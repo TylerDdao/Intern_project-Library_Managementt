@@ -2,6 +2,7 @@ package com.example.library_management.model;
 
 import jakarta.persistence.*;
 import jakarta.persistence.MappedSuperclass;
+import lombok.Data;
 import org.springframework.data.annotation.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@Data
 public abstract class BaseEntity {
 
     @CreatedDate
