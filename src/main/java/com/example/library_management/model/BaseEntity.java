@@ -30,8 +30,8 @@ public abstract class BaseEntity {
     private String updatedBy;
 
     @Column(name = "is_active")
-    private boolean isActive = true;
+    private Boolean isActive = true;
 
     @Column(name = "is_deleted")
-    private boolean isDeleted = false;
+    private Boolean isDeleted = false;
 }

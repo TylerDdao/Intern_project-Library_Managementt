@@ -11,6 +11,10 @@ public class UserResponse {
     private Long id;
     private String username;
     private String role;
+    private String phoneNumber;
+    private String fullName;
+    private String address = null;
+    private String email = null;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

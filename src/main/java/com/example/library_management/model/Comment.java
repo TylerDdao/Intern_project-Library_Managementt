@@ -3,17 +3,21 @@ package com.example.library_management.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "roles")
+@Table(name = "comments")
 @EqualsAndHashCode(callSuper = true)
-public class Role extends BaseEntity{
+public class Comment extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false, unique = true, length = 50)
-    private String name;
+    @Lob
+    @Column(nullable = false)
+    private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 }

@@ -5,15 +5,18 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@Data
 @Entity
-@Table(name = "roles")
+@Data
+@Table(name = "genre")
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Role extends BaseEntity{
+public class Genre extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false, unique = true, length = 50)
-    private String name;
+    @Column(nullable = false, length = 255)
+    private String genre;
+
+
 }

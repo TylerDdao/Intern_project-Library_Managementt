@@ -19,12 +19,21 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 255)
     private String username;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    @Column(name = "display_name")
-    private String displayName;
+    @Column(name = "full_name", nullable = false)
+    private String fullName;
+
+    @Column(name = "phone_number", nullable = false, length = 10)
+    private String phoneNumber;
+
+    @Column(length = 255)
+    private String address;
+
+    @Column(length = 255)
+    private String email;
 
     @Column(nullable = false, length = 255)
     private String password;

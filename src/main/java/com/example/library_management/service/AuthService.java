@@ -8,6 +8,7 @@ import com.example.library_management.dto.UserResponse;
 import com.example.library_management.exception.AuthException;
 import com.example.library_management.model.Role;
 import com.example.library_management.model.User;
+import com.example.library_management.repository.RoleRepository;
 import com.example.library_management.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,9 @@ public class AuthService {
     private UserRepository userRepository;
 
     @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -31,23 +35,6 @@ public class AuthService {
 
     @Autowired
     private JwtUtil jwtUtil;
-
-//    public LoginResponse login(LoginRequest request) {
-//        // authenticate — throws exception if wrong credentials
-//        Authentication auth = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(
-//                        request.getUsername(),
-//                        request.getPassword()
-//                )
-//        );
-//
-//        // generate JWT token
-//        String token = jwtUtil.generateToken(auth.getName());
-//
-//        User user = userRepository.findByUsername(auth.getName()).orElseThrow();
-//
-//        return new LoginResponse(token, user.getUsername(), user.getRole().name());
-//    }
 
     public LoginResponse login(LoginRequest request) {
         try {
@@ -60,7 +47,7 @@ public class AuthService {
 
             String token = jwtUtil.generateToken(auth.getName());
             User user = userRepository.findByUsername(auth.getName()).orElseThrow();
-            return new LoginResponse(token, user.getUsername(), user.getRole().name());
+            return new LoginResponse(token, user.getUsername(), user.getRole().getName());
 
         } catch (org.springframework.security.authentication.BadCredentialsException e) {
             throw new AuthException("Invalid username or password");
@@ -72,10 +59,15 @@ public class AuthService {
             throw new RuntimeException("Username already taken");
         }
 
+        Role defaultRole = roleRepository.findByName("ROLE_USER")
+                .orElseThrow(() -> new RuntimeException("Error: Default Role 'ROLE_USER' not found in the database."));
+
         User user = new User();
         user.setUsername(request.getUsername());
+        user.setFullName(request.getFullName());
+        user.setPhoneNumber(request.getPhoneNumber());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(Role.ROLE_USER);
+        user.setRole(defaultRole);
 
         userRepository.save(user);
         return "User registered successfully";
@@ -89,11 +81,14 @@ public class AuthService {
 
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
         return new UserResponse(
                 user.getId(),
                 user.getUsername(),
-                user.getRole().name(),
+                user.getRole().getName(),
+                user.getPhoneNumber(),
+                user.getFullName(),
+                user.getAddress(),
+                user.getEmail(),
                 user.getCreatedAt(),
                 user.getUpdatedAt()
         );

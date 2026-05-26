@@ -1,5 +1,6 @@
 package com.example.library_management.config;
 
+import lombok.NonNull;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,6 +11,7 @@ import java.util.Optional;
 @Component
 public class AuditorAwareImpl implements AuditorAware<String> {
     @Override
+    @NonNull
     public Optional<String> getCurrentAuditor() {
         return Optional.ofNullable(
                 SecurityContextHolder.getContext().getAuthentication()
