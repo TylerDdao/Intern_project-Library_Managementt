@@ -1,5 +1,6 @@
 package com.example.library_management.config;
 
+import com.example.library_management.dto.ApiResponse;
 import com.example.library_management.filter.JwtAuthFilter;
 import com.example.library_management.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -18,6 +23,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import tools.jackson.databind.ObjectMapper;
 
 import java.time.LocalDateTime;
 
@@ -32,6 +38,9 @@ public class SecurityConfig {
 
     @Autowired
     private JwtAuthFilter jwtAuthFilter;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -65,36 +74,46 @@ public class SecurityConfig {
                     .requestMatchers("/auth/login", "/auth/register").permitAll()
                     .requestMatchers("/auth/check", "/auth/update", "/auth/logout").authenticated()
                     .anyRequest().authenticated()
-            )
+        )
             .exceptionHandling(ex -> ex
-                    // 401 — no token or invalid token
                     .authenticationEntryPoint((request, response, e) -> {
                         response.setStatus(401);
                         response.setContentType("application/json");
-                        response.getWriter().write("""
-                {
-                    "status": 401,
-                    "message": "Unauthorized - please login",
-                    "timestamp": "%s"
-                }
-            """.formatted(LocalDateTime.now()));
+                        response.getWriter().write(
+                                objectMapper.writeValueAsString(
+                                        ApiResponse.error("401", "Unauthorized - please login")
+                                )
+                        );
                     })
-                    // 403 — valid token but wrong role
                     .accessDeniedHandler((request, response, e) -> {
                         response.setStatus(403);
                         response.setContentType("application/json");
-                        response.getWriter().write("""
-                {
-                    "status": 403,
-                    "message": "Forbidden - you don't have permission",
-                    "timestamp": "%s"
-                }
-            """.formatted(LocalDateTime.now()));
+                        response.getWriter().write(
+                                objectMapper.writeValueAsString(
+                                        ApiResponse.error("403", "Access denied")
+                                )
+                        );
                     })
             )
             .authenticationProvider(authenticationProvider())
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public RoleHierarchy roleHierarchy() {
+        return RoleHierarchyImpl.withDefaultRolePrefix()
+                .role("ADMIN").implies("MANAGER")      // ADMIN can do everything MANAGER can
+                .role("MANAGER").implies("USER")        // MANAGER can do everything USER can
+                .build();
+    }
+
+    @Bean
+    public MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
+        DefaultMethodSecurityExpressionHandler handler =
+                new DefaultMethodSecurityExpressionHandler();
+        handler.setRoleHierarchy(roleHierarchy);
+        return handler;
     }
 }

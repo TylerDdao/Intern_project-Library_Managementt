@@ -8,6 +8,7 @@ import com.example.library_management.model.User;
 import com.example.library_management.repository.RoleRepository;
 import com.example.library_management.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -110,29 +111,40 @@ public class AuthService {
         user.setFullName(request.getFullName());
         user.setPhoneNumber(request.getPhoneNumber());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(defaultRole);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isUser = auth == null
+                || !auth.isAuthenticated()
+                || auth instanceof AnonymousAuthenticationToken
+                || auth.getAuthorities().stream()
+                .anyMatch(a -> "ROLE_USER".equals(a.getAuthority()));
 
+        if(isUser) user.setRole(defaultRole);
+        else {
+            Role role = roleRepository.findByName("ROLE_USER")
+                    .orElse(defaultRole);
+            user.setRole(role);
+        }
         userRepository.save(user);
         return "User registered successfully";
     }
 
     public UserResponse getCurrentUser() {
-        // get username from SecurityContext (set by JwtAuthFilter)
-        String username = SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getName();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null || !auth.isAuthenticated()
+                || auth instanceof AnonymousAuthenticationToken) {
+            throw new RuntimeException("User not authenticated");
+        }
+
+        String username = auth.getName(); // ← safe now ✅
 
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        //No use but this is how you check a role without @PreAuthorize
-        boolean isUser = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(a -> "ROLE_USER".equals(a.getAuthority()));
-
         return new UserResponse(
                 user.getId(),
                 user.getUsername(),
-                user.getRole().getName(),
+                user.getRole() != null ? user.getRole().getName() : null,
                 user.getPhoneNumber(),
                 user.getFullName(),
                 user.getAddress(),

@@ -1,19 +1,22 @@
 package com.example.library_management.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
-// RegisterRequest.java
 @Data
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class RegisterRequest {
+public class UserRequest {
+    private Long id;
     private String username;
     private String role;
     private String phoneNumber;
     private String fullName;
     private String address = null;
     private String email = null;
-    private String password;
+    private LocalDateTime createdAt = null;
+    private LocalDateTime updatedAt = null;
 }
