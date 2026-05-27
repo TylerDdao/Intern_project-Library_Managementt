@@ -21,7 +21,7 @@ public class Book extends BaseEntity {
     private String title;
 
     @Column(nullable = false, length = 255)
-    private long author;
+    private String author;
 
     @ManyToMany
     @JoinTable(

@@ -1,6 +1,7 @@
 package com.example.library_management.filter;
 
 import com.example.library_management.config.JwtUtil;
+import com.example.library_management.service.TokenBlacklistService;
 import com.example.library_management.service.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -24,6 +25,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    private TokenBlacklistService tokenBlacklistService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -41,6 +45,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         // 3. extract the token
         String token = authHeader.substring(7); // remove "Bearer " prefix
+
+        if(tokenBlacklistService.isBlacklisted(token)){
+            filterChain.doFilter(request, response); // skip, no token
+            return;
+        }
 
         // 4. validate and set authentication
         if (jwtUtil.isTokenValid(token)) {

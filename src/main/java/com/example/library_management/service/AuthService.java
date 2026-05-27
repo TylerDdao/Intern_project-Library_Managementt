@@ -1,10 +1,7 @@
 package com.example.library_management.service;
 
 import com.example.library_management.config.JwtUtil;
-import com.example.library_management.dto.LoginRequest;
-import com.example.library_management.dto.LoginResponse;
-import com.example.library_management.dto.RegisterRequest;
-import com.example.library_management.dto.UserResponse;
+import com.example.library_management.dto.*;
 import com.example.library_management.exception.AuthException;
 import com.example.library_management.model.Role;
 import com.example.library_management.model.User;
@@ -36,6 +33,9 @@ public class AuthService {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private TokenBlacklistService tokenBlacklistService;
+
     public LoginResponse login(LoginRequest request) {
         try {
             Authentication auth = authenticationManager.authenticate(
@@ -44,7 +44,6 @@ public class AuthService {
                             request.getPassword()
                     )
             );
-
             String token = jwtUtil.generateToken(auth.getName());
             User user = userRepository.findByUsername(auth.getName()).orElseThrow();
             return new LoginResponse(token, user.getUsername(), user.getRole().getName());
@@ -52,6 +51,50 @@ public class AuthService {
         } catch (org.springframework.security.authentication.BadCredentialsException e) {
             throw new AuthException("Invalid username or password");
         }
+    }
+
+    public AccountUpdateResponse updateAccount(AccountUpdateRequest request){
+        try {
+            User user = userRepository.findByUsername(request.getUsername())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            Role newRole = roleRepository.findByName(request.getRole())
+                    .orElseThrow(() -> new RuntimeException("Role not found"));
+
+            // update only the fields that should change
+            if (request.getPhoneNumber() != null) user.setPhoneNumber(request.getPhoneNumber());
+            if (request.getAddress() != null) user.setAddress(request.getAddress());
+            if (request.getEmail() != null) user.setEmail(request.getEmail());
+            if (request.getUsername() != null) user.setUsername(request.getUsername());
+            if (request.getRole() != null) user.setRole(newRole);
+            if (request.getFullName() != null) user.setFullName(request.getFullName());
+
+            userRepository.save(user);
+
+            return new AccountUpdateResponse(
+                    user.getId(),
+                    user.getUsername(),
+                    user.getRole().getName(),
+                    user.getPhoneNumber(),
+                    user.getFullName(),
+                    user.getAddress(),
+                    user.getEmail()
+            );
+        }
+        catch (org.springframework.security.access.AccessDeniedException e) {
+            throw new RuntimeException("Access denied");
+        }
+        catch (jakarta.persistence.EntityNotFoundException e) {
+            throw new RuntimeException("User not found");
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException("Update failed: " + e.getMessage());
+        }
+    }
+
+    public void logout(String token){
+        tokenBlacklistService.blacklist(token);
+        SecurityContextHolder.clearContext();
     }
 
     public String register(RegisterRequest request) {
@@ -81,6 +124,11 @@ public class AuthService {
 
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
+        //No use but this is how you check a role without @PreAuthorize
+        boolean isUser = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                .anyMatch(a -> "ROLE_USER".equals(a.getAuthority()));
+
         return new UserResponse(
                 user.getId(),
                 user.getUsername(),

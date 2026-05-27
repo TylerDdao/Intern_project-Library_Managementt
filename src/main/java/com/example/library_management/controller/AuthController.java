@@ -1,9 +1,7 @@
 package com.example.library_management.controller;
 
-import com.example.library_management.dto.LoginRequest;
-import com.example.library_management.dto.LoginResponse;
-import com.example.library_management.dto.RegisterRequest;
-import com.example.library_management.dto.UserResponse;
+import com.example.library_management.config.JwtUtil;
+import com.example.library_management.dto.*;
 import com.example.library_management.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,10 +28,15 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout() {
-        // JWT is stateless — logout is handled client-side by deleting the token
-        SecurityContextHolder.clearContext();
+    public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.substring(7); // remove "Bearer "
+        authService.logout(token);
         return ResponseEntity.ok("Logged out successfully");
+    }
+
+    @PatchMapping("/update")
+    public ResponseEntity<?> updateUser(@RequestBody AccountUpdateRequest request) {
+        return ResponseEntity.ok(authService.updateAccount(request));
     }
 
     @GetMapping("/check")

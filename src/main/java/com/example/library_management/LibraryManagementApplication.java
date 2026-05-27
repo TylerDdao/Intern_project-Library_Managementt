@@ -5,13 +5,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration;
 import org.springframework.boot.persistence.autoconfigure.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication ()
+@EnableScheduling
 public class LibraryManagementApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LibraryManagementApplication.class, args);
 		System.out.println("Hello, World");
 	}
-
 }
