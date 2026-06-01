@@ -1,14 +1,10 @@
 package com.example.library_management.exception;
 
-import com.example.library_management.dto.ApiResponse;
-import com.example.library_management.dto.ErrorResponse;
-import org.springframework.http.HttpStatus;
+import com.example.library_management.dto.response.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {

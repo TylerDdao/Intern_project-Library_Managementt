@@ -10,24 +10,30 @@ INSERT IGNORE INTO features (id, name) VALUES
     (4, 'CREATE_ROLE'),
     (5, 'CREATE_POST'),
     (6, 'CREATE_COMMENT'),
+
     (7, 'GET_BOOK'),
     (8, 'GET_USER'),
     (9, 'GET_BORROW'),
     (10, 'GET_ROLE'),
     (11, 'GET_POST'),
     (12, 'GET_COMMENT'),
+
     (13, 'UPDATE_BOOK'),
     (14, 'UPDATE_USER'),
     (15, 'UPDATE_BORROW'),
     (16, 'UPDATE_ROLE'),
     (17, 'UPDATE_POST'),
     (18, 'UPDATE_COMMENT'),
+
     (19, 'DELETE_BOOK'),
     (20, 'DELETE_USER'),
     (21, 'DELETE_BORROW'),
     (22, 'DELETE_ROLE'),
     (23, 'DELETE_POST'),
-    (24, 'DELETE_COMMENT');
+    (24, 'DELETE_COMMENT'),
+    
+    (25, 'ASSIGN_FEATURE'),
+    (26, 'UNASSIGN_FEATURE');
 
 INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
     (1, 2),

@@ -1,0 +1,254 @@
+openapi: 3.0.0
+
+info:
+  title: Library Management System (LMS) API Specification
+  version: 1.0.0
+  description: |
+    REST API for the LMS platform.
+    Handles user, book, borrow, post, comment management.
+  contact:
+    name: API Support
+    email: baonamdao05@gmail.com
+
+servers:
+  - url: http://localhost:8080/api
+    description: Local development
+
+tags:
+  - name: User
+    description: User entity
+  - name: Book
+    description: Book entity
+  - name: Borrow
+    description: Borrow entity
+  - name: Post
+    description: Post entity
+  - name: Comment
+    description: Comment entity
+
+# ------- PATHS -------
+
+paths:
+  /users:
+    get:
+      tags: [User]
+      summary: 'To get all users'
+      operationId: 'findAll'
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: All users are found and returned
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/General Response'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/User Response'
+                example:
+                  code: "200"
+                  message: "Success"
+                  data:
+                    - id: 1
+                      username: "tyler"
+                      fullName: "Tyler Dao"
+                      role: "ROLE_USER"
+                      phoneNumber: "0123456789"
+                      address: "Hanoi"
+                      email: "tyler@gmail.com"
+                    - id: 2
+                      username: "tyler2"
+                      fullName: "Tyler Dao 2"
+                      role: "ROLE_ADMIN"
+                      phoneNumber: "0123456789"
+                      address: "Hanoi"
+                      email: "tyler2@gmail.com"
+        '401':
+          $ref: '#/components/responses/AuthException'
+        '403':
+          $ref: '#/components/responses/AccessDeniedException'
+        '500':
+          $ref: '#/components/responses/RunTimeException'
+  /users/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdParam'
+    get:
+      tags: [User]
+      summary: 'Get an user by its ID'
+      operationId: 'FindUserById'
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: 'An user is found by its ID'
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/General Response'
+                  - type: object
+                    properties:
+                      data:
+                        allOf:
+                          - $ref: '#/components/schemas/User Response'
+                    example:
+                      code: "200"
+                      message: "Success"
+                      data:
+                        - id: 1
+                          username: "tyler"
+                          fullName: "Tyler Dao"
+                          role: "ROLE_USER"
+                          phoneNumber: "0123456789"
+                          address: "Hanoi"
+                          email: "tyler@gmail.com"
+
+# ------- REUSABLE COMPONENTS -------
+components:
+
+  # Auth Scheme (Moved safely inside components root)
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  # Schemas
+  schemas:
+    Register Input:
+      type: object
+      required: [username, password, phoneNumber, role, fullName]
+      properties:
+        username:
+          type: string
+        role:
+          type: string
+        phoneNumber:
+          type: string
+        fullName:
+          type: string
+        address:
+          type: string
+        email:
+          type: string
+          format: email
+
+    Login Input:
+      type: object
+      required: [email, password]
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          format: password
+
+    Login Response:
+      type: object
+      properties:
+        token:
+          type: string
+        username:
+          type: string
+        role:
+          type: string
+
+    User Response:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+        role:
+          type: string
+        fullName:
+          type: string
+        phoneNumber:
+          type: string
+        address:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+
+    Role Response:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          nullable: false
+
+    General Response:
+      type: object
+      properties:
+        code:
+          type: string
+          example: "500"
+        message:
+          type: string
+          example: "Internal server error"
+        data:
+          type: object
+          nullable: true
+
+  # Reusable Parameters
+  parameters:
+    IdParam:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+
+    PageParam:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 0
+
+  # Reusable Responses
+  responses:
+    RunTimeException:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/General Response'
+          example:
+            code: "500"
+            message: "Internal server error"
+            data: null
+
+    AuthException:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/General Response'
+          example:
+            code: "401"
+            message: "Unauthorized API request"
+            data: null
+
+    AccessDeniedException:
+      description: Access denied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/General Response'
+          example:
+            code: "403"
+            message: "Access denied"
+            data: null

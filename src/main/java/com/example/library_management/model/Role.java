@@ -21,9 +21,10 @@ public class Role extends BaseEntity{
 
     @ManyToMany
     @JoinTable(
-            name = "features_roles",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "feature_id")
+        name = "features_roles",
+        joinColumns = @JoinColumn(name = "role_id"),
+        inverseJoinColumns = @JoinColumn(name = "feature_id"),
+        uniqueConstraints = @UniqueConstraint(columnNames = {"role_id", "feature_id"})
     )
     private List<Feature> features;
 }

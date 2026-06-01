@@ -1,11 +1,11 @@
 package com.example.library_management.controller;
 
-import com.example.library_management.config.JwtUtil;
 import com.example.library_management.dto.*;
+import com.example.library_management.dto.response.LoginResponse;
+import com.example.library_management.dto.response.UserResponse;
 import com.example.library_management.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

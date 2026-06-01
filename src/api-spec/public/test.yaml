@@ -1,0 +1,303 @@
+openapi: 3.0.0
+
+info:
+  title: API
+  version: 1.0.0
+  description: |
+    REST API for the Farm2Fork platform.
+    Handles products, orders, and user management.
+  contact:
+    name: API Support
+    email: support@farm2fork.com
+
+servers:
+  - url: http://localhost:8080/api
+    description: Local development
+
+tags:
+  - name: Products
+    description: Product catalogue operations
+  - name: Orders
+    description: Order management
+  - name: Users
+    description: User accounts and auth
+
+# ------- PATHS -------
+
+paths:
+  /users:
+    get:
+      tags: [Users]
+      summary: List all available users
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+      responses:
+        '200':
+          description: Paginated product list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /products:
+    get:
+      tags: [Products]
+      summary: List all products
+      operationId: listProducts
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - name: category
+          in: query
+          description: Filter by category
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Paginated product list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+    post:
+      tags: [Products]
+      summary: Create a product
+      operationId: createProduct
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+            example:
+              name: Organic Tomatoes
+              price: 3.99
+              category: vegetables
+              stock: 100
+      responses:
+        '201':
+          description: Product created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /products/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdParam'
+
+    get:
+      tags: [Products]
+      summary: Get a product by ID
+      operationId: getProduct
+      responses:
+        '200':
+          description: Product found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags: [Products]
+      summary: Update a product
+      operationId: updateProduct
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Product updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags: [Products]
+      summary: Delete a product
+      operationId: deleteProduct
+      security:
+        - BearerAuth: []
+      responses:
+        '204':
+          description: Deleted successfully
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /auth/login:
+    post:
+      tags: [Users]
+      summary: Login and get JWT token
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login Input'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+# ------- REUSABLE COMPONENTS -------
+
+components:
+
+  # Auth Scheme (Moved safely inside components root)
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  # Schemas
+  schemas:
+    Register Input:
+      type: object
+      required: [username, password, phoneNumber, role, fullName]
+      properties:
+        username:
+          type: string
+        role:
+          type: string
+        phoneNumber:
+          type: string
+        fullName:
+          type: string
+        address:
+          type: string
+        email:
+          type: string
+          format: email
+
+    Login Input:
+      type: object
+      required: [email, password]
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          format: password
+
+    AuthToken:
+      type: object
+      properties:
+        token:
+          type: string
+        expiresIn:
+          type: integer
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          nullable: false
+        role:
+          nullable: false
+          allOf:
+            - $ref: '#/components/schemas/Role'
+        fullName:
+          type: string
+          nullable: false
+        phoneNumber:
+          type: string
+          nullable: false
+        address:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+          nullable: false
+
+    Role:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          nullable: false
+
+  # Reusable Parameters
+  parameters:
+    IdParam:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+
+    PageParam:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 0
+
+  # Reusable Responses
+  responses:
+    BadRequest:
+      description: Invalid request data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalError:
+      description: Unexpected server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

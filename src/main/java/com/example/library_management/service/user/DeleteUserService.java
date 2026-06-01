@@ -1,8 +1,6 @@
 package com.example.library_management.service.user;
 
 import com.example.library_management.dto.UserRequest;
-import com.example.library_management.dto.UserResponse;
-import com.example.library_management.model.Role;
 import com.example.library_management.model.User;
 import com.example.library_management.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,8 @@
-package com.example.library_management.controller.roleAdmin;
+package com.example.library_management.controller;
 
-import com.example.library_management.dto.ApiResponse;
+import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.dto.UserRequest;
-import com.example.library_management.dto.UserResponse;
+import com.example.library_management.dto.response.UserResponse;
 import com.example.library_management.service.user.DeleteUserService;
 import com.example.library_management.service.user.GetUserService;
 import com.example.library_management.service.user.UpdateUserService;
@@ -44,6 +44,7 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success(getUserService.getUserByUsername(page, username)));
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_USER')")
     @PatchMapping("/user")
     public ResponseEntity<ApiResponse<UserResponse>> updateUserByUsername(@RequestBody UserRequest request){
         return ResponseEntity.ok(ApiResponse.success(updateUserService.updateUser(request)));

@@ -1,13 +1,12 @@
 package com.example.library_management.config;
 
-import com.example.library_management.dto.ApiResponse;
+import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.filter.JwtAuthFilter;
 import com.example.library_management.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -24,8 +23,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import tools.jackson.databind.ObjectMapper;
-
-import java.time.LocalDateTime;
 
 @Configuration
 @EnableWebSecurity
@@ -72,7 +69,7 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/auth/login", "/auth/register").permitAll()
-                    .requestMatchers("/auth/check", "/auth/update", "/auth/logout").authenticated()
+                    .requestMatchers("/**").hasAuthority("ROLE_SUPER")
                     .anyRequest().authenticated()
         )
             .exceptionHandling(ex -> ex
