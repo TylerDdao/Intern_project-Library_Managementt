@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "roles")
@@ -16,4 +18,12 @@ public class Role extends BaseEntity{
 
     @Column(nullable = false, unique = true, length = 50)
     private String name;
+
+    @ManyToMany
+    @JoinTable(
+            name = "features_roles",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "feature_id")
+    )
+    private List<Feature> features;
 }

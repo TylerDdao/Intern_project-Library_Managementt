@@ -25,6 +25,8 @@ public class AuthService {
     @Autowired
     private RoleRepository roleRepository;
 
+    
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -47,6 +49,8 @@ public class AuthService {
             );
             String token = jwtUtil.generateToken(auth.getName());
             User user = userRepository.findByUsername(auth.getName()).orElseThrow();
+
+
             return new LoginResponse(token, user.getUsername(), user.getRole().getName());
 
         } catch (org.springframework.security.authentication.BadCredentialsException e) {

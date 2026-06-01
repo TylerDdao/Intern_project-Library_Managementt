@@ -13,7 +13,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@PreAuthorize("hasRole('ADMIN')")
 public class UserController {
     @Autowired
     GetUserService getUserService;
@@ -39,6 +38,7 @@ public class UserController {
         );
     }
 
+    @PreAuthorize("hasAuthority('GET_USER')")
     @GetMapping("/user/{username}")
     public ResponseEntity<ApiResponse<Page<UserResponse>>> getUserByUsername(@PathVariable String username, @RequestParam(defaultValue = "0") int page){
         return ResponseEntity.ok(ApiResponse.success(getUserService.getUserByUsername(page, username)));

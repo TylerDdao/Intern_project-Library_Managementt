@@ -16,13 +16,8 @@ public class Feature {
     private long id;
 
     @Column(nullable = false, length = 255)
-    private String feature;
+    private String name;
 
-    @ManyToMany
-    @JoinTable(
-            name = "features_roles",
-            joinColumns = @JoinColumn(name = "feature_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
+    @ManyToMany(mappedBy = "features")
     private List<Role> roles;
 }
