@@ -1,13 +1,15 @@
 package com.example.library_management.controller;
 
-import com.example.library_management.dto.*;
-import com.example.library_management.dto.response.AccountUpdateResponse;
+import com.example.library_management.dto.request.LoginRequest;
+import com.example.library_management.dto.request.RegisterRequest;
+import com.example.library_management.dto.request.UserRequest;
 import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.dto.response.LoginResponse;
 import com.example.library_management.dto.response.UserResponse;
 import com.example.library_management.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,8 +37,9 @@ public class AuthController {
         return ResponseEntity.ok(ApiResponse.success("Logged out successfully"));
     }
 
+    @PreAuthorize("@securityService.hasAccess('UPDATE_USER')")
     @PatchMapping("/update")
-    public ResponseEntity<ApiResponse<AccountUpdateResponse>> updateUser(@RequestBody AccountUpdateRequest request) {
+    public ResponseEntity<ApiResponse<UserResponse>> updateUser(@RequestBody UserRequest request) {
         return ResponseEntity.ok(ApiResponse.success(authService.updateAccount(request)));
     }
 

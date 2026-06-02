@@ -36,9 +36,8 @@ INSERT IGNORE INTO features (id, name) VALUES
     (24, 'DELETE_COMMENT'),
     
     (25, 'ASSIGN_FEATURE'),
-    (26, 'UNASSIGN_FEATURE'),
+    (26, 'UNASSIGN_FEATURE');
 
-    (27, 'GET_USERS');
 
 INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
     (1, 2),

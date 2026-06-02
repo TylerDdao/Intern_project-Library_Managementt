@@ -18,6 +18,14 @@ public class UserResponse {
     private String fullName;
     private String address = null;
     private String email = null;
-    private LocalDateTime createdAt = null;
-    private LocalDateTime updatedAt = null;
+
+    public UserResponse(User user){
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.role = user.getRole().getName();
+        this.phoneNumber = user.getPhoneNumber();
+        this.fullName = user.getFullName();
+        this.address = user.getAddress();
+        this.email = user.getEmail();
+    }
 }

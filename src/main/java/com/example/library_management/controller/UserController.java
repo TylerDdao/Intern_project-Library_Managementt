@@ -1,7 +1,7 @@
 package com.example.library_management.controller;
 
 import com.example.library_management.dto.response.ApiResponse;
-import com.example.library_management.dto.UserRequest;
+import com.example.library_management.dto.request.UserRequest;
 import com.example.library_management.dto.response.UserResponse;
 import com.example.library_management.service.user.DeleteUserService;
 import com.example.library_management.service.user.GetUserService;
@@ -23,35 +23,29 @@ public class UserController {
     @Autowired
     DeleteUserService deleteUserService;
 
-    @PreAuthorize("hasAuthority('GET_USERS')")
+    @PreAuthorize("@securityService.hasAccess('GET_USER')")
     @GetMapping("/users")
     public ResponseEntity<ApiResponse<Page<UserResponse>>> getUsers(
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String fullName,
+            @RequestParam(required = false) String role,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(required = false) String username) {
-
-        if (username != null && !username.isEmpty()) {
-            return ResponseEntity.ok(
-                    ApiResponse.success(getUserService.getUserByUsername(page, username))
-            );
-        }
+            @RequestParam(defaultValue = "10") int limit,
+            @RequestParam(defaultValue = "username") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir) {
         return ResponseEntity.ok(
-                ApiResponse.success(getUserService.getUsers(page))
+                ApiResponse.success(getUserService.getUsers(page, limit, sortBy, sortDir, username, fullName, role))
         );
     }
 
-    @PreAuthorize("hasAuthority('GET_USER')")
-    @GetMapping("/user/{username}")
-    public ResponseEntity<ApiResponse<Page<UserResponse>>> getUserByUsername(@PathVariable String username, @RequestParam(defaultValue = "0") int page){
-        return ResponseEntity.ok(ApiResponse.success(getUserService.getUserByUsername(page, username)));
-    }
-
-    @PreAuthorize("hasAuthority('UPDATE_USER')")
+    @PreAuthorize("@securityService.hasAccess('UPDATE_USER')")
     @PatchMapping("/user")
-    public ResponseEntity<ApiResponse<UserResponse>> updateUserByUsername(@RequestBody UserRequest request){
+    public ResponseEntity<ApiResponse<UserResponse>> updateUserByUsername(
+            @RequestBody UserRequest request){
         return ResponseEntity.ok(ApiResponse.success(updateUserService.updateUser(request)));
     }
 
-    @PreAuthorize("hasAuthority('DELETE_USER')")
+    @PreAuthorize("@securityService.hasAccess('DELETE_BOOK')")
     @DeleteMapping("/user")
     public  ResponseEntity<ApiResponse<String>> deleteUserByUsername(@RequestBody UserRequest request){
         return ResponseEntity.ok(ApiResponse.success(deleteUserService.deleteUser(request)));

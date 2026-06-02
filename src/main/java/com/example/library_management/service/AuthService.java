@@ -1,8 +1,9 @@
 package com.example.library_management.service;
 
 import com.example.library_management.config.JwtUtil;
-import com.example.library_management.dto.*;
-import com.example.library_management.dto.response.AccountUpdateResponse;
+import com.example.library_management.dto.request.LoginRequest;
+import com.example.library_management.dto.request.RegisterRequest;
+import com.example.library_management.dto.request.UserRequest;
 import com.example.library_management.dto.response.LoginResponse;
 import com.example.library_management.dto.response.UserResponse;
 import com.example.library_management.exception.AuthException;
@@ -18,17 +19,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class AuthService {
-
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private RoleRepository roleRepository;
-
-
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -52,8 +52,7 @@ public class AuthService {
             );
             String token = jwtUtil.generateToken(auth.getName());
             User user = userRepository.findByUsername(auth.getName()).orElseThrow();
-
-
+            log.info("Authorizing @{}, ID #{}",  user.getUsername(), user.getId());
             return new LoginResponse(token, user.getUsername(), user.getRole().getName());
 
         } catch (org.springframework.security.authentication.BadCredentialsException e) {
@@ -61,7 +60,7 @@ public class AuthService {
         }
     }
 
-    public AccountUpdateResponse updateAccount(AccountUpdateRequest request){
+    public UserResponse updateAccount(UserRequest request){
         try {
             User user = userRepository.findByUsername(request.getUsername())
                     .orElseThrow(() -> new RuntimeException("User not found"));
@@ -77,17 +76,9 @@ public class AuthService {
             if (request.getRole() != null) user.setRole(newRole);
             if (request.getFullName() != null) user.setFullName(request.getFullName());
 
-            userRepository.save(user);
-
-            return new AccountUpdateResponse(
-                    user.getId(),
-                    user.getUsername(),
-                    user.getRole().getName(),
-                    user.getPhoneNumber(),
-                    user.getFullName(),
-                    user.getAddress(),
-                    user.getEmail()
-            );
+            User savedUser = userRepository.save(user);
+            log.info("Updating @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
+            return new UserResponse(savedUser);
         }
         catch (org.springframework.security.access.AccessDeniedException e) {
             throw new RuntimeException("Access denied");
@@ -102,7 +93,9 @@ public class AuthService {
 
     public void logout(String token){
         tokenBlacklistService.blacklist(token);
+        String username = jwtUtil.extractUsername(token);
         SecurityContextHolder.clearContext();
+        log.info("Logging out @{}", username);
     }
 
     public UserResponse register(RegisterRequest request) {
@@ -131,18 +124,9 @@ public class AuthService {
                     .orElse(defaultRole);
             user.setRole(role);
         }
-        userRepository.save(user);
-        return new UserResponse(
-                user.getId(),
-                user.getUsername(),
-                user.getRole().getName(),
-                user.getPhoneNumber(),
-                user.getFullName(),
-                user.getAddress(),
-                user.getEmail(),
-                user.getCreatedAt(),
-                user.getUpdatedAt()
-        );
+        User savedUser = userRepository.save(user);
+        log.info("Registering @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
+        return new UserResponse(savedUser);
     }
 
     public UserResponse getCurrentUser() {
@@ -158,16 +142,6 @@ public class AuthService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        return new UserResponse(
-                user.getId(),
-                user.getUsername(),
-                user.getRole() != null ? user.getRole().getName() : null,
-                user.getPhoneNumber(),
-                user.getFullName(),
-                user.getAddress(),
-                user.getEmail(),
-                user.getCreatedAt(),
-                user.getUpdatedAt()
-        );
+        return new UserResponse(user);
     }
 }

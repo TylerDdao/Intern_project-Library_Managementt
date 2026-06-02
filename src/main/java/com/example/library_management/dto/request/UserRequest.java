@@ -1,4 +1,4 @@
-package com.example.library_management.dto;
+package com.example.library_management.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -10,13 +10,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserRequest {
-    private Long id;
     private String username;
     private String role;
     private String phoneNumber;
     private String fullName;
     private String address = null;
     private String email = null;
-    private LocalDateTime createdAt = null;
-    private LocalDateTime updatedAt = null;
 }

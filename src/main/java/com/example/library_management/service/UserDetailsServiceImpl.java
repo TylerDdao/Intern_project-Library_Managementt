@@ -36,6 +36,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         featureRepository.findByRoles_Id(user.getRole().getId()).forEach(feature ->
                 authorities.add(new SimpleGrantedAuthority(feature.getName())));
 
+        System.out.println(">>> authorities: " + authorities);
+
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())

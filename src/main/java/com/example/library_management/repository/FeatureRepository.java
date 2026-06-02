@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface FeatureRepository extends JpaRepository<Feature, Long>{
     List<Feature> findByRoles_Id(long roleId);
+    Optional<Feature> findByName(String name);
 }

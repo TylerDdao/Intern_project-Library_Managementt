@@ -69,9 +69,9 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/auth/login", "/auth/register").permitAll()
-//                    .requestMatchers("/**").hasAuthority("ROLE_SUPER")
-//                    .anyRequest().authenticated()
-                    .anyRequest().permitAll()
+                    .requestMatchers("/**").hasAuthority("ROLE_ADMIN")
+                    .anyRequest().authenticated()
+//                    .anyRequest().permitAll()
         )
             .exceptionHandling(ex -> ex
                     .authenticationEntryPoint((request, response, e) -> {
@@ -99,19 +99,19 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public RoleHierarchy roleHierarchy() {
-        return RoleHierarchyImpl.withDefaultRolePrefix()
-                .role("ADMIN").implies("MANAGER")      // ADMIN can do everything MANAGER can
-                .role("MANAGER").implies("USER")        // MANAGER can do everything USER can
-                .build();
-    }
-
-    @Bean
-    public MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
-        DefaultMethodSecurityExpressionHandler handler =
-                new DefaultMethodSecurityExpressionHandler();
-        handler.setRoleHierarchy(roleHierarchy);
-        return handler;
-    }
+//    @Bean
+//    public RoleHierarchy roleHierarchy() {
+//        return RoleHierarchyImpl.withDefaultRolePrefix()
+//                .role("ADMIN").implies("MANAGER")      // ADMIN can do everything MANAGER can
+//                .role("MANAGER").implies("USER")        // MANAGER can do everything USER can
+//                .build();
+//    }
+//
+//    @Bean
+//    public MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
+//        DefaultMethodSecurityExpressionHandler handler =
+//                new DefaultMethodSecurityExpressionHandler();
+//        handler.setRoleHierarchy(roleHierarchy);
+//        return handler;
+//    }
 }

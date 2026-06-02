@@ -28,7 +28,8 @@ public class Book extends BaseEntity {
     @JoinTable(
             name = "Books_Genres",
             joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id")
+            inverseJoinColumns = @JoinColumn(name = "genre_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"book_id", "genre_id"})
     )
     private List<Genre> genres = new ArrayList<>();
 }

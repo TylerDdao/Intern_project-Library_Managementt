@@ -1,9 +1,7 @@
-package com.example.library_management.dto;
+package com.example.library_management.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 // RegisterRequest.java
 @Data

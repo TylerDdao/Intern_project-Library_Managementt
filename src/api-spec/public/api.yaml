@@ -36,6 +36,30 @@ paths:
       operationId: 'findAll'
       security:
         - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/SortByParam'
+        - $ref: '#/components/parameters/SortDirParam'
+        - name: username
+          required: false
+          in: query
+          description: Find by username
+          schema:
+            type: string
+        - name: fullName
+          required: false
+          in: query
+          description: Find by full name
+          schema:
+            type: string
+        - name: role
+          required: false
+          in: query
+          description: Find by role
+          schema:
+            type: string
+      
       responses:
         '200':
           description: All users are found and returned
@@ -74,18 +98,22 @@ paths:
           $ref: '#/components/responses/AccessDeniedException'
         '500':
           $ref: '#/components/responses/RunTimeException'
-  /users/{id}:
-    parameters:
-      - $ref: '#/components/parameters/IdParam'
-    get:
+  /user:
+    post:
       tags: [User]
-      summary: 'Get an user by its ID'
-      operationId: 'FindUserById'
+      summary: Create new user
+      operationId: saveUser
       security:
         - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User Input'
       responses:
-        '200':
-          description: 'An user is found by its ID'
+        '201':
+          description: User created successfully
           content:
             application/json:
               schema:
@@ -94,19 +122,13 @@ paths:
                   - type: object
                     properties:
                       data:
-                        allOf:
-                          - $ref: '#/components/schemas/User Response'
-                    example:
-                      code: "200"
-                      message: "Success"
-                      data:
-                        - id: 1
-                          username: "tyler"
-                          fullName: "Tyler Dao"
-                          role: "ROLE_USER"
-                          phoneNumber: "0123456789"
-                          address: "Hanoi"
-                          email: "tyler@gmail.com"
+                        $ref: '#/components/schemas/User Response'
+        '401':
+          $ref: '#/components/responses/AuthException'
+        '403':
+          $ref: '#/components/responses/AccessDeniedException'
+        '500':
+          $ref: '#/components/responses/RunTimeException'
 
 # ------- REUSABLE COMPONENTS -------
 components:
@@ -158,6 +180,24 @@ components:
         role:
           type: string
 
+    User Input:
+      type: object
+      properties:
+        username:
+          type: string
+        role:
+          type: string
+        fullName:
+          type: string
+        phoneNumber:
+          type: string
+        address:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+
     User Response:
       type: object
       properties:
@@ -204,19 +244,37 @@ components:
 
   # Reusable Parameters
   parameters:
-    IdParam:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: integer
-
     PageParam:
       name: page
       in: query
       schema:
         type: integer
         default: 0
+    
+    LimitParam:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        default: 10
+
+    SortByParam:
+      name: sortBy
+      description: Sort by a field of object
+      in: query
+      schema:
+        type: string
+        default: "id"
+
+    SortDirParam:
+      name: sortDir
+      in: query
+      schema:
+        type: string
+        default: "asc"
+        enum:
+          - "asc"
+          - "desc"
 
   # Reusable Responses
   responses:

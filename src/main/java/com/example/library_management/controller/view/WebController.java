@@ -1,4 +1,4 @@
-package com.example.library_management.controller.web;
+package com.example.library_management.controller.view;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

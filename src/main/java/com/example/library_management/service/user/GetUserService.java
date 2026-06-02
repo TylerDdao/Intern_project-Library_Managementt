@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,36 +16,23 @@ public class GetUserService {
     @Autowired
     private UserRepository userRepository;
 
-    public Page<UserResponse> getUsers(int page) {
-        Pageable pageable = PageRequest.of(page, 10);
-        Page<User> users = userRepository.findAll(pageable);
+    public Page<UserResponse> getUsers(int page, int limit, String sortBy, String sortDir, String username, String fullName, String role) {
+        Sort sort = sortDir.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+        Pageable pageable = PageRequest.of(page, limit, sort);
+        Page<User> users;
 
-        return users.map(user -> new UserResponse(
-                user.getId(),
-                user.getUsername(),
-                user.getRole().getName(),
-                user.getPhoneNumber(),
-                user.getFullName(),
-                user.getAddress(),
-                user.getEmail(),
-                user.getCreatedAt(),
-                user.getUpdatedAt()
-        ));
-    }
+        if (username != null) {
+            users = userRepository.findByUsernameContaining(username, pageable);
+        } else if (fullName != null) {
+            users = userRepository.findByFullNameContaining(fullName, pageable);
+        } else if (role != null) {
+            users = userRepository.findByRole_NameContaining(role, pageable);
+        } else {
+            users = userRepository.findAll(pageable);
+        }
 
-    public Page<UserResponse> getUserByUsername(int page, String username) {
-        Pageable pageable = PageRequest.of(page, 10);
-        Page<User> users = userRepository.findByUsernameContainingOrderByUsernameAsc(username, pageable);
-        return users.map(user -> new UserResponse(
-                user.getId(),
-                user.getUsername(),
-                user.getRole().getName(),
-                user.getPhoneNumber(),
-                user.getFullName(),
-                user.getAddress(),
-                user.getEmail(),
-                user.getCreatedAt(),
-                user.getUpdatedAt()
-        ));
+        return users.map(UserResponse::new);
     }
 }
