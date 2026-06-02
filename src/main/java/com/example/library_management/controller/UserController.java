@@ -23,6 +23,7 @@ public class UserController {
     @Autowired
     DeleteUserService deleteUserService;
 
+    @PreAuthorize("hasAuthority('GET_USERS')")
     @GetMapping("/users")
     public ResponseEntity<ApiResponse<Page<UserResponse>>> getUsers(
             @RequestParam(defaultValue = "0") int page,
@@ -50,7 +51,8 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success(updateUserService.updateUser(request)));
     }
 
-    @DeleteMapping("/user/")
+    @PreAuthorize("hasAuthority('DELETE_USER')")
+    @DeleteMapping("/user")
     public  ResponseEntity<ApiResponse<String>> deleteUserByUsername(@RequestBody UserRequest request){
         return ResponseEntity.ok(ApiResponse.success(deleteUserService.deleteUser(request)));
     }

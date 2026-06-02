@@ -34,4 +34,13 @@ public abstract class BaseEntity {
 
     @Column(name = "is_deleted")
     private Boolean isDeleted = false;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+        this.updatedBy = null;
+        this.isActive = true;
+        this.isDeleted = false;
+    }
 }

@@ -105,7 +105,7 @@ public class AuthService {
         SecurityContextHolder.clearContext();
     }
 
-    public String register(RegisterRequest request) {
+    public UserResponse register(RegisterRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new RuntimeException("Username already taken");
         }
@@ -132,7 +132,17 @@ public class AuthService {
             user.setRole(role);
         }
         userRepository.save(user);
-        return "User registered successfully";
+        return new UserResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getRole().getName(),
+                user.getPhoneNumber(),
+                user.getFullName(),
+                user.getAddress(),
+                user.getEmail(),
+                user.getCreatedAt(),
+                user.getUpdatedAt()
+        );
     }
 
     public UserResponse getCurrentUser() {

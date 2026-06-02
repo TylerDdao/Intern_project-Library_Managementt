@@ -69,8 +69,9 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/auth/login", "/auth/register").permitAll()
-                    .requestMatchers("/**").hasAuthority("ROLE_SUPER")
-                    .anyRequest().authenticated()
+//                    .requestMatchers("/**").hasAuthority("ROLE_SUPER")
+//                    .anyRequest().authenticated()
+                    .anyRequest().permitAll()
         )
             .exceptionHandling(ex -> ex
                     .authenticationEntryPoint((request, response, e) -> {

@@ -5,9 +5,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
-@Table(name = "genre")
+@Table(name = "genres")
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Genre extends BaseEntity{
@@ -16,7 +18,8 @@ public class Genre extends BaseEntity{
     private long id;
 
     @Column(nullable = false, length = 255)
-    private String genre;
+    private String name;
 
-
+    @ManyToMany(mappedBy = "genres")
+    private List<Book> books;
 }

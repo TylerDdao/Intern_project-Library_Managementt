@@ -1,5 +1,6 @@
 package com.example.library_management.dto.response;
 
+import com.example.library_management.model.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;

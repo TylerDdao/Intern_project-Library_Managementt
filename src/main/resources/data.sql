@@ -3,6 +3,9 @@ INSERT IGNORE INTO roles (id, created_at, created_by, is_active, is_deleted, upd
    (2, now(), 'SYSTEM', true, false, now(), 'SYSTEM', 'ROLE_MANAGER'),
    (3, now(), 'SYSTEM', true, false, now(), 'SYSTEM', 'ROLE_ADMIN');
 
+INSERT IGNORE INTO users(id, full_name, username, address, email, phone_number, password, role_id, created_at) VALUES
+    (1, 'Tyler Dao', 'tyler', '32 Noecker Street', 'tyler@gmail.com', '5483843681', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '3', now());
+
 INSERT IGNORE INTO features (id, name) VALUES
     (1, 'CREATE_BOOK'),
     (2, 'CREATE_USER'),
@@ -33,7 +36,9 @@ INSERT IGNORE INTO features (id, name) VALUES
     (24, 'DELETE_COMMENT'),
     
     (25, 'ASSIGN_FEATURE'),
-    (26, 'UNASSIGN_FEATURE');
+    (26, 'UNASSIGN_FEATURE'),
+
+    (27, 'GET_USERS');
 
 INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
     (1, 2),
