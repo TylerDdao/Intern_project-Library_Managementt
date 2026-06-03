@@ -8,6 +8,7 @@ import com.example.library_management.model.User;
 import com.example.library_management.repository.BookRepository;
 import com.example.library_management.repository.GenreRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class CreateBookService {
     @Autowired
@@ -41,6 +43,7 @@ public class CreateBookService {
         book.setGenres(genres);
 
         Book savedBook = bookRepository.save(book);
+        log.info("Creating book {}, by {}, ID # {}", savedBook.getTitle(), savedBook.getAuthor(), savedBook.getId());
         return new BookResponse(savedBook);
     }
 }

@@ -20,14 +20,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthException.class)
     public ResponseEntity<ApiResponse<?>> handleAuth(AuthException e) {
-        log.error("Exception code 401: {}", e.getMessage());
+        log.warn("Exception code 401: {}", e.getMessage());
         return ResponseEntity.status(401)
                 .body(ApiResponse.error("401", e.getMessage()));
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ApiResponse<?>> handleAccessDenied(AccessDeniedException e) {
-        log.error("Exception code 403: {}", e.getMessage());
+        log.warn("Exception code 403: {}", e.getMessage());
         return ResponseEntity.status(403)
                 .body(ApiResponse.error("403", "Access denied"));
     }

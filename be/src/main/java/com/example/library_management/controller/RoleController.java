@@ -67,4 +67,10 @@ public class RoleController {
     ){
         return ResponseEntity.ok(ApiResponse.success(getRoleService.getRole(page, limit, sortBy, sortDir, name)));
     }
+
+    @PreAuthorize("@securityService.hasAccess('DELETE_ROLE')")
+    @DeleteMapping("/role")
+    public ResponseEntity<ApiResponse<String>> deleteRole(RoleRequest request){
+        return ResponseEntity.ok(ApiResponse.success(deleteRoleService.deleteRole(request)));
+    }
 }

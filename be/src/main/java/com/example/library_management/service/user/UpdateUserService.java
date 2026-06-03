@@ -6,10 +6,12 @@ import com.example.library_management.model.Role;
 import com.example.library_management.model.User;
 import com.example.library_management.repository.RoleRepository;
 import com.example.library_management.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class UpdateUserService {
     @Autowired
@@ -18,7 +20,7 @@ public class UpdateUserService {
     @Autowired
     RoleRepository roleRepository;
 
-    @PreAuthorize("@securityService.hasAccess('ROLE_ADMIN')")
+    @PreAuthorize("@securityService.hasAccess('ROLE_ROOT')")
     public UserResponse updateUserRole(UserRequest request){
         Role defaultRole = roleRepository.findByName("ROLE_USER")
                 .orElseThrow(() -> new RuntimeException("Role not found"));
@@ -38,7 +40,7 @@ public class UpdateUserService {
         if (request.getFullName() != null) user.setFullName(request.getFullName());
 
         User savedUser = userRepository.save(user);
-
+        log.info("Updating role @{}, ID #{} to {}", savedUser.getUsername(),savedUser.getId(), savedUser.getRole().getName());
         return new UserResponse(savedUser);
     }
 
@@ -55,7 +57,7 @@ public class UpdateUserService {
         if (request.getFullName() != null) user.setFullName(request.getFullName());
 
         User savedUser = userRepository.save(user);
-
+        log.info("Updating @{}, ID #{}", savedUser.getUsername(),savedUser.getId());
         return new UserResponse(savedUser);
     }
 }

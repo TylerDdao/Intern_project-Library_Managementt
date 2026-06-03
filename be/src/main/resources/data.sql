@@ -1,10 +1,11 @@
 INSERT IGNORE INTO roles (id, created_at, created_by, is_active, is_deleted, updated_at, updated_by, name) VALUES
-   (1, now(), 'SYSTEM', true, false, now(), 'SYSTEM', 'ROLE_USER'),
-   (2, now(), 'SYSTEM', true, false, now(), 'SYSTEM', 'ROLE_MANAGER'),
-   (3, now(), 'SYSTEM', true, false, now(), 'SYSTEM', 'ROLE_ADMIN');
+   (1, now(), 'SYSTEM', true, false, now(), 'SYSTEM', 'ROLE_ROOT'),
+   (2, now(), 'SYSTEM', true, false, now(), 'SYSTEM', 'ROLE_ADMIN'),
+   (3, now(), 'SYSTEM', true, false, now(), 'SYSTEM', 'ROLE_MANAGER'),
+   (4, now(), 'SYSTEM', true, false, now(), 'SYSTEM', 'ROLE_USER');
 
 INSERT IGNORE INTO users(id, full_name, username, address, email, phone_number, password, role_id, created_at) VALUES
-    (1, 'Tyler Dao', 'tyler', '32 Noecker Street', 'tyler@gmail.com', '5483843681', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '3', now());
+    (1, 'Tyler Dao', 'tyler', '32 Noecker Street', 'tyler@gmail.com', '5483843681', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '1', now());
 
 INSERT IGNORE INTO features (id, name) VALUES
     (1, 'CREATE_BOOK'),
@@ -40,18 +41,18 @@ INSERT IGNORE INTO features (id, name) VALUES
 
 
 INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
-    (1, 2),
-    (1, 3),
-    (1, 5),
-    (1, 6),
-    (1, 7),
-    (1, 8),
-    (1, 9),
-    (1, 10),
-    (1, 11),
-    (1, 12),
-    (1, 14),
-    (1, 17),
-    (1, 18),
-    (1, 23),
-    (1, 24);
+    (4, 2),
+    (4, 3),
+    (4, 5),
+    (4, 6),
+    (4, 7),
+    (4, 8),
+    (4, 9),
+    (4, 10),
+    (4, 11),
+    (4, 12),
+    (4, 14),
+    (4, 17),
+    (4, 18),
+    (4, 23),
+    (4, 24);

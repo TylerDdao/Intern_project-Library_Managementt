@@ -6,12 +6,14 @@ import com.example.library_management.model.Book;
 import com.example.library_management.model.Genre;
 import com.example.library_management.repository.BookRepository;
 import com.example.library_management.repository.GenreRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class UpdateBookService {
     @Autowired
@@ -39,6 +41,8 @@ public class UpdateBookService {
             });
             book.setGenres(genres);
         }
+        Book savedBook = bookRepository.save(book);
+        log.info("Updating book {}, by {}, ID # {}", savedBook.getTitle(), savedBook.getAuthor(), savedBook.getId());
         return new BookResponse(book);
     }
 }

@@ -6,12 +6,14 @@ import com.example.library_management.model.Feature;
 import com.example.library_management.model.Role;
 import com.example.library_management.repository.FeatureRepository;
 import com.example.library_management.repository.RoleRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class AuthorityService {
     @Autowired
@@ -40,7 +42,8 @@ public class AuthorityService {
                 role.getFeatures().add(feature);
             }
         });
-        roleRepository.save(role);
+        Role savedRole = roleRepository.save(role);
+        log.info("Assigning {} to role {}", featureNames, savedRole.getName());
         return new AuthorityResponse(role.getName(), featureNames, "Assigned");
     }
 
@@ -56,7 +59,12 @@ public class AuthorityService {
 
         role.getFeatures().removeAll(features);
 
-        roleRepository.save(role);
+        List<String> featureNamesToLog = features.stream()
+                .map(Feature::getName)
+                .toList();
+
+        Role savedRole = roleRepository.save(role);
+        log.info("Unassigning {} from role {}", featureNamesToLog, savedRole.getName());
         return new AuthorityResponse(role.getName(), featureNames, "Unassigned");
     }
 }

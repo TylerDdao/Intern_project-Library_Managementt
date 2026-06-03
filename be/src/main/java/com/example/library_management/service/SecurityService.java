@@ -14,9 +14,9 @@ public class SecurityService {
         if (auth == null || !auth.isAuthenticated()) return false;
 
         // ROLE_ADMIN bypass everything
-        boolean isAdmin = auth.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-        if (isAdmin) return true;
+        boolean isRoot = auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ROOT"));
+        if (isRoot) return true;
 
         // check specific authority for everyone else
         return auth.getAuthorities().stream()
