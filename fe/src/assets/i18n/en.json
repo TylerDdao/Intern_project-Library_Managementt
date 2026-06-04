@@ -1,0 +1,12 @@
+{
+  "login": {
+    "title": "Login",
+    "login": "Login",
+    "username": "Username",
+    "password":"Password",
+    "dont-have-an-account-yet-?": "Don't have an account yet?",
+    "signup": "Sign up",
+    "forgot-password":"Forgot password",
+    "your-username-or-password-is-wrong": "Your username or password is wrong"
+  }
+}

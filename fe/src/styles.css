@@ -1,3 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import "tailwindcss";
 
-@import 'tailwindcss';
+@theme {
+    --font-quicksand: 'Quicksand', sans-serif;
+
+    --color-steel-blue: #2C5EAD;
+    --color-dodger-blue: #1591DC;
+    --color-sky-blue: #4BB8FA;
+    --color-pastel-blue: #C4E2F5;
+    --color-deep-charcoal: #25343F;
+    --color-cool-gray: #BFC9D1;
+    --color-soft-ice: #EAEFEF;
+    --color-leaf-green: #6FAF4F;
+    --color-tomato-red: #E50046;
+    --color-bright-gold: #E50046;
+}
+
+@layer base {
+  html, body {
+    font-family: var(--font-quicksand);
+    color: var(--color-soft-ice);
+  }
+}
+
+@utility text-responsive-title {
+    @apply text-lg md:text-2xl lg:text-4xl;
+}
+
+@utility text-responsive-body {
+    @apply text-sm md:text-base lg:text-lg;
+}
