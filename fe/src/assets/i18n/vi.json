@@ -1,9 +1,18 @@
 {
+  "navBar": {
+    "hello": "Xin chào",
+    "home-page": "Trang chủ",
+    "browse-books": "Sách",
+    "browse-posts": "Bài viết",
+    "my-borrows": "Sách tôi mượn",
+    "my-posts": "Bài viết của tôi",
+    "please-login-to-continue": "Vui lòng đăng nhập để tiếp tục"
+  },
   "login": {
     "login": "Đăng nhập",
     "username": "Tên đăng nhập",
     "password": "Mật khẩu",
-    "dont-have-an-account-yet": "Chưa có tài khoản",
+    "dont-have-an-account-yet": "Chưa có tài khoản?",
     "signup": "Đăng ký",
     "forgot-password": "Quên mật khẩu",
     "username-or-password-is-wrong": "Tên đăng nhập hoặc mật khẩu không chính xác"
@@ -27,8 +36,9 @@
     "already-had-an-account": "Đã có tài khoản",
     "back-to-login": "Quay lại trang đăng nhập"
   },
+
   "forgotPassword": {
     "forgot-password": "Quên mật khẩu",
     "confirm": "Xác nhận"
-    }
+  }
 }

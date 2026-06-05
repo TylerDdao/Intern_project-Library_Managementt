@@ -33,26 +33,21 @@
 }
 
 .desktop-title{
-    font-weight: bold;
     font-size: 30px;
 }
 
 .desktop-header{
-    font-weight: 600;
     font-size: 25px;
 }
 
 .desktop-subheader{
-    font-weight: 600;
     font-size: 18px;
 }
 
 .desktop-body{
-    font-weight: 400;
     font-size: 12px;
 }
 
 .desktop-placeholder{
-    font-weight: 600;
     font-size: 14px;
 }

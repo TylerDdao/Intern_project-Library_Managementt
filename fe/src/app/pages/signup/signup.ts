@@ -2,14 +2,14 @@ import { Component, NgZone } from '@angular/core';
 import { AuthService } from '../../services/auth-service';
 import { NavbarComponent } from '../../components/navbar/navbar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { interval, Subscription } from 'rxjs';
 import { LanguageService } from '../../services/language-service/language-service';
 
 @Component({
   selector: 'app-signup',
-  imports: [TranslateModule, NavbarComponent, ReactiveFormsModule],
+  imports: [TranslateModule, NavbarComponent, ReactiveFormsModule, RouterLink],
   templateUrl: './signup.html',
   styleUrl: './signup.css',
 })

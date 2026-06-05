@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NavbarComponent } from '../../components/navbar/navbar';
 import { AuthService } from '../../services/auth-service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { LanguageService } from '../../services/language-service/language-service';
 
 @Component({
   selector: 'app-login',
-  imports: [TranslateModule, NavbarComponent, ReactiveFormsModule],
+  imports: [TranslateModule, NavbarComponent, ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

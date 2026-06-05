@@ -1,4 +1,15 @@
 {
+  "navBar": {
+    "hello": "Hello",
+    "home-page": "Home page",
+    "browse-books": "Browse books",
+    "browse-posts": "Browse posts",
+    "my-borrows": "My borrows",
+    "my-posts": "My posts",
+    "language": "Language",
+    "logout":"Logout",
+    "please-login-to-continue": "Please login to continue"
+  },
   "login": {
     "login": "Login",
     "username": "Username",
