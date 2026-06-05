@@ -1,6 +1,6 @@
 <nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center p-4 bg-steel-blue text-white">
     <h1>Library Management System</h1>
-    <select #langSelect (change)="switchLanguage(langSelect.value)" class="text-deep-charcoal bg-soft-ice rounded p-1">
+    <select [value]="langService.currentLang" (change)="langService.switchLanguage($any($event.target).value)" class="text-deep-charcoal bg-soft-ice rounded p-1">
         <option value="en">English</option>
         <option value="vi">Tiếng Việt</option>
         <option value="fr">Français</option>

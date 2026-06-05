@@ -15,6 +15,22 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/login`, body);
   }
 
+  signup(username: string, password:string, email:string, fullName:string, phoneNumber:string, province: string, city:string, addressLine1: string, addressLine2: string){
+    const body = {
+      'username': username,
+      'password': password,
+      'email': email,
+      'fullName': fullName,
+      'phoneNumber': phoneNumber,
+      'province': province,
+      'city': city, 
+      'addressLine1': addressLine1, 
+      'addressLine2': addressLine2
+    }
+
+    return this.http.post(`${this.baseUrl}/register`, body)
+  }
+
   // GET
   getBooks() {
     return this.http.get(`${this.baseUrl}/books`);

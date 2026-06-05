@@ -1,6 +1,34 @@
 {
-  "HOME": {
-    "TITLE": "Hello, World!",
-    "WELCOME": "Welcome, {{name}}!"
-  }
+  "login": {
+    "login": "Đăng nhập",
+    "username": "Tên đăng nhập",
+    "password": "Mật khẩu",
+    "dont-have-an-account-yet": "Chưa có tài khoản",
+    "signup": "Đăng ký",
+    "forgot-password": "Quên mật khẩu",
+    "username-or-password-is-wrong": "Tên đăng nhập hoặc mật khẩu không chính xác"
+  },
+
+  "signup": {
+    "sign-up": "Đăng ký",
+    "signup-completed": "Đăng ký hoàn tất",
+    "redirect-in-seconds": "Bạn sẽ được chuyển hướng đến trang đăng nhập sau {{ seconds }} giây",
+    "email": "Email",
+    "optional": "Không bắt buộc",
+    "account-information": "Thông tin tài khoản",
+    "personal-information": "Thông tin cá nhân",
+    "full-name": "Họ và tên",
+    "phone-number": "Số điện thoại",
+    "address": "Địa chỉ",
+    "province": "Tỉnh thành",
+    "city": "Thành phố",
+    "address-line-1": "Địa chỉ dòng 1",
+    "address-line-2": "Địa chỉ dòng 2",
+    "already-had-an-account": "Đã có tài khoản",
+    "back-to-login": "Quay lại trang đăng nhập"
+  },
+  "forgotPassword": {
+    "forgot-password": "Quên mật khẩu",
+    "confirm": "Xác nhận"
+    }
 }

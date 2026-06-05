@@ -1,12 +1,35 @@
 {
   "login": {
-    "title": "Login",
     "login": "Login",
     "username": "Username",
     "password":"Password",
-    "dont-have-an-account-yet-?": "Don't have an account yet?",
+    "dont-have-an-account-yet": "Don't have an account yet",
     "signup": "Sign up",
     "forgot-password":"Forgot password",
-    "your-username-or-password-is-wrong": "Your username or password is wrong"
+    "username-or-password-is-wrong": "Username or password is wrong"
+  },
+
+  "signup": {
+    "sign-up":"Sign Up",
+    "signup-completed": "Signup Completed",
+    "redirect-in-seconds": "You will be redirected to the login page in {{ seconds }} seconds",
+    "email": "Email",
+    "optional": "Optional",
+    "account-information":"Account information",
+    "personal-information":"Personal information",
+    "full-name":"Full name",
+    "phone-number":"Phone number",
+    "address":"Address",
+    "province": "Province",
+    "city":"City",
+    "address-line-1":"Address line 1",
+    "address-line-2":"Address line 2",
+    "already-had-an-account":"Already had an account",
+    "back-to-login": "Back to login"
+  },
+
+  "forgotPassword": {
+    "forgot-password": "Forgot password",
+    "confirm":"Confirm"
   }
 }

@@ -3,24 +3,23 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NavbarComponent } from '../../components/navbar/navbar';
 import { AuthService } from '../../services/auth-service';
 import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { LanguageService } from '../../services/language-service/language-service';
 
 @Component({
   selector: 'app-login',
-  imports: [TranslateModule, NavbarComponent],
+  imports: [TranslateModule, NavbarComponent, ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
-  currentLang = 'en';
   wrongCredential = false;
 
   constructor(
-    private translate: TranslateService, 
+    public langService: LanguageService,
     private authService: AuthService,
-    private router: Router) 
-  {
-    translate.use('en');
-  }
+    protected router: Router) 
+  {}
 
   async login(username: string, password: string){
     this.authService.login(username, password).subscribe({
@@ -38,8 +37,16 @@ export class Login {
     })
   }
 
-  switchLanguage(lang: string) {
-    this.translate.use(lang);
-    this.currentLang = lang;
+  loginForm = new FormGroup({
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+  });
+
+  onSubmit() {
+    if (this.loginForm.invalid) return;
+
+    const { username, password } = this.loginForm.value;
+    
+    this.login(username ?? '', password ?? '')
   }
 }

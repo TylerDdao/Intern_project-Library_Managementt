@@ -1,6 +1,35 @@
 {
-  "HOME": {
-    "TITLE": "Bonjour le monde!",
-    "WELCOME": "Welcome, {{name}}!"
+  "login": {
+    "login": "Connexion",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "dont-have-an-account-yet": "Vous n'avez pas encore de compte ?",
+    "signup": "S'inscrire",
+    "forgot-password": "Mot de passe oublié",
+    "username-or-password-is-wrong": "Le nom d'utilisateur ou le mot de passe est incorrect"
+  },
+
+  "signup": {
+    "sign-up": "S'inscrire",
+    "signup-completed": "Inscription réussie",
+    "redirect-in-seconds": "Vous serez redirigé vers la page de connexion dans {{ seconds }} secondes",
+    "email": "E-mail",
+    "optional": "Optionnel",
+    "account-information": "Informations du compte",
+    "personal-information": "Informations personnelles",
+    "full-name": "Nom complet",
+    "phone-number": "Numéro de téléphone",
+    "address": "Adresse",
+    "province": "Province",
+    "city": "Ville",
+    "address-line-1": "Ligne d'adresse 1",
+    "address-line-2": "Ligne d'adresse 2",
+    "already-had-an-account": "Vous avez déjà un compte",
+    "back-to-login": "Retour à la connexion"
+  },
+
+  "forgotPassword": {
+    "forgot-password": "Mot de passe oublié",
+    "confirm": "Confirmer"
   }
 }

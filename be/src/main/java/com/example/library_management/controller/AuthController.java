@@ -42,7 +42,7 @@ public class AuthController {
     public ResponseEntity<ApiResponse<UserResponse>> updateUser(@RequestBody UserRequest request) {
         return ResponseEntity.ok(ApiResponse.success(authService.updateAccount(request)));
     }
-    
+
     @GetMapping("/check")
     public ResponseEntity<ApiResponse<UserResponse>> checkUser() {
         UserResponse user = authService.getCurrentUser();

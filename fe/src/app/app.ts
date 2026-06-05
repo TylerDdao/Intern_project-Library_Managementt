@@ -11,9 +11,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class App {
   protected readonly title = signal('library-management-fe');
   constructor(private translate: TranslateService) {
-    translate.use('en');
   }
   switchLanguage(lang: string) {
-    this.translate.use(lang); // call this to switch
+    this.translate.use(lang);
   }
 }

@@ -1,21 +1,16 @@
-import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { LanguageService } from '../../services/language-service/language-service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [TranslateModule, NgClass],
+  imports: [TranslateModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
 export class NavbarComponent {
   currentLang = 'en';
 
-  constructor(private translate: TranslateService) {}
-
-  switchLanguage(lang: string) {
-    this.translate.use(lang);
-    this.currentLang = lang;
-  }
+  constructor(public langService: LanguageService) {}
 }

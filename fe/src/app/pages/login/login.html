@@ -1,21 +1,30 @@
 <app-navbar></app-navbar>
 <div class="min-h-screen flex flex-col justify-center items-center">
     <div class="login-area">
-        <h1 class="text-2xl font-bold text-steel-blue">Library Management System</h1>
-        <div class="flex flex-col justify-center items-center space-y-[20px]">
-            <p class="text-xl font-semibold text-steel-blue">{{'login.title' | translate}}</p>
+        <h1 class="desktop-title text-steel-blue">Library Management System</h1>
+        <div class="flex flex-col justify-center items-center space-y-[20px] w-full">
+            <p class="desktop-header text-steel-blue">{{'login.login' | translate}}</p>
             <div class="flex flex-col space-y-[10px] w-full items-end">
                 @if(wrongCredential){
-                    <p class="text-tomato-red">{{'login.your-username-or-password-is-wrong' |translate}}</p>
+                    <h1 class="text-tomato-red">{{'login.username-or-password-is-wrong' |translate}}</h1>
                 }
-                <input #username type="text" placeholder="{{'login.username' | translate}}" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full" (input)="wrongCredential = false"/>
-                <input #password type="password" placeholder="{{'login.password' | translate}}" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full" (input)="wrongCredential = false"/>
-                <p class="text-sm text-steel-blue underline">{{'login.forgot-password' | translate}}</p>
+                <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col space-y-[10px] w-full">
+                    <input formControlName="username" type="text"
+                        placeholder="{{'login.username' | translate}}"
+                        class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full desktop-placeholder"
+                        (input)="wrongCredential = false"/>
+
+                    <input formControlName="password" type="password"
+                        placeholder="{{'login.password' | translate}}"
+                        class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full desktop-placeholder"
+                        (input)="wrongCredential = false"/>
+                </form>
+                <a href="/forgot-password"><p class="text-sm text-steel-blue underline">{{'login.forgot-password' | translate}}</p></a>
             </div>
             
             <div class="flex flex-col w-full items-end space-y-[10px]">
-                <button (click)="login(username.value, password.value)" class="bg-steel-blue rounded-lg p-[10px] font-bold w-full">{{'login.login' |translate}}</button>
-                <p class="text-deep-charcoal font-bold">{{'login.dont-have-an-account-yet-?'|translate}} <span class="text-steel-blue">{{'login.signup' |translate}}</span></p>
+                <button type="submit" form="loginForm" class="bg-steel-blue rounded-lg p-[10px] font-bold w-full">{{'login.login' | translate}}</button>
+                <p class="text-deep-charcoal font-bold">{{'login.dont-have-an-account-yet' |translate}}? <a href="/signup"><span class="text-steel-blue">{{'login.signup' |translate}}</span></a></p>
             </div>
         </div>
     </div>
