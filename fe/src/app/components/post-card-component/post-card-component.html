@@ -1,0 +1,27 @@
+<div class="desktop-post-card">
+    <div>
+        <div class="flex items-start space-x-[5px]">
+            <img src="/book-covers/go-for-it-nakamura.jpg" alt="Go for it, Nakamura-kun!" class="desktop-book-cover">
+            <div>
+                <h1 class="desktop-subheader font-bold line-clamp-2">{{bookName}}</h1>
+                <h1 class="desktop-body font-bold line-clamp-1">{{'book.author'|translate}}: {{author}}</h1>
+                <h1 class="desktop-body line-clamp-3">{{'book.genres'|translate}}: {{genres}}</h1>
+            </div>
+        </div>
+        <div class="w-full border my-[10px] border-sky-blue"></div>
+        <h2 class="desktop-subheader font-bold line-clamp-2">{{subject}}</h2>
+        <p class="desktop-body line-clamp-3">{{content}}</p>
+    </div>
+
+    <div class="flex items-center justify-evenly w-full">
+        <div class="flex items-center space-x-[5px]">
+            <span class="material-symbols-outlined">favorite</span>
+            <h1 class="desktop-body">{{likeCount}}</h1>
+        </div>
+
+        <div class="flex items-center space-x-[5px]">
+            <span class="material-symbols-outlined">comment</span>
+            <h1 class="desktop-body">{{commentCount}}</h1>
+        </div>
+    </div>
+</div>

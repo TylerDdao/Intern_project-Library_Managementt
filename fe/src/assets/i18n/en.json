@@ -1,4 +1,9 @@
 {
+  "book": {
+    "author": "Author",
+    "genres": "Genres"
+  },
+  
   "navBar": {
     "hello": "Hello",
     "home-page": "Home page",

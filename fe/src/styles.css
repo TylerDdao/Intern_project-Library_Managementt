@@ -20,7 +20,7 @@
 @layer base {
   html, body {
     font-family: var(--font-quicksand);
-    color: var(--color-soft-ice);
+    color: var(--color-deep-charcoal);
   }
 }
 
@@ -45,7 +45,7 @@
 }
 
 .desktop-body{
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .desktop-placeholder{

@@ -1,1 +1,51 @@
 <app-navbar></app-navbar>
+<div class="desktop-home-container">
+    <div class="desktop-statistics-area">
+        <div class="flex flex-col items-center justify-center">
+            <h1 class="text-deep-charcoal desktop-title font-bold">{{'home.number-of-books-by-genre' |translate}}</h1>
+            <div class="w-[700px] h-[300px]">
+                <app-chart-component
+                [labels]="['Fiction', 'Non-Fiction', 'Science', 'History']"
+                [data]="[120, 90, 60, 30]"
+                label="Books"
+                type="bar"/>
+            </div>
+        </div>
+
+        <div class="flex flex-col items-center justify-center">
+            <h1 class="text-deep-charcoal desktop-title font-bold">{{'home.top-5-posts-have-most-likes' |translate}}</h1>
+            <div class="desktop-posts-scrolling-area">
+                <app-post-card-component
+                    [bookName]="'Go for it, Nakamura-kun!'"
+                    [author]="'Syundei'"
+                    [genres]="['Boy\'s love', 'Romantic comedy', 'Manga']"
+                    [subject]="'Review of my favorite manga recently!!'"
+                    [content]="'This manga is a cute BL that I just finished reading. It is a about a highschooler Nakamura, who is in love with his classmate Hirose. The story is very sweet and heartwarming, and the art style is really nice. I highly recommend it to anyone who loves BL or just wants to read a cute romance manga! Another great news about the manga is that it has been announced to have an anime adaptation, which has been being released weekly on Wednesday on Crunchyroll.'"
+                    [likeCount]="'1M'"
+                    [commentCount]="'1M'"/>
+                
+                <app-post-card-component
+                    [bookName]="'Go for it, Nakamura-kun!'"
+                    [author]="'Syundei'"
+                    [genres]="['Boy\'s love', 'Romantic comedy', 'Manga']"
+                    [subject]="'Review of my favorite manga recently!!'"
+                    [content]="'This manga is a cute BL that I just finished reading. It is a about a highschooler Nakamura, who is in love with his classmate Hirose. The story is very sweet and heartwarming, and the art style is really nice. I highly recommend it to anyone who loves BL or just wants to read a cute romance manga! Another great news about the manga is that it has been announced to have an anime adaptation, which has been being released weekly on Wednesday on Crunchyroll.'"
+                    [likeCount]="'1M'"
+                    [commentCount]="'1M'"/>
+
+                <app-post-card-component
+                    [bookName]="'Go for it, Nakamura-kun!'"
+                    [author]="'Syundei'"
+                    [genres]="['Boy\'s love', 'Romantic comedy', 'Manga']"
+                    [subject]="'Review of my favorite manga recently!!'"
+                    [content]="'This manga is a cute BL that I just finished reading. It is a about a highschooler Nakamura, who is in love with his classmate Hirose. The story is very sweet and heartwarming, and the art style is really nice. I highly recommend it to anyone who loves BL or just wants to read a cute romance manga! Another great news about the manga is that it has been announced to have an anime adaptation, which has been being released weekly on Wednesday on Crunchyroll.'"
+                    [likeCount]="'1M'"
+                    [commentCount]="'1M'"/>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h1 class="desktop-title font-bold">{{'home.books-that-you-borrowed'|translate}}</h1>
+    </div>
+</div>

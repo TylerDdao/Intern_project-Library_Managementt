@@ -13,6 +13,9 @@ public class Post extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
+    private String subject;
+
     @Lob
     @Column(nullable = false)
     private String content;
@@ -23,4 +26,8 @@ public class Post extends BaseEntity{
 
     @Column(name = "like_count", nullable = false)
     private long likeCount;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
