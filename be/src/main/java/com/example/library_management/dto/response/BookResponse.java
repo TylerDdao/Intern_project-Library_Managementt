@@ -16,6 +16,7 @@ public class BookResponse {
     private String title;
     private String author;
     private List<String> genres = new ArrayList<>();
+    private int copies;
 
     public BookResponse(Book book){
         this.id = book.getId();
@@ -23,5 +24,6 @@ public class BookResponse {
         this.title = book.getTitle();
         List<Genre> genres = book.getGenres();
         genres.forEach(genre -> this.genres.add(genre.getName()));
+        this.copies = book.getCopies();
     }
 }

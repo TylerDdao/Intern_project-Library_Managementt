@@ -1,0 +1,17 @@
+@media (min-width: 768px) {
+    .container{
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .book-cover-container{
+        height: 250px;
+        width: 150px;
+        overflow-y: hidden;
+    }
+
+    .book-cover{
+        width: 200px;
+    }
+}

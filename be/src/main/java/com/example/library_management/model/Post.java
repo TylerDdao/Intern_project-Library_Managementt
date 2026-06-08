@@ -26,8 +26,4 @@ public class Post extends BaseEntity{
 
     @Column(name = "like_count", nullable = false)
     private long likeCount;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 }

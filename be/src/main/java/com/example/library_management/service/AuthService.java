@@ -137,7 +137,7 @@ public class AuthService {
             throw new RuntimeException("User not authenticated");
         }
 
-        String username = auth.getName(); // ← safe now ✅
+        String username = auth.getName();
 
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));

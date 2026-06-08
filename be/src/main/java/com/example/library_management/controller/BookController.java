@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class BookController {
     @Autowired
@@ -30,15 +32,47 @@ public class BookController {
     @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
     @GetMapping("/books")
     public ResponseEntity<ApiResponse<Page<BookResponse>>> getBooks(
-            @RequestParam(required = false) String title,
-            @RequestParam(required = false) String author,
-            @RequestParam(required = false) String genre,
+            @RequestParam(required = false) String searchQuery,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int limit,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir,
+            @RequestParam(required = false) List<String> filterBy) {
+        return ResponseEntity.ok(
+                ApiResponse.success(getBookService.getBooks(page, limit, sortBy, sortDir, filterBy, searchQuery))
+        );
+    }
+
+    @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
+    @GetMapping("/books/new-arrived")
+    public ResponseEntity<ApiResponse<Page<BookResponse>>> getRecentBooks(
+            @RequestParam(defaultValue = "5") int dayRange,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir) {
         return ResponseEntity.ok(
-                ApiResponse.success(getBookService.getBooks(page, limit, sortBy, sortDir, title, author, genre))
+                ApiResponse.success(getBookService.getRecentBooks(page, limit, sortBy, sortDir, dayRange))
+        );
+    }
+
+    @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
+    @GetMapping("/books/most-posts")
+    public ResponseEntity<ApiResponse<Page<BookResponse>>> getMostPostBooks(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int limit) {
+        return ResponseEntity.ok(
+                ApiResponse.success(getBookService.getMostPopularBooks(page, limit))
+        );
+    }
+
+    @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
+    @GetMapping("/books/most-borrowed")
+    public ResponseEntity<ApiResponse<Page<BookResponse>>> getMostBorrowedBooks(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int limit) {
+        return ResponseEntity.ok(
+                ApiResponse.success(getBookService.getMostBorrowedBooks(page, limit))
         );
     }
 
@@ -49,7 +83,7 @@ public class BookController {
     }
 
     @PreAuthorize("@securityService.hasAccess('UPDATE_BOOK')")
-    @PatchMapping("book")
+    @PatchMapping("/book")
     public ResponseEntity<ApiResponse<BookResponse>> updateBook(@RequestBody BookRequest request){
         return ResponseEntity.ok(ApiResponse.success(updateBookService.updateBook(request)));
     }

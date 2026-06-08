@@ -7,6 +7,8 @@ import { RouteReuseStrategy } from '@angular/router';
 import { ChartComponent } from '../../components/chart-component/chart-component';
 import { PostCardComponent } from '../../components/post-card-component/post-card-component';
 import { BorrowCardComponent } from '../../components/borrow-card-component/borrow-card-component';
+import { Post } from '../../models/post';
+import { PostsService } from '../../services/posts-service/posts-service';
 
 @Component({
   selector: 'app-home',
@@ -20,10 +22,26 @@ export class Home {
   dueDate3: Date = new Date('2026-06-08');
   dueDate4: Date = new Date('2026-06-11');
 
+  posts:Post[] = [];
+
   constructor(
     public langService: LanguageService,
-    private authService: AuthService,
+    private postsService: PostsService,
     protected router: RouteReuseStrategy) 
   {}
 
+  async fetchAllPosts(){
+    this.postsService.getAllPost().subscribe({
+      next: (data:any) => {
+        console.log(data)
+        if(data.code == 200){
+          this.posts = data.content;
+        }
+      },
+      error: (err) => {
+        console.error(err);
+      }
+
+    })
+  }
 }

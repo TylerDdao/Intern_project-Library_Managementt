@@ -17,15 +17,13 @@ export interface SideBarQuery {
 
 export class SortSideBarComponent {
   @Input() sortBy: string[] = ["Test", "Test 2"];
-  @Input() filterBy: string = "book.Genres";
+  @Input() filterBy: string[] = [];
 
   @Output() onApply = new EventEmitter<SideBarQuery>();
 
   selectedSort: string = '';
   selectedFilters: string[] = [];
   searchQuery: string = 'Genres';
-
-  filterOption: string[] = ["Sci-fi", "Romance", "Action"]
 
   onFilterChange(option: string, event: Event): void {
     const checked = (event.target as HTMLInputElement).checked;
@@ -36,7 +34,7 @@ export class SortSideBarComponent {
     }
   }
 
-  handleApply(): void {
+  apply(): void {
     this.onApply.emit({
       sortBy: this.selectedSort,
       filterBy: this.selectedFilters,

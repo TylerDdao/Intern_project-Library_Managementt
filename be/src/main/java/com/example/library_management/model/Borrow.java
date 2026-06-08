@@ -29,9 +29,6 @@ public class Borrow extends BaseEntity{
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @Column(name = "borrow_at", nullable = false)
-    private LocalDateTime borrowAt;
-
     @Column(name = "due_date", nullable = false)
     private LocalDateTime dueDate;
 }

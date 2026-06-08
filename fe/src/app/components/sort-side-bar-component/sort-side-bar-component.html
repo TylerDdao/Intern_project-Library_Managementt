@@ -1,13 +1,13 @@
 <div class="side-bar-container">
     <div class="search-bar">
         <span class="material-symbols-outlined">search</span>
-        <input type="text" placeholder="Search..." class="w-full">
+        <input type="text" placeholder="Search..." class="w-full" [(ngModel)]="searchQuery">
     </div>
 
     @if (sortBy.length > 0) {
         <div class="flex flex-col items-start">
             <h1 class="subheader font-bold">{{'search.Sort-by'}}</h1>
-            <select class="sort-bar">
+            <select class="sort-bar" [(ngModel)] ="selectedSort">
                 @for (option of sortBy; track option) {
                     <option [value]="option">{{ option }}</option>
                 }
@@ -17,8 +17,8 @@
 
     @if (filterBy) {
         <div class="flex flex-col items-start">
-            <h1 class="subheader font-bold">{{'search.Filter-by'|translate}} {{filterBy|translate}}</h1>
-            @for (option of filterOption; track option) {
+            <h1 class="subheader font-bold">{{'search.Filter-by'|translate}}</h1>
+            @for (option of filterBy; track option) {
                 <label class="flex items-center gap-2 cursor-pointer">
                     <input
                         type="checkbox"
@@ -30,5 +30,5 @@
         </div>
     }
 
-    <button (click)="handleApply()" class="submit-button text-soft-ice">Apply</button>
+    <button (click)="apply()" class="submit-button text-soft-ice">Apply</button>
 </div>

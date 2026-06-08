@@ -56,3 +56,25 @@ INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
     (4, 18),
     (4, 23),
     (4, 24);
+
+INSERT IGNORE books (id, title, author, copies) VALUES
+    (1,'Project Hail Mary', 'Andy Weir', 10),
+    (2, 'Go for it, Nakamura-kun', 'Syundei', 5);
+
+INSERT IGNORE genres(id, name) VALUES
+    (1, 'Sci-fi'),
+    (2, 'Romance'),
+    (3, 'Manga');
+
+INSERT IGNORE books_genres(book_id, genre_id) VALUES
+    (1,1),
+    (2,2),
+    (2,3);
+
+INSERT IGNORE posts (id, created_at, created_by, is_active, is_deleted, updated_at, updated_by, content, like_count, subject, book_id) VALUES
+    (1, NOW(), 'tyler', true, false, null, null, 'This is a nice manga', 500000, 'Review of my favorite manga recently!!', 2),
+    (2, NOW(), 'tyler', true, false, null, null, 'This novel is written by Andy Weir, who is the author of Martian.', 1000000, 'Review of my favorite novel recently!!', 1);
+
+INSERT IGNORE comments(id, created_at, created_by, is_active, is_deleted, updated_at, updated_by, content, post_id) VALUES
+    (1, NOW(), 'tyler', true, false, null, null, 'Great post!', 1),
+    (1, NOW(), 'tyler', true, false, null, null, 'CAn\'t wait for the movie adaption!!', 2);
