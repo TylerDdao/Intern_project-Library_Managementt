@@ -1,7 +1,27 @@
 {
   "book": {
     "author": "Author",
-    "genres": "Genres"
+    "Genres": "Genres"
+  },
+
+  "borrow": {
+    "borrow-on": "Borrow on",
+    "Please-return-by": "Please return by",
+    "Due-in": "Due in",
+    "days": "days",
+    "Late": "Late",
+    "Due-today": "Due today"
+  },
+
+  "post": {
+    "posted-at": "Posted at"
+  },
+
+  "home": {
+    "Top-5-posts-have-most-likes": "Top 5 posts have most likes",
+    "Number-of-books-by-genre": "Number of books by genre",
+    "Number-of-borrowed-books-by-genre": "Number of borrowed books by genre",
+    "Books-that-you-borrowed": "Books that you borrowed"
   },
   
   "navBar": {

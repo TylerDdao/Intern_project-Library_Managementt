@@ -1,51 +1,88 @@
 <app-navbar></app-navbar>
-<div class="desktop-home-container">
-    <div class="desktop-statistics-area">
-        <div class="flex flex-col items-center justify-center">
-            <h1 class="text-deep-charcoal desktop-title font-bold">{{'home.number-of-books-by-genre' |translate}}</h1>
-            <div class="w-[700px] h-[300px]">
-                <app-chart-component
-                [labels]="['Fiction', 'Non-Fiction', 'Science', 'History']"
-                [data]="[120, 90, 60, 30]"
-                label="Books"
-                type="bar"/>
-            </div>
-        </div>
+<div class="home-container">
+    <div class="chart-1">
+        <h1 class="text-deep-charcoal header font-bold">{{'home.Number-of-books-by-genre' |translate}}</h1>
+        <app-chart-component
+        [labels]="['Fiction', 'Non-Fiction', 'Science', 'History']"
+        [data]="[120, 90, 60, 30]"
+        label="Books"
+        type="bar"/>
+    </div>
 
-        <div class="flex flex-col items-center justify-center">
-            <h1 class="text-deep-charcoal desktop-title font-bold">{{'home.top-5-posts-have-most-likes' |translate}}</h1>
-            <div class="desktop-posts-scrolling-area">
-                <app-post-card-component
-                    [bookName]="'Go for it, Nakamura-kun!'"
-                    [author]="'Syundei'"
-                    [genres]="['Boy\'s love', 'Romantic comedy', 'Manga']"
-                    [subject]="'Review of my favorite manga recently!!'"
-                    [content]="'This manga is a cute BL that I just finished reading. It is a about a highschooler Nakamura, who is in love with his classmate Hirose. The story is very sweet and heartwarming, and the art style is really nice. I highly recommend it to anyone who loves BL or just wants to read a cute romance manga! Another great news about the manga is that it has been announced to have an anime adaptation, which has been being released weekly on Wednesday on Crunchyroll.'"
-                    [likeCount]="'1M'"
-                    [commentCount]="'1M'"/>
-                
-                <app-post-card-component
-                    [bookName]="'Go for it, Nakamura-kun!'"
-                    [author]="'Syundei'"
-                    [genres]="['Boy\'s love', 'Romantic comedy', 'Manga']"
-                    [subject]="'Review of my favorite manga recently!!'"
-                    [content]="'This manga is a cute BL that I just finished reading. It is a about a highschooler Nakamura, who is in love with his classmate Hirose. The story is very sweet and heartwarming, and the art style is really nice. I highly recommend it to anyone who loves BL or just wants to read a cute romance manga! Another great news about the manga is that it has been announced to have an anime adaptation, which has been being released weekly on Wednesday on Crunchyroll.'"
-                    [likeCount]="'1M'"
-                    [commentCount]="'1M'"/>
+    <div class="chart-2">
+        <h1 class="text-deep-charcoal header font-bold">{{'home.Number-of-borrowed-books-by-genre' |translate}}</h1>
+        <app-chart-component
+        [labels]="['Fiction', 'Non-Fiction', 'Science', 'History']"
+        [data]="[100, 70, 40, 10]"
+        label="Books"
+        type="bar"/>
+    </div>
 
-                <app-post-card-component
-                    [bookName]="'Go for it, Nakamura-kun!'"
-                    [author]="'Syundei'"
-                    [genres]="['Boy\'s love', 'Romantic comedy', 'Manga']"
-                    [subject]="'Review of my favorite manga recently!!'"
-                    [content]="'This manga is a cute BL that I just finished reading. It is a about a highschooler Nakamura, who is in love with his classmate Hirose. The story is very sweet and heartwarming, and the art style is really nice. I highly recommend it to anyone who loves BL or just wants to read a cute romance manga! Another great news about the manga is that it has been announced to have an anime adaptation, which has been being released weekly on Wednesday on Crunchyroll.'"
-                    [likeCount]="'1M'"
-                    [commentCount]="'1M'"/>
-            </div>
+    <div class="posts-area">
+        <h1 class="text-deep-charcoal header font-bold">{{'home.Top-5-posts-have-most-likes' |translate}}</h1>
+        <div class="posts-scrolling-area">
+            <app-post-card-component
+                [bookName]="'Go for it, Nakamura-kun!'"
+                [author]="'Syundei'"
+                [genres]="['Boy\'s love', 'Romantic comedy', 'Manga']"
+                [subject]="'Review of my favorite manga recently!!'"
+                [content]="'This manga is a cute BL that I just finished reading. It is a about a highschooler Nakamura, who is in love with his classmate Hirose. The story is very sweet and heartwarming, and the art style is really nice. I highly recommend it to anyone who loves BL or just wants to read a cute romance manga! Another great news about the manga is that it has been announced to have an anime adaptation, which has been being released weekly on Wednesday on Crunchyroll.'"
+                [likeCount]="'1M'"
+                [commentCount]="'1M'"/>
+            
+            <app-post-card-component
+                [bookName]="'Project Hail Mary'"
+                [author]="'Andy Weir'"
+                [genres]="['Sci-fi']"
+                [subject]="'Review of my favorite sci-fi novel recently!!'"
+                [content]="'This novel is written by Andy Weir, who is the author of Martian.'"
+                [likeCount]="'500K'"
+                [commentCount]="'250K'"/>
+
+            <app-post-card-component
+                [bookName]="'Project Hail Mary'"
+                [author]="'Andy Weir'"
+                [genres]="['Sci-fi']"
+                [subject]="'Review of my favorite sci-fi novel recently!!'"
+                [content]="'This novel is written by Andy Weir, who is the author of Martian.'"
+                [likeCount]="'500K'"
+                [commentCount]="'250K'"/>
+
+            <app-post-card-component
+                [bookName]="'Project Hail Mary'"
+                [author]="'Andy Weir'"
+                [genres]="['Sci-fi']"
+                [subject]="'Review of my favorite sci-fi novel recently!!'"
+                [content]="'This novel is written by Andy Weir, who is the author of Martian.'"
+                [likeCount]="'500K'"
+                [commentCount]="'250K'"/>
         </div>
     </div>
 
-    <div>
-        <h1 class="desktop-title font-bold">{{'home.books-that-you-borrowed'|translate}}</h1>
+    <div class="borrowed-books-area">
+        <h1 class="header font-bold">{{'home.Books-that-you-borrowed'|translate}}</h1>
+        <div class="borrows-scrolling-area">
+            <app-borrow-card-component
+                bookName= "Project Hail Mary"
+                author= "Andy Weir"
+                [dueDate]= "dueDate1"
+            />
+            <app-borrow-card-component
+                bookName= "Project Hail Mary"
+                author= "Andy Weir"
+                [dueDate]= "dueDate2"
+            />
+            <app-borrow-card-component
+                bookName= "Project Hail Mary"
+                author= "Andy Weir"
+                [dueDate]= "dueDate3"
+            />
+
+            <app-borrow-card-component
+                bookName= "Project Hail Mary"
+                author= "Andy Weir"
+                [dueDate]= "dueDate4"
+            />
+        </div>
     </div>
 </div>

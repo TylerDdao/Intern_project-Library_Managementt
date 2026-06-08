@@ -32,7 +32,7 @@ public class AuthController {
 
     @PostMapping("/logout")
     public ResponseEntity<ApiResponse<String>> logout(@RequestHeader("Authorization") String authHeader) {
-        String token = authHeader.substring(7); // remove "Bearer "
+        String token = authHeader.substring(7);
         authService.logout(token);
         return ResponseEntity.ok(ApiResponse.success("Logged out successfully"));
     }

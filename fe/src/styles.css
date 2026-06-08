@@ -14,7 +14,7 @@
     --color-soft-ice: #EAEFEF;
     --color-leaf-green: #6FAF4F;
     --color-tomato-red: #E50046;
-    --color-bright-gold: #E50046;
+    --color-bright-gold: #F9D923;
 }
 
 @layer base {
@@ -32,22 +32,24 @@
     @apply text-sm md:text-base lg:text-lg;
 }
 
-.desktop-title{
+@media (min-width: 768px) {
+.title{
     font-size: 30px;
 }
 
-.desktop-header{
+.header{
     font-size: 25px;
 }
 
-.desktop-subheader{
+.subheader{
     font-size: 18px;
 }
 
-.desktop-body{
+.body{
     font-size: 14px;
 }
 
-.desktop-placeholder{
+.placeholder{
     font-size: 14px;
+}
 }

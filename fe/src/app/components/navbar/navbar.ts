@@ -21,8 +21,8 @@ export class NavbarComponent {
 
   roleUserPages = [
     { name: 'navBar.home-page', path: '/home' },
-    { name: 'navBar.browse-books', path: '/browse-books' },
-    { name: 'navBar.browse-posts', path: '/browse-posts' },
+    { name: 'navBar.browse-books', path: '/books' },
+    { name: 'navBar.browse-posts', path: '/posts' },
     { name: 'navBar.my-borrows', path: '/my-borrows' },
     { name: 'navBar.my-posts', path: '/my-posts' },
   ];

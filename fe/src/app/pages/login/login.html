@@ -1,9 +1,9 @@
 <app-navbar></app-navbar>
 <div class="min-h-screen flex flex-col justify-center items-center">
     <div class="login-area">
-        <h1 class="desktop-title text-steel-blue">Library Management System</h1>
+        <h1 class="title text-steel-blue">Library Management System</h1>
         <div class="flex flex-col justify-center items-center space-y-[20px] w-full">
-            <p class="desktop-header text-steel-blue">{{'login.login' | translate}}</p>
+            <p class="header text-steel-blue">{{'login.login' | translate}}</p>
             <div class="flex flex-col space-y-[10px] w-full items-end">
                 @if(wrongCredential){
                     <h1 class="text-tomato-red">{{'login.username-or-password-is-wrong' |translate}}</h1>
@@ -11,12 +11,12 @@
                 <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col space-y-[10px] w-full">
                     <input formControlName="username" type="text"
                         placeholder="{{'login.username' | translate}}"
-                        class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full desktop-placeholder"
+                        class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"
                         (input)="wrongCredential = false"/>
 
                     <input formControlName="password" type="password"
                         placeholder="{{'login.password' | translate}}"
-                        class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full desktop-placeholder"
+                        class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"
                         (input)="wrongCredential = false"/>
                 </form>
                 <a routerLink="/forgot-password"><p class="text-sm text-steel-blue underline">{{'login.forgot-password' | translate}}</p></a>

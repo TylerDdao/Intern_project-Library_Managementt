@@ -3,7 +3,7 @@
         <div class="flex space-x-[10px]">
         @for (page of roleUserPages; track $index) {
             <a [routerLink]="page.path" routerLinkActive="active-page">
-                <h1 class="desktop-subheader">{{page.name|translate}}</h1>
+                <h1 class="subheader">{{page.name|translate}}</h1>
             </a>
             @if($index < roleUserPages.length - 1) {
                 <div class="border border-white"></div>
@@ -12,7 +12,7 @@
     </div>
     }
     @else {
-        <h1 class="desktop-subheader">Library Management System | {{'navBar.please-login-to-continue' | translate}}</h1>
+        <h1 class="subheader">Library Management System | {{'navBar.please-login-to-continue' | translate}}</h1>
     }
     <div class="flex items-center space-x-[20px]">
         <select [value]="langService.currentLang" (change)="langService.switchLanguage($any($event.target).value)" class="text-deep-charcoal bg-soft-ice rounded p-1">

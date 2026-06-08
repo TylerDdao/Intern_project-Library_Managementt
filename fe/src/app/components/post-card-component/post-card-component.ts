@@ -9,14 +9,21 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './post-card-component.css',
 })
 export class PostCardComponent {
-  @Input() bookName: string = ''; 
-  @Input() author: string = '';
+  @Input() user: string = 'Null';
+  @Input() postedAt: string = 'Null';
+  @Input() bookName: string = 'Null'; 
+  @Input() author: string = 'Null';
   @Input() genres: string[] = [];
-  @Input() subject: string = '';
-  @Input() content: string = '';
-  @Input() likeCount: string = '';
-  @Input() commentCount: string = '';
+  @Input() subject: string = 'Null';
+  @Input() content: string = 'Null';
+  @Input() likeCount: string = 'Null';
+  @Input() commentCount: string = 'Null';
 
   @ViewChild('myPost') myChart!: ElementRef;
+  bookCover: string = '';
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
+  ngOnInit(): void {
+    this.bookCover = this.bookName.replaceAll(' ', '-').toLowerCase();
+  }
 }

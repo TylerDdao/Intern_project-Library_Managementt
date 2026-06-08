@@ -1,0 +1,32 @@
+<div class="borrow-card">
+    <img src="/book-covers/{{bookCover}}.jpg" alt="{{bookName}}" class="book-cover"/>
+    <div class="book-info-area">
+        <h1 class="header font-bold">{{bookName}}</h1>
+        <h2 class="subheader">{{'book.author'|translate}}: {{author}}</h2>
+        <h2 class="subheader">{{'borrow.borrow-on'|translate}}: {{formattedBorrowedOn}}</h2>
+        <h2 class="subheader font-bold">{{'borrow.Please-return-by'|translate}}: {{formattedDueDate}}</h2>
+        @if (dueIn <= 5 && dueIn > 0) {
+            <div class="flex items-center space-x-[5px] text-bright-gold">
+                <span class="material-symbols-outlined">error</span>
+                <h1 class="subheader font-bold">{{'borrow.Due-in'|translate}} {{dueIn}} {{'borrow.days'|translate}}</h1>
+            </div>
+        }
+        @else if (dueIn == 0) {
+            <div class="flex items-center space-x-[5px] text-bright-gold">
+                <span class="material-symbols-outlined">error</span>
+                <h1 class="subheader font-bold">{{'borrow.Due-today'|translate}}</h1>
+            </div>
+        }
+        @else if (dueIn < 0) {
+            <div class="flex items-center space-x-[5px] text-tomato-red">
+                <span class="material-symbols-outlined">error</span>
+                <h1 class="subheader font-bold">{{'borrow.Late'|translate}} {{dueIn*(-1)}} {{'borrow.days'|translate}}</h1>
+            </div>
+        }
+        @else {
+            <div class="flex items-center space-x-[5px]">
+                <h1 class="subheader font-bold">{{'borrow.Due-in'|translate}} {{dueIn}} {{'borrow.days'|translate}}</h1>
+            </div>
+        }
+    </div>
+</div>
