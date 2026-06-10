@@ -1,5 +1,6 @@
 export interface Book {
-    bookName: string,
+    title: string,
     author: string,
     genres: string[],
+    copies: number,
 }

@@ -1,36 +1,43 @@
-<div class="post-card">
-    <div class="post-info-area">
-        <div class="flex space-x-[5px] items-center">
-            <div class="user-pfp bg-steel-blue"></div>
-            <div>
-                <h1 class="font-bold body">{{user}}</h1>
-                <h2 class="body">{{'post.posted-at'|translate}}: {{postedAt}}</h2>
-            </div>
-        </div>
-        <div>
-            <div class="flex items-start space-x-[5px]">
-                <img src='/book-covers/{{bookCover}}.jpg' alt={{bookName}} class="book-cover">
+@if (post) {
+    <div class="post-card">
+        <div class="user-info-container">
+            <div class="flex space-x-[5px] items-center">
+                <div class="user-pfp bg-steel-blue"></div>
                 <div>
-                    <h1 class="subheader font-bold line-clamp-2">{{bookName}}</h1>
-                    <h1 class="body font-bold line-clamp-1">{{'book.author'|translate}}: {{author}}</h1>
-                    <h1 class="body line-clamp-1">{{'book.Genres'|translate}}: {{genres}}</h1>
+                    <div class="title">@{{post.createdBy}}</div>
+                    <div>{{formattedCreatedAt}}</div>
                 </div>
             </div>
-            <div class="w-full border my-[10px] border-sky-blue"></div>
-            <h2 class="subheader font-bold line-clamp-2">{{subject}}</h2>
-            <p class="body line-clamp-3">{{content}}</p>
-        </div>
-    </div>
-
-    <div class="flex items-center justify-evenly w-full">
-        <div class="flex items-center space-x-[5px]">
-            <span class="material-symbols-outlined text-sky-blue">thumb_up</span>
-            <h1 class="body">{{likeCount}}</h1>
         </div>
 
-        <div class="flex items-center space-x-[5px]">
-            <span class="material-symbols-outlined text-sky-blue">comment</span>
-            <h1 class="body">{{commentCount}}</h1>
+        <div class="book-info-container">
+            <div class="flex space-x-[5px] items-start">
+                <img src="/book-covers/{{bookCover}}.jpg" class="book-cover"/>
+                <div>
+                    <h1 class="header font-bold">{{'book.Title'|translate}}: {{post.book.title}}</h1>
+                    <h1 class="subheader font-bold">{{'book.Author'|translate}}: {{post.book.author}}</h1>
+                    <h1 class="subheader">{{'book.Genres'|translate}}: {{post.book.genres}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="post-subject-container">
+            <h1 class="header font-bold">{{post.subject}}</h1>
+        </div>
+        <div class="post-content-container">
+            <h1 class="body">{{post.content}}</h1>
+        </div>
+
+        <div class="post-react-container">
+            <div class="flex items-center space-x-[5px]">
+                <button (click)="toggleLike()"><span class="material-symbols-outlined text-sky-blue icon" [class.active]="post.liked">thumb_up</span></button>
+
+                <h1 class="body">{{formattedLikeCount}}</h1>
+            </div>
+
+            <div class="flex items-center space-x-[5px]">
+                <button><span class="material-symbols-outlined text-sky-blue">comment</span></button>
+                <h1 class="body">{{formattedCommentCount}}</h1>
+            </div>
         </div>
     </div>
-</div>
+}

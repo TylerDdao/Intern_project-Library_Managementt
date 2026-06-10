@@ -1,34 +1,77 @@
-<nav class="sticky top-0 left-0 w-full z-50 flex justify-between items-center p-4 bg-steel-blue text-white">
-    @if (validateUser) {
-        <div class="flex space-x-[10px]">
-        @for (page of roleUserPages; track $index) {
-            <a [routerLink]="page.path" routerLinkActive="active-page">
-                <h1 class="subheader">{{page.name|translate}}</h1>
-            </a>
-            @if($index < roleUserPages.length - 1) {
-                <div class="border border-white"></div>
-            }
+<nav class="sticky top-0 left-0 w-full z-50 p-4 bg-steel-blue text-white">
+    <div class="flex justify-between items-center">
+        @if (validateUser) {
+            <div class="pages-container">
+                @for (page of roleUserPages; track $index) {
+                    <a [routerLink]="page.path" routerLinkActive="active-page">
+                        <h1 class="body">{{page.name|translate}}</h1>
+                    </a>
+                    @if($index < roleUserPages.length - 1) {
+                        <div class="border border-white"></div>
+                    }
+                }
+            </div>
+        <div class="setting-container">
+            <select [value]="langService.currentLang" (change)="langService.switchLanguage($any($event.target).value)" class="text-deep-charcoal bg-soft-ice rounded p-1">
+                <option value="en">English</option>
+                <option value="vi">Tiếng Việt</option>
+                <option value="fr">Français</option>
+            </select>
+
+            <span class="material-symbols-outlined icon-size">notifications</span>
+
+            <div class="flex items-center space-x-[5px]">
+                <span class="material-symbols-outlined icon-size">account_circle</span>
+                <div>
+                    <h1 class="body">{{('navBar.hello'|translate) + ': ' + 'Name'}}</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-setting-icon lg:hidden">
+            <span class="material-symbols-outlined" (click)="toggleMobileMenu()">menu</span>
+            <span class="material-symbols-outlined icon-size">notifications</span>
+        </div>
+        }
+        @else {
+            <h1 class="subheadline font-bold">Library Management System</h1>
         }
     </div>
-    }
-    @else {
-        <h1 class="subheader">Library Management System | {{'navBar.please-login-to-continue' | translate}}</h1>
-    }
-    <div class="flex items-center space-x-[20px]">
-        <select [value]="langService.currentLang" (change)="langService.switchLanguage($any($event.target).value)" class="text-deep-charcoal bg-soft-ice rounded p-1">
-            <option value="en">English</option>
-            <option value="vi">Tiếng Việt</option>
-            <option value="fr">Français</option>
-        </select>
+    
+<!-- 
+    @if (validateUser) {
+        <div class="mobile-setting-icon lg:hidden">
+            <span class="material-symbols-outlined" (click)="toggleMobileMenu()">menu</span>
+            <span class="material-symbols-outlined icon-size">notifications</span>
+        </div>
+    } -->
 
-        <span class="material-symbols-outlined icon-size">notifications</span>
+    <div id="mobile-menu-container" class="mobile-menu-container lg:hidden" [class.inactive]="!isMobileMenuOpen">
+        <div class="mobile-pages-container">
+            @for (page of roleUserPages; track $index) {
+                <a [routerLink]="page.path" routerLinkActive="active-page">
+                    <h1 class="body">{{page.name|translate}}</h1>
+                </a>
+                @if($index < roleUserPages.length - 1) {
+                    <div class="border border-white"></div>
+                }
+            }
+        </div>
 
-        <div class="flex items-center space-x-[5px]">
-            <span class="material-symbols-outlined icon-size">account_circle</span>
-            <div>
-                <h1>{{('navBar.hello'|translate) + ': ' + 'Name'}}</h1>
+        <div class="mobile-setting-container">
+            <select [value]="langService.currentLang" (change)="langService.switchLanguage($any($event.target).value)" class="text-deep-charcoal bg-soft-ice rounded p-1">
+                <option value="en">English</option>
+                <option value="vi">Tiếng Việt</option>
+                <option value="fr">Français</option>
+            </select>
 
+            <div class="flex items-center space-x-[5px]">
+                <span class="material-symbols-outlined icon-size">account_circle</span>
+                <div>
+                    <h1 class="body">{{('navBar.hello'|translate) + ': ' + 'Name'}}</h1>
+                </div>
             </div>
         </div>
     </div>
 </nav>
+

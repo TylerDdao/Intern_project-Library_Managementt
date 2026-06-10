@@ -1,4 +1,4 @@
-@media (min-width: 768px) {  /* md */
+@media (min-width: 1024px) {  /* md */
     .borrow-card{
         display: flex;
         flex-direction: row;
@@ -9,12 +9,31 @@
     }
 
     .book-cover{
-        width: 100px;
+        width: 70px;
     }
 
     .book-info-area{
         display: flex;
         flex-direction: column;
-        
+    }
+}
+
+@media (max-width: 1023px) {  /* md */
+    .borrow-card{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 10px;
+        background-color: var(--color-soft-ice);
+        border-radius: 10px;
+    }
+
+    .book-cover{
+        width: 70px;
+    }
+
+    .book-info-area{
+        display: flex;
+        flex-direction: column;
     }
 }

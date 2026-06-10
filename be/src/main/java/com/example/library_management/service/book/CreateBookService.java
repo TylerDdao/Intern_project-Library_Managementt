@@ -7,9 +7,12 @@ import com.example.library_management.model.Genre;
 import com.example.library_management.model.User;
 import com.example.library_management.repository.BookRepository;
 import com.example.library_management.repository.GenreRepository;
+import com.example.library_management.util.AuditLogger;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +23,16 @@ import java.util.List;
 @Service
 public class CreateBookService {
     @Autowired
-    BookRepository bookRepository;
+    private BookRepository bookRepository;
 
     @Autowired
-    GenreRepository genreRepository;
+    private GenreRepository genreRepository;
+
+    @Autowired
+    private MessageSource messageSource;
+
+    @Autowired
+    private AuditLogger logger;
 
     public BookResponse addBook(BookRequest request) {
         Book book = new Book();
@@ -43,7 +52,7 @@ public class CreateBookService {
         book.setGenres(genres);
 
         Book savedBook = bookRepository.save(book);
-        log.info("Creating book {}, by {}, ID # {}", savedBook.getTitle(), savedBook.getAuthor(), savedBook.getId());
+        logger.log("Created book ID#{} | Title: {} | Author: {}", savedBook.getId(), savedBook.getTitle(), savedBook.getAuthor());
         return new BookResponse(savedBook);
     }
 }

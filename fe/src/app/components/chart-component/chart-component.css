@@ -1,6 +1,12 @@
-@media (min-width: 768px) { 
+@media (min-width: 1024px) { 
     .chart{
-        width: 500px;
-        height: 300px;
+        width: auto;
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 1023px) { 
+    .chart{
+        width: 300px;
     }
 }

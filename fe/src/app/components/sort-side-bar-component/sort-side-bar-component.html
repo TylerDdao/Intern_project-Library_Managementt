@@ -6,7 +6,7 @@
 
     @if (sortBy.length > 0) {
         <div class="flex flex-col items-start">
-            <h1 class="subheader font-bold">{{'search.Sort-by'}}</h1>
+            <h1 class="subheader font-bold">{{'search.Sort-by' |translate}}</h1>
             <select class="sort-bar" [(ngModel)] ="selectedSort">
                 @for (option of sortBy; track option) {
                     <option [value]="option">{{ option }}</option>
@@ -15,7 +15,7 @@
         </div>
     }
 
-    @if (filterBy) {
+    @if (filterBy.length > 0) {
         <div class="flex flex-col items-start">
             <h1 class="subheader font-bold">{{'search.Filter-by'|translate}}</h1>
             @for (option of filterBy; track option) {
@@ -31,4 +31,5 @@
     }
 
     <button (click)="apply()" class="submit-button text-soft-ice">Apply</button>
+    <button (click)="handleClear()" class="clear-button text-soft-ice">Clear</button>
 </div>

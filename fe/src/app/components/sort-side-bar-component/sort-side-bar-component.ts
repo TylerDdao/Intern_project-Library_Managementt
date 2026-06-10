@@ -6,6 +6,7 @@ export interface SideBarQuery {
   sortBy: string;
   filterBy: string[];
   searchQuery: string;
+  isClear: boolean;
 }
 
 @Component({
@@ -16,14 +17,16 @@ export interface SideBarQuery {
 })
 
 export class SortSideBarComponent {
-  @Input() sortBy: string[] = ["Test", "Test 2"];
+  @Input() sortBy: string[] = [];
   @Input() filterBy: string[] = [];
+  @Input() isSearch:boolean = false;
 
   @Output() onApply = new EventEmitter<SideBarQuery>();
 
   selectedSort: string = '';
   selectedFilters: string[] = [];
-  searchQuery: string = 'Genres';
+  searchQuery: string = '';
+  isClear:boolean = false;
 
   onFilterChange(option: string, event: Event): void {
     const checked = (event.target as HTMLInputElement).checked;
@@ -39,6 +42,16 @@ export class SortSideBarComponent {
       sortBy: this.selectedSort,
       filterBy: this.selectedFilters,
       searchQuery: this.searchQuery,
+      isClear: this.isClear
     });
+  }
+
+  handleClear():void {
+    this.onApply.emit({
+      sortBy: '',
+      filterBy: [],
+      searchQuery: '',
+      isClear: true
+    })
   }
 }

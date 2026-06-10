@@ -88,11 +88,10 @@ public class SecurityConfig {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/auth/login", "/auth/register").permitAll()
+                    .requestMatchers("/auth/login", "/auth/register", "/mail").permitAll()
                     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                    .requestMatchers("/**").hasAuthority("ROLE_ADMIN")
+                    .requestMatchers("/**").hasAuthority("ROLE_ROOT")
                     .anyRequest().authenticated()
-//                    .anyRequest().permitAll()
         )
             .exceptionHandling(ex -> ex
                     .authenticationEntryPoint((request, response, e) -> {

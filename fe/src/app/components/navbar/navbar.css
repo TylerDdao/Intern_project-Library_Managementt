@@ -6,14 +6,63 @@
   font-size: 20px; /* mobile */
 }
 
-@media (min-width: 768px) {
-  .icon-size {
+.icon-size {
     font-size: 24px; /* tablet */
+  }
+
+@media (min-width: 1024px) {
+  .pages-container{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .setting-container{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
   }
 }
 
-@media (min-width: 1024px) {
-  .icon-size {
-    font-size: 40px; /* desktop */
+@media (max-width: 1023px) {
+  .pages-container{
+    display: none;
+  }
+  .setting-container{
+    display: none;
+  }
+  .mobile-setting-icon{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .mobile-menu-container{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 10px;
+    background-color: var(--color-steel-blue);
+    color: var(--color-soft-ice)
+  }
+
+  .mobile-menu-container.inactive{
+    display: none !important;
+  }
+
+  .mobile-pages-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: var(--color-steel-blue);
+    color: var(--color-soft-ice)
+  }
+
+  .mobile-setting-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 }

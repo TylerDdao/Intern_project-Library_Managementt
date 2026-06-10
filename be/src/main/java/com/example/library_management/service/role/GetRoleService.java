@@ -7,6 +7,7 @@ import com.example.library_management.model.Role;
 import com.example.library_management.model.User;
 import com.example.library_management.repository.FeatureRepository;
 import com.example.library_management.repository.RoleRepository;
+import com.example.library_management.util.AuditLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

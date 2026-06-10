@@ -1,0 +1,17 @@
+@media (min-width: 768px) {
+    .container{
+        padding: 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items:start;
+        gap:30px
+    }
+
+    .posts-scrolling-area{
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        width: 100%;
+        gap: 30px;
+    }
+}

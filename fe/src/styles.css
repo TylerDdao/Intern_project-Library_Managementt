@@ -2,6 +2,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 @import "tailwindcss";
 
+.icon {
+    font-variation-settings: 'FILL' 0;
+    transition: font-variation-settings 0.2s ease-in-out;
+}
+
+.icon.active {
+    font-variation-settings: 'FILL' 1;
+    transition: font-variation-settings 0.2s ease-in-out;
+}
+
+.icon:hover {
+    font-variation-settings: 'FILL' 1;
+}
+
 @theme {
     --font-quicksand: 'Quicksand', sans-serif;
 
@@ -33,23 +47,77 @@
 }
 
 @media (min-width: 768px) {
-.title{
-    font-size: 30px;
+.large-title{
+    font-size: 26pt;
 }
-
-.header{
-    font-size: 25px;
+.title-1{
+    font-size: 22pt;
 }
-
-.subheader{
-    font-size: 18px;
+.title-2{
+    font-size: 17pt;
 }
-
+.title-3{
+    font-size: 15pt;
+}
+.headline{
+    font-size: 13pt;
+    font-weight: bold;
+}
 .body{
-    font-size: 14px;
+    font-size: 13pt;
+}
+.callout{
+    font-size: 12pt;
+}
+.subheadline{
+    font-size: 11pt;
+}
+.footnote{
+    font-size: 10pt;
+}
+.caption-1{
+    font-size: 10pt;
+}
+.caption-2{
+    font-size: 10pt;
+    font-weight: 500;
+}
 }
 
-.placeholder{
-    font-size: 14px;
+
+@media (max-width: 767px) {
+.large-title{
+    font-size: 34pt;
+}
+.title-1{
+    font-size: 28pt;
+}
+.title-2{
+    font-size: 22pt;
+}
+.title-3{
+    font-size: 20pt;
+}
+.headline{
+    font-size: 17pt;
+    font-weight: 600;
+}
+.body{
+    font-size: 17pt;
+}
+.callout{
+    font-size: 16pt;
+}
+.subheadline{
+    font-size: 15pt;
+}
+.footnote{
+    font-size: 13pt;
+}
+.caption-1{
+    font-size: 12pt;
+}
+.caption-2{
+    font-size: 11pt;
 }
 }

@@ -13,12 +13,12 @@ public class SecurityService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || !auth.isAuthenticated()) return false;
 
-        // ROLE_ADMIN bypass everything
         boolean isRoot = auth.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ROOT"));
-        if (isRoot) return true;
+        if (isRoot){
+            return true;
+        };
 
-        // check specific authority for everyone else
         return auth.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals(requiredAuthority));
     }

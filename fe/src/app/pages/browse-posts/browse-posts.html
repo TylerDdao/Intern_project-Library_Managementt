@@ -1,0 +1,16 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+    <app-sort-side-bar-component
+    [isSearch]="isSearch"
+    (onApply)="handleApply($event)">
+    </app-sort-side-bar-component>
+
+    <div class="posts-scrolling-area">
+        @if (posts.length>0) {
+            @for (post of posts; track $index) {
+                <app-post-card-component [post]="post"></app-post-card-component>
+            }
+        }
+    </div>
+</div>

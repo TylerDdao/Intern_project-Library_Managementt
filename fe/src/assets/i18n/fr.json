@@ -1,44 +1,66 @@
 {
+  "book": {
+    "Author": "TODO",
+    "Genres": "TODO"
+  },
+  "borrow": {
+    "Borrow-on": "TODO",
+    "Please-return-by": "TODO",
+    "Due-in": "TODO",
+    "days": "TODO",
+    "Due-today": "TODO",
+    "Late": "TODO"
+  },
   "navBar": {
-    "hello": "Bonjour",
-    "home-page": "Page d'accueil",
-    "browse-books": "Parcourir les livres",
-    "browse-posts": "Parcourir les publications",
-    "my-borrows": "Mes emprunts",
-    "my-posts": "Mes publications",
-    "please-login-to-continue": "Veuillez vous connecter pour continuer"
+    "please-login-to-continue": "TODO",
+    "hello": "TODO"
+  },
+  "post": {
+    "posted-at": "TODO"
+  },
+  "search": {
+    "Filter-by": "TODO",
+    "Sort-by": "TODO"
+  },
+  "browseBook": {
+    "Top-borrowed-books": "TODO",
+    "People-are-writing-about-these-books": "TODO",
+    "Newly-arrived": "TODO"
+  },
+  "forgotPassword": {
+    "forgot-password": "TODO",
+    "confirm": "TODO"
+  },
+  "signup": {
+    "email": "TODO",
+    "back-to-login": "TODO",
+    "sign-up": "TODO",
+    "account-information": "TODO",
+    "personal-information": "TODO",
+    "full-name": "TODO",
+    "phone-number": "TODO",
+    "address": "TODO",
+    "optional": "TODO",
+    "province": "TODO",
+    "city": "TODO",
+    "address-line-1": "TODO",
+    "address-line-2": "TODO",
+    "already-had-an-account": "TODO",
+    "signup-completed": "TODO"
+  },
+  "home": {
+    "Number-of-books-by-genre": "TODO",
+    "Number-of-borrowed-books-by-genre": "TODO",
+    "Top-5-posts-have-most-likes": "TODO",
+    "Books-that-you-borrowed": "TODO"
   },
   "login": {
-    "login": "Connexion",
-    "username": "Nom d'utilisateur",
-    "password": "Mot de passe",
-    "dont-have-an-account-yet": "Vous n'avez pas encore de compte ?",
-    "signup": "S'inscrire",
-    "forgot-password": "Mot de passe oublié",
-    "username-or-password-is-wrong": "Le nom d'utilisateur ou le mot de passe est incorrect"
-  },
-
-  "signup": {
-    "sign-up": "S'inscrire",
-    "signup-completed": "Inscription réussie",
-    "redirect-in-seconds": "Vous serez redirigé vers la page de connexion dans {{ seconds }} secondes",
-    "email": "E-mail",
-    "optional": "Optionnel",
-    "account-information": "Informations du compte",
-    "personal-information": "Informations personnelles",
-    "full-name": "Nom complet",
-    "phone-number": "Numéro de téléphone",
-    "address": "Adresse",
-    "province": "Province",
-    "city": "Ville",
-    "address-line-1": "Ligne d'adresse 1",
-    "address-line-2": "Ligne d'adresse 2",
-    "already-had-an-account": "Vous avez déjà un compte ?",
-    "back-to-login": "Retour à la page de connexion"
-  },
-
-  "forgotPassword": {
-    "forgot-password": "Mot de passe oublié",
-    "confirm": "Confirmer"
+    "login": "TODO",
+    "username-or-password-is-wrong": "TODO",
+    "username": "TODO",
+    "password": "TODO",
+    "forgot-password": "TODO",
+    "dont-have-an-account-yet": "TODO",
+    "signup": "TODO"
   }
 }

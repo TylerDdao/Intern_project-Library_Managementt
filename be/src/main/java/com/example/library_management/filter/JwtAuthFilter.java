@@ -1,6 +1,6 @@
 package com.example.library_management.filter;
 
-import com.example.library_management.config.JwtUtil;
+import com.example.library_management.util.JwtUtil;
 import com.example.library_management.service.TokenBlacklistService;
 import com.example.library_management.service.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;

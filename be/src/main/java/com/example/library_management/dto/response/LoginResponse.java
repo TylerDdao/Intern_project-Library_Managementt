@@ -1,5 +1,6 @@
 package com.example.library_management.dto.response;
 
+import com.example.library_management.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -7,7 +8,11 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class LoginResponse {
+    private UserResponse user;
     private String token;
-    private String username;
-    private String role;
+
+    public LoginResponse(User user, String token){
+        this.user = new UserResponse(user);
+        this.token =token;
+    }
 }

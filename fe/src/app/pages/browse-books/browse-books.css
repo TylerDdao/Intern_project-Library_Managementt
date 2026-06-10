@@ -1,9 +1,36 @@
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
     .container{
         padding: 50px;
         display: flex;
         justify-content: space-between;
         align-items:start;
+        gap: 30px;
+    }
+
+    .books-area{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 20px;
+    }
+
+    .book-scrolling-area{
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        width: 100%;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .container{
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items:center;
+        width: 100vw;
         gap: 30px;
     }
 

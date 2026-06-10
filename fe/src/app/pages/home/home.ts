@@ -1,41 +1,59 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, PLATFORM_ID } from '@angular/core';
 import { NavbarComponent } from "../../components/navbar/navbar";
 import { TranslateModule } from '@ngx-translate/core';
-import { AuthService } from '../../services/auth-service';
 import { LanguageService } from '../../services/language-service/language-service';
-import { RouteReuseStrategy } from '@angular/router';
+import { Router } from '@angular/router';
 import { ChartComponent } from '../../components/chart-component/chart-component';
 import { PostCardComponent } from '../../components/post-card-component/post-card-component';
 import { BorrowCardComponent } from '../../components/borrow-card-component/borrow-card-component';
 import { Post } from '../../models/post';
 import { PostsService } from '../../services/posts-service/posts-service';
+import { isPlatformBrowser } from '@angular/common';
+import { BorrowService } from '../../services/borrow-service/borrow-service';
+import { Borrow } from '../../models/borrow';
+import { MiniPostCardComponent } from '../../components/mini-post-card-component/mini-post-card-component';
 
 @Component({
   selector: 'app-home',
-  imports: [TranslateModule, NavbarComponent, ChartComponent, PostCardComponent, BorrowCardComponent],
+  imports: [TranslateModule, NavbarComponent, ChartComponent, MiniPostCardComponent, BorrowCardComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home {
-  dueDate1: Date = new Date('2026-07-01');
-  dueDate2: Date = new Date('2026-06-01');
-  dueDate3: Date = new Date('2026-06-08');
-  dueDate4: Date = new Date('2026-06-11');
-
   posts:Post[] = [];
+  borrows:Borrow[] = [];
 
   constructor(
     public langService: LanguageService,
     private postsService: PostsService,
-    protected router: RouteReuseStrategy) 
+    private borrowService: BorrowService,
+    protected router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private cdr: ChangeDetectorRef,
+  ) 
   {}
 
-  async fetchAllPosts(){
+  fetchAllBorrow():void{
+    const userId = JSON.parse(localStorage.getItem("user") ?? "{}").id
+    if (!userId) return;
+    this.borrowService.getBorrowsByUserId(userId).subscribe({
+      next: (data:any) => {
+        if(data.code == "200"){
+          this.borrows = data.data.content;
+          console.log('borrows:', data);
+          this.cdr.detectChanges();
+        }
+      }
+    })
+  }
+
+  fetchAllPosts():void{
     this.postsService.getAllPost().subscribe({
       next: (data:any) => {
         console.log(data)
-        if(data.code == 200){
-          this.posts = data.content;
+        if(data.code == "200"){
+          this.posts = data.data.content;
+          this.cdr.detectChanges();
         }
       },
       error: (err) => {
@@ -43,5 +61,12 @@ export class Home {
       }
 
     })
+  }
+
+  ngOnInit() {
+    if(isPlatformBrowser(this.platformId)){
+      this.fetchAllPosts()
+      this.fetchAllBorrow()
+    }
   }
 }

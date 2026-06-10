@@ -1,4 +1,4 @@
-package com.example.library_management.config;
+package com.example.library_management.util;
 
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;

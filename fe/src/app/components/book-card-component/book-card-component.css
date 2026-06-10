@@ -1,17 +1,69 @@
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
     .container{
         display: flex;
         flex-direction: column;
-
+        justify-content: center;
+        align-items: center;
+        border: 1px solid var(--color-steel-blue);
+        padding: 5px;
+        border-radius: 8px;
+        width: 250px;
     }
 
     .book-cover-container{
         height: 250px;
-        width: 150px;
         overflow-y: hidden;
+        
     }
 
     .book-cover{
-        width: 200px;
+        /* width: 200px; */
+        border-radius: 8px;
+        height: 250px;
+        max-width: 250px;
+    }
+
+    .book-info{
+        text-align: center;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
+
+@media (max-width: 1023px) {
+    .container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid var(--color-steel-blue);
+        padding: 5px;
+        border-radius: 8px;
+        width: 50vw;
+    }
+
+    .book-cover-container{
+        height: 250px;
+        overflow-y: hidden;
+        
+    }
+
+    .book-cover{
+        /* width: 200px; */
+        border-radius: 8px;
+        height: 250px;
+        max-width: 250px;
+    }
+
+    .book-info{
+        text-align: center;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+

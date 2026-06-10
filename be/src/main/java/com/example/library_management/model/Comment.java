@@ -3,6 +3,7 @@ package com.example.library_management.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.Formula;
 
 @Data
 @Entity

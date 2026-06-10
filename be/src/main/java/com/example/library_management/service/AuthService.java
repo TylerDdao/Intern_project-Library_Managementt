@@ -1,6 +1,7 @@
 package com.example.library_management.service;
 
-import com.example.library_management.config.JwtUtil;
+import com.example.library_management.util.AuditLogger;
+import com.example.library_management.util.JwtUtil;
 import com.example.library_management.dto.request.LoginRequest;
 import com.example.library_management.dto.request.RegisterRequest;
 import com.example.library_management.dto.request.UserRequest;
@@ -12,6 +13,8 @@ import com.example.library_management.model.User;
 import com.example.library_management.repository.RoleRepository;
 import com.example.library_management.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,6 +45,12 @@ public class AuthService {
     @Autowired
     private TokenBlacklistService tokenBlacklistService;
 
+    @Autowired
+    private MessageSource messageSource;
+
+    @Autowired
+    AuditLogger logger;
+
     public LoginResponse login(LoginRequest request) {
         try {
             Authentication auth = authenticationManager.authenticate(
@@ -52,21 +61,22 @@ public class AuthService {
             );
             String token = jwtUtil.generateToken(auth.getName());
             User user = userRepository.findByUsername(auth.getName()).orElseThrow();
-            log.info("Authorizing @{}, ID #{}",  user.getUsername(), user.getId());
-            return new LoginResponse(token, user.getUsername(), user.getRole().getName());
+            logger.log("SYSTEM","Authorized @{}, ID #{}", user.getUsername(), user.getId());
+            return new LoginResponse(user, token);
 
         } catch (org.springframework.security.authentication.BadCredentialsException e) {
-            throw new AuthException("Invalid username or password");
+            String message = messageSource.getMessage("error.invalid.credential", null, LocaleContextHolder.getLocale());
+            throw new AuthException(message);
         }
     }
 
     public UserResponse updateAccount(UserRequest request){
         try {
             User user = userRepository.findByUsername(request.getUsername())
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
 
             Role newRole = roleRepository.findByName(request.getRole())
-                    .orElseThrow(() -> new RuntimeException("Role not found"));
+                    .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
 
             // update only the fields that should change
             if (request.getPhoneNumber() != null) user.setPhoneNumber(request.getPhoneNumber());
@@ -77,17 +87,17 @@ public class AuthService {
             if (request.getFullName() != null) user.setFullName(request.getFullName());
 
             User savedUser = userRepository.save(user);
-            log.info("Updating @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
+            logger.log("Updated @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
             return new UserResponse(savedUser);
         }
         catch (org.springframework.security.access.AccessDeniedException e) {
-            throw new RuntimeException("Access denied");
+            throw new RuntimeException(messageSource.getMessage("auth.access.denied", null, LocaleContextHolder.getLocale()));
         }
         catch (jakarta.persistence.EntityNotFoundException e) {
-            throw new RuntimeException("User not found");
+            throw new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale()));
         }
         catch (RuntimeException e) {
-            throw new RuntimeException("Update failed: " + e.getMessage());
+            throw new RuntimeException(messageSource.getMessage("error.runtime", null, LocaleContextHolder.getLocale()) + e.getMessage());
         }
     }
 
@@ -95,12 +105,12 @@ public class AuthService {
         tokenBlacklistService.blacklist(token);
         String username = jwtUtil.extractUsername(token);
         SecurityContextHolder.clearContext();
-        log.info("Logging out @{}", username);
+        logger.log(username,"Logged out @{}", username);
     }
 
     public UserResponse register(RegisterRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
-            throw new RuntimeException("Username already taken");
+            throw new RuntimeException(messageSource.getMessage("error.username.taken", null, LocaleContextHolder.getLocale()));
         }
 
         Role defaultRole = roleRepository.findByName("ROLE_USER")
@@ -125,7 +135,7 @@ public class AuthService {
             user.setRole(role);
         }
         User savedUser = userRepository.save(user);
-        log.info("Registering @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
+        logger.log("Registered @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
         return new UserResponse(savedUser);
     }
 
@@ -134,13 +144,13 @@ public class AuthService {
 
         if (auth == null || !auth.isAuthenticated()
                 || auth instanceof AnonymousAuthenticationToken) {
-            throw new RuntimeException("User not authenticated");
+            throw new RuntimeException(messageSource.getMessage("error.user.not.authenticated", null, LocaleContextHolder.getLocale()));
         }
 
         String username = auth.getName();
 
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
 
         return new UserResponse(user);
     }

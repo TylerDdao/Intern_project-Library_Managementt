@@ -59,17 +59,23 @@ INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
 
 INSERT IGNORE books (id, title, author, copies) VALUES
     (1,'Project Hail Mary', 'Andy Weir', 10),
-    (2, 'Go for it, Nakamura-kun', 'Syundei', 5);
+    (2, 'Go for it, Nakamura-kun', 'Syundei', 5),
+    (3,'The Song of Achilles', 'Madeline Miller', 1);
 
 INSERT IGNORE genres(id, name) VALUES
     (1, 'Sci-fi'),
     (2, 'Romance'),
-    (3, 'Manga');
+    (3, 'Manga'),
+    (4, 'Historical Fiction'),
+    (5, 'War Story');
 
 INSERT IGNORE books_genres(book_id, genre_id) VALUES
     (1,1),
     (2,2),
-    (2,3);
+    (2,3),
+    (3,2),
+    (3,4),
+    (3,5);
 
 INSERT IGNORE posts (id, created_at, created_by, is_active, is_deleted, updated_at, updated_by, content, like_count, subject, book_id) VALUES
     (1, NOW(), 'tyler', true, false, null, null, 'This is a nice manga', 500000, 'Review of my favorite manga recently!!', 2),
@@ -78,3 +84,10 @@ INSERT IGNORE posts (id, created_at, created_by, is_active, is_deleted, updated_
 INSERT IGNORE comments(id, created_at, created_by, is_active, is_deleted, updated_at, updated_by, content, post_id) VALUES
     (1, NOW(), 'tyler', true, false, null, null, 'Great post!', 1),
     (1, NOW(), 'tyler', true, false, null, null, 'CAn\'t wait for the movie adaption!!', 2);
+
+INSERT IGNORE INTO borrows(id, created_at, created_by, is_active, is_deleted, updated_at, updated_by, due_date, book_id, user_id) VALUES
+      (1, NOW(), 'tyler', 1, 0, null, null, '2026-06-10', 1, 1),
+      (3, NOW(), 'tyler', 1, 0, null, null, '2026-06-01', 2, 1),
+      (4, '2026-04-25 10:00:00', 'tyler', 0, 0, null, null, '2026-05-10', 3, 1);
+
+INSERT IGNORE INTO post_likes(post_id, user_id) VALUES (2, 1);

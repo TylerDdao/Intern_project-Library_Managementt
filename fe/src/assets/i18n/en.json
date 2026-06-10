@@ -1,29 +1,26 @@
 {
   "book": {
+    "Title": "Title",
     "Author": "Author",
     "Genres": "Genres"
   },
-
   "borrow": {
-    "borrow-on": "Borrow on",
+    "Borrow-on": "Borrow on",
     "Please-return-by": "Please return by",
     "Due-in": "Due in",
     "days": "days",
     "Late": "Late",
     "Due-today": "Due today"
   },
-
   "post": {
-    "posted-at": "Posted at"
+    "Posted-at": "Posted at"
   },
-
   "home": {
     "Top-5-posts-have-most-likes": "Top 5 posts have most likes",
     "Number-of-books-by-genre": "Number of books by genre",
     "Number-of-borrowed-books-by-genre": "Number of borrowed books by genre",
     "Books-that-you-borrowed": "Books that you borrowed"
   },
-  
   "navBar": {
     "hello": "Hello",
     "home-page": "Home page",
@@ -32,40 +29,46 @@
     "my-borrows": "My borrows",
     "my-posts": "My posts",
     "language": "Language",
-    "logout":"Logout",
+    "logout": "Logout",
     "please-login-to-continue": "Please login to continue"
   },
   "login": {
     "login": "Login",
     "username": "Username",
-    "password":"Password",
+    "password": "Password",
     "dont-have-an-account-yet": "Don't have an account yet",
     "signup": "Sign up",
-    "forgot-password":"Forgot password",
+    "forgot-password": "Forgot password",
     "username-or-password-is-wrong": "Username or password is wrong"
   },
-
   "signup": {
-    "sign-up":"Sign Up",
+    "sign-up": "Sign Up",
     "signup-completed": "Signup Completed",
-    "redirect-in-seconds": "You will be redirected to the login page in {{ seconds }} seconds",
     "email": "Email",
     "optional": "Optional",
-    "account-information":"Account information",
-    "personal-information":"Personal information",
-    "full-name":"Full name",
-    "phone-number":"Phone number",
-    "address":"Address",
+    "account-information": "Account information",
+    "personal-information": "Personal information",
+    "full-name": "Full name",
+    "phone-number": "Phone number",
+    "address": "Address",
     "province": "Province",
-    "city":"City",
-    "address-line-1":"Address line 1",
-    "address-line-2":"Address line 2",
-    "already-had-an-account":"Already had an account",
+    "city": "City",
+    "address-line-1": "Address line 1",
+    "address-line-2": "Address line 2",
+    "already-had-an-account": "Already had an account",
     "back-to-login": "Back to login"
   },
-
   "forgotPassword": {
     "forgot-password": "Forgot password",
-    "confirm":"Confirm"
+    "confirm": "Confirm"
+  },
+  "search": {
+    "Filter-by": "Filter by",
+    "Sort-by": "Sort by"
+  },
+  "browseBook": {
+    "Top-borrowed-books": "Top borrowed books",
+    "People-are-writing-about-these-books": "People are writing about these books",
+    "Newly-arrived": "Newly arrived"
   }
 }

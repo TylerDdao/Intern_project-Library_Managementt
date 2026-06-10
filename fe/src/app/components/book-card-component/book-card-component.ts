@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Book } from '../../models/book';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -10,4 +10,12 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class BookCardComponent {
   @Input({ required: true }) book!: Book;
+
+  bookCover = ''
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['book'] && this.book) {
+        this.bookCover = this.book.title.replaceAll(' ', '-').toLowerCase();
+    }
+  }
 }

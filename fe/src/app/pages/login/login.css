@@ -8,3 +8,27 @@
     justify-content: center;
     gap: 30px;
 }
+
+@media (min-width: 1024px) {
+    .login-container{
+        /* min-height: 100vh; */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+    }
+    
+}
+
+@media (max-width: 1023px) {
+    .login-container{
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+    }
+
+}

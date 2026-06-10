@@ -5,6 +5,8 @@ import com.example.library_management.dto.response.UserResponse;
 import com.example.library_management.model.Book;
 import com.example.library_management.model.User;
 import com.example.library_management.repository.BookRepository;
+import com.example.library_management.util.AuditLogger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 public class GetBookService {
     @Autowired
@@ -72,7 +75,6 @@ public class GetBookService {
         } else {
             books = bookRepository.findAll(pageable);
         }
-
         return books.map(BookResponse::new);
     }
 }

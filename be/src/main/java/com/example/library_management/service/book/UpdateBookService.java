@@ -6,8 +6,11 @@ import com.example.library_management.model.Book;
 import com.example.library_management.model.Genre;
 import com.example.library_management.repository.BookRepository;
 import com.example.library_management.repository.GenreRepository;
+import com.example.library_management.util.AuditLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,14 +20,20 @@ import java.util.List;
 @Service
 public class UpdateBookService {
     @Autowired
-    BookRepository bookRepository;
+    private BookRepository bookRepository;
 
     @Autowired
-    GenreRepository genreRepository;
+    private GenreRepository genreRepository;
+
+    @Autowired
+    private MessageSource messageSource;
+
+    @Autowired
+    AuditLogger logger;
 
     public BookResponse updateBook(BookRequest request){
         Book book = bookRepository.findByTitle(request.getTitle())
-                .orElseThrow(() -> new RuntimeException("Book not found"));
+                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
         if(request.getTitle() != null) book.setTitle(request.getTitle());
         if(request.getAuthor() != null) book.setTitle(request.getTitle());
         if(request.getGenres() != null){
@@ -42,7 +51,7 @@ public class UpdateBookService {
             book.setGenres(genres);
         }
         Book savedBook = bookRepository.save(book);
-        log.info("Updating book {}, by {}, ID # {}", savedBook.getTitle(), savedBook.getAuthor(), savedBook.getId());
+        logger.log("Updated book ID #{} | Title: {} | Author: {}", savedBook.getId(), savedBook.getTitle(), savedBook.getAuthor());
         return new BookResponse(book);
     }
 }

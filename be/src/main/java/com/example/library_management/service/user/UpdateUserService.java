@@ -6,8 +6,11 @@ import com.example.library_management.model.Role;
 import com.example.library_management.model.User;
 import com.example.library_management.repository.RoleRepository;
 import com.example.library_management.repository.UserRepository;
+import com.example.library_management.util.AuditLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -15,18 +18,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class UpdateUserService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private MessageSource messageSource;
+
+    @Autowired
+    private AuditLogger logger;
 
     @PreAuthorize("@securityService.hasAccess('ROLE_ROOT')")
     public UserResponse updateUserRole(UserRequest request){
         Role defaultRole = roleRepository.findByName("ROLE_USER")
-                .orElseThrow(() -> new RuntimeException("Role not found"));
+                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
 
         User user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.username.not.found", null, LocaleContextHolder.getLocale())));
 
         Role newRole = roleRepository.findByName(request.getRole())
                 .orElse(defaultRole);
@@ -40,13 +49,13 @@ public class UpdateUserService {
         if (request.getFullName() != null) user.setFullName(request.getFullName());
 
         User savedUser = userRepository.save(user);
-        log.info("Updating role @{}, ID #{} to {}", savedUser.getUsername(),savedUser.getId(), savedUser.getRole().getName());
+        logger.log("Updated role for @{}, ID #{} to {}", savedUser.getUsername(),savedUser.getId(), savedUser.getRole().getName());
         return new UserResponse(savedUser);
     }
 
     public UserResponse updateUser(UserRequest request){
         User user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.username.not.found", null, LocaleContextHolder.getLocale())));
 
 
         // update only the fields that should change
@@ -57,7 +66,7 @@ public class UpdateUserService {
         if (request.getFullName() != null) user.setFullName(request.getFullName());
 
         User savedUser = userRepository.save(user);
-        log.info("Updating @{}, ID #{}", savedUser.getUsername(),savedUser.getId());
+        logger.log("Updated @{}, ID #{}", savedUser.getUsername(),savedUser.getId());
         return new UserResponse(savedUser);
     }
 }

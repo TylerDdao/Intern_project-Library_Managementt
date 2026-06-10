@@ -5,10 +5,11 @@ export interface Post {
     subject: string,
     content: string,
     likeCount: string,
-    book: Book
+    commentCount: string,
+    book: Book,
     createdBy: string,
     createdAt: string,
     updatedBy?: string,
     updatedAt?: string,
-    
+    liked: boolean
 }

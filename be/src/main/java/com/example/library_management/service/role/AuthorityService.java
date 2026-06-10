@@ -6,8 +6,11 @@ import com.example.library_management.model.Feature;
 import com.example.library_management.model.Role;
 import com.example.library_management.repository.FeatureRepository;
 import com.example.library_management.repository.RoleRepository;
+import com.example.library_management.util.AuditLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,9 +25,15 @@ public class AuthorityService {
     @Autowired
     private FeatureRepository featureRepository;
 
+    @Autowired
+    private MessageSource messageSource;
+
+    @Autowired
+    private AuditLogger logger;
+
     public AuthorityResponse assignAuthority(AuthorityRequest request){
         Role role = roleRepository.findByName(request.getRole())
-                .orElseThrow(() -> new RuntimeException("Role not found"));
+                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
 
         List<String> featureNames = request.getFeatures();
         List<Feature> features = new ArrayList<>();
@@ -43,13 +52,13 @@ public class AuthorityService {
             }
         });
         Role savedRole = roleRepository.save(role);
-        log.info("Assigning {} to role {}", featureNames, savedRole.getName());
+        logger.log("Assigned {} -> {}", featureNames, savedRole.getName());
         return new AuthorityResponse(role.getName(), featureNames, "Assigned");
     }
 
     public AuthorityResponse unassignAuthority(AuthorityRequest request){
         Role role = roleRepository.findByName(request.getRole())
-                .orElseThrow(() -> new RuntimeException("Role not found"));
+                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
 
         List<String> featureNames = request.getFeatures();
         List<Feature> features = new ArrayList<>();
@@ -64,7 +73,7 @@ public class AuthorityService {
                 .toList();
 
         Role savedRole = roleRepository.save(role);
-        log.info("Unassigning {} from role {}", featureNamesToLog, savedRole.getName());
+        logger.log("Unassigned {} -> {}", featureNamesToLog, savedRole.getName());
         return new AuthorityResponse(role.getName(), featureNames, "Unassigned");
     }
 }

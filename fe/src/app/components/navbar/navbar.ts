@@ -11,19 +11,23 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './navbar.css'
 })
 export class NavbarComponent {
+  isMobileMenuOpen = false;
   constructor(public langService: LanguageService) {}
 
   get validateUser(): boolean {
-    // if (typeof localStorage === 'undefined') return false;
-    // return !!localStorage.getItem('token');
-    return true;
+    if (typeof localStorage === 'undefined') return false;
+    return !!localStorage.getItem('token');
   }
 
   roleUserPages = [
-    { name: 'navBar.home-page', path: '/home' },
-    { name: 'navBar.browse-books', path: '/books' },
-    { name: 'navBar.browse-posts', path: '/posts' },
-    { name: 'navBar.my-borrows', path: '/my-borrows' },
-    { name: 'navBar.my-posts', path: '/my-posts' },
+    { name: 'navBar.home-page', path: '/home' }, // i18n
+    { name: 'navBar.browse-books', path: '/books' }, // i18n
+    { name: 'navBar.browse-posts', path: '/posts' }, // i18n
+    { name: 'navBar.my-borrows', path: '/my-borrows' }, // i18n
+    { name: 'navBar.my-posts', path: '/my-posts' }, // i18n
   ];
+
+  toggleMobileMenu() {
+      this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
 }

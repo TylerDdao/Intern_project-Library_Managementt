@@ -18,11 +18,7 @@ public class Borrow extends BaseEntity{
     private long id;
 
     @ManyToOne
-    @JoinTable(
-            name = "Users_Borrows",
-            joinColumns = @JoinColumn(name = "borrow_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
