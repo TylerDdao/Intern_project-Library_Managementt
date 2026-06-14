@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+    <app-sort-side-bar-component
+    [isSearch]="isSearch"
+    (onApply)="handleApply($event)">
+    </app-sort-side-bar-component>
+
+    <div class="posts-scrolling-area">
+        @if (!isSearch) {
+            @for (post of posts; track $index) {
+                <app-post-card-component 
+                [post]="post"
+                (onLikeToggled)="onPostLikeToggled($event)"></app-post-card-component>
+            }
+            <app-pages-component [pages]="postPages" (onApply)="fetchMyPost($event)"></app-pages-component>
+        }
+        @else {
+            @if (searchPost.length > 0) {
+                @for (post of searchPost; track $index) {
+                    <app-post-card-component 
+                    [post]="post"
+                    (onLikeToggled)="onPostLikeToggled($event)"></app-post-card-component>
+                }
+                <app-pages-component [pages]="postPages" (onApply)="fetchMyPost($event)"></app-pages-component>
+            }
+            @else {
+                @if (isPostFound) {
+                    <h1 class="body">{{'browsePosts.Loading'|translate}}...</h1>
+                }
+                @else {
+                    <h1 class="body">{{'browseBook.Book-not-found'|translate}}</h1>
+                }
+            }
+        }
+    </div>
+</div>

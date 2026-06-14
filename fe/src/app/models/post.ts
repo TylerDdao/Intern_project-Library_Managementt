@@ -4,12 +4,13 @@ export interface Post {
     id: number,
     subject: string,
     content: string,
-    likeCount: string,
-    commentCount: string,
+    likeCount: number,
+    commentCount: number,
     book: Book,
     createdBy: string,
     createdAt: string,
     updatedBy?: string,
     updatedAt?: string,
-    liked: boolean
+    liked: boolean,
+    editable: boolean
 }

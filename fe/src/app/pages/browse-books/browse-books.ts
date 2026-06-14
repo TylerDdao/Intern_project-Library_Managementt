@@ -32,6 +32,8 @@ export class BrowseBooks {
   {}
 
   mostPostsBooks:Book[] = []
+  mostBorrowedBooks: Book[] = []
+  newlyArrivedBooks: Book[] = []
   genres: string[] = []
 
   searchBooks: Book[] = []
@@ -53,11 +55,11 @@ export class BrowseBooks {
         if(data.code == "200"){
           if(data.data.totalElements > 0){
             this.searchBooks = data.data.content;
-            this.cdr.detectChanges();
+            this.cdr.markForCheck();
           }
           else{
             this.isBookFound = false;
-            this.cdr.detectChanges();
+            this.cdr.markForCheck();
           }
         }
       },
@@ -88,35 +90,45 @@ export class BrowseBooks {
       }
       
       this.genres = collectedGenres.map(genre => genre.name);
-      this.cdr.detectChanges();
+      this.cdr.markForCheck();
     } catch (err) {
       console.error("Failed to load genres", err);
     }
   }
-
-  // fetchAllBooks():void{
-  //   this.bookService.getAllBooks().subscribe({
-  //     next: (data:any) => {
-  //       if(data.code == "200"){
-  //         this.books = data.data.content;
-  //         this.cdr.detectChanges();
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.error(err);
-  //     }
-  //   })
-  // }
-
-  fetchMostPostsBooks():void{
-    this.bookService.getMostPostsBooks().subscribe({
-      next: (data: any) => {
-        if(data.code == "200"){
-          this.mostPostsBooks = data.data.content;
-          this.cdr.detectChanges();
+  
+  fetchBooks(): void{
+    this.bookService.getMostBorrowedBooks().subscribe({
+      next: (data: any) =>{
+        if(data.code ="200"){
+          this.mostBorrowedBooks = data.data.content;
+          this.cdr.markForCheck();
         }
       },
-      error: (err) =>{
+      error: (err) => {
+        console.error(err)
+      }
+    })
+
+    this.bookService.getMostPostsBooks().subscribe({
+      next: (data: any) =>{
+        if(data.code ="200"){
+          this.mostPostsBooks = data.data.content;
+          this.cdr.markForCheck();
+        }
+      },
+      error: (err) => {
+        console.error(err)
+      }
+    })
+
+    this.bookService.getNewlyArrivedBooks().subscribe({
+      next: (data: any) =>{
+        if(data.code ="200"){
+          this.newlyArrivedBooks = data.data.content;
+          this.cdr.markForCheck();
+        }
+      },
+      error: (err) => {
         console.error(err)
       }
     })
@@ -125,7 +137,7 @@ export class BrowseBooks {
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
       this.fetchAllGenres();
-      this.fetchMostPostsBooks();
+      this.fetchBooks();
     }
   }
 }

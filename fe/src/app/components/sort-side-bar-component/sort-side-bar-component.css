@@ -3,7 +3,8 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
-        width: 300px;
+        width: 100%;
+        max-width: 300px;
         padding: 10px;
         background-color: var(--color-soft-ice);
         border-radius: 10px;
@@ -15,6 +16,7 @@
         align-items: center;
         background: var(--color-cool-gray);
         border-radius: 10px;
+        width: 100%;
         padding: 5px;
     }
 
@@ -48,12 +50,14 @@
 
 @media (max-width: 1023px) {  /* md */
     .side-bar-container{
-        width: 95vw;
+        width: 100%;
         padding: 10px;
         background-color: var(--color-soft-ice);
         border-radius: 10px;
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
         gap: 10px;
     }
     

@@ -1,4 +1,10 @@
-@media (min-width: 768px) {  /* md */
+@media (min-width: 1024px) {  /* md */
+    .container{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
     .post-card{
         padding: 10px;
         background-color: var(--color-soft-ice);
@@ -9,6 +15,97 @@
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto auto auto auto;
         width: 100%;
+        position: relative;
+    }
+
+    .user-info-container{
+        grid-row: 1;
+        grid-column: 1;
+    }
+
+    .book-info-container{
+        grid-row: 1;
+        grid-column: 2;
+    }
+
+    .post-subject-container{
+        grid-row: 2;
+        grid-column: 1/3;
+        place-self: start;
+    }
+
+    .post-content-container{
+        grid-row: 3;
+        grid-column: 1/3;
+    }
+
+    .post-react-container{
+        grid-row: 4;
+        grid-column: 1/3;
+        place-self: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .user-pfp{
+        width: 50px;
+        height: 50px;
+        overflow: hidden;
+        border-radius: 100%;
+    }
+    .book-cover{
+        height: 100px;
+        border-radius: 5px;
+    }
+
+    .comment-box-overlay {
+        /* position: absolute;
+        top: 0;
+        left: 0; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        /* background-color: rgb(from var(--color-deep-charcoal) r g b / 30%); */
+    }
+
+    .comment-box-overlay.inactive{
+        display: none;
+    }
+
+    .edit-button{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+        padding: 5px;
+        border: 1px solid var(--color-sky-blue);
+        border-radius: 10px;
+        color: var(--color-sky-blue);
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .edit-button:hover{
+        background-color: var(--color-sky-blue);
+        color: white;
+    }
+}
+
+@media (max-width: 1023px) {  /* md */
+    .post-card{
+        padding: 10px;
+        background-color: var(--color-soft-ice);
+        border-radius: 10px;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
     }
 
     .user-info-container{
@@ -51,5 +148,35 @@
     .book-cover{
         height: 100px;
         border-radius: 5px;
+    }
+
+    .comment-box-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-deep-charcoal); /* semi-transparent background */
+    }
+
+    .edit-button{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+        padding: 5px;
+        border: 1px solid var(--color-sky-blue);
+        border-radius: 10px;
+        color: var(--color-sky-blue);
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .edit-button:hover{
+        background-color: var(--color-sky-blue);
+        color: white;
     }
 }

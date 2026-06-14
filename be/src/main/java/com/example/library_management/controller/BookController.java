@@ -44,7 +44,7 @@ public class BookController {
     }
 
     @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
-    @GetMapping("/books/new-arrived")
+    @GetMapping("/books/newly-arrived")
     public ResponseEntity<ApiResponse<Page<BookResponse>>> getRecentBooks(
             @RequestParam(defaultValue = "5") int dayRange,
             @RequestParam(defaultValue = "0") int page,

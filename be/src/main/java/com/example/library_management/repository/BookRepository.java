@@ -59,9 +59,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Query("""
     SELECT b FROM Book b
-    WHERE b.createdAt >= :since
+    ORDER BY createdAt DESC
     """)
-    Page<Book> findRecentBooks(@Param("since") LocalDateTime since, Pageable pageable);
+    Page<Book> findMostRecentBooks(Pageable pageable);
 
     @Query("""
     SELECT b FROM Book b

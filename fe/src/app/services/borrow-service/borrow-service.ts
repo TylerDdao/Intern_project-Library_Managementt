@@ -1,12 +1,13 @@
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BorrowService {
-  private baseUrl = 'http://localhost:8080/api';
+  private baseUrl = `${environment.apiUrl}`;
 
   constructor(
     private http: HttpClient,
@@ -32,7 +33,7 @@ export class BorrowService {
   }
 
   getBorrowsByUserId(userId: number, page: number = 0, limit: number = 10) {
-    return this.http.get(`${this.baseUrl}/borrows?page=${page}&limit=${limit}&userid=${userId}`, {
+    return this.http.get(`${this.baseUrl}/borrows?page=${page}&limit=${limit}&userId=${userId}`, {
       headers: this.getAuthHeaders()
     });
   }

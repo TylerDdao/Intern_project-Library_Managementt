@@ -1,5 +1,5 @@
 <div class="borrow-card">
-    <img src="/book-covers/{{bookCover}}.jpg" alt="{{borrow.book.title}}" class="book-cover"/>
+    <img src="/book-covers/{{bookCover}}.jpg" alt="{{borrow.book.title}}" class="book-cover" (error)="onImageError($event)"/>
     <div class="book-info-area">
         <h1 class="subheadline font-bold">{{borrow.book.title}}</h1>
         <h2 class="caption-1">{{'book.Author'|translate}}: {{borrow.book.author}}</h2>

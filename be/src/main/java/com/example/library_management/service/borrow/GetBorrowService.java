@@ -22,7 +22,7 @@ public class GetBorrowService {
     @Autowired
     private BorrowRepository borrowRepository;
 
-    public Page<BorrowResponse> getBorrows(int page, int limit, String sortBy, String sortDir, Long userId){
+    public Page<BorrowResponse> getBorrows(int page, int limit, String sortBy, String sortDir, Long userId, String searchQuery){
         Sort sort = sortDir.equalsIgnoreCase("desc")
                 ? Sort.by(sortBy).descending()
                 : Sort.by(sortBy).ascending();
@@ -32,18 +32,6 @@ public class GetBorrowService {
         Page<Borrow> borrows = userId != null
                 ? borrowRepository.findByUserId(userId, pageable)
                 : borrowRepository.findAll(pageable);
-
-        return borrows.map(BorrowResponse::new);
-    }
-
-    public Page<BorrowResponse> getNearestBorrowByBookId(int page, int limit, String sortBy, String sortDir, Long bookId){
-        Sort sort = sortDir.equalsIgnoreCase("desc")
-                ? Sort.by(sortBy).descending()
-                : Sort.by(sortBy).ascending();
-
-        Pageable pageable = PageRequest.of(page, limit, sort);
-
-        Page<Borrow> borrows = borrowRepository.findByBookId(bookId, pageable);
 
         return borrows.map(BorrowResponse::new);
     }

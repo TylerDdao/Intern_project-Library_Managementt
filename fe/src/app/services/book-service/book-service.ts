@@ -2,12 +2,13 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { SideBarQuery } from '../../components/sort-side-bar-component/sort-side-bar-component';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BookService {
-  private baseUrl = 'http://localhost:8080/api';
+  private baseUrl = `${environment.apiUrl}`;
 
   constructor(
     private http: HttpClient,
@@ -38,6 +39,18 @@ export class BookService {
 
   getMostPostsBooks(page: number = 0, limit: number = 10) {
     return this.http.get(`${this.baseUrl}/books/most-posts?page=${page}&limit=${limit}`, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
+  getMostBorrowedBooks(page: number = 0, limit: number = 10) {
+    return this.http.get(`${this.baseUrl}/books/most-borrowed?page=${page}&limit=${limit}`, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
+  getNewlyArrivedBooks(page: number = 0, limit: number = 10) {
+    return this.http.get(`${this.baseUrl}/books/newly-arrived?page=${page}&limit=${limit}`, {
       headers: this.getAuthHeaders()
     });
   }

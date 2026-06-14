@@ -1,21 +1,27 @@
-import { Component, ElementRef, Input, SimpleChanges, ViewChild, OnChanges, OnInit, OnDestroy } from '@angular/core';
+import { Component, ElementRef, Input, SimpleChanges, ViewChild, OnChanges, OnInit, OnDestroy, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Post } from '../../models/post';
-import { formatNumber } from '../../util/format-number';
+import { formatNumber, formatTime } from '../../util/format-number';
 import { LanguageService } from '../../services/language-service/language-service';
 import { Subscription } from 'rxjs';
+import { PostsService } from '../../services/posts-service/posts-service';
+import { CommentBoxComponent } from '../comment-box-component/comment-box-component';
+import { CommentService } from '../../services/comment-service/comment-service';
+import { Comment } from '../../models/comment';
 
 @Component({
   selector: 'app-post-card-component',
-  imports: [TranslateModule],
+  imports: [TranslateModule, CommentBoxComponent],
   templateUrl: './post-card-component.html',
   styleUrl: './post-card-component.css',
 })
 export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
   @Input({ required: true }) post!: Post;
+  @Output() onLikeToggled = new EventEmitter<Post>();
 
-  formattedCreatedAt: string = '';
   bookCover: string = '';
+  isOpenComment:boolean = false;
+  comments!: Comment[]
   
   private langSubscription!: Subscription;
 
@@ -23,23 +29,68 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
 
   constructor(
     public langService: LanguageService, 
-    private translate: TranslateService
+    private translate: TranslateService,
+    private cdr: ChangeDetectorRef,
+    private postsService: PostsService,
+    private commentService: CommentService
   ) {}
+
+  fetchComments(){
+    this.commentService.getComments(this.post.id, 0, 10).subscribe({
+      next: (data: any) => {
+        if(data.code == "200") {
+          this.comments = data.data.content
+          this.cdr.markForCheck();
+        }
+      }
+    })
+  }
+
+  toggleLike() {
+    this.postsService.toggleLike(this.post.id).subscribe({
+        next: (data: any) => {
+            if (data.code == "200") {
+                this.post = {
+                    ...this.post,
+                    liked: !this.post.liked,
+                    likeCount: this.post.liked ? this.post.likeCount - 1 : this.post.likeCount + 1
+                };
+                this.onLikeToggled.emit(this.post);
+                this.cdr.markForCheck();
+            }
+        },
+        error: (err) => console.error(err)
+    });
+  }
+
+  toggleCommentBox(){
+    this.fetchComments();
+    this.isOpenComment = !this.isOpenComment;
+    this.cdr.markForCheck();
+  }
+
+  handleOpenComment(){
+    this.fetchComments();
+    this.isOpenComment = true;
+    this.cdr.markForCheck();
+  }
+
+  handleCloseComment(){
+    this.isOpenComment = false
+    this.cdr.markForCheck();
+  }
 
   ngOnInit(): void {
     // // 1. Subscribe ONLY ONCE during component creation
-    // this.langSubscription = this.translate.onLangChange.subscribe(() => {
-    //   this.formatDate();
-    // });
-  }
-  formatDate() {
-    throw new Error('Method not implemented.');
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      formatTime(this.post.createdAt, this.langService.currentLang)
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['post'] && this.post) {
       this.bookCover = this.post.book.title.replaceAll(' ', '-').toLowerCase();
-      this.formatDate();
+      formatTime(this.post.createdAt, this.langService.currentLang)
     }
   }
 
@@ -58,7 +109,11 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
     return formatNumber(Number(this.post.commentCount));
   }
 
-  toggleLike(){
-    this.post.liked = !this.post.liked;
+  get formattedPostedAt(): string{
+    return formatTime(this.post.createdAt, this.langService.currentLang)
+  }
+
+  onImageError(event: Event): void {
+    (event.target as HTMLImageElement).src = '/book-covers/default.jpg';
   }
 }

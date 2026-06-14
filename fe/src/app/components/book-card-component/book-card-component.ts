@@ -18,4 +18,8 @@ export class BookCardComponent {
         this.bookCover = this.book.title.replaceAll(' ', '-').toLowerCase();
     }
   }
+
+  onImageError(event: Event): void {
+    (event.target as HTMLImageElement).src = '/book-covers/default.jpg';
+  }
 }

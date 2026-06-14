@@ -11,6 +11,7 @@
         display: flex;
         flex-direction: column;
         width: 100%;
+        min-width: 0;
         gap: 20px;
     }
 
@@ -24,13 +25,13 @@
 }
 
 @media (max-width: 1023px) {
-    .container{
+    .container {
         padding: 30px;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items:center;
-        width: 100vw;
+        align-items: center;
+        width: 100%;
         gap: 30px;
     }
 
@@ -45,7 +46,7 @@
         display: flex;
         flex-direction: row;
         overflow-x: auto;
-        width: 100%;
+        width: calc(100vw - 60px); /* full viewport width minus container padding */
         gap: 10px;
     }
 }

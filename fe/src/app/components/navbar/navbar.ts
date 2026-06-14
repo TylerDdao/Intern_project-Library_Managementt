@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, PLATFORM_ID } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language-service/language-service';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +13,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class NavbarComponent {
   isMobileMenuOpen = false;
-  constructor(public langService: LanguageService) {}
+  fullName: string = "";
+  constructor(public langService: LanguageService, private cdr: ChangeDetectorRef, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   get validateUser(): boolean {
     if (typeof localStorage === 'undefined') return false;
@@ -29,5 +31,13 @@ export class NavbarComponent {
 
   toggleMobileMenu() {
       this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  ngOnInit() {
+    if(isPlatformBrowser(this.platformId)){
+      const user = JSON.parse(localStorage.getItem('user') ?? '{}');
+      this.fullName = user.fullName || '';
+      this.cdr.markForCheck();
+    }
   }
 }

@@ -69,6 +69,18 @@
   "browseBook": {
     "Top-borrowed-books": "Top borrowed books",
     "People-are-writing-about-these-books": "People are writing about these books",
-    "Newly-arrived": "Newly arrived"
+    "Newly-arrived": "Newly arrived",
+    "Result": "TODO",
+    "Book-not-found": "TODO"
+  },
+  "browseBooks": {
+    "Loading": "TODO",
+    "Book-not-found": "TODO"
+  },
+  "browsePosts": {
+    "Loading": "TODO"
+  },
+  "sortBar": {
+    "search": "TODO"
   }
 }

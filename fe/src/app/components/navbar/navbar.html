@@ -23,14 +23,14 @@
             <div class="flex items-center space-x-[5px]">
                 <span class="material-symbols-outlined icon-size">account_circle</span>
                 <div>
-                    <h1 class="body">{{('navBar.hello'|translate) + ': ' + 'Name'}}</h1>
+                    <h1 class="headline">{{('navBar.hello'|translate)}}: {{fullName}}</h1>
                 </div>
             </div>
         </div>
 
         <div class="mobile-setting-icon lg:hidden">
-            <span class="material-symbols-outlined" (click)="toggleMobileMenu()">menu</span>
-            <span class="material-symbols-outlined icon-size">notifications</span>
+            <span class="material-symbols-outlined cursor-default" (click)="toggleMobileMenu()">menu</span>
+            <span class="material-symbols-outlined icon-size cursor-default">notifications</span>
         </div>
         }
         @else {
@@ -68,7 +68,7 @@
             <div class="flex items-center space-x-[5px]">
                 <span class="material-symbols-outlined icon-size">account_circle</span>
                 <div>
-                    <h1 class="body">{{('navBar.hello'|translate) + ': ' + 'Name'}}</h1>
+                    <h1 class="headline">{{('navBar.hello'|translate)}}: {{fullName}}</h1>
                 </div>
             </div>
         </div>

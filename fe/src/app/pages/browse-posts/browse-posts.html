@@ -7,9 +7,30 @@
     </app-sort-side-bar-component>
 
     <div class="posts-scrolling-area">
-        @if (posts.length>0) {
+        @if (!isSearch) {
             @for (post of posts; track $index) {
-                <app-post-card-component [post]="post"></app-post-card-component>
+                <app-post-card-component 
+                [post]="post"
+                (onLikeToggled)="onPostLikeToggled($event)"></app-post-card-component>
+            }
+            <app-pages-component [pages]="postPages" (onApply)="fetchAllPosts($event)"></app-pages-component>
+        }
+        @else {
+            @if (searchPost.length > 0) {
+                @for (post of searchPost; track $index) {
+                    <app-post-card-component 
+                    [post]="post"
+                    (onLikeToggled)="onPostLikeToggled($event)"></app-post-card-component>
+                }
+                <app-pages-component [pages]="postPages" (onApply)="fetchSearchPosts($event)"></app-pages-component>
+            }
+            @else {
+                @if (isPostFound) {
+                    <h1 class="body">{{'browsePosts.Loading'|translate}}...</h1>
+                }
+                @else {
+                    <h1 class="body">{{'browseBook.Book-not-found'|translate}}</h1>
+                }
             }
         }
     </div>

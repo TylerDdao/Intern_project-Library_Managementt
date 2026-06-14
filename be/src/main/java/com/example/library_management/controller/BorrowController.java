@@ -27,22 +27,11 @@ public class BorrowController {
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "dueDate") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir,
-            @RequestParam(required = false) Long userId) {
+            @RequestParam(required = true) Long userId,
+            @RequestParam(required = false) String searchQuery) {
+        System.out.println("Borrow called");
         return ResponseEntity.ok(
-                ApiResponse.success(getBorrowService.getBorrows(page, limit, sortBy, sortDir, userId))
-        );
-    }
-
-    @PreAuthorize("@securityService.hasAccess('GET_BORROW')")
-    @GetMapping("/borrow/nearest")
-    public ResponseEntity<ApiResponse<Page<BorrowResponse>>> getNearestBorrowByBookId(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int limit,
-            @RequestParam(defaultValue = "dueDate") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir,
-            @RequestParam(required = true) Long bookId) {
-        return ResponseEntity.ok(
-                ApiResponse.success(getBorrowService.getBorrows(page, limit, sortBy, sortDir, bookId))
+                ApiResponse.success(getBorrowService.getBorrows(page, limit, sortBy, sortDir, userId, searchQuery))
         );
     }
 }

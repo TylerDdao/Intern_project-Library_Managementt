@@ -21,8 +21,9 @@ public class PostResponse {
     private String updatedBy;
     private LocalDateTime updatedAt;
     private BookResponse book;
+    private boolean isEditable;
 
-    public PostResponse(Post post, boolean isLiked) {
+    public PostResponse(Post post, boolean isLiked, boolean isEditable) {
         this.id = post.getId();
         this.subject = post.getSubject();
         this.content = post.getContent();
@@ -34,5 +35,6 @@ public class PostResponse {
         this.updatedBy = post.getUpdatedBy();
         this.updatedAt = post.getUpdatedAt();
         this.book = new BookResponse(post.getBook());
+        this.isEditable = isEditable;
     }
 }

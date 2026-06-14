@@ -1,12 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../environments/environment';
+import { SideBarQuery } from '../../components/sort-side-bar-component/sort-side-bar-component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostsService {
-  private baseUrl = 'http://localhost:8080/api';
+  private baseUrl = `${environment.apiUrl}`;
 
   constructor(
     private http: HttpClient,
@@ -33,6 +35,24 @@ export class PostsService {
 
   getAllPost(page: number = 0, limit: number = 10) {
     return this.http.get(`${this.baseUrl}/posts?page=${page}&limit=${limit}`, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
+  getPostsByQuery(query: SideBarQuery, page: number = 0, limit: number = 10){
+      return this.http.get(`${this.baseUrl}/posts?page=${page}&limit=${limit}&searchQuery=${query.searchQuery}&filterBy=${query.filterBy}&sortBy=createdAt`,{
+        headers: this.getAuthHeaders()
+      });
+  }
+
+  getMyPosts(userId: number, page: number = 0, limit: number = 10){
+      return this.http.get(`${this.baseUrl}/posts/my-posts?page=${page}&limit=${limit}&userId=${userId}`,{
+        headers: this.getAuthHeaders()
+      });
+  }
+
+  toggleLike(postId: number) {
+    return this.http.post(`${this.baseUrl}/post/${postId}/like`, {}, {
       headers: this.getAuthHeaders()
     });
   }

@@ -49,7 +49,7 @@ public class GetBookService {
         Pageable pageable = PageRequest.of(page, limit, sort);
         Page<Book> books;
         LocalDateTime since = LocalDateTime.now().minusDays(range);
-        books = bookRepository.findRecentBooks(since, pageable);
+        books = bookRepository.findMostRecentBooks(pageable);
         return books.map(BookResponse::new);
     }
 

@@ -1,8 +1,9 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { Post } from '../../models/post';
 import { formatNumber, formatTime } from '../../util/format-number';
-import { Component, ElementRef, Input, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { LanguageService } from '../../services/language-service/language-service';
+import { PostsService } from '../../services/posts-service/posts-service';
 
 @Component({
   selector: 'app-mini-post-card-component',
@@ -12,10 +13,32 @@ import { LanguageService } from '../../services/language-service/language-servic
 })
 export class MiniPostCardComponent {
   @Input({required: true}) post!: Post
+  @Output() onLikeToggled = new EventEmitter<Post>();
 
   @ViewChild('myPost') myChart!: ElementRef;
   bookCover: string = '';
-  constructor(public langService: LanguageService) {}
+  constructor(
+    public langService: LanguageService,
+    private cdr: ChangeDetectorRef,
+    private postsService: PostsService
+  ) {}
+
+  toggleLike() {
+    this.postsService.toggleLike(this.post.id).subscribe({
+        next: (data: any) => {
+            if (data.code == "200") {
+                this.post = {
+                    ...this.post,
+                    liked: !this.post.liked,
+                    likeCount: this.post.liked ? this.post.likeCount - 1 : this.post.likeCount + 1
+                };
+                this.onLikeToggled.emit(this.post);
+                this.cdr.markForCheck();
+            }
+        },
+        error: (err) => console.error(err)
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['post'] && this.post) {
@@ -34,5 +57,9 @@ export class MiniPostCardComponent {
 
   get formattedPostedAt(): string{
     return formatTime(this.post.createdAt, this.langService.currentLang)
+  }
+
+  onImageError(event: Event): void {
+    (event.target as HTMLImageElement).src = '/book-covers/default.jpg';
   }
 }

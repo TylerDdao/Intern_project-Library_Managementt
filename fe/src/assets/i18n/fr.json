@@ -1,7 +1,8 @@
 {
   "book": {
     "Author": "TODO",
-    "Genres": "TODO"
+    "Genres": "TODO",
+    "Title": "TODO"
   },
   "borrow": {
     "Borrow-on": "TODO",
@@ -12,20 +13,25 @@
     "Late": "TODO"
   },
   "navBar": {
-    "please-login-to-continue": "TODO",
     "hello": "TODO"
   },
-  "post": {
-    "posted-at": "TODO"
-  },
   "search": {
-    "Filter-by": "TODO",
-    "Sort-by": "TODO"
+    "Sort-by": "TODO",
+    "Filter-by": "TODO"
   },
   "browseBook": {
     "Top-borrowed-books": "TODO",
     "People-are-writing-about-these-books": "TODO",
-    "Newly-arrived": "TODO"
+    "Newly-arrived": "TODO",
+    "Result": "TODO",
+    "Book-not-found": "TODO"
+  },
+  "browseBooks": {
+    "Loading": "TODO",
+    "Book-not-found": "TODO"
+  },
+  "browsePosts": {
+    "Loading": "TODO"
   },
   "forgotPassword": {
     "forgot-password": "TODO",
@@ -62,5 +68,8 @@
     "forgot-password": "TODO",
     "dont-have-an-account-yet": "TODO",
     "signup": "TODO"
+  },
+  "sortBar": {
+    "search": "TODO"
   }
 }

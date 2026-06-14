@@ -56,4 +56,8 @@ export class BorrowCardComponent implements OnChanges {
             day: '2-digit',
         });
     }
+
+    onImageError(event: Event): void {
+        (event.target as HTMLImageElement).src = '/book-covers/default.jpg';
+    }
 }

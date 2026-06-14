@@ -1,0 +1,40 @@
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { environment } from '../../../environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CommentService {
+  private baseUrl = `${environment.apiUrl}`;
+
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
+
+  
+
+  protected getAuthHeaders(): HttpHeaders {
+    let headers = new HttpHeaders();
+    
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem('token');
+      const lang = localStorage.getItem('lang') ?? 'en';
+      
+      if (token) {
+        headers = headers.set('Authorization', `Bearer ${token}`);
+      }
+      headers = headers.set('Accept-Language', lang);
+    }
+    
+    return headers;
+  }
+
+  getComments(postId: number, page: number = 0, limit: number = 10) {
+    return this.http.get(`${this.baseUrl}/comments?page=${page}&limit=${limit}&postId=${postId}`, {
+      headers: this.getAuthHeaders()
+    });
+  }
+}

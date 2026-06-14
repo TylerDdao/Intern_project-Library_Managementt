@@ -23,7 +23,7 @@
         <div class="posts-scrolling-area">
             @if (posts.length > 0) {
                 @for (post of posts; track $index) {
-                    <app-mini-post-card-component [post]="post"></app-mini-post-card-component>
+                    <app-mini-post-card-component [post]="post" (onLikeToggled)="onPostLikeToggled($event)"></app-mini-post-card-component>
                 }
             } @else {
                 <p>Loading...</p>

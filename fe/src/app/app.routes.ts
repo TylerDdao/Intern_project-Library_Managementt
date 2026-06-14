@@ -6,6 +6,8 @@ import { authGuard } from './guards/auth-guard';
 import { Signup } from './pages/signup/signup';
 import { ForgotPassword } from './pages/forgot-password/forgot-password';
 import { BrowsePosts } from './pages/browse-posts/browse-posts';
+import { MyBorrows } from './pages/my-borrows/my-borrows';
+import { MyPosts } from './pages/my-posts/my-posts';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -16,4 +18,6 @@ export const routes: Routes = [
     { path: 'home', component: Home, canActivate: [authGuard] },
     { path: 'books', component: BrowseBooks, canActivate: [authGuard] },
     { path: 'posts', component: BrowsePosts, canActivate: [authGuard] },
+    { path: 'my-borrows', component: MyBorrows, canActivate: [authGuard]},
+    { path: 'my-posts', component: MyPosts, canActivate: [authGuard]}
 ];

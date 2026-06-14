@@ -33,7 +33,7 @@ export class Home {
   ) 
   {}
 
-  fetchAllBorrow():void{
+  fetchBorrowsByUserId():void{
     const userId = JSON.parse(localStorage.getItem("user") ?? "{}").id
     if (!userId) return;
     this.borrowService.getBorrowsByUserId(userId).subscribe({
@@ -41,7 +41,7 @@ export class Home {
         if(data.code == "200"){
           this.borrows = data.data.content;
           console.log('borrows:', data);
-          this.cdr.detectChanges();
+          this.cdr.markForCheck();
         }
       }
     })
@@ -53,7 +53,7 @@ export class Home {
         console.log(data)
         if(data.code == "200"){
           this.posts = data.data.content;
-          this.cdr.detectChanges();
+          this.cdr.markForCheck();
         }
       },
       error: (err) => {
@@ -66,7 +66,15 @@ export class Home {
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
       this.fetchAllPosts()
-      this.fetchAllBorrow()
+      this.fetchBorrowsByUserId()
+    }
+  }
+
+  onPostLikeToggled(updatedPost: Post) {
+    const index = this.posts.findIndex(p => p.id === updatedPost.id);
+    if (index !== -1) {
+        this.posts[index] = updatedPost;
+        this.cdr.markForCheck();
     }
   }
 }
