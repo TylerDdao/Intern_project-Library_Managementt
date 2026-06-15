@@ -61,5 +61,16 @@ export class BookService {
     })
   }
 
+  getBooksByGenre(genre: string, page: number = 0, limit: number = 10){
+    return this.http.get(`${this.baseUrl}/books/books-count?page=${page}&limit=${limit}&genre=${genre}`,{
+      headers: this.getAuthHeaders()
+    })
+  }
+// /books/books-count/borrowed
+  getBorrowedBooksByGenre(genre: string, page: number = 0, limit: number = 10){
+    return this.http.get(`${this.baseUrl}/books/books-count/borrowed?page=${page}&limit=${limit}&genre=${genre}`,{
+      headers: this.getAuthHeaders()
+    })
+  }
 }
 

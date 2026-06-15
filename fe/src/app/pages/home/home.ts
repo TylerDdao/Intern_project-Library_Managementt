@@ -12,6 +12,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { BorrowService } from '../../services/borrow-service/borrow-service';
 import { Borrow } from '../../models/borrow';
 import { MiniPostCardComponent } from '../../components/mini-post-card-component/mini-post-card-component';
+import { GenreService } from '../../services/genre-service/genre-service';
+import { BookService } from '../../services/book-service/book-service';
+import { Genre } from '../../models/genre';
 
 @Component({
   selector: 'app-home',
@@ -23,15 +26,70 @@ export class Home {
   posts:Post[] = [];
   borrows:Borrow[] = [];
 
+  genres:Genre[] = [];
+  bookCountByGenre: { [key: string]: number } = {};
+  borrowedBookCountByGenre: { [key: string]: number } = {};
+  bookGenreLabels: string[] = [];
+  bookGenreValues: number[] = [];
+  borrowedBookGenreValues: number[] = [];
+
   constructor(
     public langService: LanguageService,
     private postsService: PostsService,
     private borrowService: BorrowService,
+    private genreService: GenreService,
+    private bookService: BookService,
     protected router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef,
   ) 
   {}
+
+  fetchBookCountsByGenre(): void {
+    this.genreService.getAllGenres().subscribe({
+        next: (data: any) => {
+            if (data.code == "200") {
+                this.genres = data.data.content;
+                let bookCompleted = 0;
+                let borrowCompleted = 0;
+
+                for (const genre of this.genres) {
+                    this.bookService.getBooksByGenre(genre.name).subscribe({
+                        next: (bookData: any) => {
+                            if (bookData.code == "200") {
+                                this.bookCountByGenre[genre.name] = bookData.data.totalElements;
+                                bookCompleted++;
+
+                                if (bookCompleted === this.genres.length) {
+                                    this.bookGenreLabels = Object.keys(this.bookCountByGenre);
+                                    this.bookGenreValues = Object.values(this.bookCountByGenre);
+                                    this.cdr.markForCheck();
+                                }
+                            }
+                        },
+                        error: (err) => console.error(err)
+                    });
+
+                    this.bookService.getBorrowedBooksByGenre(genre.name).subscribe({
+                        next: (borrowData: any) => {
+                            if (borrowData.code == "200") {
+                                this.borrowedBookCountByGenre[genre.name] = borrowData.data.totalElements;
+                                borrowCompleted++;
+
+                                if (borrowCompleted === this.genres.length) {
+                                    this.borrowedBookGenreValues = Object.values(this.borrowedBookCountByGenre);
+                                    this.cdr.markForCheck();
+                                }
+                            }
+                        },
+                        error: (err) => console.error(err)
+                    });
+                }
+            }
+        },
+        error: (err) => console.error(err)
+    });
+  }
 
   fetchBorrowsByUserId():void{
     const userId = JSON.parse(localStorage.getItem("user") ?? "{}").id
@@ -40,9 +98,11 @@ export class Home {
       next: (data:any) => {
         if(data.code == "200"){
           this.borrows = data.data.content;
-          console.log('borrows:', data);
           this.cdr.markForCheck();
         }
+      },
+      error: (err) => {
+        console.error(err)
       }
     })
   }
@@ -67,6 +127,7 @@ export class Home {
     if(isPlatformBrowser(this.platformId)){
       this.fetchAllPosts()
       this.fetchBorrowsByUserId()
+      this.fetchBookCountsByGenre()
     }
   }
 
@@ -76,5 +137,13 @@ export class Home {
         this.posts[index] = updatedPost;
         this.cdr.markForCheck();
     }
+  }
+
+  get booksCountByGenreKeys(): string[] {
+    return Object.keys(this.bookCountByGenre);
+  }
+
+  get booksCountByGenreValues(): number[] {
+    return Object.values(this.bookCountByGenre);
   }
 }

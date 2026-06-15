@@ -2,20 +2,30 @@
 <div class="home-container">
     <div class="chart-1">
         <h1 class="text-deep-charcoal header headline">{{'home.Number-of-books-by-genre' |translate}}</h1>
-        <app-chart-component
-        [labels]="['Fiction', 'Non-Fiction', 'Science', 'History']"
-        [data]="[120, 90, 60, 30]"
-        label="Books"
-        type="bar"/>
+        @if (bookGenreLabels.length > 0) {
+            <app-chart-component
+                [labels]="bookGenreLabels"
+                [data]="bookGenreValues"
+                label="Books"
+                type="bar"/>
+        } 
+        @else {
+            <p class="body">Loading...</p>
+        }       
     </div>
 
     <div class="chart-2">
         <h1 class="text-deep-charcoal header headline">{{'home.Number-of-borrowed-books-by-genre' |translate}}</h1>
-        <app-chart-component
-        [labels]="['Fiction', 'Non-Fiction', 'Science', 'History']"
-        [data]="[100, 70, 40, 10]"
-        label="Books"
-        type="bar"/>
+        @if (bookGenreLabels.length > 0) {
+            <app-chart-component
+            [labels]="bookGenreLabels"
+            [data]="borrowedBookGenreValues"
+            label="Books"
+            type="bar"/>
+        }
+        @else {
+            <p class="body">Loading...</p>
+        } 
     </div>
 
     <div class="posts-area">

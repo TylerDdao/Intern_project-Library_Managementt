@@ -7,10 +7,9 @@
         gap:30px
     }
 
-    .posts-scrolling-area{
+    .posts-area{
         display: flex;
         flex-direction: column;
-        overflow-y: auto;
         width: 100%;
         gap: 30px;
     }
@@ -39,10 +38,9 @@
         gap:30px
     }
 
-    .posts-scrolling-area{
+    .posts-area{
         display: flex;
         flex-direction: column;
-        overflow-y: auto;
         width: 100%;
         gap: 30px;
     }

@@ -74,5 +74,13 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     ORDER BY (SELECT COUNT(br) FROM Borrow br WHERE br.book = b) DESC
     """)
     Page<Book> findMostBorrowedBooks(Pageable pageable);
+
+    @Query("""
+    SELECT DISTINCT b FROM Book b
+    JOIN b.genres g
+    JOIN Borrow br ON br.book = b
+    WHERE g.name = :genre
+    """)
+    Page<Book> findBorrowedBooksByGenre(@Param("genre") String genre, Pageable pageable);
 }
 

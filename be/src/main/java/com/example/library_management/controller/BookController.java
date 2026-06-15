@@ -3,6 +3,7 @@ package com.example.library_management.controller;
 import com.example.library_management.dto.request.BookRequest;
 import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.dto.response.BookResponse;
+import com.example.library_management.model.Book;
 import com.example.library_management.service.book.CreateBookService;
 import com.example.library_management.service.book.DeleteBookService;
 import com.example.library_management.service.book.GetBookService;
@@ -28,6 +29,33 @@ public class BookController {
 
     @Autowired
     DeleteBookService deleteBookService;
+
+    @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
+    @GetMapping("/books/books-count/borrowed")
+    public ResponseEntity<ApiResponse<Page<BookResponse>>> getBorrowedBooksByGenre(
+            @RequestParam(required = true) String genre,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int limit,
+            @RequestParam(defaultValue =  "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir) {
+        System.out.println("Book Count called");
+        return ResponseEntity.ok(
+                ApiResponse.success(getBookService.getBorrowedBooksByGenre(page, limit, sortBy, sortDir, genre))
+        );
+    }
+
+    @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
+    @GetMapping("/books/books-count")
+    public ResponseEntity<ApiResponse<Page<BookResponse>>> getBooksByGenre(
+            @RequestParam(required = true) String genre,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int limit,
+            @RequestParam(defaultValue =  "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir) {
+        return ResponseEntity.ok(
+                ApiResponse.success(getBookService.getBooksByGenre(page, limit, sortBy, sortDir, genre))
+        );
+    }
 
     @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
     @GetMapping("/books")

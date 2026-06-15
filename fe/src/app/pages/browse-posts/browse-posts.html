@@ -10,7 +10,7 @@
         <button class="create-post-button headline">Create Post</button>
     </div>
 
-    <div class="posts-scrolling-area">
+    <div class="posts-area">
         @if (!isSearch) {
             @for (post of posts; track $index) {
                 <app-post-card-component 

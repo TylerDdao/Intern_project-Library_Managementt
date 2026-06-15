@@ -23,6 +23,32 @@ public class GetBookService {
     @Autowired
     BookRepository bookRepository;
 
+    public Page<BookResponse> getBorrowedBooksByGenre(int page, int limit, String sortBy, String sortDir, String genre){
+        Sort sort = sortDir.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, limit);
+        Page<Book> books;
+
+        books = bookRepository.findBorrowedBooksByGenre(genre, pageable);
+
+        return books.map(BookResponse::new);
+    }
+
+    public Page<BookResponse> getBooksByGenre(int page, int limit, String sortBy, String sortDir, String genre){
+        Sort sort = sortDir.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, limit);
+        Page<Book> books;
+
+        books = bookRepository.findByGenres_NameContaining(genre, pageable);
+
+        return books.map(BookResponse::new);
+    }
+
     public Page<BookResponse> getMostBorrowedBooks(int page, int limit){
         Pageable pageable = PageRequest.of(page,limit);
         Page<Book> books;
