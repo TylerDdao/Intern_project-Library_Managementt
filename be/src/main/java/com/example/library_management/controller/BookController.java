@@ -2,8 +2,7 @@ package com.example.library_management.controller;
 
 import com.example.library_management.dto.request.BookRequest;
 import com.example.library_management.dto.response.ApiResponse;
-import com.example.library_management.dto.response.BookResponse;
-import com.example.library_management.model.Book;
+import com.example.library_management.dto.response.book.BookResponse;
 import com.example.library_management.service.book.CreateBookService;
 import com.example.library_management.service.book.DeleteBookService;
 import com.example.library_management.service.book.GetBookService;
@@ -31,14 +30,26 @@ public class BookController {
     DeleteBookService deleteBookService;
 
     @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
+    @GetMapping("books/unavailable")
+    public ResponseEntity<ApiResponse<Page<BookResponse>>> getUnavailableBooks(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int limit,
+            @RequestParam(defaultValue = "title") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir
+    ){
+        return ResponseEntity.ok(
+                ApiResponse.success(getBookService.getUnavailableBooks(page, limit, sortBy, sortDir))
+        );
+    }
+
+    @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
     @GetMapping("/books/books-count/borrowed")
     public ResponseEntity<ApiResponse<Page<BookResponse>>> getBorrowedBooksByGenre(
             @RequestParam(required = true) String genre,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
-            @RequestParam(defaultValue =  "id") String sortBy,
+            @RequestParam(defaultValue =  "title") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir) {
-        System.out.println("Book Count called");
         return ResponseEntity.ok(
                 ApiResponse.success(getBookService.getBorrowedBooksByGenre(page, limit, sortBy, sortDir, genre))
         );
@@ -50,7 +61,7 @@ public class BookController {
             @RequestParam(required = true) String genre,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
-            @RequestParam(defaultValue =  "id") String sortBy,
+            @RequestParam(defaultValue =  "title") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir) {
         return ResponseEntity.ok(
                 ApiResponse.success(getBookService.getBooksByGenre(page, limit, sortBy, sortDir, genre))
@@ -63,7 +74,7 @@ public class BookController {
             @RequestParam(required = false) String searchQuery,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
-            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "title") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir,
             @RequestParam(required = false) List<String> filterBy) {
         return ResponseEntity.ok(
@@ -77,7 +88,7 @@ public class BookController {
             @RequestParam(defaultValue = "5") int dayRange,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
-            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "title") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir) {
         return ResponseEntity.ok(
                 ApiResponse.success(getBookService.getRecentBooks(page, limit, sortBy, sortDir, dayRange))

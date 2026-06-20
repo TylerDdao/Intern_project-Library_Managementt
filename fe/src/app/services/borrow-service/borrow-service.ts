@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { getAuthHeaders } from '../auth-service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,27 +15,9 @@ export class BorrowService {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  
-
-  protected getAuthHeaders(): HttpHeaders {
-    let headers = new HttpHeaders();
-    
-    if (isPlatformBrowser(this.platformId)) {
-      const token = localStorage.getItem('token');
-      const lang = localStorage.getItem('lang') ?? 'en';
-      
-      if (token) {
-        headers = headers.set('Authorization', `Bearer ${token}`);
-      }
-      headers = headers.set('Accept-Language', lang);
-    }
-    
-    return headers;
-  }
-
   getBorrowsByUserId(userId: number, page: number = 0, limit: number = 10) {
     return this.http.get(`${this.baseUrl}/borrows?page=${page}&limit=${limit}&userId=${userId}`, {
-      headers: this.getAuthHeaders()
+      headers: getAuthHeaders(this.platformId)
     });
   }
 }

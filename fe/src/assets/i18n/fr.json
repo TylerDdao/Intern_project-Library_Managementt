@@ -1,75 +1,90 @@
 {
   "book": {
-    "Author": "TODO",
-    "Genres": "TODO",
-    "Title": "TODO"
+    "Title": "Titre",
+    "Author": "Auteur",
+    "Genres": "Genres"
   },
   "borrow": {
-    "Borrow-on": "TODO",
-    "Please-return-by": "TODO",
-    "Due-in": "TODO",
-    "days": "TODO",
-    "Due-today": "TODO",
-    "Late": "TODO"
+    "Borrow-on": "Emprunté le",
+    "Please-return-by": "À retourner avant le",
+    "Due-in": "À rendre dans",
+    "days": "jours",
+    "Late": "En retard",
+    "Due-today": "À rendre aujourd'hui"
   },
-  "navBar": {
-    "hello": "TODO"
-  },
-  "search": {
-    "Sort-by": "TODO",
-    "Filter-by": "TODO"
-  },
-  "browseBook": {
-    "Top-borrowed-books": "TODO",
-    "People-are-writing-about-these-books": "TODO",
-    "Newly-arrived": "TODO",
-    "Result": "TODO",
-    "Book-not-found": "TODO"
-  },
-  "browseBooks": {
-    "Loading": "TODO",
-    "Book-not-found": "TODO"
-  },
-  "browsePosts": {
-    "Loading": "TODO"
-  },
-  "forgotPassword": {
-    "forgot-password": "TODO",
-    "confirm": "TODO"
-  },
-  "signup": {
-    "email": "TODO",
-    "back-to-login": "TODO",
-    "sign-up": "TODO",
-    "account-information": "TODO",
-    "personal-information": "TODO",
-    "full-name": "TODO",
-    "phone-number": "TODO",
-    "address": "TODO",
-    "optional": "TODO",
-    "province": "TODO",
-    "city": "TODO",
-    "address-line-1": "TODO",
-    "address-line-2": "TODO",
-    "already-had-an-account": "TODO",
-    "signup-completed": "TODO"
+  "post": {
+    "Edit-post": "Modifier la publication"
   },
   "home": {
-    "Number-of-books-by-genre": "TODO",
-    "Number-of-borrowed-books-by-genre": "TODO",
-    "Top-5-posts-have-most-likes": "TODO",
-    "Books-that-you-borrowed": "TODO"
+    "Top-5-posts-have-most-likes": "Top 5 des publications les plus aimées",
+    "Number-of-books-by-genre": "Nombre de livres par genre",
+    "Number-of-borrowed-books-by-genre": "Nombre de livres empruntés par genre",
+    "Books-that-you-borrowed": "Livres que vous avez empruntés"
+  },
+  "navBar": {
+    "hello": "Bonjour",
+    "home-page": "Accueil",
+    "browse-books": "Parcourir les livres",
+    "browse-posts": "Parcourir les publications",
+    "my-borrows": "Mes emprunts",
+    "my-posts": "Mes publications",
+    "language": "Langue",
+    "logout": "Se déconnecter",
+    "please-login-to-continue": "Veuillez vous connecter pour continuer"
   },
   "login": {
-    "login": "TODO",
-    "username-or-password-is-wrong": "TODO",
-    "username": "TODO",
-    "password": "TODO",
-    "forgot-password": "TODO",
-    "dont-have-an-account-yet": "TODO",
-    "signup": "TODO"
+    "login": "Connexion",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "dont-have-an-account-yet": "Pas encore de compte ?",
+    "signup": "S'inscrire",
+    "forgot-password": "Mot de passe oublié",
+    "username-or-password-is-wrong": "Nom d'utilisateur ou mot de passe incorrect"
+  },
+  "signup": {
+    "sign-up": "S'inscrire",
+    "signup-completed": "Inscription terminée",
+    "email": "E-mail",
+    "optional": "Optionnel",
+    "account-information": "Informations du compte",
+    "personal-information": "Informations personnelles",
+    "full-name": "Nom complet",
+    "phone-number": "Numéro de téléphone",
+    "address": "Adresse",
+    "province": "Province",
+    "city": "Ville",
+    "address-line-1": "Adresse ligne 1",
+    "address-line-2": "Adresse ligne 2",
+    "already-had-an-account": "Vous avez déjà un compte ?",
+    "back-to-login": "Retour à la connexion"
+  },
+  "forgotPassword": {
+    "forgot-password": "Mot de passe oublié",
+    "confirm": "Confirmer"
+  },
+  "search": {
+    "Filter-by": "Filtrer par",
+    "Sort-by": "Trier par"
+  },
+  "browseBooks": {
+    "Loading": "Chargement...",
+    "Book-not-found": "Livre introuvable",
+    "Top-borrowed-books": "Livres les plus empruntés",
+    "People-are-writing-about-these-books": "Livres les plus commentés",
+    "Newly-arrived": "Nouveautés",
+    "Result": "Résultat"
+  },
+  "browsePosts": {
+    "Loading": "Chargement..."
   },
   "sortBar": {
-    "search": "TODO"
+    "Search": "Rechercher",
+    "Filter-by": "Filtrer par",
+    "Sort-by": "Trier par",
+    "Apply": "Appliquer",
+    "Clear": "Effacer"
+  },
+  "page": {
+    "Page": "Page"
   }
 }

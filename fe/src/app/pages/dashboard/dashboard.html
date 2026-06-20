@@ -1,0 +1,56 @@
+<app-navbar></app-navbar>
+<div class="home-container">
+    <div class="chart-1">
+        <h1 class="text-deep-charcoal header headline">{{'home.Number-of-books-by-genre' |translate}}</h1>
+        @if (bookGenreLabels.length > 0) {
+            <app-chart-component
+                [labels]="bookGenreLabels"
+                [data]="bookGenreValues"
+                label="Books"
+                type="bar"/>
+        } 
+        @else {
+            <p class="body">Loading...</p>
+        }       
+    </div>
+
+    <div class="chart-2">
+        <h1 class="text-deep-charcoal header headline">{{'home.Number-of-borrowed-books-by-genre' |translate}}</h1>
+        @if (bookGenreLabels.length > 0) {
+            <app-chart-component
+            [labels]="bookGenreLabels"
+            [data]="borrowedBookGenreValues"
+            label="Books"
+            type="bar"/>
+        }
+        @else {
+            <p class="body">Loading...</p>
+        } 
+    </div>
+
+    <div class="posts-area">
+        <h1 class="text-deep-charcoal header headline">{{'home.Top-5-posts-have-most-likes' |translate}}</h1>
+        <div class="posts-scrolling-area">
+            @if (posts.length > 0) {
+                @for (post of posts; track $index) {
+                    <app-mini-post-card-component [post]="post" (onLikeToggled)="onPostLikeToggled($event)"></app-mini-post-card-component>
+                }
+            } @else {
+                <p>Loading...</p>
+            }
+        </div>
+    </div>
+
+    <div class="borrowed-books-area">
+        <h1 class="headline">{{'home.Books-that-you-borrowed'|translate}}</h1>
+        <div class="borrows-scrolling-area">
+            @if (borrows.length > 0) {
+                @for (borrow of borrows; track borrow.id) {
+                    <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
+                }
+            } @else {
+                <p>Loading...</p>
+            }
+        </div>
+    </div>
+</div>

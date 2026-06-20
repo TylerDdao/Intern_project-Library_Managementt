@@ -22,6 +22,15 @@
         gap: 10px;
         overflow-y: auto;
     }
+
+    .my-borrow-side-menu{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+    }
 }
 
 @media (max-width: 1023px) {

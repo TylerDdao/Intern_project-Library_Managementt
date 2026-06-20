@@ -4,9 +4,8 @@ const path = require('path');
 
 const SRC_DIR = './src/main/java';
 const OUTPUT_DIR = './src/main/resources/i18n';
-const MESSAGES_FILE = path.join(OUTPUT_DIR, 'messages.properties');
+const LOCALES = ['messages', 'messages_vi', 'messages_fr']; // messages = English (default)
 
-// Match messageSource.getMessage("some.key", ...)
 const KEY_REGEX = /messageSource\.getMessage\("([^"]+)"/g;
 
 function scanDir(dir) {
@@ -40,24 +39,27 @@ function loadExisting(filePath) {
 }
 
 const foundKeys = scanDir(SRC_DIR);
-const existing = loadExisting(MESSAGES_FILE);
-
-// Report missing keys
-const missing = [...foundKeys].filter(k => !existing[k]);
-if (missing.length) {
-    console.log('Missing keys:');
-    missing.forEach(k => console.log(`  ${k}`));
-} else {
-    console.log('All keys are present.');
-}
-
-// Merge and write — existing values preserved, missing keys added as TODO
-const merged = { ...existing };
-for (const key of foundKeys) {
-    if (!merged[key]) merged[key] = 'TODO';
-}
 
 if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-const output = Object.entries(merged).map(([k, v]) => `${k}=${v}`).join('\n');
-fs.writeFileSync(MESSAGES_FILE, output, 'utf-8');
-console.log(`Written to ${MESSAGES_FILE}`);
+
+for (const locale of LOCALES) {
+    const filePath = path.join(OUTPUT_DIR, `${locale}.properties`);
+    const existing = loadExisting(filePath);
+
+    const missing = [...foundKeys].filter(k => !existing[k]);
+    if (missing.length) {
+        console.log(`[${locale}] Missing ${missing.length} keys:`);
+        missing.forEach(k => console.log(`  ${k}`));
+    } else {
+        console.log(`[${locale}] All keys are present.`);
+    }
+
+    const merged = { ...existing };
+    for (const key of foundKeys) {
+        if (!merged[key]) merged[key] = 'TODO';
+    }
+
+    const output = Object.entries(merged).map(([k, v]) => `${k}=${v}`).join('\n');
+    fs.writeFileSync(filePath, output, 'utf-8');
+    console.log(`[${locale}] Written to ${filePath}`);
+}

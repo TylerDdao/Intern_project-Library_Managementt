@@ -1,5 +1,6 @@
 package com.example.library_management.service.role;
 
+import com.example.library_management.dto.response.AuthorityResponse;
 import com.example.library_management.dto.response.RoleResponse;
 import com.example.library_management.dto.response.UserResponse;
 import com.example.library_management.model.Feature;

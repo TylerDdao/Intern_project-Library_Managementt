@@ -1,75 +1,90 @@
 {
   "book": {
-    "Author": "TODO",
-    "Genres": "TODO",
-    "Title": "TODO"
+    "Title": "Tiêu đề",
+    "Author": "Tác giả",
+    "Genres": "Thể loại"
   },
   "borrow": {
-    "Borrow-on": "TODO",
-    "Please-return-by": "TODO",
-    "Due-in": "TODO",
-    "days": "TODO",
-    "Due-today": "TODO",
-    "Late": "TODO"
+    "Borrow-on": "Mượn ngày",
+    "Please-return-by": "Vui lòng trả trước ngày",
+    "Due-in": "Hạn trả trong",
+    "days": "ngày",
+    "Late": "Quá hạn",
+    "Due-today": "Hết hạn hôm nay"
   },
-  "navBar": {
-    "hello": "TODO"
-  },
-  "search": {
-    "Sort-by": "TODO",
-    "Filter-by": "TODO"
-  },
-  "browseBook": {
-    "Top-borrowed-books": "TODO",
-    "People-are-writing-about-these-books": "TODO",
-    "Newly-arrived": "TODO",
-    "Result": "TODO",
-    "Book-not-found": "TODO"
-  },
-  "browseBooks": {
-    "Loading": "TODO",
-    "Book-not-found": "TODO"
-  },
-  "browsePosts": {
-    "Loading": "TODO"
-  },
-  "forgotPassword": {
-    "forgot-password": "TODO",
-    "confirm": "TODO"
-  },
-  "signup": {
-    "email": "TODO",
-    "back-to-login": "TODO",
-    "sign-up": "TODO",
-    "account-information": "TODO",
-    "personal-information": "TODO",
-    "full-name": "TODO",
-    "phone-number": "TODO",
-    "address": "TODO",
-    "optional": "TODO",
-    "province": "TODO",
-    "city": "TODO",
-    "address-line-1": "TODO",
-    "address-line-2": "TODO",
-    "already-had-an-account": "TODO",
-    "signup-completed": "TODO"
+  "post": {
+    "Edit-post": "Chỉnh sửa bài viết"
   },
   "home": {
-    "Number-of-books-by-genre": "TODO",
-    "Number-of-borrowed-books-by-genre": "TODO",
-    "Top-5-posts-have-most-likes": "TODO",
-    "Books-that-you-borrowed": "TODO"
+    "Top-5-posts-have-most-likes": "Top 5 bài viết được yêu thích nhất",
+    "Number-of-books-by-genre": "Số lượng sách theo thể loại",
+    "Number-of-borrowed-books-by-genre": "Số lượng sách được mượn theo thể loại",
+    "Books-that-you-borrowed": "Sách bạn đã mượn"
+  },
+  "navBar": {
+    "hello": "Xin chào",
+    "home-page": "Trang chủ",
+    "browse-books": "Duyệt tìm sách",
+    "browse-posts": "Duyệt bài viết",
+    "my-borrows": "Sách tôi mượn",
+    "my-posts": "Bài viết của tôi",
+    "language": "Ngôn ngữ",
+    "logout": "Đăng xuất",
+    "please-login-to-continue": "Vui lòng đăng nhập để tiếp tục"
   },
   "login": {
-    "login": "TODO",
-    "username-or-password-is-wrong": "TODO",
-    "username": "TODO",
-    "password": "TODO",
-    "forgot-password": "TODO",
-    "dont-have-an-account-yet": "TODO",
-    "signup": "TODO"
+    "login": "Đăng nhập",
+    "username": "Tên đăng nhập",
+    "password": "Mật khẩu",
+    "dont-have-an-account-yet": "Chưa có tài khoản?",
+    "signup": "Đăng ký",
+    "forgot-password": "Quên mật khẩu",
+    "username-or-password-is-wrong": "Tên đăng nhập hoặc mật khẩu không đúng"
+  },
+  "signup": {
+    "sign-up": "Đăng ký",
+    "signup-completed": "Đăng ký hoàn tất",
+    "email": "Email",
+    "optional": "Tùy chọn",
+    "account-information": "Thông tin tài khoản",
+    "personal-information": "Thông tin cá nhân",
+    "full-name": "Họ và tên",
+    "phone-number": "Số điện thoại",
+    "address": "Địa chỉ",
+    "province": "Tỉnh",
+    "city": "Thành phố",
+    "address-line-1": "Địa chỉ dòng 1",
+    "address-line-2": "Địa chỉ dòng 2",
+    "already-had-an-account": "Đã có tài khoản?",
+    "back-to-login": "Quay lại đăng nhập"
+  },
+  "forgotPassword": {
+    "forgot-password": "Quên mật khẩu",
+    "confirm": "Xác nhận"
+  },
+  "search": {
+    "Filter-by": "Lọc theo",
+    "Sort-by": "Sắp xếp theo"
+  },
+  "browseBooks": {
+    "Loading": "Đang tải",
+    "Book-not-found": "Không tìm thấy sách",
+    "Top-borrowed-books": "Sách được mượn nhiều nhất",
+    "People-are-writing-about-these-books": "Sách đang được thảo luận nhiều",
+    "Newly-arrived": "Sách mới về",
+    "Result": "Kết quả"
+  },
+  "browsePosts": {
+    "Loading": "Đang tải"
   },
   "sortBar": {
-    "search": "TODO"
+    "Search": "Tìm kiếm",
+    "Filter-by": "Lọc theo",
+    "Sort-by": "Sắp xếp theo",
+    "Apply": "Áp dụng",
+    "Clear": "Xóa bộ lọc"
+  },
+  "page": {
+    "Page": "Trang"
   }
 }

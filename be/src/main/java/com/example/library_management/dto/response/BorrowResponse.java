@@ -1,8 +1,7 @@
 package com.example.library_management.dto.response;
 
-import com.example.library_management.model.Book;
+import com.example.library_management.dto.response.book.BookResponse;
 import com.example.library_management.model.Borrow;
-import com.example.library_management.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

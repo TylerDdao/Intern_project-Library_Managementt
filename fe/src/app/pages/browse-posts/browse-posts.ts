@@ -74,7 +74,7 @@ export class BrowsePosts {
     }
 }
 
-  handleApply(query: SideBarQuery, page: Page = this.postPages): void {
+  handleApply(query: SideBarQuery): void {
     if(query.isClear){
       this.isSearch = false;
       this.searchPost = [];

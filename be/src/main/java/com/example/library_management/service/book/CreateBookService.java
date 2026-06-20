@@ -1,19 +1,15 @@
 package com.example.library_management.service.book;
 
 import com.example.library_management.dto.request.BookRequest;
-import com.example.library_management.dto.response.BookResponse;
+import com.example.library_management.dto.response.book.BookResponse;
 import com.example.library_management.model.Book;
 import com.example.library_management.model.Genre;
-import com.example.library_management.model.User;
 import com.example.library_management.repository.BookRepository;
 import com.example.library_management.repository.GenreRepository;
 import com.example.library_management.util.AuditLogger;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

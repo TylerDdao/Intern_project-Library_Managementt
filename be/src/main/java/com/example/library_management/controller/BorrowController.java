@@ -1,15 +1,12 @@
 package com.example.library_management.controller;
 
 import com.example.library_management.dto.response.ApiResponse;
-import com.example.library_management.dto.response.BookResponse;
 import com.example.library_management.dto.response.BorrowResponse;
-import com.example.library_management.dto.response.PostResponse;
 import com.example.library_management.service.borrow.GetBorrowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,9 +26,9 @@ public class BorrowController {
             @RequestParam(defaultValue = "asc") String sortDir,
             @RequestParam(required = true) Long userId,
             @RequestParam(required = false) String searchQuery) {
-        System.out.println("Borrow called");
         return ResponseEntity.ok(
                 ApiResponse.success(getBorrowService.getBorrows(page, limit, sortBy, sortDir, userId, searchQuery))
         );
     }
+
 }

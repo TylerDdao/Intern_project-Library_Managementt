@@ -35,14 +35,14 @@
                     <span class="material-symbols-outlined text-sky-blue">comment</span>
                     <h1 class="body">{{formattedCommentCount}}</h1>
                 </div>
-
-                @if (post.editable) {
-                    <button class="edit-button cursor-pointer">
-                        <span class="material-symbols-outlined">edit</span>
-                        <h1>{{'post.Edit-post'|translate}}</h1>
-                    </button>
-                }
             </div>
+
+            @if (post.editable) {
+            <button class="edit-button cursor-pointer">
+                <span class="material-symbols-outlined">edit</span>
+                <h1 class="headline">{{'post.Edit-post'|translate}}</h1>
+            </button>
+            }
         </div>
         <div class="comment-box-overlay" [class.inactive]="!isOpenComment">
             <app-comment-box-component [comments]="comments" (onClose)="handleCloseComment()"></app-comment-box-component>

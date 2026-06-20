@@ -13,7 +13,7 @@
     "Due-today": "Due today"
   },
   "post": {
-    "Posted-at": "Posted at"
+    "Edit-post": "Edit post"
   },
   "home": {
     "Top-5-posts-have-most-likes": "Top 5 posts have most likes",
@@ -23,14 +23,23 @@
   },
   "navBar": {
     "hello": "Hello",
-    "home-page": "Home page",
-    "browse-books": "Browse books",
-    "browse-posts": "Browse posts",
-    "my-borrows": "My borrows",
-    "my-posts": "My posts",
     "language": "Language",
     "logout": "Logout",
-    "please-login-to-continue": "Please login to continue"
+    "please-login-to-continue": "Please login to continue",
+    "user":{
+      "Home-page": "Home page",
+      "Browse-books": "Browse books",
+      "Browse-posts": "Browse posts",
+      "My-borrows": "My borrows",
+      "My-posts": "My posts"
+    },
+    "admin": {
+      "Dashboard": "Dashboard",
+      "Books-management": "Books management",
+      "Users-management": "Users management",
+      "Borrows-management": "Borrows management",
+      "Posts-management": "Posts management"
+    }
   },
   "login": {
     "login": "Login",
@@ -66,21 +75,27 @@
     "Filter-by": "Filter by",
     "Sort-by": "Sort by"
   },
-  "browseBook": {
+  "browseBooks": {
+    "Loading": "Loading",
+    "Book-not-found": "Book not found",
     "Top-borrowed-books": "Top borrowed books",
     "People-are-writing-about-these-books": "People are writing about these books",
     "Newly-arrived": "Newly arrived",
-    "Result": "TODO",
-    "Book-not-found": "TODO"
-  },
-  "browseBooks": {
-    "Loading": "TODO",
-    "Book-not-found": "TODO"
+    "Result": "Result"
   },
   "browsePosts": {
-    "Loading": "TODO"
+    "Loading": "Loading"
   },
   "sortBar": {
-    "search": "TODO"
+    "Search": "Search",
+    "Filter-by": "Filter by",
+    "Sort-by": "Sort by",
+    "Apply": "Apply",
+    "Clear": "Clear",
+    "See-more": "See more",
+    "See-less": "See less"
+  },
+  "page": {
+    "Page": "Page"
   }
 }

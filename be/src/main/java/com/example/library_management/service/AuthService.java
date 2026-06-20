@@ -85,6 +85,7 @@ public class AuthService {
             if (request.getUsername() != null) user.setUsername(request.getUsername());
             if (request.getRole() != null) user.setRole(newRole);
             if (request.getFullName() != null) user.setFullName(request.getFullName());
+            if (request.getPassword() != null) user.setPassword(request.getPassword());
 
             User savedUser = userRepository.save(user);
             logger.log("Updated @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
@@ -120,6 +121,8 @@ public class AuthService {
         user.setUsername(request.getUsername());
         user.setFullName(request.getFullName());
         user.setPhoneNumber(request.getPhoneNumber());
+        user.setEmail(request.getEmail());
+        user.setAddress(request.getAddress());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         boolean isUser = auth == null
@@ -135,7 +138,7 @@ public class AuthService {
             user.setRole(role);
         }
         User savedUser = userRepository.save(user);
-        logger.log("Registered @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
+        logger.log("SYSTEM","Registered @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
         return new UserResponse(savedUser);
     }
 

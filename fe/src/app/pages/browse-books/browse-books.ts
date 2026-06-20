@@ -13,10 +13,12 @@ import { Genre } from '../../models/genre';
 import { GenreService } from '../../services/genre-service/genre-service';
 import { EMPTY, firstValueFrom } from 'rxjs';
 import { expand, reduce } from 'rxjs/operators';
+import { Page } from '../../models/page';
+import { PagesComponent } from '../../components/pages-component/pages-component';
 
 @Component({
   selector: 'app-browse-books',
-  imports: [NavbarComponent, SortSideBarComponent, BookCardComponent, TranslateModule],
+  imports: [NavbarComponent, SortSideBarComponent, BookCardComponent, TranslateModule, PagesComponent],
   templateUrl: './browse-books.html',
   styleUrl: './browse-books.css',
 })
@@ -31,6 +33,8 @@ export class BrowseBooks {
   ) 
   {}
 
+  lastQuery: SideBarQuery | null = null;
+
   mostPostsBooks:Book[] = []
   mostBorrowedBooks: Book[] = []
   newlyArrivedBooks: Book[] = []
@@ -40,21 +44,31 @@ export class BrowseBooks {
   isSearch:boolean = false;
   isBookFound:boolean = true;
 
+  bookPages:Page = {
+    totalPages: 1,
+    number: 0,
+    last: true,
+    first: true
+    }
+
   handleApply(query: SideBarQuery): void {
     if(query.isClear){
       this.isSearch = false;
       this.searchBooks = [];
       this.isBookFound = false;
+      this.lastQuery = null ;
       return;
     }
     this.isSearch = true;
     this.searchBooks = [];
     this.isBookFound = true;
+    this.lastQuery = query;
     this.bookService.getBooksByQuery(query).subscribe({
       next: (data: any) => {
         if(data.code == "200"){
           if(data.data.totalElements > 0){
             this.searchBooks = data.data.content;
+            this.bookPages = data.data;
             this.cdr.markForCheck();
           }
           else{
@@ -67,6 +81,29 @@ export class BrowseBooks {
         console.error(err);
       }
     })
+  }
+
+  fetchLastQuery(page: Page){
+    if(this.lastQuery){
+      this.bookService.getBooksByQuery(this.lastQuery, page.number).subscribe({
+        next: (data: any) => {
+          if(data.code == "200"){
+            if(data.data.totalElements > 0){
+              this.searchBooks = data.data.content;
+              this.bookPages = data.data;
+              this.cdr.markForCheck();
+            }
+            else{
+              this.isBookFound = false;
+              this.cdr.markForCheck();
+            }
+          }
+        },
+        error: (err)=>{
+          console.error(err)
+        }
+      })
+    }
   }
 
   async fetchAllGenres(): Promise<void> {

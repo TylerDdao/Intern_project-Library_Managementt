@@ -1,12 +1,12 @@
 <div class="side-bar-container">
     <div class="search-bar">
         <span class="material-symbols-outlined">search</span>
-        <input type="text" placeholder="{{'sortBar.search'|translate}}..." class="w-full" [(ngModel)]="searchQuery">
+        <input type="text" placeholder="{{'sortBar.Search'|translate}}..." class="w-full" [(ngModel)]="searchQuery">
     </div>
 
     @if (sortBy.length > 0) {
         <div class="flex flex-col items-start">
-            <h1 class="subheader font-bold">{{'search.Sort-by' |translate}}</h1>
+            <h1 class="subheader font-bold">{{'sortBar.Sort-by' |translate}}</h1>
             <select class="sort-bar" [(ngModel)] ="selectedSort">
                 @for (option of sortBy; track option) {
                     <option [value]="option">{{ option }}</option>
@@ -17,19 +17,47 @@
 
     @if (filterBy.length > 0) {
         <div class="flex flex-col items-start">
-            <h1 class="subheader font-bold">{{'search.Filter-by'|translate}}</h1>
-            @for (option of filterBy; track option) {
-                <label class="flex items-center gap-2 cursor-pointer">
-                    <input
-                        type="checkbox"
-                        [value]="option"
-                        (change)="onFilterChange(option, $event)">
-                    {{ option }}
-                </label>
+            <h1 class="subheader font-bold">{{'sortBar.Filter-by'|translate}}</h1>
+            @if (filterBy.length > 5) {
+                @if (!isExpandFilter) {
+                    @for (option of filterBy.slice(0,5); track option) {
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                [value]="option"
+                                (change)="onFilterChange(option, $event)">
+                            {{ option }}
+                        </label>
+                    }
+                    <button class="caption-1 underline" (click)="handleExpandFiler()">{{'sortBar.See-more' | translate}}</button>
+                }
+                @else {
+                    @for (option of filterBy; track option) {
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                [value]="option"
+                                (change)="onFilterChange(option, $event)">
+                            {{ option }}
+                        </label>
+                    }
+                    <button class="caption-1 underline" (click)="handleExpandFiler()">{{'sortBar.See-less' | translate}}</button>
+                }
+            }
+            @else {
+                @for (option of filterBy; track option) {
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input
+                            type="checkbox"
+                            [value]="option"
+                            (change)="onFilterChange(option, $event)">
+                        {{ option }}
+                    </label>
+                }
             }
         </div>
     }
 
-    <button (click)="apply()" class="submit-button text-soft-ice">{{'sortBar.Apply'}}</button>
-    <button (click)="handleClear()" class="clear-button text-soft-ice">{{'sortBar.Clear'}}</button>
+    <button (click)="apply()" class="submit-button text-soft-ice">{{'sortBar.Apply'|translate}}</button>
+    <button (click)="handleClear()" class="clear-button text-soft-ice">{{'sortBar.Clear'|translate}}</button>
 </div>

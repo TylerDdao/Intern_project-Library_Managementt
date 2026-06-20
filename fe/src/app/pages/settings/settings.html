@@ -1,0 +1,46 @@
+<app-navbar></app-navbar>
+<div class="min-h-screen flex flex-col justify-center items-center">
+    <div class="signup-area">
+        <div class="flex flex-col justify-center items-center w-full space-y-[20px]">
+            <h1 class="headline text-steel-blue">{{"setting.Account-setting" | translate}}</h1>
+            @if(invalidInformation){
+                <div class="flex justify-end w-full">
+                    <h1 class="text-tomato-red subheadline">{{'signup.Please-check-your-information-again'|translate}}</h1>
+                </div>
+            }
+            <form id="signupForm" [formGroup]="accountUpdateForm" class="flex flex-col space-y-[10px] w-full" (ngSubmit)="onSubmit()" (input)="invalidInformation=false">
+            <div class="flex justify-between items-start space-x-[20px]">
+                <div class="flex flex-col space-y-[10px] w-full">
+                    <h1 class="headline text-steel-blue">{{"signup.account-information"|translate}}</h1>
+                        <input formControlName="username" type="text" [placeholder]="(userName)" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full" readonly/>
+                        <input formControlName="email" type="email" [placeholder]="(email)"  class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full"/>
+                </div>
+
+                <div class="flex flex-col space-y-[10px] w-full">
+                    <h1 class="headline text-steel-blue">{{"signup.personal-information"|translate}}</h1>
+                    <input formControlName="fullName" type="text" [placeholder]="(fullName)" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                    <input formControlName="phoneNumber" type="text" [placeholder]="(phoneNumber)" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                    <h1 class="headline text-steel-blue">{{("signup.address"|translate) + ' (' + ("signup.optional"|translate) + ')'}}</h1>
+                    <input formControlName="province" type="text" [placeholder]="('signup.province' | translate)" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                    <input formControlName="city" type="text" [placeholder]="('signup.city' | translate)" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                    <input formControlName="addressLine1" type="text" [placeholder]="('signup.address-line-1' | translate)" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                    <input formControlName="addressLine2" type="text" [placeholder]="('signup.address-line-2' | translate)" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                </div>
+            </div>
+            </form>
+        </div>
+
+        <div class="flex flex-col w-full items-end space-y-[10px]">
+            <button type="submit" form="signupForm" class="bg-steel-blue rounded-lg p-[10px] font-bold w-full text-soft-ice">{{'signup.Sign-up' | translate}}</button>
+            <p class="text-deep-charcoal font-bold">{{('signup.Already-had-an-account'|translate) + '?'}} <a routerLink="/login"><span class="text-steel-blue">{{'login.login' |translate}}</span></a></p>
+        </div>
+    </div>
+
+    
+    @if(signupCompleted){
+        <div class="complete-box">
+            <h1 class="text-leaf-green title">{{('signup.signup-completed' | translate) + '!'}}</h1>
+            <button (click)="router.navigate(['/login'])" class="bg-steel-blue rounded-lg p-[10px] font-bold w-full">  {{'signup.back-to-login' | translate}}</button>
+        </div>
+    }
+</div>

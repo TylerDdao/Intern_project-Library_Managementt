@@ -5,7 +5,7 @@
                 arrow_back_ios
             </span>
         }
-        <p>{{'page.page'|translate}}: {{pages.number + 1}}/{{pages.totalPages}}</p>
+        <p>{{'page.Page'|translate}}: {{pages.number + 1}}/{{pages.totalPages}}</p>
         @if (!pages.last) {
             <span class="material-symbols-outlined cursor-pointer" (click)="apply(pages.number+1)">
                 arrow_forward_ios

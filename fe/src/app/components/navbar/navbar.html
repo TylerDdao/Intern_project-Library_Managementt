@@ -2,11 +2,11 @@
     <div class="flex justify-between items-center">
         @if (validateUser) {
             <div class="pages-container">
-                @for (page of roleUserPages; track $index) {
+                @for (page of pages; track $index) {
                     <a [routerLink]="page.path" routerLinkActive="active-page">
                         <h1 class="body">{{page.name|translate}}</h1>
                     </a>
-                    @if($index < roleUserPages.length - 1) {
+                    @if($index < pages.length - 1) {
                         <div class="border border-white"></div>
                     }
                 }
@@ -18,41 +18,37 @@
                 <option value="fr">Français</option>
             </select>
 
-            <span class="material-symbols-outlined icon-size">notifications</span>
+            <!-- <span class="material-symbols-outlined icon-size">notifications</span> -->
 
             <div class="flex items-center space-x-[5px]">
-                <span class="material-symbols-outlined icon-size">account_circle</span>
+                <a routerLink='/settings'><span class="material-symbols-outlined icon-size cursor-pointer">account_circle</span></a>
                 <div>
                     <h1 class="headline">{{('navBar.hello'|translate)}}: {{fullName}}</h1>
                 </div>
             </div>
+
+            <div class="border border-white mx-[10px]"></div> 
+
+            <button class="border border-soft-ice p-[10px] rounded-[10px] caption-1 font-bold" (click)="handleLogout()">Logout</button>
         </div>
 
         <div class="mobile-setting-icon lg:hidden">
             <span class="material-symbols-outlined cursor-default" (click)="toggleMobileMenu()">menu</span>
-            <span class="material-symbols-outlined icon-size cursor-default">notifications</span>
+            <!-- <span class="material-symbols-outlined icon-size cursor-default">notifications</span> -->
         </div>
         }
         @else {
             <h1 class="subheadline font-bold">Library Management System</h1>
         }
     </div>
-    
-<!-- 
-    @if (validateUser) {
-        <div class="mobile-setting-icon lg:hidden">
-            <span class="material-symbols-outlined" (click)="toggleMobileMenu()">menu</span>
-            <span class="material-symbols-outlined icon-size">notifications</span>
-        </div>
-    } -->
 
     <div id="mobile-menu-container" class="mobile-menu-container lg:hidden" [class.inactive]="!isMobileMenuOpen">
         <div class="mobile-pages-container">
-            @for (page of roleUserPages; track $index) {
+            @for (page of pages; track $index) {
                 <a [routerLink]="page.path" routerLinkActive="active-page">
                     <h1 class="body">{{page.name|translate}}</h1>
                 </a>
-                @if($index < roleUserPages.length - 1) {
+                @if($index < pages.length - 1) {
                     <div class="border border-white"></div>
                 }
             }
@@ -66,11 +62,12 @@
             </select>
 
             <div class="flex items-center space-x-[5px]">
-                <span class="material-symbols-outlined icon-size">account_circle</span>
+                <span class="material-symbols-outlined icon-size cursor-pointer" routerLink="/settings">account_circle</span>
                 <div>
                     <h1 class="headline">{{('navBar.hello'|translate)}}: {{fullName}}</h1>
                 </div>
             </div>
+            <button class="border border-soft-ice p-[10px] rounded-[10px] caption-1 font-bold" (click)="handleLogout()">Logout</button>
         </div>
     </div>
 </nav>

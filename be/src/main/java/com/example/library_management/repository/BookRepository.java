@@ -24,6 +24,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Page<Book> findByAuthorContaining(String author, Pageable pageable);
     Page<Book> findByGenres_NameContaining(String genre, Pageable pageable);
 
+    Page<Book> findByCopies(int copies, Pageable pageable);
+
     // Search across title, author, genre name
     @Query("""
         SELECT DISTINCT b FROM Book b

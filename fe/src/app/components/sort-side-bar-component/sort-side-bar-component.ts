@@ -28,6 +28,12 @@ export class SortSideBarComponent {
   searchQuery: string = '';
   isClear:boolean = false;
 
+  isExpandFilter: boolean = false;
+
+  handleExpandFiler(){
+    this.isExpandFilter = !this.isExpandFilter;
+  }
+
   onFilterChange(option: string, event: Event): void {
     const checked = (event.target as HTMLInputElement).checked;
     if (checked) {

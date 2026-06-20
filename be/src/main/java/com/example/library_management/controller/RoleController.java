@@ -59,13 +59,13 @@ public class RoleController {
     @PreAuthorize("@securityService.hasAccess('GET_ROLE')")
     @GetMapping("/roles")
     public ResponseEntity<ApiResponse<Page<RoleResponse>>> getRoles(
-            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String role,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir
     ){
-        return ResponseEntity.ok(ApiResponse.success(getRoleService.getRole(page, limit, sortBy, sortDir, name)));
+        return ResponseEntity.ok(ApiResponse.success(getRoleService.getRole(page, limit, sortBy, sortDir, role)));
     }
 
     @PreAuthorize("@securityService.hasAccess('DELETE_ROLE')")

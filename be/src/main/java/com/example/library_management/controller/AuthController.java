@@ -44,6 +44,7 @@ public class AuthController {
         return ResponseEntity.ok(ApiResponse.success(authService.updateAccount(request)));
     }
 
+    @PreAuthorize("@securityService.hasAccess('GET_USER')")
     @GetMapping("/check")
     public ResponseEntity<ApiResponse<UserResponse>> checkUser() {
         UserResponse user = authService.getCurrentUser();

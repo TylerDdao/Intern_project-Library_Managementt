@@ -5,7 +5,7 @@
 INSERT IGNORE INTO roles (id, created_at, created_by, is_active, is_deleted, updated_at, updated_by, name) VALUES
     (1, NOW(), 'SYSTEM', true, false, NOW(), 'SYSTEM', 'ROLE_ROOT'),
     (2, NOW(), 'SYSTEM', true, false, NOW(), 'SYSTEM', 'ROLE_ADMIN'),
-    (3, NOW(), 'SYSTEM', true, false, NOW(), 'SYSTEM', 'ROLE_MANAGER'),
+    (3, NOW(), 'SYSTEM', true, false, NOW(), 'SYSTEM', 'ROLE_LIBRARIAN'),
     (4, NOW(), 'SYSTEM', true, false, NOW(), 'SYSTEM', 'ROLE_USER');
 
 INSERT IGNORE INTO features (id, name) VALUES
@@ -15,31 +15,40 @@ INSERT IGNORE INTO features (id, name) VALUES
     (4, 'CREATE_ROLE'),
     (5, 'CREATE_POST'),
     (6, 'CREATE_COMMENT'),
-    (7, 'GET_BOOK'),
-    (8, 'GET_USER'),
-    (9, 'GET_BORROW'),
-    (10, 'GET_ROLE'),
-    (11, 'GET_POST'),
-    (12, 'GET_COMMENT'),
-    (13, 'UPDATE_BOOK'),
-    (14, 'UPDATE_USER'),
-    (15, 'UPDATE_BORROW'),
-    (16, 'UPDATE_ROLE'),
-    (17, 'UPDATE_POST'),
-    (18, 'UPDATE_COMMENT'),
-    (19, 'DELETE_BOOK'),
-    (20, 'DELETE_USER'),
-    (21, 'DELETE_BORROW'),
-    (22, 'DELETE_ROLE'),
-    (23, 'DELETE_POST'),
-    (24, 'DELETE_COMMENT'),
-    (25, 'ASSIGN_FEATURE'),
-    (26, 'UNASSIGN_FEATURE');
+    (7, 'CREATE_GENRE'),
+    (8, 'GET_BOOK'),
+    (9, 'GET_USER'),
+    (10, 'GET_BORROW'),
+    (11, 'GET_ROLE'),
+    (12, 'GET_POST'),
+    (13, 'GET_COMMENT'),
+    (14, 'GET_GENRE'),
+    (15, 'UPDATE_BOOK'),
+    (16, 'UPDATE_USER'),
+    (17, 'UPDATE_BORROW'),
+    (18, 'UPDATE_ROLE'),
+    (19, 'UPDATE_POST'),
+    (20, 'UPDATE_COMMENT'),
+    (21, 'UPDATE_GENRE'),
+    (22, 'DELETE_BOOK'),
+    (23, 'DELETE_USER'),
+    (24, 'DELETE_BORROW'),
+    (25, 'DELETE_ROLE'),
+    (26, 'DELETE_POST'),
+    (27, 'DELETE_COMMENT'),
+    (28, 'DELETE_GENRE'),
+    (29, 'ASSIGN_FEATURE'),
+    (30, 'UNASSIGN_FEATURE');
 
 INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
-    (4, 2),  (4, 3),  (4, 5),  (4, 6),  (4, 7),
-    (4, 8),  (4, 9),  (4, 10), (4, 11), (4, 12),
-    (4, 14), (4, 17), (4, 18), (4, 23), (4, 24);
+    (4, 5),  (4, 6),  (4, 7),  (4, 8),  (4, 9),
+    (4, 11),  (4, 12),  (4, 14), (4, 17), (4, 18),
+    (4, 23), (4, 24),
+
+    (3, 1),  (3, 3),  (3, 5),  (3, 6),  (3, 7),
+    (3, 8),  (3, 9),  (3, 10), (3, 11), (3, 12),
+    (3, 13), (3, 14), (3, 15), (3, 17), (3, 18),
+    (3, 19), (3, 21), (3, 23), (3, 24);
 
 -- =========================================================================
 -- 2. USERS (Tyler as ROOT, everyone else as USER)

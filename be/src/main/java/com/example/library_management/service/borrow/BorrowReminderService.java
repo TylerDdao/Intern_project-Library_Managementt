@@ -5,6 +5,9 @@ import com.example.library_management.repository.BorrowRepository;
 import com.example.library_management.service.MailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +19,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BorrowReminderService {
 
-    private final BorrowRepository borrowRepository;
-    private final MailService mailService;
+    @Autowired
+    private BorrowRepository borrowRepository;
+
+    @Autowired
+    private MailService mailService;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @Scheduled(cron = "0 0 8 * * *") // runs every day at 8:00 AM
     public void sendDueDateReminders() {
@@ -36,5 +45,26 @@ public class BorrowReminderService {
 
             mailService.sendEmail(email, subject, body);
         }
+    }
+
+    public String test() {
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+        LocalDateTime endOfDay = LocalDate.now().atTime(23, 59, 59);
+
+        List<Borrow> borrows = borrowRepository.findByUserId(1);
+
+        for (Borrow borrow : borrows) {
+            String email = "baonamdao05@gmail.com";
+            String subject = messageSource.getMessage("borrow.due.email.subject", null, LocaleContextHolder.getLocale());
+            String body = messageSource.getMessage(
+                    "borrow.due.email.body",
+                    new Object[]{borrow.getUser().getUsername(), borrow.getBook().getTitle()},
+                    LocaleContextHolder.getLocale()
+            );
+
+            mailService.sendEmail(email, subject, body);
+            break;
+        }
+        return "Emails sent";
     }
 }

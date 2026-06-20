@@ -15,5 +15,6 @@ public class UserRequest {
     private String phoneNumber;
     private String fullName;
     private String address = null;
-    private String email = null;
+    private String email;
+    private String password = null;
 }

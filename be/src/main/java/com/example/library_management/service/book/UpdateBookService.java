@@ -1,7 +1,7 @@
 package com.example.library_management.service.book;
 
 import com.example.library_management.dto.request.BookRequest;
-import com.example.library_management.dto.response.BookResponse;
+import com.example.library_management.dto.response.book.BookResponse;
 import com.example.library_management.model.Book;
 import com.example.library_management.model.Genre;
 import com.example.library_management.repository.BookRepository;

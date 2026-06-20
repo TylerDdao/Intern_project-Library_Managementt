@@ -1,11 +1,8 @@
 package com.example.library_management.service.book;
 
-import com.example.library_management.dto.response.BookResponse;
-import com.example.library_management.dto.response.UserResponse;
+import com.example.library_management.dto.response.book.BookResponse;
 import com.example.library_management.model.Book;
-import com.example.library_management.model.User;
 import com.example.library_management.repository.BookRepository;
-import com.example.library_management.util.AuditLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +19,19 @@ import java.util.List;
 public class GetBookService {
     @Autowired
     BookRepository bookRepository;
+
+    public Page<BookResponse> getUnavailableBooks(int page, int limit, String sortBy, String sortDir){
+        Sort sort = sortDir.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, limit);
+        Page<Book> books;
+
+        books = bookRepository.findByCopies(0, pageable);
+
+        return books.map(BookResponse::new);
+    }
 
     public Page<BookResponse> getBorrowedBooksByGenre(int page, int limit, String sortBy, String sortDir, String genre){
         Sort sort = sortDir.equalsIgnoreCase("desc")

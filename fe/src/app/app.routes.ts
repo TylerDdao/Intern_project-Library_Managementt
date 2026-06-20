@@ -2,12 +2,15 @@ import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
 import { BrowseBooks } from './pages/browse-books/browse-books';
 import { Login } from './pages/login/login';
-import { authGuard } from './guards/auth-guard';
+import { adminGuard, authGuard } from './guards/auth-guard';
 import { Signup } from './pages/signup/signup';
 import { ForgotPassword } from './pages/forgot-password/forgot-password';
 import { BrowsePosts } from './pages/browse-posts/browse-posts';
 import { MyBorrows } from './pages/my-borrows/my-borrows';
 import { MyPosts } from './pages/my-posts/my-posts';
+import { Settings } from './pages/settings/settings';
+import { NotFound } from './pages/not-found/not-found';
+import { Dashboard } from './pages/dashboard/dashboard';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -19,5 +22,10 @@ export const routes: Routes = [
     { path: 'books', component: BrowseBooks, canActivate: [authGuard] },
     { path: 'posts', component: BrowsePosts, canActivate: [authGuard] },
     { path: 'my-borrows', component: MyBorrows, canActivate: [authGuard]},
-    { path: 'my-posts', component: MyPosts, canActivate: [authGuard]}
+    { path: 'my-posts', component: MyPosts, canActivate: [authGuard]},
+    { path: 'settings', component: Settings, canActivate: [authGuard]},
+
+    { path: 'dashboard', component: Dashboard, canActivate: [adminGuard]},
+
+    { path: '**', component: NotFound }
 ];

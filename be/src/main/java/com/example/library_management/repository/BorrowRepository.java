@@ -13,6 +13,8 @@ import java.util.Optional;
 
 @Repository
 public interface BorrowRepository extends JpaRepository<Borrow, Long> {
+    public List<Borrow> findByUserId(int userId);
+
     public Page<Borrow> findByUserId(Long userId, Pageable pageable);
     public Optional<Borrow> findByUserIdAndBookId(Long userId, Long bookId);
     public Page<Borrow> findByBookId(Long bookId, Pageable pageable);

@@ -11,7 +11,7 @@
     <div class="books-area">
         @if (!isSearch) {
             <div>
-                <h1 class="title font-bold">{{'browseBook.Top-borrowed-books'|translate}}</h1>
+                <h1 class="title font-bold">{{'browseBooks.Top-borrowed-books'|translate}}</h1>
                 <div class="book-scrolling-area">
                     @if(mostBorrowedBooks.length > 0){
                         @for (book of mostBorrowedBooks; track $index) {
@@ -25,7 +25,7 @@
             </div>
 
             <div>
-                <h1 class="title font-bold">{{'browseBook.People-are-writing-about-these-books'|translate}}</h1>
+                <h1 class="title font-bold">{{'browseBooks.People-are-writing-about-these-books'|translate}}</h1>
                 <div class="book-scrolling-area">
                     @if(mostPostsBooks.length > 0){
                         @for (book of mostPostsBooks; track $index) {
@@ -39,7 +39,7 @@
             </div>
 
             <div>
-                <h1 class="title font-bold">{{'browseBook.Newly-arrived'|translate}}</h1>
+                <h1 class="title font-bold">{{'browseBooks.Newly-arrived'|translate}}</h1>
                 <div class="book-scrolling-area">
                     @if(newlyArrivedBooks.length > 0){
                         @for (book of newlyArrivedBooks; track $index) {
@@ -70,6 +70,7 @@
                         }
                     }
                 </div>
+                <app-pages-component [pages]="bookPages" (onApply)="fetchLastQuery($event)"></app-pages-component>
             </div>
         }
     </div>

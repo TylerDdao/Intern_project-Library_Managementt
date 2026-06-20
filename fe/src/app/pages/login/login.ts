@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NavbarComponent } from '../../components/navbar/navbar';
 import { AuthService } from '../../services/auth-service';
@@ -18,7 +18,8 @@ export class Login {
   constructor(
     public langService: LanguageService,
     private authService: AuthService,
-    protected router: Router) 
+    protected router: Router,
+    private cdr: ChangeDetectorRef) 
   {}
 
   async login(username: string, password: string){
@@ -33,6 +34,7 @@ export class Login {
       },
       error: (err) => {
         this.wrongCredential = true
+        this.cdr.markForCheck()
         console.error(err);
       }
     })

@@ -3,6 +3,7 @@ package com.example.library_management.controller;
 import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.dto.response.GenreResponse;
 import com.example.library_management.service.MailService;
+import com.example.library_management.service.borrow.BorrowReminderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +18,14 @@ public class MailSenderController {
     @Autowired
     MailService mailService;
 
+    @Autowired
+    BorrowReminderService borrowReminderService;
+
     @PreAuthorize("@securityService.hasAccess('GET_GENRE')")
     @GetMapping("/mail")
     public ResponseEntity<ApiResponse<String>> sendMail(){
         return ResponseEntity.ok(
-                ApiResponse.success(mailService.sendEmail("baonamdao05@gmail.com", "Test Mail from Spring Boot", "Hello, World"))
+                ApiResponse.success(borrowReminderService.test())
         );
     }
 }

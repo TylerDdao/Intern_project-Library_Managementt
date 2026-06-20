@@ -7,10 +7,9 @@
         gap:30px
     }
 
-    .posts-scrolling-area{
+    .posts-area{
         display: flex;
         flex-direction: column;
-        overflow-y: auto;
         width: 100%;
         gap: 30px;
     }
@@ -18,14 +17,18 @@
     .post-side-menu{
         display: flex;
         flex-direction: column;
-        gap: 10px
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
     }
-
+    
     .create-post-button{
         background-color: var(--color-steel-blue);
         border-radius: 10px;
         padding: 5px;
         color: var(--color-soft-ice);
+        width: 100%;
     }
 }
 
@@ -39,10 +42,9 @@
         gap:30px
     }
 
-    .posts-scrolling-area{
+    .posts-area{
         display: flex;
         flex-direction: column;
-        overflow-y: auto;
         width: 100%;
         gap: 30px;
     }
@@ -50,12 +52,17 @@
     .post-side-menu{
         display: flex;
         flex-direction: column;
-        gap: 10px
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
     }
+
     .create-post-button{
         background-color: var(--color-steel-blue);
         border-radius: 10px;
         padding: 5px;
         color: var(--color-soft-ice);
+        width: 100%;
     }
 }

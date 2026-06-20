@@ -90,7 +90,6 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/auth/login", "/auth/register", "/mail").permitAll()
                     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                    .requestMatchers("/**").hasAuthority("ROLE_ROOT")
                     .anyRequest().authenticated()
         )
             .exceptionHandling(ex -> ex
@@ -118,20 +117,4 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-//    @Bean
-//    public RoleHierarchy roleHierarchy() {
-//        return RoleHierarchyImpl.withDefaultRolePrefix()
-//                .role("ADMIN").implies("MANAGER")      // ADMIN can do everything MANAGER can
-//                .role("MANAGER").implies("USER")        // MANAGER can do everything USER can
-//                .build();
-//    }
-//
-//    @Bean
-//    public MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
-//        DefaultMethodSecurityExpressionHandler handler =
-//                new DefaultMethodSecurityExpressionHandler();
-//        handler.setRoleHierarchy(roleHierarchy);
-//        return handler;
-//    }
 }

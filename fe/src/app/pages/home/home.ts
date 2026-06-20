@@ -108,7 +108,7 @@ export class Home {
   }
 
   fetchAllPosts():void{
-    this.postsService.getAllPost().subscribe({
+    this.postsService.getAllPost(0, 5).subscribe({
       next: (data:any) => {
         console.log(data)
         if(data.code == "200"){

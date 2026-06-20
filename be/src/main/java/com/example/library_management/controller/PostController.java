@@ -1,7 +1,6 @@
 package com.example.library_management.controller;
 
 import com.example.library_management.dto.response.ApiResponse;
-import com.example.library_management.dto.response.BookResponse;
 import com.example.library_management.dto.response.PostResponse;
 import com.example.library_management.model.User;
 import com.example.library_management.repository.UserRepository;
@@ -13,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class PostController {
