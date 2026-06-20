@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -44,9 +46,10 @@ public class AuthController {
         return ResponseEntity.ok(ApiResponse.success(authService.updateAccount(request)));
     }
 
-    @PreAuthorize("@securityService.hasAccess('GET_USER')")
-    @GetMapping("/check")
-    public ResponseEntity<ApiResponse<UserResponse>> checkUser() {
+    @GetMapping("/authorities")
+    public ResponseEntity<ApiResponse<UserResponse>> checkAuthorities(
+            @RequestParam() List<String> authorities
+    ) {
         UserResponse user = authService.getCurrentUser();
         return ResponseEntity.ok(ApiResponse.success(user));
     }

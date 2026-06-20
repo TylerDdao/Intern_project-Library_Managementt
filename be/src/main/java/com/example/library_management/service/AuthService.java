@@ -1,5 +1,7 @@
 package com.example.library_management.service;
 
+import com.example.library_management.model.Feature;
+import com.example.library_management.repository.FeatureRepository;
 import com.example.library_management.util.AuditLogger;
 import com.example.library_management.util.JwtUtil;
 import com.example.library_management.dto.request.LoginRequest;
@@ -24,6 +26,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 @Slf4j
 @Service
 public class AuthService {
@@ -32,6 +36,9 @@ public class AuthService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private FeatureRepository featureRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -61,8 +68,9 @@ public class AuthService {
             );
             String token = jwtUtil.generateToken(auth.getName());
             User user = userRepository.findByUsername(auth.getName()).orElseThrow();
+            List<Feature> authorities = featureRepository.findByRoles_Id(user.getRole().getId());
             logger.log("SYSTEM","Authorized @{}, ID #{}", user.getUsername(), user.getId());
-            return new LoginResponse(user, token);
+            return new LoginResponse(user, token, authorities);
 
         } catch (org.springframework.security.authentication.BadCredentialsException e) {
             String message = messageSource.getMessage("error.invalid.credential", null, LocaleContextHolder.getLocale());

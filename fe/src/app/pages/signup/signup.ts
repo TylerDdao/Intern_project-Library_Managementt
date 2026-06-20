@@ -24,7 +24,7 @@ export class Signup {
     phoneNumber: "",
     address: "",
     role: "",
-    username: ""
+    username: "",
   };
 
   constructor(

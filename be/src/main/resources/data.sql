@@ -41,14 +41,15 @@ INSERT IGNORE INTO features (id, name) VALUES
     (30, 'UNASSIGN_FEATURE');
 
 INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
-    (4, 5),  (4, 6),  (4, 7),  (4, 8),  (4, 9),
-    (4, 11),  (4, 12),  (4, 14), (4, 17), (4, 18),
-    (4, 23), (4, 24),
+    (4, 5),  (4, 6),  (4, 8),  (4, 9),  (4, 10),
+    (4, 11),  (4, 12), (4, 13), (4, 14), (4, 19),
+    (4, 20), (4, 26), (4, 27),
 
     (3, 1),  (3, 3),  (3, 5),  (3, 6),  (3, 7),
     (3, 8),  (3, 9),  (3, 10), (3, 11), (3, 12),
-    (3, 13), (3, 14), (3, 15), (3, 17), (3, 18),
-    (3, 19), (3, 21), (3, 23), (3, 24);
+    (3, 13), (3, 14), (3, 15), (3, 17), (3, 19),
+    (3, 20), (3, 21), (3, 22), (3, 24), (3, 26),
+    (3, 27), (3, 28);
 
 -- =========================================================================
 -- 2. USERS (Tyler as ROOT, everyone else as USER)
@@ -57,8 +58,8 @@ INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
 INSERT IGNORE INTO users (id, full_name, username, address, email, phone_number, password, role_id, created_at) VALUES
     (1, 'Tyler Dao', 'tyler', '32 Noecker Street', 'tyler@gmail.com', '5483843681', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '1', NOW()),
     (2, 'Alex Mercer', 'alex_m', '123 University Ave', 'alex@gmail.com', '5195550143', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '4', NOW()),
-    (3, 'Chloe Laurent', 'chloe_l', '88 Columbia St W', 'chloe@gmail.com', '5195550177', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '4', NOW()),
-    (4, 'Marcus Vance', 'marcus_v', '12 King St N', 'marcus@gmail.com', '5195550198', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '4', NOW()),
+    (3, 'Chloe Laurent', 'chloe_l', '88 Columbia St W', 'chloe@gmail.com', '5195550177', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '3', NOW()),
+    (4, 'Marcus Vance', 'marcus_v', '12 King St N', 'marcus@gmail.com', '5195550198', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '2', NOW()),
     (5, 'Sarah Jenkins', 'sarah_j', '45 Phillip St', 'sarah@gmail.com', '5195550211', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '4', NOW());
 
 -- =========================================================================
