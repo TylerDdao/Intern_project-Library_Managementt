@@ -13,17 +13,17 @@
             <div class="flex justify-between items-start space-x-[20px]">
                 <div class="flex flex-col space-y-[10px] w-full">
                     <h1 class="headline text-steel-blue">{{"signup.account-information"|translate}}</h1>
-                        <input formControlName="username" type="text" [placeholder]="('login.username' | translate) + '*'" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
-                        <input formControlName="password" type="text" [placeholder]="('login.password' | translate) + '*'" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
-                        <input formControlName="email" type="text" [placeholder]="('signup.email' | translate) + '*'" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                        <input formControlName="username" type="text" [placeholder]="('account.username' | translate) + '*'" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                        <input formControlName="password" type="text" [placeholder]="('account.password' | translate) + '*'" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                        <input formControlName="email" type="text" [placeholder]="('account.email' | translate) + '*'" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
                 </div>
 
                 <div class="flex flex-col space-y-[10px] w-full">
-                    <h1 class="headline text-steel-blue">{{"signup.personal-information"|translate}}</h1>
-                    <input formControlName="fullName" type="text" [placeholder]="('signup.full-name' | translate) + '*'" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
-                    <input formControlName="phoneNumber" type="text" [placeholder]="('signup.phone-number' | translate) + '*'" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
-                    <h1 class="headline text-steel-blue">{{("signup.address"|translate) + ' (' + ("signup.optional"|translate) + ')'}}</h1>
-                    <input formControlName="address" type="text" [placeholder]="('signup.address' | translate)" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                    <h1 class="headline text-steel-blue">{{"account.personal-information"|translate}}</h1>
+                    <input formControlName="fullName" type="text" [placeholder]="('account.full-name' | translate) + '*'" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                    <input formControlName="phoneNumber" type="text" [placeholder]="('account.phone-number' | translate) + '*'" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                    <h1 class="headline text-steel-blue">{{("account.address"|translate) + ' (' + ("account.optional"|translate) + ')'}}</h1>
+                    <input formControlName="address" type="text" [placeholder]="('account.address' | translate)" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
                 </div>
             </div>
             </form>

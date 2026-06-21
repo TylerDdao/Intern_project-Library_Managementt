@@ -12,35 +12,55 @@
             <div class="flex justify-between items-start space-x-[20px]">
                 <div class="flex flex-col space-y-[10px] w-full">
                     <h1 class="headline text-steel-blue">{{"signup.account-information"|translate}}</h1>
-                        <input formControlName="username" type="text" [placeholder]="(userName)" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full" readonly/>
-                        <input formControlName="email" type="email" [placeholder]="(email)"  class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full"/>
+                        <div>
+                            <label for="username">{{"account.Username"|translate}}</label>
+                            <input id="username" formControlName="username" type="text" [placeholder]="(userName)" class="rounded-lg bg-pastel-blue text-dodger-blue w-full" readonly/>
+                        </div>
+                        <div>
+                            <label for="email">{{'account.Email'|translate}}</label>
+                            <div class="flex items-center space-x-[10px]">
+                                <input id="email" formControlName="email" type="email" [placeholder]="(email)"  class="rounded-lg bg-pastel-blue text-dodger-blue w-full"/>
+                                <button type="button" class="px-[10px] py-[5px] bg-steel-blue text-soft-ice rounded-[10px]">Verify</button>
+                            </div>
+                            <p class="caption-2 text-steel-blue">{{'settings.An-email-with-verification-link-has-been-sent-to-your-new-email'}}</p>
+                        </div>
                 </div>
 
                 <div class="flex flex-col space-y-[10px] w-full">
                     <h1 class="headline text-steel-blue">{{"signup.personal-information"|translate}}</h1>
-                    <input formControlName="fullName" type="text" [placeholder]="(fullName)" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
-                    <input formControlName="phoneNumber" type="text" [placeholder]="(phoneNumber)" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                    <div>
+                        <label for="fullName">{{'account.Fullname'|translate}}</label>
+                        <input id="fullName" formControlName="fullName" type="text" [placeholder]="(fullName)" class="rounded-lg bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                    </div>
+                    <div>
+                        <label for="phoneNumber">{{'account.Phone-number'|translate}}</label>
+                        <input id="phoneNumber" formControlName="phoneNumber" type="text" [placeholder]="(phoneNumber)" class="rounded-lg bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                    </div>
                     <h1 class="headline text-steel-blue">{{("signup.address"|translate) + ' (' + ("signup.optional"|translate) + ')'}}</h1>
-                    <input formControlName="province" type="text" [placeholder]="('signup.province' | translate)" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
-                    <input formControlName="city" type="text" [placeholder]="('signup.city' | translate)" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
-                    <input formControlName="addressLine1" type="text" [placeholder]="('signup.address-line-1' | translate)" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
-                    <input formControlName="addressLine2" type="text" [placeholder]="('signup.address-line-2' | translate)" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                    <div>
+                        <label for="province">{{'account.province'|translate}}</label>
+                        <input id="province" formControlName="province" type="text" [placeholder]="('signup.province' | translate)" class="rounded-lg bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                    </div>
+                    <div>
+                        <label for="city">{{"account.city"|translate}}</label>
+                        <input id="city" formControlName="city" type="text" [placeholder]="('signup.city' | translate)" class="rounded-lg bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                    </div>
+                    <div>
+                        <label for="addressLine1">{{'account.Address-line-1'|translate}}</label>
+                        <input id="addressLine1" formControlName="addressLine1" type="text" [placeholder]="('signup.address-line-1' | translate)" class="rounded-lg bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                    </div>
+                    <div>
+                        <label for="addressLine2">{{'account.Address-line-2'|translate}}</label>
+                        <input id="addressLine2" formControlName="addressLine2" type="text" [placeholder]="('signup.address-line-2' | translate)" class="rounded-lg bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                    </div>
                 </div>
             </div>
             </form>
         </div>
 
-        <div class="flex flex-col w-full items-end space-y-[10px]">
-            <button type="submit" form="signupForm" class="bg-steel-blue rounded-lg p-[10px] font-bold w-full text-soft-ice">{{'signup.Sign-up' | translate}}</button>
-            <p class="text-deep-charcoal font-bold">{{('signup.Already-had-an-account'|translate) + '?'}} <a routerLink="/login"><span class="text-steel-blue">{{'login.login' |translate}}</span></a></p>
+        <div class="flex w-full items-end space-x-[10px]">
+            <button type="submit" form="signupForm" class="bg-steel-blue rounded-lg p-[10px] font-bold w-full text-soft-ice">{{'settings.Save-changes' | translate}}</button>
+            <button type="button" form="signupForm" class="text-steel-blue rounded-lg p-[10px] font-bold w-full bg-soft-ice" routerLink="/home">{{'settings.Cancel' | translate}}</button>
         </div>
     </div>
-
-    
-    @if(signupCompleted){
-        <div class="complete-box">
-            <h1 class="text-leaf-green title">{{('signup.signup-completed' | translate) + '!'}}</h1>
-            <button (click)="router.navigate(['/login'])" class="bg-steel-blue rounded-lg p-[10px] font-bold w-full">  {{'signup.back-to-login' | translate}}</button>
-        </div>
-    }
 </div>

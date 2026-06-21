@@ -29,6 +29,10 @@
     --color-leaf-green: #6FAF4F;
     --color-tomato-red: #E50046;
     --color-bright-gold: #F9D923;
+
+    --color-primary-1: #2C5EAD;
+    --color-primary-2: #1591DC;
+    --color-primary-3: #C4E2F5;
 }
 
 @layer base {
@@ -120,4 +124,11 @@
 .caption-2{
     font-size: 11pt;
 }
+}
+
+input{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }

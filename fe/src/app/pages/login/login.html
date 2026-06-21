@@ -2,28 +2,28 @@
 <div class="login-container min-h-screen">
     <div class="login-area">
         <div class="flex flex-col justify-center items-center space-y-[20px] w-full">
-            <p class="headline text-steel-blue ">{{'login.login' | translate}}</p>
+            <p class="headline text-steel-blue ">{{'login.Login' | translate}}</p>
             <div class="">
                 @if(wrongCredential){
-                    <h1 class="caption-1 text-tomato-red">{{'login.username-or-password-is-wrong' |translate}}</h1>
+                    <h1 class="caption-1 text-tomato-red">{{'login.Username-or-password-is-wrong' |translate}}</h1>
                 }
                 <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col space-y-[10px] w-full">
                     <input formControlName="username" type="text"
-                        placeholder="{{'login.username' | translate}}"
+                        placeholder="{{'account.username' | translate}}"
                         class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"
                         (input)="wrongCredential = false"/>
 
                     <input formControlName="password" type="password"
-                        placeholder="{{'login.password' | translate}}"
+                        placeholder="{{'account.password' | translate}}"
                         class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"
                         (input)="wrongCredential = false"/>
                 </form>
-                <a routerLink="/forgot-password"><p class="text-sm text-steel-blue underline">{{'login.forgot-password' | translate}}</p></a>
+                <a routerLink="/forgot-password"><p class="text-sm text-steel-blue underline">{{'login.Forgot-password' | translate}}</p></a>
             </div>
             
             <div class="flex flex-col w-full items-end space-y-[10px]">
-                <button type="submit" form="loginForm" class="bg-steel-blue rounded-lg p-[10px] caption-1 font-bold w-full text-soft-ice">{{'login.login' | translate}}</button>
-                <p class="text-deep-charcoal font-bold caption-2">{{'login.dont-have-an-account-yet' |translate}}? <a routerLink="/signup"><span class="text-steel-blue">{{'login.signup' |translate}}</span></a></p>
+                <button type="submit" form="loginForm" class="bg-steel-blue rounded-lg p-[10px] caption-1 font-bold w-full text-soft-ice">{{'login.Login' | translate}}</button>
+                <p class="text-deep-charcoal font-bold caption-2">{{'login.Dont-have-an-account-yet' |translate}}? <a routerLink="/signup"><span class="text-steel-blue">{{'signup.Signup' |translate}}</span></a></p>
             </div>
         </div>
     </div>
