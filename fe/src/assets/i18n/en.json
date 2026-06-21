@@ -2,7 +2,8 @@
   "book": {
     "Title": "Title",
     "Author": "Author",
-    "Genres": "Genres"
+    "Genres": "Genres",
+    "Available-copies": "Available copies"
   },
   "borrow": {
     "Borrow-on": "Borrow on",

@@ -46,7 +46,7 @@
     @apply text-sm md:text-base lg:text-lg;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
 .large-title{
     font-size: 26pt;
 }
@@ -85,7 +85,7 @@
 }
 
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
 .large-title{
     font-size: 34pt;
 }

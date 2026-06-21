@@ -11,10 +11,15 @@
   }
 
 @media (min-width: 1024px) {
-  .pages-container{
-    display: flex;
-    flex-direction: row;
+  .pages-container {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    align-items: center;
     gap: 10px;
+    overflow-x: auto;
+    max-width: 100%;
+    padding: 5px;
   }
 
   .setting-container{
