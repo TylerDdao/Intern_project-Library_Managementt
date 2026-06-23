@@ -27,4 +27,7 @@ public class Borrow extends BaseEntity{
 
     @Column(name = "due_date", nullable = false)
     private LocalDateTime dueDate;
+
+    @Column(name = "is_returned", nullable = false)
+    private boolean isReturned = false;
 }

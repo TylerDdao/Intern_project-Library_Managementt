@@ -33,7 +33,7 @@ public class BorrowReminderService {
         LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
         LocalDateTime endOfDay = LocalDate.now().atTime(23, 59, 59);
 
-        List<Borrow> dueBorrows = borrowRepository.findByDueDateBetween(startOfDay, endOfDay);
+        List<Borrow> dueBorrows = borrowRepository.findByDueDateBetweenAndIsActiveTrue(startOfDay, endOfDay);
 
         for (Borrow borrow : dueBorrows) {
             String email = borrow.getUser().getEmail();

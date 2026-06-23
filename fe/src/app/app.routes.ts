@@ -11,6 +11,10 @@ import { MyPosts } from './pages/my-posts/my-posts';
 import { Settings } from './pages/settings/settings';
 import { NotFound } from './pages/not-found/not-found';
 import { Dashboard } from './pages/dashboard/dashboard';
+import { BooksManagement } from './pages/books-management/books-management';
+import { BorrowsManagement } from './pages/borrows-management/borrows-management';
+import { UsersManagement } from './pages/users-management/users-management';
+import { PostsManagement } from './pages/posts-management/posts-management';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -26,6 +30,10 @@ export const routes: Routes = [
     { path: 'settings', component: Settings, canActivate: [authGuard]},
 
     { path: 'dashboard', component: Dashboard, canActivate: [adminGuard]},
+    { path: 'books-management', component: BooksManagement, canActivate: [adminGuard]},
+    { path: 'borrows-management', component: BorrowsManagement, canActivate: [adminGuard]},
+    { path: 'posts-management', component: PostsManagement, canActivate: [adminGuard]},
+    { path: 'users-management', component: UsersManagement, canActivate: [adminGuard]},
 
     { path: '**', component: NotFound }
 ];

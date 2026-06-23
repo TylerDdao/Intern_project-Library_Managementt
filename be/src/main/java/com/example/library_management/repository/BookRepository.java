@@ -84,5 +84,11 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     WHERE g.name = :genre
     """)
     Page<Book> findBorrowedBooksByGenre(@Param("genre") String genre, Pageable pageable);
+
+    @Query("""
+    SELECT g.name, COUNT(b) FROM Book b
+    JOIN b.genres g
+    GROUP BY g.name""")
+    List<Object[]> countBooksByGenre();
 }
 

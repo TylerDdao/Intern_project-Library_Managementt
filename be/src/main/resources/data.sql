@@ -40,7 +40,8 @@ INSERT IGNORE INTO features (id, name) VALUES
     (29, 'ASSIGN_FEATURE'),
     (30, 'UNASSIGN_FEATURE'),
     (31, 'DELETE_POST_MULTI'),
-    (32, 'DELETE_COMMENT_MULTI');
+    (32, 'DELETE_COMMENT_MULTI'),
+    (33, 'GET_BORROW_MULTI');
 
 INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
     (4, 5),  (4, 6),  (4, 8),  (4, 9),  (4, 10),
@@ -51,7 +52,7 @@ INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
     (3, 8),  (3, 9),  (3, 10), (3, 11), (3, 12),
     (3, 13), (3, 14), (3, 15), (3, 17), (3, 19),
     (3, 20), (3, 21), (3, 22), (3, 24), (3, 26),
-    (3, 27), (3, 28), (3, 31), (3, 32);
+    (3, 27), (3, 28), (3, 31), (3, 32), (3,33);
 
 -- =========================================================================
 -- 2. USERS (Tyler as ROOT, everyone else as USER)
@@ -84,28 +85,27 @@ INSERT IGNORE INTO books (id, title, author, copies, created_at) VALUES
     (1, 'Project Hail Mary', 'Andy Weir', 10, DATE_SUB(NOW(), INTERVAL 6 DAY)),
     (2, 'Go for it, Nakamura-kun', 'Syundei', 5, DATE_SUB(NOW(), INTERVAL 6 DAY)),
     (3, 'The Song of Achilles', 'Madeline Miller', 1, DATE_SUB(NOW(), INTERVAL 18 DAY)),
-    (4, 'The Martian', 'Andy Weir', 8, DATE_SUB(NOW(), INTERVAL 10 DAY)),
-    (5, 'Dune', 'Frank Herbert', 12, DATE_SUB(NOW(), INTERVAL 19 DAY)),
-    (6, 'Neuromancer', 'William Gibson', 4, DATE_SUB(NOW(), INTERVAL 5 DAY)),
-    (7, 'Pride and Prejudice', 'Jane Austen', 6, DATE_SUB(NOW(), INTERVAL 1 DAY)),
-    (8, 'The Seven Husbands of Evelyn Hugo', 'Taylor Jenkins Reid', 7, DATE_SUB(NOW(), INTERVAL 17 DAY)),
-    (9, 'Spy x Family, Vol. 1', 'Tatsuya Endo', 15, DATE_SUB(NOW(), INTERVAL 1 DAY)),
-    (10, 'Demon Slayer: Kimetsu no Yaiba, Vol. 1', 'Koyoharu Gotouge', 10, DATE_SUB(NOW(), INTERVAL 2 DAY )),
+    (4, 'The Martian', 'Andy Weir', 0, DATE_SUB(NOW(), INTERVAL 10 DAY)),
+    (5, 'Dune', 'Frank Herbert', 0, DATE_SUB(NOW(), INTERVAL 19 DAY)),
+    (6, 'Neuromancer', 'William Gibson', 0, DATE_SUB(NOW(), INTERVAL 5 DAY)),
+    (7, 'Pride and Prejudice', 'Jane Austen', 0, DATE_SUB(NOW(), INTERVAL 1 DAY)),
+    (8, 'The Seven Husbands of Evelyn Hugo', 'Taylor Jenkins Reid', 0, DATE_SUB(NOW(), INTERVAL 17 DAY)),
+    (9, 'Spy x Family, Vol. 1', 'Tatsuya Endo', 0, DATE_SUB(NOW(), INTERVAL 1 DAY)),
+    (10, 'Demon Slayer: Kimetsu no Yaiba, Vol. 1', 'Koyoharu Gotouge', 0, DATE_SUB(NOW(), INTERVAL 2 DAY )),
     (11, 'Chainsaw Man, Vol. 1', 'Tatsuki Fujimoto', 11, DATE_SUB(NOW(), INTERVAL 9 DAY)),
     (12, 'The Book Thief', 'Markus Zusak', 5, DATE_SUB(NOW(), INTERVAL 2 DAY)),
-    (13, 'All the Light We Cannot See', 'Anthony Doerr', 9, DATE_SUB(NOW(), INTERVAL 18 DAY)),
+    (13, 'All the Light We Cannot See', 'Anthony Doerr', 0, DATE_SUB(NOW(), INTERVAL 18 DAY)),
     (14, 'The Nightingale', 'Kristin Hannah', 6, DATE_SUB(NOW(), INTERVAL 20 DAY)),
     (15, 'Circe', 'Madeline Miller', 4, DATE_SUB(NOW(), INTERVAL 9 DAY)),
     (16, 'Snow Crash', 'Neal Stephenson', 3, DATE_SUB(NOW(), INTERVAL 0 DAY)),
     (17, 'A Court of Thorns and Roses', 'Sarah J. Maas', 8, DATE_SUB(NOW(), INTERVAL 1 DAY)),
-    (18, 'Kaguya-sama: Love Is War, Vol. 1', 'Aka Akasaka', 7, DATE_SUB(NOW(), INTERVAL 6 DAY)),
+    (18, 'Kaguya-sama: Love Is War, Vol. 1', 'Aka Akasaka', 0, DATE_SUB(NOW(), INTERVAL 6 DAY)),
     (19, 'The Hobbit', 'J.R.R. Tolkien', 12, DATE_SUB(NOW(), INTERVAL 5 DAY)),
     (20, 'The Fellowship of the Ring', 'J.R.R. Tolkien', 8, DATE_SUB(NOW(), INTERVAL 4 DAY)),
     (21, 'Gone Girl', 'Gillian Flynn', 6, DATE_SUB(NOW(), INTERVAL 3 DAY)),
-    (22, 'The Girl with the Dragon Tattoo', 'Stieg Larsson', 5, DATE_SUB(NOW(), INTERVAL 9 DAY)),
+    (22, 'The Girl with the Dragon Tattoo', 'Stieg Larsson', 0, DATE_SUB(NOW(), INTERVAL 9 DAY)),
     (23, '1984', 'George Orwell', 15, DATE_SUB(NOW(), INTERVAL 7 DAY)),
-    (24, 'Atomic Habits', 'James Clear', 20, DATE_SUB(NOW(), INTERVAL 8 DAY)),
-    (25, 'Circe', 'Madeline Miller', 4, DATE_SUB(NOW(), INTERVAL 5 DAY));
+    (24, 'Atomic Habits', 'James Clear', 0, DATE_SUB(NOW(), INTERVAL 8 DAY));
 
 INSERT IGNORE INTO books_genres (book_id, genre_id) VALUES
     (1, 1),
@@ -254,7 +254,7 @@ INSERT IGNORE INTO comments (id, created_at, created_by, is_active, is_deleted, 
 -- =========================================================================
 
 INSERT IGNORE INTO borrows (id, created_at, created_by, is_active, is_deleted, updated_at, updated_by, due_date, book_id, user_id) VALUES
-    (1, NOW(), 'tyler', 1, 0, null, null, '2026-06-10', 1, 1),
+    (1, NOW(), 'tyler', 0, 0, null, null, '2026-06-10', 1, 1),
     (3, NOW(), 'tyler', 1, 0, null, null, '2026-06-01', 2, 1),
     (4, '2026-04-25 10:00:00', 'tyler', 0, 0, null, null, '2026-05-10', 3, 1),
     -- Overdue: Due 25 days ago
@@ -269,3 +269,14 @@ INSERT IGNORE INTO borrows (id, created_at, created_by, is_active, is_deleted, u
     (9, DATE_SUB(NOW(), INTERVAL 30 DAY), 'alex_m', 0, 0, NOW(), 'SYSTEM', DATE_SUB(NOW(), INTERVAL 14 DAY), 21, 2),
     -- Active: Due in 5 days
     (10, NOW(), 'tyler', 1, 0, null, null, DATE_ADD(NOW(), INTERVAL 5 DAY), 19, 1);
+
+
+#     (11, NOW(), 'tyler', 1, 0, null, null, DATE_ADD(NOW(), INTERVAL 10 DAY), 1, 1),
+#     (12, NOW(), 'tyler', 1, 0, null, null, DATE_ADD(NOW(), INTERVAL 7 DAY), 2, 1),
+#     (13, '2026-04-25 10:00:00', 'tyler', 0, 0, null, null, '2026-05-10', 3, 1),
+#     (14, NOW(), 'tyler', 1, 0, null, null, '2026-06-10', 1, 1),
+#     (15, NOW(), 'tyler', 1, 0, null, null, '2026-06-01', 2, 1),
+#     (16, '2026-04-25 10:00:00', 'tyler', 0, 0, null, null, DATE_ADD(NOW(), INTERVAL 20 DAY), 3, 1),
+#     (17, NOW(), 'tyler', 1, 0, null, null, '2026-06-10', 1, 1),
+#     (18, NOW(), 'tyler', 1, 0, null, null, '2026-06-01', 2, 1),
+#     (19, '2026-04-25 10:00:00', 'tyler', 0, 0, null, null, '2026-05-10', 3, 1);

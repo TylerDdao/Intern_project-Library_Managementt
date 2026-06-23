@@ -2,12 +2,16 @@
 
 <div class="container">
     <div class="side-menu">
-        <app-sort-side-bar-component
-        [isSearch]="isSearch"
-        [sortBy]="['Title', 'Author']"
-        [filterBy]="genres"
-        (onApply)="handleApply($event)">
-        </app-sort-side-bar-component>
+        <div class="flex flex-col space-y-[10px]">
+            <app-sort-side-bar-component
+            [isSearch]="isSearch"
+            [sortBy]="['Title', 'Author']"
+            [filterBy]="genres"
+            (onApply)="handleApply($event)">
+            </app-sort-side-bar-component>
+            <button class="bg-primary-1 text-soft-ice p-[5px] rounded-[10px] headline">{{'booksManagement.Add-book'|translate}}</button>
+            <button class="text-primary-1 p-[5px] rounded-[10px] border border-primary-1 headline">{{'management.Export'|translate}}</button>
+        </div>
     </div>
 
     <div class="books-area">

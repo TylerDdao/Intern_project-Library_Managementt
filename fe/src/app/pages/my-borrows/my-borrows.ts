@@ -16,8 +16,17 @@ import { Page } from '../../models/page';
   styleUrl: './my-borrows.css',
 })
 export class MyBorrows {
-  borrows:Borrow[] = [];
-  borrowPages: Page = {
+  borrowing:Borrow[] = [];
+  borrowsHistory: Borrow[] = [];
+
+  borrowingPages: Page = {
+    last: true,
+    first: true,
+    number: 0,
+    totalPages: 1
+  }
+
+  borrowsHistoryPages: Page = {
     last: true,
     first: true,
     number: 0,
@@ -34,14 +43,28 @@ export class MyBorrows {
     @Inject(PLATFORM_ID) private platformId: Object,
   ){}
 
-  fetchBorrowsByUserId(page: Page = this.borrowPages):void{
+  fetchBorrowsByUserId(page: Page = this.borrowingPages):void{
     const userId = JSON.parse(localStorage.getItem("user") ?? "{}").id
     if (!userId) return;
-    this.borrowService.getBorrowsByUserId(userId, page.number).subscribe({
+    this.borrowService.getBorrowsByUserId(userId, page.number, 5).subscribe({
       next: (data:any) => {
         if(data.code == "200"){
-          this.borrows = data.data.content;
-          this.borrowPages = data.data;
+          this.borrowing = data.data.content;
+          this.borrowingPages = data.data;
+          this.cdr.markForCheck();
+        }
+      }
+    })
+  }
+
+  fetchBorrowsHistoryByUserId(page: Page = this.borrowsHistoryPages):void{
+    const userId = JSON.parse(localStorage.getItem("user") ?? "{}").id
+    if (!userId) return;
+    this.borrowService.getBorrowsByUserId(userId, page.number, 5).subscribe({
+      next: (data:any) => {
+        if(data.code == "200"){
+          this.borrowsHistory = data.data.content;
+          this.borrowsHistoryPages = data.data;
           this.cdr.markForCheck();
         }
       }
@@ -51,6 +74,7 @@ export class MyBorrows {
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
       this.fetchBorrowsByUserId()
+      this.fetchBorrowsHistoryByUserId()
     }
   }
 }

@@ -14,8 +14,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
+@RequestMapping("/books")
 public class BookController {
     @Autowired
     CreateBookService createBookService;
@@ -30,7 +32,7 @@ public class BookController {
     DeleteBookService deleteBookService;
 
     @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
-    @GetMapping("books/unavailable")
+    @GetMapping("/unavailable")
     public ResponseEntity<ApiResponse<Page<BookResponse>>> getUnavailableBooks(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
@@ -42,34 +44,15 @@ public class BookController {
         );
     }
 
-    @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
-    @GetMapping("/books/books-count/borrowed")
-    public ResponseEntity<ApiResponse<Page<BookResponse>>> getBorrowedBooksByGenre(
-            @RequestParam(required = true) String genre,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int limit,
-            @RequestParam(defaultValue =  "title") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir) {
+    @GetMapping("/books-count/genre")
+    public ResponseEntity<ApiResponse<Map<String, Long>>> getBooksCountByGenre() {
         return ResponseEntity.ok(
-                ApiResponse.success(getBookService.getBorrowedBooksByGenre(page, limit, sortBy, sortDir, genre))
+                ApiResponse.success(getBookService.getBooksCountByGenre())
         );
     }
 
     @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
-    @GetMapping("/books/books-count")
-    public ResponseEntity<ApiResponse<Page<BookResponse>>> getBooksByGenre(
-            @RequestParam(required = true) String genre,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int limit,
-            @RequestParam(defaultValue =  "title") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir) {
-        return ResponseEntity.ok(
-                ApiResponse.success(getBookService.getBooksByGenre(page, limit, sortBy, sortDir, genre))
-        );
-    }
-
-    @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
-    @GetMapping("/books")
+    @GetMapping()
     public ResponseEntity<ApiResponse<Page<BookResponse>>> getBooks(
             @RequestParam(required = false) String searchQuery,
             @RequestParam(defaultValue = "0") int page,
@@ -83,7 +66,7 @@ public class BookController {
     }
 
     @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
-    @GetMapping("/books/newly-arrived")
+    @GetMapping("/newly-arrived")
     public ResponseEntity<ApiResponse<Page<BookResponse>>> getRecentBooks(
             @RequestParam(defaultValue = "5") int dayRange,
             @RequestParam(defaultValue = "0") int page,
@@ -96,7 +79,7 @@ public class BookController {
     }
 
     @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
-    @GetMapping("/books/most-posts")
+    @GetMapping("/most-posts")
     public ResponseEntity<ApiResponse<Page<BookResponse>>> getMostPostBooks(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit) {
@@ -106,7 +89,7 @@ public class BookController {
     }
 
     @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
-    @GetMapping("/books/most-borrowed")
+    @GetMapping("/most-borrowed")
     public ResponseEntity<ApiResponse<Page<BookResponse>>> getMostBorrowedBooks(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit) {
@@ -116,19 +99,19 @@ public class BookController {
     }
 
     @PreAuthorize("@securityService.hasAccess('CREATE_BOOK')")
-    @PostMapping("/book")
+    @PostMapping("")
     public ResponseEntity<ApiResponse<BookResponse>> addBook(@RequestBody BookRequest request){
         return ResponseEntity.ok(ApiResponse.success(createBookService.addBook(request)));
     }
 
     @PreAuthorize("@securityService.hasAccess('UPDATE_BOOK')")
-    @PatchMapping("/book")
+    @PatchMapping("")
     public ResponseEntity<ApiResponse<BookResponse>> updateBook(@RequestBody BookRequest request){
         return ResponseEntity.ok(ApiResponse.success(updateBookService.updateBook(request)));
     }
 
     @PreAuthorize("@securityService.hasAccess('DELETE_BOOK')")
-    @DeleteMapping("/book")
+    @DeleteMapping("")
     public ResponseEntity<ApiResponse<String>> deleteBook(@RequestBody BookRequest request){
         return  ResponseEntity.ok(ApiResponse.success(deleteBookService.deleteBook(request)));
     }

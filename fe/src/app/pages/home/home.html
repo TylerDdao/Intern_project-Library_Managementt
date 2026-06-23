@@ -2,10 +2,10 @@
 <div class="home-container">
     <div class="chart-1">
         <h1 class="text-deep-charcoal header headline">{{'home.Number-of-books-by-genre' |translate}}</h1>
-        @if (bookGenreLabels.length > 0) {
+        @if (booksCountByGenreValues.length > 0 && booksCountByGenreLabels.length > 0) {
             <app-chart-component
-                [labels]="bookGenreLabels"
-                [data]="bookGenreValues"
+                [labels]="booksCountByGenreLabels"
+                [data]="booksCountByGenreValues"
                 label="Books"
                 type="bar"/>
         } 
@@ -16,10 +16,10 @@
 
     <div class="chart-2">
         <h1 class="text-deep-charcoal header headline">{{'home.Number-of-borrowed-books-by-genre' |translate}}</h1>
-        @if (bookGenreLabels.length > 0) {
+        @if (borrowsCountByGenreValues.length > 0 && borrowsCountByGenreLabels.length >0) {
             <app-chart-component
-            [labels]="bookGenreLabels"
-            [data]="borrowedBookGenreValues"
+            [labels]="borrowsCountByGenreLabels"
+            [data]="borrowsCountByGenreValues"
             label="Books"
             type="bar"/>
         }

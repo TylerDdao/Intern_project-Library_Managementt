@@ -1,32 +1,44 @@
 <div class="borrow-card">
-    <img src="/book-covers/{{bookCover}}.jpg" alt="{{borrow.book.title}}" class="book-cover" (error)="onImageError($event)"/>
-    <div class="book-info-area">
-        <h1 class="subheadline font-bold">{{borrow.book.title}}</h1>
-        <h2 class="caption-1">{{'book.Author'|translate}}: {{borrow.book.author}}</h2>
-        <h2 class="caption-1">{{'borrow.Borrow-on'|translate}}: {{formattedBorrowedOn}}</h2>
-        <h2 class="caption-1 font-bold">{{'borrow.Please-return-by'|translate}}: {{formattedDueDate}}</h2>
-        @if (dueIn <= 5 && dueIn > 0) {
-            <div class="flex items-center space-x-[5px] text-bright-gold">
-                <span class="material-symbols-outlined">error</span>
-                <h1 class="subheadline font-bold">{{'borrow.Due-in'|translate}} {{dueIn}} {{'borrow.days'|translate}}</h1>
-            </div>
-        }
-        @else if (dueIn == 0) {
-            <div class="flex items-center space-x-[5px] text-bright-gold">
-                <span class="material-symbols-outlined">error</span>
-                <h1 class="subheadline font-bold">{{'borrow.Due-today'|translate}}</h1>
-            </div>
-        }
-        @else if (dueIn < 0) {
-            <div class="flex items-center space-x-[5px] text-tomato-red">
-                <span class="material-symbols-outlined">error</span>
-                <h1 class="subheadline font-bold">{{'borrow.Late'|translate}} {{dueIn*(-1)}} {{'borrow.days'|translate}}</h1>
-            </div>
-        }
-        @else {
-            <div class="flex items-center space-x-[5px]">
-                <h1 class="subheadline font-bold">{{'borrow.Due-in'|translate}} {{dueIn}} {{'borrow.days'|translate}}</h1>
-            </div>
-        }
+    <div class="borrow-info">
+        <img src="/book-covers/{{bookCover}}.jpg" alt="{{borrow.book.title}}" class="book-cover" (error)="onImageError($event)"/>
+        <div class="book-info-area">
+            <h1 class="subheadline font-bold">{{borrow.book.title}}</h1>
+            <h2 class="caption-1">{{'book.Author'|translate}}: {{borrow.book.author}}</h2>
+            <h2 class="caption-1">{{'borrow.Borrow-on'|translate}}: {{formattedBorrowedOn}}</h2>
+            <h2 class="caption-1 font-bold">{{'borrow.Please-return-by'|translate}}: {{formattedDueDate}}</h2>
+            @if (!borrow.active) {
+                <div class="flex items-center space-x-[5px] text-leaf-green">
+                    <span class="material-symbols-outlined">check</span>
+                    <h1 class="subheadline font-bold">{{'borrow.Returned'|translate}}</h1>
+                </div>
+            }
+            @else if (dueIn <= 5 && dueIn > 0) {
+                <div class="flex items-center space-x-[5px] text-bright-gold">
+                    <span class="material-symbols-outlined">error</span>
+                    <h1 class="subheadline font-bold">{{'borrow.Due-in'|translate}} {{dueIn}} {{'borrow.days'|translate}}</h1>
+                </div>
+            }
+            @else if (dueIn == 0) {
+                <div class="flex items-center space-x-[5px] text-bright-gold">
+                    <span class="material-symbols-outlined">error</span>
+                    <h1 class="subheadline font-bold">{{'borrow.Due-today'|translate}}</h1>
+                </div>
+            }
+            @else if (dueIn < 0) {
+                <div class="flex items-center space-x-[5px] text-tomato-red">
+                    <span class="material-symbols-outlined">error</span>
+                    <h1 class="subheadline font-bold">{{'borrow.Late'|translate}} {{dueIn*(-1)}} {{'borrow.days'|translate}}</h1>
+                </div>
+            }
+            @else {
+                <div class="flex items-center space-x-[5px]">
+                    <h1 class="subheadline font-bold">{{'borrow.Due-in'|translate}} {{dueIn}} {{'borrow.days'|translate}}</h1>
+                </div>
+            }
+        </div>
     </div>
+
+    @if (editable) {
+        <button class="p-[10px] bg-leaf-green text-soft-ice rounded-[10px] h-fit">{{'borrow.Returned'|translate}}</button>
+    }
 </div>

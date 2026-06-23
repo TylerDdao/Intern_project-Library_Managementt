@@ -1,0 +1,70 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+    <div class="side-menu"> 
+        <div class="flex flex-col space-y-[10px]">
+            <app-sort-side-bar-component></app-sort-side-bar-component>
+            <button class="bg-primary-1 text-soft-ice p-[5px] rounded-[10px] headline">{{'borrowsManagement.Pending-borrow'|translate}}</button>
+            <button class="text-primary-1 p-[5px] rounded-[10px] border border-primary-1 headline">{{'management.Export'|translate}}</button>
+        </div>
+    </div>
+
+    <div class="borrows-container">
+        <div class="title-3 borrows-count font-bold">{{'borrowsManagement.Total-borrows-that-have-not-been-returned'|translate}}: {{onGoingBorrows.length + nearDueBorrows.length + passedDueBorrows.length}} {{'borrow.Borrows'}}</div>
+        <div class="all-borrows-container">
+            <h1 class="headline">{{'borrowManagement.On-going-borrows'|translate}}</h1>
+            <div class="borrows-scrolling-area">
+                @if (onGoingBorrows.length > 0) {
+                    @for (borrow of onGoingBorrows   ; track borrow.id) {
+                        <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
+                    }
+                    <app-pages-component [pages]="onGoingBorrowsPages" (onApply)="fetchOnGoingBorrows($event)"></app-pages-component>
+                } @else {
+                    <p>Loading...</p>
+                }
+            </div>
+        </div>
+
+        <div class="near-borrows-container">
+            <h1 class="headline">{{'borrowManagement.Near-due-date-borrows'|translate}}</h1>
+            <div class="borrows-scrolling-area">
+                @if (nearDueBorrows.length > 0) {
+                    @for (borrow of nearDueBorrows; track borrow.id) {
+                        <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
+                    }
+                    <app-pages-component [pages]="nearDueBorrowsPages" (onApply)="fetchNearDueBorrows($event)"></app-pages-component>
+                } @else {
+                    <p>Loading...</p>
+                }
+            </div>
+        </div>
+
+        <div class="late-borrows-container">
+            <h1 class="headline">{{'borrowManagement.Passed-due-date-borrows'|translate}}</h1>
+            <div class="borrows-scrolling-area">
+                @if (passedDueBorrows.length > 0) {
+                    @for (borrow of passedDueBorrows; track borrow.id) {
+                        <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
+                    }
+                    <app-pages-component [pages]="passedDueBorrowsPages" (onApply)="fetchLateBorrows($event)"></app-pages-component>
+                } @else {
+                    <p>Loading...</p>
+                }
+            </div>
+        </div>
+
+        <div class="returned-borrows-container">
+            <h1 class="headline">{{'borrowManagement.Returned-borrows'|translate}}</h1>
+            <div class="borrows-scrolling-area">
+                @if (returnedBorrows.length > 0) {
+                    @for (borrow of returnedBorrows; track borrow.id) {
+                        <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
+                    }
+                    <app-pages-component [pages]="returnedBorrowsPages" (onApply)="fetchReturnedBorrows($event)"></app-pages-component>
+                } @else {
+                    <p>Loading...</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

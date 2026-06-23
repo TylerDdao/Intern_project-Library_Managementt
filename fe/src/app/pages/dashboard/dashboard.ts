@@ -4,40 +4,53 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language-service/language-service';
 import { Router } from '@angular/router';
 import { ChartComponent } from '../../components/chart-component/chart-component';
-import { PostCardComponent } from '../../components/post-card-component/post-card-component';
-import { BorrowCardComponent } from '../../components/borrow-card-component/borrow-card-component';
 import { Post } from '../../models/post';
-import { PostsService } from '../../services/posts-service/posts-service';
 import { isPlatformBrowser } from '@angular/common';
 import { BorrowService } from '../../services/borrow-service/borrow-service';
-import { Borrow } from '../../models/borrow';
-import { MiniPostCardComponent } from '../../components/mini-post-card-component/mini-post-card-component';
 import { GenreService } from '../../services/genre-service/genre-service';
 import { BookService } from '../../services/book-service/book-service';
-import { Genre } from '../../models/genre';
+import { Book } from '../../models/book';
+import { Page } from '../../models/page';
+import { BookCardComponent } from '../../components/book-card-component/book-card-component';
+import { PagesComponent } from '../../components/pages-component/pages-component';
+import { Borrow } from '../../models/borrow';
+import { BorrowCardComponent } from '../../components/borrow-card-component/borrow-card-component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [TranslateModule, NavbarComponent, ChartComponent, MiniPostCardComponent, BorrowCardComponent],
+  imports: [TranslateModule, NavbarComponent, ChartComponent, BookCardComponent, PagesComponent, BorrowCardComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
-  posts:Post[] = [];
-  borrows:Borrow[] = [];
+  borrowStatusLabels: string[] = ['Late', 'Near Due', 'On-Time'];
+  borrowStatusValues: number[] = [0, 0, 0];
+  lateBorrowCount = 0;
+  nearBorrowCount = 0;
+  onTimeBorrowCount = 0;
 
-  genres:Genre[] = [];
-  bookCountByGenre: { [key: string]: number } = {};
-  borrowedBookCountByGenre: { [key: string]: number } = {};
-  bookGenreLabels: string[] = [];
-  bookGenreValues: number[] = [];
-  borrowedBookGenreValues: number[] = [];
+  borrowsCountByGenre:{ [key: string]: number } = {};
+  booksCountByGenre:{ [key: string]: number } = {};
+
+  unavailableBooks:Book[] = [];
+  unavailableBooksPage:Page = {
+    first: true,
+    last: true,
+    number: 0,
+    totalPages: 1
+  }
+
+  lateBorrows: Borrow[] = []
+  lateBorrowsPage:Page = {
+    first: true,
+    last: true,
+    number: 0,
+    totalPages: 1
+  }
 
   constructor(
     public langService: LanguageService,
-    private postsService: PostsService,
     private borrowService: BorrowService,
-    private genreService: GenreService,
     private bookService: BookService,
     protected router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -45,105 +58,105 @@ export class Dashboard {
   ) 
   {}
 
-  fetchBookCountsByGenre(): void {
-    this.genreService.getAllGenres().subscribe({
+  fetchLateBorrow(page:Page = this.lateBorrowsPage):void{
+    this.borrowService.getBorrowByStatus("late", page.number).subscribe({
+      next: (data: any) => {
+        if(data.code == "200"){
+          this.lateBorrows = data.data.content;
+          this.lateBorrowsPage = data.data;
+          this.cdr.markForCheck();
+        }
+      }
+    })
+  }
+
+  fetchUnavailableBooks(page:Page = this.unavailableBooksPage):void{
+    this.bookService.getUnavailableBooks(page.number).subscribe({
+      next: (data: any) => {
+        if(data.code == "200"){
+          this.unavailableBooks = data.data.content;
+          this.unavailableBooksPage = data.data;
+          this.cdr.markForCheck();
+        }
+      }
+    })
+  }
+
+  fetchLateBorrows():void{
+    this.borrowService.getBorrowByStatus("late").subscribe({
+      next: (data: any) => {
+        if(data.code == "200"){
+          this.lateBorrowCount = data.data.totalElements
+          this.updateChartData()
+          this.cdr.markForCheck()
+        }
+      }
+    })
+  }
+
+  fetchNearBorrows():void{
+    this.borrowService.getBorrowByStatus("near").subscribe({
+      next: (data: any) => {
+        if(data.code == "200"){
+          this.nearBorrowCount = data.data.totalElements
+          this.updateChartData()
+          this.cdr.markForCheck()
+        }
+      }
+    })
+  }
+
+  fetchOnTimeBorrows():void{
+    this.borrowService.getBorrowByStatus("onTime").subscribe({
+      next: (data: any) => {
+        if(data.code == "200"){
+          this.onTimeBorrowCount = data.data.totalElements
+          this.updateChartData()
+          this.cdr.markForCheck()
+        }
+      }
+    })
+  }
+
+  private updateChartData(): void {
+    this.borrowStatusValues = [
+      this.lateBorrowCount,
+      this.nearBorrowCount,
+      this.onTimeBorrowCount
+    ];
+
+    console.log(this.borrowStatusValues)
+    this.cdr.markForCheck();
+  }
+
+  private fetchBorrowsByGenre(): void {
+    this.borrowService.getBorrowsCountByGenre().subscribe({
         next: (data: any) => {
             if (data.code == "200") {
-                this.genres = data.data.content;
-                let bookCompleted = 0;
-                let borrowCompleted = 0;
-
-                for (const genre of this.genres) {
-                    this.bookService.getBooksByGenre(genre.name).subscribe({
-                        next: (bookData: any) => {
-                            if (bookData.code == "200") {
-                                this.bookCountByGenre[genre.name] = bookData.data.totalElements;
-                                bookCompleted++;
-
-                                if (bookCompleted === this.genres.length) {
-                                    this.bookGenreLabels = Object.keys(this.bookCountByGenre);
-                                    this.bookGenreValues = Object.values(this.bookCountByGenre);
-                                    this.cdr.markForCheck();
-                                }
-                            }
-                        },
-                        error: (err) => console.error(err)
-                    });
-
-                    this.bookService.getBorrowedBooksByGenre(genre.name).subscribe({
-                        next: (borrowData: any) => {
-                            if (borrowData.code == "200") {
-                                this.borrowedBookCountByGenre[genre.name] = borrowData.data.totalElements;
-                                borrowCompleted++;
-
-                                if (borrowCompleted === this.genres.length) {
-                                    this.borrowedBookGenreValues = Object.values(this.borrowedBookCountByGenre);
-                                    this.cdr.markForCheck();
-                                }
-                            }
-                        },
-                        error: (err) => console.error(err)
-                    });
-                }
+                this.borrowsCountByGenre = data.data;
+                this.cdr.markForCheck();
             }
         },
         error: (err) => console.error(err)
     });
   }
 
-  fetchBorrowsByUserId():void{
-    const userId = JSON.parse(localStorage.getItem("user") ?? "{}").id
-    if (!userId) return;
-    this.borrowService.getBorrowsByUserId(userId).subscribe({
-      next: (data:any) => {
-        if(data.code == "200"){
-          this.borrows = data.data.content;
-          this.cdr.markForCheck();
-        }
-      },
-      error: (err) => {
-        console.error(err)
-      }
-    })
+  get borrowsCountByGenreLabels(): string[] {
+      return Object.keys(this.borrowsCountByGenre);
   }
 
-  fetchAllPosts():void{
-    this.postsService.getAllPost(0, 5).subscribe({
-      next: (data:any) => {
-        console.log(data)
-        if(data.code == "200"){
-          this.posts = data.data.content;
-          this.cdr.markForCheck();
-        }
-      },
-      error: (err) => {
-        console.error(err);
-      }
-
-    })
+  get borrowsCountByGenreValues(): number[] {
+      return Object.values(this.borrowsCountByGenre);
   }
-
+  
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
-      this.fetchAllPosts()
-      this.fetchBorrowsByUserId()
-      this.fetchBookCountsByGenre()
+      this.fetchOnTimeBorrows();
+      this.fetchNearBorrows();
+      this.fetchLateBorrows();
+      this.fetchBorrowsByGenre();
+      this.fetchUnavailableBooks();
+      this.fetchLateBorrow();
     }
-  }
-
-  onPostLikeToggled(updatedPost: Post) {
-    const index = this.posts.findIndex(p => p.id === updatedPost.id);
-    if (index !== -1) {
-        this.posts[index] = updatedPost;
-        this.cdr.markForCheck();
-    }
-  }
-
-  get booksCountByGenreKeys(): string[] {
-    return Object.keys(this.bookCountByGenre);
-  }
-
-  get booksCountByGenreValues(): number[] {
-    return Object.values(this.bookCountByGenre);
   }
 }

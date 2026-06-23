@@ -9,7 +9,7 @@
                 <div class="flex items-start space-x-[5px]">
                     <img src='/book-covers/{{bookCover}}.jpg' alt={{post.book.title}} class="book-cover" (error)="onImageError($event)">
                     <div>
-                        <h1 class="caption-1 line-clamp-2">{{post.book.title}}</h1>
+                        <h1 class="caption-1 font-bold line-clamp-2">{{post.book.title}}</h1>
                         <h1 class="caption-2 line-clamp-1">{{'book.Author'|translate}}: {{post.book.author}}</h1>
                         <h1 class="caption-2 line-clamp-1">{{'book.Genres'|translate}}: {{post.book.genres}}</h1>
                     </div>

@@ -4,7 +4,8 @@
         display: flex;
         justify-content: space-between;
         align-items:start;
-        gap:30px
+        gap:30px;
+        min-width: calc(100dvw - 25px);
     }
 
     .posts-area{
@@ -12,15 +13,6 @@
         flex-direction: column;
         width: 100%;
         gap: 30px;
-    }
-
-    .post-side-menu{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        width: 100%;
     }
     
     .create-post-button{
@@ -49,12 +41,7 @@
         gap: 30px;
     }
 
-    .post-side-menu{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
+    .side-menu{
         width: 100%;
     }
 

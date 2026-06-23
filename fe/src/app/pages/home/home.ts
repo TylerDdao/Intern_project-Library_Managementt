@@ -28,10 +28,7 @@ export class Home {
 
   genres:Genre[] = [];
   bookCountByGenre: { [key: string]: number } = {};
-  borrowedBookCountByGenre: { [key: string]: number } = {};
-  bookGenreLabels: string[] = [];
-  bookGenreValues: number[] = [];
-  borrowedBookGenreValues: number[] = [];
+  borrowsCountByGenre: { [key: string]: number } = {};
 
   constructor(
     public langService: LanguageService,
@@ -45,50 +42,44 @@ export class Home {
   ) 
   {}
 
-  fetchBookCountsByGenre(): void {
-    this.genreService.getAllGenres().subscribe({
+  private fetchBooksCountByGenre(): void {
+    this.bookService.getBooksCountByGenre().subscribe({
         next: (data: any) => {
             if (data.code == "200") {
-                this.genres = data.data.content;
-                let bookCompleted = 0;
-                let borrowCompleted = 0;
-
-                for (const genre of this.genres) {
-                    this.bookService.getBooksByGenre(genre.name).subscribe({
-                        next: (bookData: any) => {
-                            if (bookData.code == "200") {
-                                this.bookCountByGenre[genre.name] = bookData.data.totalElements;
-                                bookCompleted++;
-
-                                if (bookCompleted === this.genres.length) {
-                                    this.bookGenreLabels = Object.keys(this.bookCountByGenre);
-                                    this.bookGenreValues = Object.values(this.bookCountByGenre);
-                                    this.cdr.markForCheck();
-                                }
-                            }
-                        },
-                        error: (err) => console.error(err)
-                    });
-
-                    this.bookService.getBorrowedBooksByGenre(genre.name).subscribe({
-                        next: (borrowData: any) => {
-                            if (borrowData.code == "200") {
-                                this.borrowedBookCountByGenre[genre.name] = borrowData.data.totalElements;
-                                borrowCompleted++;
-
-                                if (borrowCompleted === this.genres.length) {
-                                    this.borrowedBookGenreValues = Object.values(this.borrowedBookCountByGenre);
-                                    this.cdr.markForCheck();
-                                }
-                            }
-                        },
-                        error: (err) => console.error(err)
-                    });
-                }
+                this.bookCountByGenre = data.data;
+                this.cdr.markForCheck();
             }
         },
         error: (err) => console.error(err)
     });
+  }
+
+  get booksCountByGenreLabels(): string[] {
+      return Object.keys(this.bookCountByGenre);
+  }
+
+  get booksCountByGenreValues(): number[] {
+      return Object.values(this.bookCountByGenre);
+  }
+
+  private fetchBorrowsCountByGenre(): void {
+    this.borrowService.getBorrowsCountByGenre().subscribe({
+        next: (data: any) => {
+            if (data.code == "200") {
+                this.borrowsCountByGenre = data.data;
+                this.cdr.markForCheck();
+            }
+        },
+        error: (err) => console.error(err)
+    });
+  }
+
+  get borrowsCountByGenreLabels(): string[] {
+      return Object.keys(this.borrowsCountByGenre);
+  }
+
+  get borrowsCountByGenreValues(): number[] {
+      return Object.values(this.borrowsCountByGenre);
   }
 
   fetchBorrowsByUserId():void{
@@ -127,7 +118,8 @@ export class Home {
     if(isPlatformBrowser(this.platformId)){
       this.fetchAllPosts()
       this.fetchBorrowsByUserId()
-      this.fetchBookCountsByGenre()
+      this.fetchBooksCountByGenre()
+      this.fetchBorrowsCountByGenre();
     }
   }
 
@@ -137,13 +129,5 @@ export class Home {
         this.posts[index] = updatedPost;
         this.cdr.markForCheck();
     }
-  }
-
-  get booksCountByGenreKeys(): string[] {
-    return Object.keys(this.bookCountByGenre);
-  }
-
-  get booksCountByGenreValues(): number[] {
-    return Object.values(this.bookCountByGenre);
   }
 }

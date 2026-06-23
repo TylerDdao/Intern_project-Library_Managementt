@@ -10,22 +10,36 @@
 
     .borrows-container{
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
         width: 100%;
         gap: 30px;
     }
 
-    .borrowing-container{
+    .all-borrows-container{
         display: flex;
         flex-direction: column;
         grid-column: 1;
         gap: 30px;
     }
 
-    .borrows-history-container{
+    .near-borrows-container{
         display: flex;
         flex-direction: column;
         grid-column: 2;
+        gap: 30px;
+    }
+
+    .late-borrows-container{
+        display: flex;
+        flex-direction: column;
+        grid-column: 3;
+        gap: 30px;
+    }
+
+    .returned-borrows-container{
+        display: flex;
+        flex-direction: column;
+        grid-column: 4;
         gap: 30px;
     }
 
@@ -35,6 +49,10 @@
         flex: 1;
         min-height: 0;
         gap: 10px;
+    }
+
+    .borrows-count{
+        grid-column: 1/5;
     }
 }
 

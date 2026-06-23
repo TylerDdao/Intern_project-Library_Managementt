@@ -9,6 +9,8 @@ export interface Borrow{
     createdAt: string,
     
     updatedAt: string,
+
+    active: boolean
     // updatedBy: string,
     // createdBy: string,
 }

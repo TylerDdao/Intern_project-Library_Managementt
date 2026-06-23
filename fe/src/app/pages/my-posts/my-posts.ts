@@ -39,7 +39,7 @@ export class MyPosts {
   ) 
   {}
 
-  fetchMyPost(page: Page = this.postPages): void {
+  fetchMyPosts(page: Page = this.postPages): void {
     const userJson = localStorage.getItem("user");
     if (!userJson) {
         this.router.navigate(['/login']);
@@ -57,6 +57,40 @@ export class MyPosts {
         },
         error: (err) => console.error(err)
     });
+  }
+
+  handleLessPosts():void{
+    this.postsService.getMyPosts(0).subscribe({
+      next: (data:any) => {
+        console.log(data)
+        if(data.code == "200"){
+          this.posts = data.data.content;
+          this.postPages = data.data;
+          this.cdr.markForCheck();
+        }
+      },
+      error: (err) => {
+        console.error(err);
+      }
+
+    })
+  }
+
+  handleLoadMorePosts():void{
+    this.postPages.number ++;
+    this.postsService.getMyPosts(this.postPages.number).subscribe({
+      next: (data:any) => {
+        if(data.code == "200"){
+          this.posts.push(...data.data.content);
+          this.postPages = data.data;
+          this.cdr.markForCheck();
+        }
+      },
+      error: (err) => {
+        console.error(err);
+      }
+
+    })
   }
 
   handleApply(query: SideBarQuery): void {
@@ -91,7 +125,7 @@ export class MyPosts {
 
   ngOnInit(){
     if(isPlatformBrowser(this.platformId)){
-      this.fetchMyPost();
+      this.fetchMyPosts();
     }
   }
 

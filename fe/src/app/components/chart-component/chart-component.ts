@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, OnInit, ElementRef, ViewChild, Input, Inject, PLATFORM_ID
+import { Component, ElementRef, ViewChild, Input, Inject, PLATFORM_ID, ChangeDetectorRef
 
  } from '@angular/core';
 import { Chart } from 'chart.js/auto';
@@ -11,27 +11,47 @@ import { Chart } from 'chart.js/auto';
   styleUrl: './chart-component.css',
 })
 export class ChartComponent {
-  @Input() labels: string[] = [];  // X axis
-  @Input() data: number[] = [];    // Y axis
-  @Input() label: string = '';     // dataset label
-  @Input() type: any = 'bar';      // chart type
+  @Input() labels: string[] = [];
+  @Input() data: number[] = [];
+  @Input() label: string = '';
+  @Input() type: any = 'bar';
+  @Input() colors: string[] = [];
 
   @ViewChild('myChart') myChart!: ElementRef;
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
+  private getBackgroundColor(): string | string[] {
+      return this.colors.length > 0 ? this.colors : '#2C5EAD';
+  }
+
+  private chartInstance: Chart | null = null;
+
   ngAfterViewInit() {
-    if (!isPlatformBrowser(this.platformId)) return;
-    new Chart(this.myChart.nativeElement, {
-      type: this.type,
-      data: {
-        labels: this.labels,
-        datasets: [{
-          label: this.label,
-          data: this.data,
-          backgroundColor: '#3b82f6',
-        }]
-      },
-      options: { responsive: true }
-    });
+      if (!isPlatformBrowser(this.platformId)) return;
+      this.renderChart();
+  }
+
+  ngOnChanges() {
+      if (this.chartInstance) {
+          this.chartInstance.data.labels = this.labels;
+          this.chartInstance.data.datasets[0].data = this.data;
+          this.chartInstance.data.datasets[0].backgroundColor = this.getBackgroundColor();
+          this.chartInstance.update();
+      }
+  }
+
+  private renderChart() {
+      this.chartInstance = new Chart(this.myChart.nativeElement, {
+          type: this.type,
+          data: {
+              labels: this.labels,
+              datasets: [{
+                  label: this.label,
+                  data: this.data,
+                  backgroundColor: this.getBackgroundColor(),
+              }]
+          },
+          options: { responsive: true }
+      });
   }
 }

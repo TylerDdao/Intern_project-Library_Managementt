@@ -8,15 +8,27 @@ import { getAuthHeaders } from '../auth-service';
   providedIn: 'root',
 })
 export class BorrowService {
-  private baseUrl = `${environment.apiUrl}`;
+  private baseUrl = `${environment.apiUrl}/borrows`;
 
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  getBorrowsByUserId(userId: number, page: number = 0, limit: number = 10) {
-    return this.http.get(`${this.baseUrl}/borrows?page=${page}&limit=${limit}&userId=${userId}`, {
+  getBorrowsByUserId(userId: number | null = null, page: number = 0, limit: number = 10) {
+    return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}&userId=${userId}`, {
+      headers: getAuthHeaders(this.platformId)
+    });
+  }
+
+  getBorrowByStatus(status: string, page: number = 0, limit: number = 10) {
+    return this.http.get(`${this.baseUrl}/${status}?page=${page}&limit=${limit}`, {
+      headers: getAuthHeaders(this.platformId)
+    });
+  }
+
+  getBorrowsCountByGenre() {
+    return this.http.get(`${this.baseUrl}/borrows-count/genre`, {
       headers: getAuthHeaders(this.platformId)
     });
   }

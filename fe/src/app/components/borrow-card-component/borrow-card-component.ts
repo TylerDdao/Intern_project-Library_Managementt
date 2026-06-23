@@ -11,6 +11,7 @@ import { Borrow } from '../../models/borrow';
 })
 export class BorrowCardComponent implements OnChanges {
     @Input({ required: true }) borrow!: Borrow;
+    @Input() editable: boolean = false;
 
     dueIn: number = 0;
     dueDate: Date = new Date();

@@ -9,7 +9,7 @@ import { getAuthHeaders } from '../auth-service';
   providedIn: 'root',
 })
 export class BookService {
-  private baseUrl = `${environment.apiUrl}`;
+  private baseUrl = `${environment.apiUrl}/books`;
 
   constructor(
     private http: HttpClient,
@@ -17,45 +17,45 @@ export class BookService {
   ) {}
 
   getAllBooks(page: number = 0, limit: number = 10) {
-    return this.http.get(`${this.baseUrl}/books?page=${page}&limit=${limit}`, {
+    return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}`, {
       headers: getAuthHeaders(this.platformId)
     });
   }
 
   getMostPostsBooks(page: number = 0, limit: number = 10) {
-    return this.http.get(`${this.baseUrl}/books/most-posts?page=${page}&limit=${limit}`, {
+    return this.http.get(`${this.baseUrl}/most-posts?page=${page}&limit=${limit}`, {
       headers: getAuthHeaders(this.platformId)
     });
   }
 
   getMostBorrowedBooks(page: number = 0, limit: number = 10) {
-    return this.http.get(`${this.baseUrl}/books/most-borrowed?page=${page}&limit=${limit}`, {
+    return this.http.get(`${this.baseUrl}/most-borrowed?page=${page}&limit=${limit}`, {
       headers: getAuthHeaders(this.platformId)
     });
   }
 
   getNewlyArrivedBooks(page: number = 0, limit: number = 10) {
-    return this.http.get(`${this.baseUrl}/books/newly-arrived?page=${page}&limit=${limit}`, {
+    return this.http.get(`${this.baseUrl}/newly-arrived?page=${page}&limit=${limit}`, {
       headers: getAuthHeaders(this.platformId)
     });
   }
 
   getBooksByQuery(query: SideBarQuery, page: number = 0, limit: number = 10){
-    return this.http.get(`${this.baseUrl}/books?page=${page}&limit=${limit}&searchQuery=${query.searchQuery}&filterBy=${query.filterBy}&sortBy=${query.sortBy.toLowerCase()}`,{
+    return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}&searchQuery=${query.searchQuery}&filterBy=${query.filterBy}&sortBy=${query.sortBy.toLowerCase()}`,{
       headers: getAuthHeaders(this.platformId)
-    })
+    });
   }
 
-  getBooksByGenre(genre: string, page: number = 0, limit: number = 10){
-    return this.http.get(`${this.baseUrl}/books/books-count?page=${page}&limit=${limit}&genre=${genre}`,{
+  getBooksCountByGenre(){
+    return this.http.get(`${this.baseUrl}/books-count/genre`,{
       headers: getAuthHeaders(this.platformId)
-    })
+    });
   }
 
-  getBorrowedBooksByGenre(genre: string, page: number = 0, limit: number = 10){
-    return this.http.get(`${this.baseUrl}/books/books-count/borrowed?page=${page}&limit=${limit}&genre=${genre}`,{
+  getUnavailableBooks(page: number = 0, limit: number = 10){
+    return this.http.get(`${this.baseUrl}/unavailable?page=${page}&limit=${limit}`, {
       headers: getAuthHeaders(this.platformId)
-    })
+    });
   }
 }
 

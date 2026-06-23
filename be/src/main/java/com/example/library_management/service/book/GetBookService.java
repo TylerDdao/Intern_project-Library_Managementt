@@ -12,7 +12,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -33,30 +35,13 @@ public class GetBookService {
         return books.map(BookResponse::new);
     }
 
-    public Page<BookResponse> getBorrowedBooksByGenre(int page, int limit, String sortBy, String sortDir, String genre){
-        Sort sort = sortDir.equalsIgnoreCase("desc")
-                ? Sort.by(sortBy).descending()
-                : Sort.by(sortBy).ascending();
-
-        Pageable pageable = PageRequest.of(page, limit);
-        Page<Book> books;
-
-        books = bookRepository.findBorrowedBooksByGenre(genre, pageable);
-
-        return books.map(BookResponse::new);
-    }
-
-    public Page<BookResponse> getBooksByGenre(int page, int limit, String sortBy, String sortDir, String genre){
-        Sort sort = sortDir.equalsIgnoreCase("desc")
-                ? Sort.by(sortBy).descending()
-                : Sort.by(sortBy).ascending();
-
-        Pageable pageable = PageRequest.of(page, limit);
-        Page<Book> books;
-
-        books = bookRepository.findByGenres_NameContaining(genre, pageable);
-
-        return books.map(BookResponse::new);
+    public Map<String, Long> getBooksCountByGenre(){
+        List<Object[]> results = bookRepository.countBooksByGenre();
+        Map<String, Long> map = new LinkedHashMap<>();
+        for (Object[] row : results) {
+            map.put((String) row[0], (Long) row[1]);
+        }
+        return map;
     }
 
     public Page<BookResponse> getMostBorrowedBooks(int page, int limit){

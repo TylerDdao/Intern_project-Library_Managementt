@@ -1,11 +1,11 @@
 <div class="side-bar-container">
     <div class="search-bar">
-        <span class="material-symbols-outlined">search</span>
+        <span class="material-symbols-outlined p-[5px]">search</span>
         <input type="text" placeholder="{{'sortBar.Search'|translate}}..." class="w-full" [(ngModel)]="searchQuery">
     </div>
 
     @if (sortBy.length > 0) {
-        <div class="flex flex-col items-start">
+        <div class="flex flex-col items-start w-full">
             <h1 class="subheader font-bold">{{'sortBar.Sort-by' |translate}}</h1>
             <select class="sort-bar" [(ngModel)] ="selectedSort">
                 @for (option of sortBy; track option) {
@@ -16,7 +16,7 @@
     }
 
     @if (filterBy.length > 0) {
-        <div class="flex flex-col items-start">
+        <div class="flex flex-col items-start w-full">
             <h1 class="subheader font-bold">{{'sortBar.Filter-by'|translate}}</h1>
             @if (filterBy.length > 5) {
                 @if (!isExpandFilter) {

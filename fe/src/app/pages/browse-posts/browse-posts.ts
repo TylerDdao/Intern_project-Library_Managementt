@@ -30,6 +30,7 @@ export class BrowsePosts {
   searchPost: Post[] = []
   isSearch:boolean = false;
   isPostFound:boolean = true;
+  isLoading: boolean = true;
 
   constructor(
     public langService: LanguageService,
@@ -43,11 +44,44 @@ export class BrowsePosts {
   fetchAllPosts(page:Page = this.postPages):void{
     this.postsService.getAllPost(page.number).subscribe({
       next: (data:any) => {
+        if(data.code == "200"){
+          this.posts = data.data.content;
+          this.postPages = data.data;
+          this.isLoading = false;
+          this.cdr.markForCheck();
+        }
+      },
+      error: (err) => {
+        console.error(err);
+      }
+
+    })
+  }
+
+  handleLessPosts():void{
+    this.postsService.getAllPost(0).subscribe({
+      next: (data:any) => {
         console.log(data)
         if(data.code == "200"){
           this.posts = data.data.content;
           this.postPages = data.data;
-          console.log(this.postPages)
+          this.cdr.markForCheck();
+        }
+      },
+      error: (err) => {
+        console.error(err);
+      }
+
+    })
+  }
+
+  handleLoadMorePosts():void{
+    this.postPages.number ++;
+    this.postsService.getAllPost(this.postPages.number).subscribe({
+      next: (data:any) => {
+        if(data.code == "200"){
+          this.posts.push(...data.data.content);
+          this.postPages = data.data;
           this.cdr.markForCheck();
         }
       },
