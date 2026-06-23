@@ -1,0 +1,12 @@
+<app-navbar></app-navbar>
+<div class="container">
+    <div class="flex flex-col space-y-[10px] items-center">
+        <app-book-card-component [book]="book"></app-book-card-component>
+        @if (book.copies < 0) {
+            <button class="bg-primary-1 w-full p-[5px] rounded-[10px] text-soft-ice body font-bold">{{'bookPage.Borrow'|translate}}</button>
+        }
+        @else {
+            <button class="bg-tomato-red/40 w-full p-[5px] rounded-[10px] text-soft-ice body font-bold">{{'bookPage.Book-is-not-available'|translate}}</button>
+        }
+    </div>
+</div>

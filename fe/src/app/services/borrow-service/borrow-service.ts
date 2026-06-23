@@ -27,6 +27,12 @@ export class BorrowService {
     });
   }
 
+  getMyBorrows(isActive: string, page: number = 0, limit: number = 10) {
+    return this.http.get(`${this.baseUrl}/my-borrows?isActive=${isActive}&page=${page}&limit=${limit}`, {
+      headers: getAuthHeaders(this.platformId)
+    });
+  }
+
   getBorrowsCountByGenre() {
     return this.http.get(`${this.baseUrl}/borrows-count/genre`, {
       headers: getAuthHeaders(this.platformId)

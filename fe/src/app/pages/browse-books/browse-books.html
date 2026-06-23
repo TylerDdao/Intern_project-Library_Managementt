@@ -57,7 +57,7 @@
         @else {
             <div>
                 <h1 class="title font-bold">{{'browseBook.Result'|translate}}</h1>
-                <div class="book-scrolling-area">
+                <div class="books-result-area">
                     @if(searchBooks.length > 0){
                         @for (book of searchBooks; track $index) {
                             <app-book-card-component [book]="book"></app-book-card-component>

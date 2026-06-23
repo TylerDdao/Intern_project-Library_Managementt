@@ -57,5 +57,11 @@ export class BookService {
       headers: getAuthHeaders(this.platformId)
     });
   }
+
+  getBook(id: number, title: string | null = null){
+    return this.http.get(`${this.baseUrl}/book?id=${id}&title=${title}`, {
+      headers: getAuthHeaders(this.platformId)
+    });
+  }
 }
 

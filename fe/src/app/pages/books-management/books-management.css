@@ -23,11 +23,17 @@
         width: 100%;
         gap: 10px;
     }
+
+    .books-result-area{
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+    }
 }
 
 @media (max-width: 1023px) {
     .container {
-        padding: 30px;
+        padding: 20px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -51,5 +57,11 @@
         overflow-x: auto;
         width: calc(100vw - 60px); /* full viewport width minus container padding */
         gap: 10px;
+    }
+
+    .books-result-area{
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        gap: 20px;
     }
 }

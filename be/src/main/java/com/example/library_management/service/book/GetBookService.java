@@ -5,6 +5,8 @@ import com.example.library_management.model.Book;
 import com.example.library_management.repository.BookRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,9 @@ import java.util.Map;
 public class GetBookService {
     @Autowired
     BookRepository bookRepository;
+
+    @Autowired
+    MessageSource messageSource;
 
     public Page<BookResponse> getUnavailableBooks(int page, int limit, String sortBy, String sortDir){
         Sort sort = sortDir.equalsIgnoreCase("desc")
@@ -74,8 +79,21 @@ public class GetBookService {
         return books.map(BookResponse::new);
     }
 
-    public Page<BookResponse> getBooks(int page, int limit, String sortBy, String sortDir, List<String> filterBy,
-                                       String searchQuery) {
+    public BookResponse getBook(Long bookId, String title){
+        if(bookId != null){
+            Book book = bookRepository.findById(bookId)
+                    .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
+            return new BookResponse(book);
+        }
+        else {
+            Book book = bookRepository.findByTitle(title)
+                    .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
+            return new BookResponse(book);
+        }
+
+    }
+
+    public Page<BookResponse> getBooks(int page, int limit, String sortBy, String sortDir, List<String> filterBy, String searchQuery) {
         Sort sort = sortDir.equalsIgnoreCase("desc")
                 ? Sort.by(sortBy).descending()
                 : Sort.by(sortBy).ascending();

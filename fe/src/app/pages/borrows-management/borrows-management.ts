@@ -65,7 +65,7 @@ export class BorrowsManagement {
   }
 
   fetchOnGoingBorrows(page: Page = this.onGoingBorrowsPages):void{
-    this.borrowService.getBorrowByStatus("borrowing", page.number).subscribe({
+    this.borrowService.getBorrowByStatus("on-going", page.number).subscribe({
       next: (data:any) => {
         if(data.code == "200"){
           this.onGoingBorrows = data.data.content;

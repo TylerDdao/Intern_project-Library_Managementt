@@ -52,14 +52,25 @@ public class BookController {
     }
 
     @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
+    @GetMapping("/book")
+    public ResponseEntity<ApiResponse<BookResponse>> getBook(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) Long id) {
+        return ResponseEntity.ok(
+                ApiResponse.success(getBookService.getBook(id, title))
+        );
+    }
+
+    @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
     @GetMapping()
     public ResponseEntity<ApiResponse<Page<BookResponse>>> getBooks(
-            @RequestParam(required = false) String searchQuery,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "title") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir,
-            @RequestParam(required = false) List<String> filterBy) {
+            @RequestParam(required = false) List<String> filterBy,
+            @RequestParam(required = false) String searchQuery,
+            @RequestParam(required = false) String title) {
         return ResponseEntity.ok(
                 ApiResponse.success(getBookService.getBooks(page, limit, sortBy, sortDir, filterBy, searchQuery))
         );

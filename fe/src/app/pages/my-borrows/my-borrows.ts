@@ -46,7 +46,7 @@ export class MyBorrows {
   fetchBorrowsByUserId(page: Page = this.borrowingPages):void{
     const userId = JSON.parse(localStorage.getItem("user") ?? "{}").id
     if (!userId) return;
-    this.borrowService.getBorrowsByUserId(userId, page.number, 5).subscribe({
+    this.borrowService.getMyBorrows("true", page.number, 5).subscribe({
       next: (data:any) => {
         if(data.code == "200"){
           this.borrowing = data.data.content;
@@ -60,7 +60,7 @@ export class MyBorrows {
   fetchBorrowsHistoryByUserId(page: Page = this.borrowsHistoryPages):void{
     const userId = JSON.parse(localStorage.getItem("user") ?? "{}").id
     if (!userId) return;
-    this.borrowService.getBorrowsByUserId(userId, page.number, 5).subscribe({
+    this.borrowService.getMyBorrows("false", page.number, 5).subscribe({
       next: (data:any) => {
         if(data.code == "200"){
           this.borrowsHistory = data.data.content;

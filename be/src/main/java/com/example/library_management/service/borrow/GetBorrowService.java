@@ -10,6 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
@@ -28,16 +31,45 @@ public class GetBorrowService {
     @Autowired
     private BorrowRepository borrowRepository;
 
-    public Page<BorrowResponse> getBorrows(int page, int limit, String sortBy, String sortDir, Long userId, String searchQuery){
+    public Page<BorrowResponse> getMyBorrows(int page, int limit, String sortBy, String sortDir, boolean isActive){
         Sort sort = sortDir.equalsIgnoreCase("desc")
                 ? Sort.by(sortBy).descending()
                 : Sort.by(sortBy).ascending();
 
         Pageable pageable = PageRequest.of(page, limit, sort);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Page<Borrow> borrows = borrowRepository.findByIsActiveAndUserUsername(isActive, username, pageable);
+        return borrows.map(BorrowResponse::new);
+    }
 
-        Page<Borrow> borrows = userId != null
-                ? borrowRepository.findByUserId(userId, pageable)
-                : borrowRepository.findAll(pageable);
+    public Page<BorrowResponse> getBorrows(int page, int limit, String sortBy, String sortDir, String searchQuery) {
+        Sort sort = sortDir.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, limit, sort);
+        LocalDateTime todayStart = LocalDate.now().atStartOfDay();
+        LocalDateTime fiveDaysOutEnd = todayStart.plusDays(6).minusNanos(1);
+
+        boolean hasSearch = searchQuery != null && !searchQuery.isBlank();
+
+        List<String> authorities = SecurityContextHolder.getContext()
+                .getAuthentication().getAuthorities()
+                .stream().map(GrantedAuthority::getAuthority).toList();
+
+        Page<Borrow> borrows;
+        boolean isAdmin = authorities.stream().anyMatch(a -> a.equals("GET_BORROW_MULTI") || a.equals("ROLE_ROOT"));
+
+        if (!isAdmin) {
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            borrows = hasSearch
+                    ? borrowRepository.findBySearchQueryAndUsername(searchQuery, username, pageable)
+                    : borrowRepository.findByUserUsername(username, pageable);
+        } else {
+            borrows = hasSearch
+                    ? borrowRepository.findBySearchQuery(searchQuery, pageable)
+                    : borrowRepository.findAll(pageable);
+        }
 
         return borrows.map(BorrowResponse::new);
     }
@@ -48,28 +80,32 @@ public class GetBorrowService {
                 : Sort.by(sortBy).ascending();
 
         Pageable pageable = PageRequest.of(page, limit, sort);
-
-        // Normalize to today at midnight (00:00:00)
         LocalDateTime todayStart = LocalDate.now().atStartOfDay();
-        LocalDateTime fiveDaysOutEnd = todayStart.plusDays(6).minusNanos(1); // End of the 5th day
+        LocalDateTime fiveDaysOutEnd = todayStart.plusDays(6).minusNanos(1);
+
+        List<String> authorities = SecurityContextHolder.getContext()
+                .getAuthentication().getAuthorities()
+                .stream().map(GrantedAuthority::getAuthority).toList();
+
+        boolean isAdmin = authorities.stream().anyMatch(a -> a.equals("GET_BORROW_MULTI") || a.equals("ROLE_ROOT"));
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Page<Borrow> borrows;
 
-        switch (status.toLowerCase().trim()) {
-            case "late" ->
-                borrows = borrowRepository.findByDueDateLessThanAndIsActiveTrue(todayStart, pageable);
-
-            case "near" ->
-                borrows = borrowRepository.findByDueDateBetweenAndIsActiveTrue(todayStart, fiveDaysOutEnd, pageable);
-
-            case "returned" ->
-                borrows = borrowRepository.findByIsActive(false, pageable);
-
-//            case "borrowing" ->
-//                borrows = borrowRepository.findByDueDateGreaterThanAndIsActiveTrue(fiveDaysOutEnd, pageable);
-
-            default ->
-                borrows = borrowRepository.findByDueDateGreaterThanAndIsActiveTrue(fiveDaysOutEnd, pageable);
+        if (!isAdmin) {
+            borrows = switch (status.toLowerCase().trim()) {
+                case "late" -> borrowRepository.findByUserUsernameAndDueDateLessThanAndIsActiveTrue(username, todayStart, pageable);
+                case "near" -> borrowRepository.findByUserUsernameAndDueDateBetweenAndIsActiveTrue(username, todayStart, fiveDaysOutEnd, pageable);
+                case "returned" -> borrowRepository.findByUserUsernameAndIsActive(username, false, pageable);
+                default -> borrowRepository.findByUserUsernameAndDueDateGreaterThanAndIsActiveTrue(username, fiveDaysOutEnd, pageable);
+            };
+        } else {
+            borrows = switch (status.toLowerCase().trim()) {
+                case "late" -> borrowRepository.findByDueDateLessThanAndIsActiveTrue(todayStart, pageable);
+                case "near" -> borrowRepository.findByDueDateBetweenAndIsActiveTrue(todayStart, fiveDaysOutEnd, pageable);
+                case "returned" -> borrowRepository.findByIsActive(false, pageable);
+                default -> borrowRepository.findByDueDateGreaterThanAndIsActiveTrue(fiveDaysOutEnd, pageable);
+            };
         }
 
         return borrows.map(BorrowResponse::new);

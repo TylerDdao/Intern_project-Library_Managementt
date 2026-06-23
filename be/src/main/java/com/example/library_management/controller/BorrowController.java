@@ -18,14 +18,28 @@ public class BorrowController {
     @Autowired
     GetBorrowService getBorrowService;
 
+    @PreAuthorize("@securityService.hasAccess('GET_BORROW')")
+    @GetMapping("/my-borrows")
+    public ResponseEntity<ApiResponse<Page<BorrowResponse>>> getMyBorrows(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int limit,
+            @RequestParam(defaultValue = "dueDate") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir,
+            @RequestParam(defaultValue = "true") boolean isActive
+    ){
+        return ResponseEntity.ok(
+                ApiResponse.success(getBorrowService.getMyBorrows(page, limit, sortBy, sortDir, isActive))
+        );
+    }
+
     @GetMapping("/borrows-count/genre")
-    public ResponseEntity<ApiResponse<Map<String, Long>>> getBorrowCountsByGenre() {
+    public ResponseEntity<ApiResponse<Map<String, Long>>> getBorrowsCountsByGenre() {
         return ResponseEntity.ok(ApiResponse.success(getBorrowService.getBorrowCountsByGenre()));
     }
 
     @PreAuthorize("@securityService.hasAccess('GET_BORROW_MULTI')")
     @GetMapping("/{status}")
-    public ResponseEntity<ApiResponse<Page<BorrowResponse>>> getLateBorrows(
+    public ResponseEntity<ApiResponse<Page<BorrowResponse>>> getBorrowsByStatus(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "dueDate") String sortBy,
@@ -37,17 +51,16 @@ public class BorrowController {
         );
     }
 
-    @PreAuthorize("@securityService.hasAccess('GET_BORROW_MULTI')")
+    @PreAuthorize("@securityService.hasAccess('GET_BORROW')")
     @GetMapping()
-    public ResponseEntity<ApiResponse<Page<BorrowResponse>>> getBorrows(
+    public ResponseEntity<ApiResponse<Page<BorrowResponse>>> getBorrowsBySearchQuery(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "dueDate") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir,
-            @RequestParam(required = false) Long userId,
             @RequestParam(required = false) String searchQuery) {
         return ResponseEntity.ok(
-                ApiResponse.success(getBorrowService.getBorrows(page, limit, sortBy, sortDir, userId, searchQuery))
+                ApiResponse.success(getBorrowService.getBorrows(page, limit, sortBy, sortDir, searchQuery))
         );
     }
 }

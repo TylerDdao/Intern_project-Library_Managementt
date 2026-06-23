@@ -61,7 +61,7 @@
         display: grid;
         grid-template-columns: auto ;
         gap: 30px;
-        padding: 50px;
+        padding: 20px;
     }
 
     .borrowing-container{
