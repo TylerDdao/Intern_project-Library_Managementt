@@ -52,5 +52,8 @@
                 <p>Loading...</p>
             }
         </div>
+        @if (!isLoading["borrows"] && borrows.length > 0) {
+            <app-pages-component [pages]="borrowsPage" (onApply)="fetchBorrowsByUserId($event)"></app-pages-component>
+        }
     </div>
 </div>

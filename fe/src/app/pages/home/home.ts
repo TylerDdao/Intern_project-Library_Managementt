@@ -15,10 +15,12 @@ import { MiniPostCardComponent } from '../../components/mini-post-card-component
 import { GenreService } from '../../services/genre-service/genre-service';
 import { BookService } from '../../services/book-service/book-service';
 import { Genre } from '../../models/genre';
+import { PagesComponent } from "../../components/pages-component/pages-component";
+import { Page } from '../../models/page';
 
 @Component({
   selector: 'app-home',
-  imports: [TranslateModule, NavbarComponent, ChartComponent, MiniPostCardComponent, BorrowCardComponent],
+  imports: [TranslateModule, NavbarComponent, ChartComponent, MiniPostCardComponent, BorrowCardComponent, PagesComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -29,6 +31,18 @@ export class Home {
   genres:Genre[] = [];
   bookCountByGenre: { [key: string]: number } = {};
   borrowsCountByGenre: { [key: string]: number } = {};
+
+  borrowsPage:Page = {
+      first: true,
+      last: true,
+      number: 0,
+      totalPages: 1
+    }
+
+  isLoading: {[key:string]:boolean} = {
+    "borrows": true,
+    "topPosts": true
+  };
 
   constructor(
     public langService: LanguageService,
@@ -82,13 +96,14 @@ export class Home {
       return Object.values(this.borrowsCountByGenre);
   }
 
-  fetchBorrowsByUserId():void{
+  fetchBorrowsByUserId(page: Page = this.borrowsPage):void{
     const userId = JSON.parse(localStorage.getItem("user") ?? "{}").id
     if (!userId) return;
-    this.borrowService.getBorrowsByUserId(userId).subscribe({
+    this.borrowService.getBorrowsByUserId(userId, page.number).subscribe({
       next: (data:any) => {
         if(data.code == "200"){
           this.borrows = data.data.content;
+          this.isLoading["borrows"] = false;
           this.cdr.markForCheck();
         }
       },
@@ -98,12 +113,13 @@ export class Home {
     })
   }
 
-  fetchAllPosts():void{
-    this.postsService.getAllPost(0, 5).subscribe({
+  fetchMostLikesPosts():void{
+    this.postsService.getMostLikesPosts(0, 5).subscribe({
       next: (data:any) => {
         console.log(data)
         if(data.code == "200"){
           this.posts = data.data.content;
+          this.isLoading["topPosts"] = false;
           this.cdr.markForCheck();
         }
       },
@@ -116,7 +132,7 @@ export class Home {
 
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
-      this.fetchAllPosts()
+      this.fetchMostLikesPosts()
       this.fetchBorrowsByUserId()
       this.fetchBooksCountByGenre()
       this.fetchBorrowsCountByGenre();

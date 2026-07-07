@@ -1,59 +1,49 @@
 @media (min-width: 1024px) {
-    .container{
-        padding: 50px;
-        display: flex;
-        justify-content: space-between;
-        align-items:start;
-        gap:30px;
-        min-width: calc(100dvw - 25px);
-    }
+  .container {
+    padding: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 30px;
+    min-width: calc(100dvw - 25px);
+    height: calc(100dvh - 80px);
+    min-height: 0;
+    box-sizing: border-box;
+  }
 
-    .borrows-container{
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        width: 100%;
-        gap: 30px;
-    }
+  .borrows-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto 1fr;  /* title row auto, columns fill rest */
+    width: 100%;
+    gap: 30px;
+    min-height: 0;
+    overflow: hidden;
+  }
 
-    .all-borrows-container{
-        display: flex;
-        flex-direction: column;
-        grid-column: 1;
-        gap: 30px;
-    }
+  .all-borrows-container,
+  .near-borrows-container,
+  .late-borrows-container,
+  .returned-borrows-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    min-height: 0;                 /* critical — allow shrinking */
+    overflow: hidden;
+  }
 
-    .near-borrows-container{
-        display: flex;
-        flex-direction: column;
-        grid-column: 2;
-        gap: 30px;
-    }
+  .borrows-scrolling-area {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    gap: 10px;
+    overflow-y: auto;
+  }
 
-    .late-borrows-container{
-        display: flex;
-        flex-direction: column;
-        grid-column: 3;
-        gap: 30px;
-    }
-
-    .returned-borrows-container{
-        display: flex;
-        flex-direction: column;
-        grid-column: 4;
-        gap: 30px;
-    }
-
-    .borrows-scrolling-area {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        min-height: 0;
-        gap: 10px;
-    }
-
-    .borrows-count{
-        grid-column: 1/5;
-    }
+  .borrows-count {
+    grid-column: 1 / 5;
+  }
 }
 
 @media (max-width: 1023px) {

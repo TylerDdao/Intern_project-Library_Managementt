@@ -16,6 +16,12 @@ export class PostsService {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
+  getMostLikesPosts(page: number = 0, limit: number = 10){
+    return this.http.get(`${this.baseUrl}/posts?page=${page}&limit=${limit}&sortBy=likeCount&sortDir=desc`, {
+      headers: getAuthHeaders(this.platformId)
+    });
+  } 
+
   getAllPost(page: number = 0, limit: number = 10) {
     return this.http.get(`${this.baseUrl}/posts?page=${page}&limit=${limit}`, {
       headers: getAuthHeaders(this.platformId)

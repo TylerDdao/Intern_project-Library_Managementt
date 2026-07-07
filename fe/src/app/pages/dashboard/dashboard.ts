@@ -48,6 +48,11 @@ export class Dashboard {
     totalPages: 1
   }
 
+  isLoading: {[key: string]: boolean} = {
+    "lateBorrows": true,
+    "unavailableBooks": true
+  };
+
   constructor(
     public langService: LanguageService,
     private borrowService: BorrowService,
@@ -74,6 +79,7 @@ export class Dashboard {
     this.bookService.getUnavailableBooks(page.number).subscribe({
       next: (data: any) => {
         if(data.code == "200"){
+          this.isLoading["unavailableBooks"] = false
           this.unavailableBooks = data.data.content;
           this.unavailableBooksPage = data.data;
           this.cdr.markForCheck();
@@ -86,6 +92,7 @@ export class Dashboard {
     this.borrowService.getBorrowByStatus("late").subscribe({
       next: (data: any) => {
         if(data.code == "200"){
+          this.isLoading["lateBorrows"] = false
           this.lateBorrowCount = data.data.totalElements
           this.updateChartData()
           this.cdr.markForCheck()

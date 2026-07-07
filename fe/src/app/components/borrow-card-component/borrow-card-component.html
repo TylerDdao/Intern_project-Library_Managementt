@@ -5,6 +5,7 @@
             <h1 class="subheadline font-bold">{{borrow.book.title}}</h1>
             <h2 class="caption-1">{{'book.Author'|translate}}: {{borrow.book.author}}</h2>
             <h2 class="caption-1">{{'borrow.Borrow-on'|translate}}: {{formattedBorrowedOn}}</h2>
+            <h2 class="caption-1">{{'borrow.User'|translate}}: {{borrow.user.fullName}}</h2>
             <h2 class="caption-1 font-bold">{{'borrow.Please-return-by'|translate}}: {{formattedDueDate}}</h2>
             @if (!borrow.active) {
                 <div class="flex items-center space-x-[5px] text-leaf-green">

@@ -18,11 +18,11 @@
                     @for (borrow of onGoingBorrows   ; track borrow.id) {
                         <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
                     }
-                    <app-pages-component [pages]="onGoingBorrowsPages" (onApply)="fetchOnGoingBorrows($event)"></app-pages-component>
                 } @else {
                     <p>Loading...</p>
                 }
             </div>
+            <app-pages-component [pages]="onGoingBorrowsPages" (onApply)="fetchOnGoingBorrows($event)"></app-pages-component>
         </div>
 
         <div class="near-borrows-container">
@@ -32,11 +32,12 @@
                     @for (borrow of nearDueBorrows; track borrow.id) {
                         <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
                     }
-                    <app-pages-component [pages]="nearDueBorrowsPages" (onApply)="fetchNearDueBorrows($event)"></app-pages-component>
+                    
                 } @else {
                     <p>Loading...</p>
                 }
             </div>
+            <app-pages-component [pages]="nearDueBorrowsPages" (onApply)="fetchNearDueBorrows($event)"></app-pages-component>
         </div>
 
         <div class="late-borrows-container">
@@ -46,11 +47,12 @@
                     @for (borrow of passedDueBorrows; track borrow.id) {
                         <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
                     }
-                    <app-pages-component [pages]="passedDueBorrowsPages" (onApply)="fetchLateBorrows($event)"></app-pages-component>
                 } @else {
                     <p>Loading...</p>
                 }
             </div>
+            <app-pages-component [pages]="passedDueBorrowsPages" (onApply)="fetchLateBorrows($event)"></app-pages-component>
+
         </div>
 
         <div class="returned-borrows-container">
@@ -59,12 +61,12 @@
                 @if (returnedBorrows.length > 0) {
                     @for (borrow of returnedBorrows; track borrow.id) {
                         <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
-                    }
-                    <app-pages-component [pages]="returnedBorrowsPages" (onApply)="fetchReturnedBorrows($event)"></app-pages-component>
+                    }               
                 } @else {
                     <p>Loading...</p>
                 }
             </div>
+            <app-pages-component [pages]="returnedBorrowsPages" (onApply)="fetchReturnedBorrows($event)"></app-pages-component>
         </div>
     </div>
 </div>

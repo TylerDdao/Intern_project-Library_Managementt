@@ -35,10 +35,17 @@
                     <app-book-card-component [book]="book"></app-book-card-component>
                 }
             } @else {
-                <p>Loading...</p>
+                @if (isLoading["unavailableBooks"]) {
+                    <p class="callout">{{'Loading.loading'|translate}}...</p>
+                }
+                @else {
+                    <p class="callout">{{'Loading.empty'|translate}}</p>
+                }
             }
         </div>
-        <app-pages-component [pages]="unavailableBooksPage" (onApply)="fetchUnavailableBooks($event)"></app-pages-component>
+        @if (unavailableBooks.length > 0 && !isLoading["unavailableBooks"]) {
+            <app-pages-component [pages]="unavailableBooksPage" (onApply)="fetchUnavailableBooks($event)"></app-pages-component>
+        }
     </div>
 
     <div class="borrowed-books-area">
@@ -49,9 +56,17 @@
                     <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
                 }
             } @else {
-                <p>Loading...</p>
+                @if (isLoading["lateBorrows"]) {
+                    <p class="callout">{{'Loading.loading'|translate}}...</p>
+                }
+                @else {
+                    <p class="callout">{{'Loading.empty'|translate}}</p>
+                }
             }
         </div>
-        <app-pages-component [pages]="lateBorrowsPage" (onApply)="fetchLateBorrow($event)"></app-pages-component>
+        @if (lateBorrows.length > 0 && !isLoading["lateBorrows"]) {
+            <app-pages-component [pages]="lateBorrowsPage" (onApply)="fetchLateBorrow($event)"></app-pages-component>
+        }
+        
     </div>
 </div>

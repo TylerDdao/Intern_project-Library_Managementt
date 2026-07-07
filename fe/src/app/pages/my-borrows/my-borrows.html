@@ -14,11 +14,12 @@
                     @for (borrow of borrowing   ; track borrow.id) {
                         <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
                     }
-                    <app-pages-component [pages]="borrowingPages" (onApply)="fetchBorrowsByUserId($event)"></app-pages-component>
+                    
                 } @else {
                     <p>Loading...</p>
                 }
             </div>
+            <app-pages-component [pages]="borrowingPages" (onApply)="fetchBorrowsByUserId($event)"></app-pages-component>
         </div>
 
         <div class="borrows-history-container">
@@ -28,11 +29,11 @@
                     @for (borrow of borrowsHistory; track borrow.id) {
                         <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
                     }
-                    <app-pages-component [pages]="borrowsHistoryPages" (onApply)="fetchBorrowsHistoryByUserId($event)"></app-pages-component>
                 } @else {
                     <p>Loading...</p>
                 }
             </div>
+            <app-pages-component [pages]="borrowsHistoryPages" (onApply)="fetchBorrowsHistoryByUserId($event)"></app-pages-component>
         </div>
     </div>
 </div>
