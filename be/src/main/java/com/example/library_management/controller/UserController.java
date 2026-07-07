@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     GetUserService getUserService;
@@ -24,7 +25,7 @@ public class UserController {
     DeleteUserService deleteUserService;
 
     @PreAuthorize("@securityService.hasAccess('GET_USER')")
-    @GetMapping("/users")
+    @GetMapping()
     public ResponseEntity<ApiResponse<Page<UserResponse>>> getUsers(
             @RequestParam(required = false) String username,
             @RequestParam(required = false) String fullName,
@@ -39,14 +40,14 @@ public class UserController {
     }
 
     @PreAuthorize("@securityService.hasAccess('UPDATE_USER')")
-    @PatchMapping("/user")
+    @PatchMapping()
     public ResponseEntity<ApiResponse<UserResponse>> updateUserByUsername(
             @RequestBody UserRequest request){
         return ResponseEntity.ok(ApiResponse.success(updateUserService.updateUser(request)));
     }
 
     @PreAuthorize("@securityService.hasAccess('DELETE_BOOK')")
-    @DeleteMapping("/user")
+    @DeleteMapping()
     public  ResponseEntity<ApiResponse<String>> deleteUserByUsername(@RequestBody UserRequest request){
         return ResponseEntity.ok(ApiResponse.success(deleteUserService.deleteUser(request)));
     }
