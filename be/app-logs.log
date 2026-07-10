@@ -1,5 +1,2 @@
-2026-07-06T17:31:26.102+07:00  INFO 8655 --- [library-management] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
-2026-07-06T17:31:26.114+07:00  INFO 8655 --- [library-management] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
-2026-07-06T17:31:26.120+07:00  INFO 8655 --- [library-management] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-07-06T17:31:26.125+07:00  INFO 8655 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2026-07-06T17:31:26.126+07:00  INFO 8655 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-07-10T14:04:13.927+07:00  INFO 85805 --- [library-management] [http-nio-8080-exec-7] c.e.library_management.util.AuditLogger  : [SYSTEM] Authorized @tyler, ID #1
+2026-07-10T14:04:38.557+07:00  INFO 85805 --- [library-management] [http-nio-8080-exec-4] c.e.library_management.util.AuditLogger  : [SYSTEM] Authorized @tyler, ID #1

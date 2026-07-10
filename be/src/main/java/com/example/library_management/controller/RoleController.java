@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/roles")
 public class RoleController {
     @Autowired
     AuthorityService authorityService;
@@ -42,13 +43,13 @@ public class RoleController {
     }
 
     @PreAuthorize("@securityService.hasAccess('CREATE_ROLE')")
-    @PostMapping("/role")
+    @PostMapping()
     public ResponseEntity<ApiResponse<RoleResponse>> createRole(@RequestBody RoleRequest request) {
         return ResponseEntity.ok(ApiResponse.success(createRoleService.createRole(request)));
     }
 
     @PreAuthorize("@securityService.hasAccess('UPDATE_ROLE')")
-    @PatchMapping("/role")
+    @PatchMapping()
     public ResponseEntity<ApiResponse<RoleResponse>> updateRole(
             @RequestParam String name,
             @RequestBody RoleRequest request
@@ -57,7 +58,7 @@ public class RoleController {
     }
 
     @PreAuthorize("@securityService.hasAccess('GET_ROLE')")
-    @GetMapping("/roles")
+    @GetMapping()
     public ResponseEntity<ApiResponse<Page<RoleResponse>>> getRoles(
             @RequestParam(required = false) String role,
             @RequestParam(defaultValue = "0") int page,
@@ -69,7 +70,7 @@ public class RoleController {
     }
 
     @PreAuthorize("@securityService.hasAccess('DELETE_ROLE')")
-    @DeleteMapping("/role")
+    @DeleteMapping()
     public ResponseEntity<ApiResponse<String>> deleteRole(RoleRequest request){
         return ResponseEntity.ok(ApiResponse.success(deleteRoleService.deleteRole(request)));
     }

@@ -103,6 +103,7 @@ export class Home {
       next: (data:any) => {
         if(data.code == "200"){
           this.borrows = data.data.content;
+          this.borrows = this.borrows.filter(borrow => borrow.active)
           this.isLoading["borrows"] = false;
           this.cdr.markForCheck();
         }
