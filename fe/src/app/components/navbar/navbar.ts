@@ -41,8 +41,8 @@ export class NavbarComponent {
   constructor(public langService: LanguageService, private cdr: ChangeDetectorRef, @Inject(PLATFORM_ID) private platformId: Object, private authService: AuthService, private router:Router) {}
 
   get validateUser(): boolean {
-    if (typeof localStorage === 'undefined') return false;
-    return !!localStorage.getItem('token');
+    if (typeof sessionStorage === 'undefined') return false;
+    return !!sessionStorage.getItem('token');
   }
 
   toggleMobileMenu() {
@@ -54,9 +54,9 @@ export class NavbarComponent {
       this.authService.logout().subscribe({
         next: (data:any) => {
           if(data.code == "200"){
-            localStorage.removeItem('token')
-            localStorage.removeItem('user')
-            localStorage.removeItem('authorities')
+            sessionStorage.removeItem('token')
+            sessionStorage.removeItem('user')
+            sessionStorage.removeItem('authorities')
             this.router.navigate(['/login'])
           }
         }
@@ -66,14 +66,15 @@ export class NavbarComponent {
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-        const user = JSON.parse(localStorage.getItem('user') ?? '{}');
+        const user = JSON.parse(sessionStorage.getItem('user') ?? '{}');
         this.fullName = user.fullName || '';
         
-        if (user.role == "ROLE_ROOT") {
+        if (user.role.name == "ROLE_ROOT") {
             this.pages = this.allPages;
         } 
         else {
-            const authorities = JSON.parse(localStorage.getItem('authorities') ?? '[]');
+          
+            const authorities = JSON.parse(sessionStorage.getItem('authorities') ?? '[]');
             this.userAuthorities = authorities || [];
             this.pages = this.allPages.filter(page =>
                 !page.authorities || page.authorities.some(auth => this.userAuthorities.includes(auth))

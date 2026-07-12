@@ -1,3 +1,35 @@
 <app-navbar></app-navbar>
 
-<app-user-card [user]="user"></app-user-card>
+<div class="min-h-screen container">
+    <div class="flex flex-col space-y-[10px] buttons-container">
+        <button class="p-[10px] bg-steel-blue text-soft-ice headline text-center rounded-[10px] w-full" (click)="isCreateNewUser = true">{{'user.Create-user' | translate}}</button>
+        <button class="p-[10px] bg-leaf-green text-soft-ice headline text-center rounded-[10px] w-full">{{'role.Create-role' | translate}}</button>
+    </div>
+    <div>
+        @for (role of roles; track $index) {
+            <div class="headline">{{role.name}}</div>
+            <div class="users-container">
+                @for (user of getUsers(role); track $index) {
+                    <!-- <button (click)="handleEditUser(user)"><app-user-card [user]="user"></app-user-card></button> -->
+                    
+                    <div (click)="handleEditUser(user)"><app-user-card [user]="user"></app-user-card></div>
+                }
+            </div>
+        }
+    </div>
+
+    @if (isCreateNewUser) {
+        <div class="fixed inset-0 flex items-center justify-center">
+            <app-new-user-form [roles]="roles" (onClose)="handleCloseCreateUserForm()"></app-new-user-form>
+        </div>
+    }
+    @if (isEditUser && editUser) {
+        <div class="fixed inset-0 flex items-center justify-center">
+            <app-edit-user-form 
+            [roles]="roles" 
+            (onClose)="handleCloseEditUserForm()" 
+            [user]="editUser">
+            </app-edit-user-form>
+        </div>
+    }
+</div>

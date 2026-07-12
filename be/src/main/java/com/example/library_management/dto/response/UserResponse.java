@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class UserResponse {
     private Long id;
     private String username;
-    private String role;
+    private RoleResponse role;
     private String phoneNumber;
     private String fullName;
     private String address = null;
@@ -22,7 +22,7 @@ public class UserResponse {
     public UserResponse(User user){
         this.id = user.getId();
         this.username = user.getUsername();
-        this.role = user.getRole().getName();
+        this.role = new RoleResponse(user.getRole());
         this.phoneNumber = user.getPhoneNumber();
         this.fullName = user.getFullName();
         this.address = user.getAddress();

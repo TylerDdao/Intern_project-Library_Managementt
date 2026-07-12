@@ -14,10 +14,10 @@ export const authGuard: CanActivateFn = () => {
         return true;
     }
 
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
 
     if (!token) {
-      localStorage.clear()
+      sessionStorage.clear()
       router.navigate(['/login']);
       return false;
     }
@@ -28,7 +28,7 @@ export const authGuard: CanActivateFn = () => {
         map(() => true),
         catchError((err) => {
             if (err.status === 401) {
-                localStorage.clear();
+                sessionStorage.clear();
                 router.navigate(['/login']);
             }
             return of(false);
@@ -45,11 +45,11 @@ export const adminGuard: CanActivateFn = () => {
       return true;
     }
 
-    const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user') ?? '{}');
+    const token = sessionStorage.getItem('token');
+    const user = JSON.parse(sessionStorage.getItem('user') ?? '{}');
 
     if (!token || user.role == "ROLE_USER") {
-      localStorage.clear()
+      sessionStorage.clear()
       router.navigate(['/login']);
       return false;
     }
@@ -60,7 +60,7 @@ export const adminGuard: CanActivateFn = () => {
         map(() => true),
         catchError((err) => {
             if (err.status === 401) {
-                localStorage.clear();
+                sessionStorage.clear();
                 router.navigate(['/login']);
             }
             return of(false);

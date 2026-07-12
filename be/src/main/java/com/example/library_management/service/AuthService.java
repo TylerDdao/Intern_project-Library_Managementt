@@ -69,6 +69,7 @@ public class AuthService {
             String token = jwtUtil.generateToken(auth.getName());
             User user = userRepository.findByUsername(auth.getName()).orElseThrow();
             List<Feature> authorities = featureRepository.findByRoles_Id(user.getRole().getId());
+            System.out.println(authorities);
             logger.log("SYSTEM","Authorized @{}, ID #{}", user.getUsername(), user.getId());
             return new LoginResponse(user, token, authorities);
 
@@ -132,19 +133,20 @@ public class AuthService {
         user.setEmail(request.getEmail());
         user.setAddress(request.getAddress());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        boolean isUser = auth == null
-                || !auth.isAuthenticated()
-                || auth instanceof AnonymousAuthenticationToken
-                || auth.getAuthorities().stream()
-                .anyMatch(a -> "ROLE_USER".equals(a.getAuthority()));
-
-        if(isUser) user.setRole(defaultRole);
-        else {
-            Role role = roleRepository.findByName("ROLE_USER")
-                    .orElse(defaultRole);
-            user.setRole(role);
-        }
+        user.setRole(defaultRole);
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        boolean isUser = auth == null
+//                || !auth.isAuthenticated()
+//                || auth instanceof AnonymousAuthenticationToken
+//                || auth.getAuthorities().stream()
+//                .anyMatch(a -> "ROLE_USER".equals(a.getAuthority()));
+//
+//        if(isUser) user.setRole(defaultRole);
+//        else {
+//            Role role = roleRepository.findByName("ROLE_USER")
+//                    .orElse(defaultRole);
+//            user.setRole(role);
+//        }
         User savedUser = userRepository.save(user);
         logger.log("SYSTEM","Registered @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
         return new UserResponse(savedUser);

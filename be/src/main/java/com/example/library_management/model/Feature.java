@@ -3,11 +3,13 @@ package com.example.library_management.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
 @Data
 @Entity
+@ToString(exclude = "roles")
 @Table(name = "features")
 @NoArgsConstructor
 public class Feature {

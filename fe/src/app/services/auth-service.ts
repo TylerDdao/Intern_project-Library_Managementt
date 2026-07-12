@@ -7,8 +7,8 @@ import { isPlatformBrowser } from '@angular/common';
 export function getAuthHeaders(platformId: Object): HttpHeaders {
   let headers = new HttpHeaders();
   if (isPlatformBrowser(platformId)) {
-    const token = localStorage.getItem('token');
-    const lang = localStorage.getItem('lang') ?? 'en';
+    const token = sessionStorage.getItem('token');
+    const lang = sessionStorage.getItem('lang') ?? 'en';
     if (token) {
       headers = headers.set('Authorization', `Bearer ${token}`);
     }

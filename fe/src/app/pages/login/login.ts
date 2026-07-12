@@ -27,9 +27,9 @@ export class Login {
       next: (data: any) => {
         console.log(data)
         if(data.code == 200){
-          localStorage.setItem("token", data.data.token);
-          localStorage.setItem("user", JSON.stringify(data.data.user));
-          localStorage.setItem("authorities", JSON.stringify(data.data.authorities));
+          sessionStorage.setItem("token", data.data.token);
+          sessionStorage.setItem("user", JSON.stringify(data.data.user));
+          sessionStorage.setItem("authorities", JSON.stringify(data.data.authorities));
           this.router.navigate(['/home']);
         }
       },

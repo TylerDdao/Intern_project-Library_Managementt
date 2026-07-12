@@ -9,12 +9,12 @@
                 }
                 <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col space-y-[10px] w-full">
                     <input formControlName="username" type="text"
-                        placeholder="{{'account.username' | translate}}"
+                        placeholder="{{'user.username' | translate}}"
                         class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"
                         (input)="wrongCredential = false"/>
 
                     <input formControlName="password" type="password"
-                        placeholder="{{'account.password' | translate}}"
+                        placeholder="{{'user.password' | translate}}"
                         class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"
                         (input)="wrongCredential = false"/>
                 </form>

@@ -1,0 +1,56 @@
+<div class="container">
+    <p class="headline">{{'newUserForm.Create-new-user'|translate}}</p>
+        <div class="info-container">
+            <form [formGroup]="newUserForm" id="newUserForm" (ngSubmit)="onSubmit()">
+                <div class="flex flex-col">
+                    <label for="username">{{'user.Username' |translate}}</label>
+                    <div class="flex space-x-[5px]">
+                        <input id="username" formControlName="username" placeholder="{{'user.Username' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full"/>
+                        @if (newUserForm.get('username')?.dirty) {
+                            <button class="bg-steel-blue text-soft-ice rounded-[10px] px-[10px] text-nowrap">
+                                {{'form.Check-username'|translate}}
+                            </button>
+                        }
+                    </div>
+                </div>
+
+                <div class="flex flex-col">
+                    <label for="fullName">{{'user.Full-name' |translate}}</label>
+                    <input id="fullName" formControlName="fullName" placeholder="{{'user.Full-name' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]"/>
+                </div>
+
+                <div class="flex flex-col">
+                    <label for="email">{{'user.Email' |translate}}</label>
+                    <div class="flex space-x-[5px]">
+                        <input id="email" formControlName="email" placeholder="{{'user.Email' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full"/>
+                    </div>
+                </div>
+
+                <div class="flex flex-col">
+                    <label for="phoneNumber">{{'user.Phone-number' |translate}}</label>
+                    <input id="phoneNumber" formControlName="phoneNumber" placeholder="{{'user.Phone-number' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]"/>
+                </div>
+
+                <div class="flex flex-col">
+                    <label for="address">{{'user.Address' |translate}}</label>
+                    <input id="address" formControlName="address" placeholder="{{'user.Address' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]"/>
+                </div>
+
+                <div class="flex flex-col">
+                    <label for="role">{{'role.Role' |translate}}</label>
+                    <select formControlName="role" class="bg-pastel-blue text-dodger-blue rounded-[10px] h-10">
+                        @for (role of roles; track role.id) {
+                            <option [value]="role.id">
+                                {{ role.name }}
+                            </option>
+                        }
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <div class="flex space-x-[10px]">
+            <button type="submit" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice body rounded-[10px]">{{'form.Save'|translate}}</button>
+            <button class="border border-tomato-red px-[10px] py-[5px] text-tomato-red body rounded-[10px]" (click)="close()">{{'form.Cancel'|translate}}</button>
+        </div>
+</div>

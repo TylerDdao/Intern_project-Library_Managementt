@@ -7,6 +7,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { interval, Subscription } from 'rxjs';
 import { LanguageService } from '../../services/language-service/language-service';
 import { User } from '../../models/user';
+import { Role } from '../../models/role';
 
 @Component({
   selector: 'app-signup',
@@ -17,15 +18,7 @@ import { User } from '../../models/user';
 export class Signup {
   invalidInformation = false;
   signupCompleted = false;
-  user:User = {
-    id: 0,
-    fullName: "",
-    email: "",
-    phoneNumber: "",
-    address: "",
-    role: "",
-    username: "",
-  };
+  user!:User
 
   constructor(
     private authService: AuthService,
@@ -77,7 +70,7 @@ export class Signup {
     this.user.email = email ?? '';
     this.user.fullName = fullName ?? 'NULL';
     this.user.phoneNumber = phoneNumber ?? 'NULL';
-    this.user.role = "ROLE_USER"
+    // this.user.role = "ROLE_USER"
 
     
     this.signup(this.user)

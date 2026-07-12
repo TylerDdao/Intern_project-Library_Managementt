@@ -13,7 +13,7 @@ export class LanguageService {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     const saved = isPlatformBrowser(this.platformId) 
-      ? localStorage.getItem('lang') 
+      ? sessionStorage.getItem('lang') 
       : null;
     this.currentLang = saved ?? 'en';
     translate.use(this.currentLang);
@@ -22,7 +22,7 @@ export class LanguageService {
   switchLanguage(lang: string) {
     this.currentLang = lang;
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('lang', lang);
+      sessionStorage.setItem('lang', lang);
     }
     this.translate.use(lang);
   }

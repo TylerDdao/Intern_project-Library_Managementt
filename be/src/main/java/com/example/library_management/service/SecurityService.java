@@ -13,6 +13,9 @@ public class SecurityService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || !auth.isAuthenticated()) return false;
 
+        System.out.println("Authorities: " + auth.getAuthorities());
+        System.out.println("Principal: " + auth.getName());
+
         boolean isRoot = auth.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ROOT"));
         if (isRoot){
