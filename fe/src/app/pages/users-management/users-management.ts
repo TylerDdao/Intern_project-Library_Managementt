@@ -9,25 +9,38 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language-service/language-service';
 import { NewUserForm } from '../../forms/new-user-form/new-user-form';
 import { EditUserForm } from '../../forms/edit-user-form/edit-user-form';
+import { NewRoleForm } from '../../forms/new-role-form/new-role-form';
+import { RoleListComponent } from '../../components/role-list-component/role-list-component';
+import { Feature } from '../../models/feature';
+import { FeatureService } from '../../services/feature-service/feature-service';
+import { EditRoleForm } from '../../forms/edit-role-form/edit-role-form';
 
 @Component({
   selector: 'app-users-management',
-  imports: [NavbarComponent, UserCard, TranslateModule, NewUserForm, EditUserForm],
+  imports: [NavbarComponent, UserCard, TranslateModule, NewUserForm, EditUserForm, NewRoleForm, RoleListComponent, EditRoleForm],
   templateUrl: './users-management.html',
   styleUrl: './users-management.css',
 })
 export class UsersManagement {
   roles: Role[] = [];
+  features: Feature[] = [];
 
   users: { role: Role, users: User[] }[] = [];
 
   isCreateNewUser: boolean = false;
   isEditUser: boolean = false;
+  isEditRole: boolean = false;
+  isRoleListOpen:boolean = false;
+  isCreateNewRole:boolean = false;
+
+
   editUser: User | null = null;
+  editRole: Role | null = null;
 
   
   constructor(
     private userService: UserService,
+    private featureService: FeatureService,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
     public langService: LanguageService,
@@ -39,6 +52,18 @@ export class UsersManagement {
     this.isEditUser = true;
     this.cdr.markForCheck();
   }
+
+  fetchFeatures(){
+  this.featureService.getAllFeatures().subscribe({
+    next: (data: any) => {
+      if(data.code == "200"){
+        this.features = data.data.content
+        this.cdr.markForCheck()
+      }
+    },
+    error: (err) => console.error('features error:', err)
+  })
+}
 
   fetchRoles(){
     this.userService.getAllRoles().subscribe({
@@ -65,17 +90,26 @@ export class UsersManagement {
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
       this.fetchRoles();
+      this.fetchFeatures();
     }
   }
 
-  handleCloseCreateUserForm(){
+  handleClose(){
     this.isCreateNewUser = false;
+    this.isEditUser = false;
+    this.isRoleListOpen = false;
+    this.isCreateNewRole = false;
+
+    this.editRole = null;
+    this.editUser = null;
+
     this.cdr.markForCheck()
   }
 
-  handleCloseEditUserForm() {
-    this.isEditUser = false;
-    this.editUser = null;
+  handleChooseRole(role: Role){
+    this.editRole = role;
+    this.isRoleListOpen = false;
+    this.isEditRole = true;
     this.cdr.markForCheck();
   }
 

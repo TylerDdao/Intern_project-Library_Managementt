@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="title-3 font-bold">{{"form.Edit-role"|translate}}</div>
+    <form [formGroup]="newRoleForm" id="newRoleForm" (ngSubmit)="onSubmit()" class="form-container">
+        <div class="flex flex-col">
+            <label for="roleName">{{"form.Role-name"|translate}}</label>
+            <input id="roleName" formControlName="roleName" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full" [placeholder]="role.name"/>
+        </div>
+
+        <div>
+            <div class="headline">{{"role.Assigned-features" | translate}}</div>
+            <div class="features-container">
+                @for (feature of assignedFeatures; track $index) {
+                    @if (removeFeatures.includes(feature)) {
+                        <div class="p-[5px] bg-tomato-red text-soft-ice text-center rounded-[10px] select-none" (click)="handleToggleFeature(feature)">{{feature.name}}</div>
+                    }
+                    @else {
+                        <div class="p-[5px] bg-primary-1 text-soft-ice text-center rounded-[10px] select-none" (click)="handleToggleFeature(feature)">{{feature.name}}</div>
+                    }
+                }
+            </div>
+        </div>
+
+        <div>
+            <div class="headline">{{"role.Unassigned-features" | translate}}</div>
+            <div class="features-container">
+                @for (feature of unassignedFeatures; track $index) {
+                    @if (addedFeatures.includes(feature)) {
+                        <div class="p-[5px] bg-leaf-green text-soft-ice text-center rounded-[10px] select-none" (click)="handleToggleFeature(feature)">{{feature.name}}</div>
+                    }
+                    @else {
+                        <div class="p-[5px] bg-tomato-red text-soft-ice text-center rounded-[10px] select-none" (click)="handleToggleFeature(feature)">{{feature.name}}</div>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="flex space-x-[10px]">
+            <button type="submit" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice body rounded-[10px]">{{'form.Save'|translate}}</button>
+            <button class="border border-tomato-red px-[10px] py-[5px] text-tomato-red body rounded-[10px]" (click)="close()">{{'form.Cancel'|translate}}</button>
+        </div>
+    </form>
+    
+</div>

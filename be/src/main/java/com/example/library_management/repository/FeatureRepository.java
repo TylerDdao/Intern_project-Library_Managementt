@@ -15,4 +15,5 @@ public interface FeatureRepository extends JpaRepository<Feature, Long>{
     List<Feature> findByRoles_Id(long roleId);
     Page<Feature> findByRoles_Name(String role, Pageable pageable);
     Optional<Feature> findByName(String name);
+    Page<Feature> findByNameContaining(String name, Pageable pageable);
 }

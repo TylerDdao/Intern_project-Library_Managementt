@@ -2,8 +2,9 @@
 
 <div class="min-h-screen container">
     <div class="flex flex-col space-y-[10px] buttons-container">
-        <button class="p-[10px] bg-steel-blue text-soft-ice headline text-center rounded-[10px] w-full" (click)="isCreateNewUser = true">{{'user.Create-user' | translate}}</button>
-        <button class="p-[10px] bg-leaf-green text-soft-ice headline text-center rounded-[10px] w-full">{{'role.Create-role' | translate}}</button>
+        <button class="p-[10px] bg-steel-blue text-soft-ice headline text-center rounded-[10px] w-full" (click)="isCreateNewUser = true;">{{'user.Create-user' | translate}}</button>
+        <button class="p-[10px] bg-leaf-green text-soft-ice headline text-center rounded-[10px] w-full" (click)="isCreateNewRole = true">{{'role.Create-role' | translate}}</button>
+        <button class="p-[10px] bg-sky-blue text-soft-ice headline text-center rounded-[10px] w-full" (click)="isRoleListOpen = true">{{'userManagement.Role-list' | translate}}</button>
     </div>
     <div>
         @for (role of roles; track $index) {
@@ -20,16 +21,37 @@
 
     @if (isCreateNewUser) {
         <div class="fixed inset-0 flex items-center justify-center">
-            <app-new-user-form [roles]="roles" (onClose)="handleCloseCreateUserForm()"></app-new-user-form>
+            <app-new-user-form [roles]="roles" (onClose)="handleClose()"></app-new-user-form>
         </div>
     }
     @if (isEditUser && editUser) {
         <div class="fixed inset-0 flex items-center justify-center">
             <app-edit-user-form 
             [roles]="roles" 
-            (onClose)="handleCloseEditUserForm()" 
+            (onClose)="handleClose()" 
             [user]="editUser">
             </app-edit-user-form>
         </div>
     }
+
+    @if(isCreateNewRole){
+        <div class="fixed inset-0 flex items-center justify-center">
+            <app-new-role-form (onClose)="handleClose()" [features]="features"></app-new-role-form>
+        </div>
+    }
+
+    @if(isEditRole && editRole){
+        <div class="fixed inset-0 flex items-center justify-center">
+            <app-edit-role-form [role]="editRole" [features]="features" (onClose)="handleClose()"></app-edit-role-form>
+        </div>
+    }
+
+    @if (isRoleListOpen) {
+        <div class="fixed inset-0 flex items-center justify-center z-99">
+            <app-role-list-component [roles]="roles" (onClose)="handleClose()" (onChoose)="handleChooseRole($event)"></app-role-list-component>
+        </div>
+    }
+
+    
+    
 </div>
