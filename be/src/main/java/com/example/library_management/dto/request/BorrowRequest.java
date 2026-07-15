@@ -12,4 +12,5 @@ public class BorrowRequest {
     private Long bookId;
     private Long userId;
     private LocalDateTime dueDate;
+    private Boolean isActive;
 }

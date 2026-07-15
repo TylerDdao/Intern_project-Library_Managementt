@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { getAuthHeaders } from '../auth-service';
+import { SideBarQuery } from '../../components/sort-side-bar-component/sort-side-bar-component';
+import { Borrow } from '../../models/borrow';
 
 @Injectable({
   providedIn: 'root',
@@ -37,5 +39,24 @@ export class BorrowService {
     return this.http.get(`${this.baseUrl}/borrows-count/genre`, {
       headers: getAuthHeaders(this.platformId)
     });
+  }
+
+  getAllActiveBorrows(page: number = 0, limit: number = 10){
+    return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}`, {
+      headers: getAuthHeaders(this.platformId)
+    });
+  }
+
+  getBorrowsByQuery(query: SideBarQuery, page: number = 0, limit: number = 10){
+    return this.http.get(`${this.baseUrl}?query=${query.searchQuery}&sortBy=${query.sortBy.toLowerCase()}&page=${page}&limit=${limit}`, {
+      headers: getAuthHeaders(this.platformId)
+    })
+  }
+
+  updateBorrow(borrow: Borrow) {
+    return this.http.patch(`${this.baseUrl}/${borrow.id}`, 
+      { id: borrow.id, isActive: false, dueDate: borrow.dueDate },
+      { headers: getAuthHeaders(this.platformId) }
+    );
   }
 }

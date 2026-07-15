@@ -1,2 +1,1 @@
-2026-07-10T14:04:13.927+07:00  INFO 85805 --- [library-management] [http-nio-8080-exec-7] c.e.library_management.util.AuditLogger  : [SYSTEM] Authorized @tyler, ID #1
-2026-07-10T14:04:38.557+07:00  INFO 85805 --- [library-management] [http-nio-8080-exec-4] c.e.library_management.util.AuditLogger  : [SYSTEM] Authorized @tyler, ID #1
+2026-07-15T13:31:25.193+07:00  WARN 31796 --- [library-management] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1d1h26m14s599ms855µs100ns).

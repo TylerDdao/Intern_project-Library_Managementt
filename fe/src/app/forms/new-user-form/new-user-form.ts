@@ -14,7 +14,6 @@ export class NewUserForm {
   @Input() roles: Role[] = [];
   @Output() onClose = new EventEmitter<void>();
   constructor(
-    private langService: LanguageService,
   ){}
 
   newUserForm = new FormGroup({

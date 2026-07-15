@@ -1,45 +1,57 @@
-<div class="borrow-card">
-    <div class="borrow-info">
-        <img src="/book-covers/{{bookCover}}.jpg" alt="{{borrow.book.title}}" class="book-cover" (error)="onImageError($event)"/>
-        <div class="book-info-area">
-            <h1 class="subheadline font-bold">{{borrow.book.title}}</h1>
-            <h2 class="caption-1">{{'book.Author'|translate}}: {{borrow.book.author}}</h2>
-            <h2 class="caption-1">{{'borrow.Borrow-on'|translate}}: {{formattedBorrowedOn}}</h2>
-            <h2 class="caption-1">{{'borrow.User'|translate}}: {{borrow.user.fullName}}</h2>
-            <h2 class="caption-1 font-bold">{{'borrow.Please-return-by'|translate}}: {{formattedDueDate}}</h2>
-            @if (!borrow.active) {
-                <div class="flex items-center space-x-[5px] text-leaf-green">
-                    <span class="material-symbols-outlined">check</span>
-                    <h1 class="subheadline font-bold">{{'borrow.Returned'|translate}}</h1>
-                </div>
-            }
-            @else if (dueIn <= 5 && dueIn > 0) {
-                <div class="flex items-center space-x-[5px] text-bright-gold">
-                    <span class="material-symbols-outlined">error</span>
-                    <h1 class="subheadline font-bold">{{'borrow.Due-in'|translate}} {{dueIn}} {{'borrow.days'|translate}}</h1>
-                </div>
-            }
-            @else if (dueIn == 0) {
-                <div class="flex items-center space-x-[5px] text-bright-gold">
-                    <span class="material-symbols-outlined">error</span>
-                    <h1 class="subheadline font-bold">{{'borrow.Due-today'|translate}}</h1>
-                </div>
-            }
-            @else if (dueIn < 0) {
-                <div class="flex items-center space-x-[5px] text-tomato-red">
-                    <span class="material-symbols-outlined">error</span>
-                    <h1 class="subheadline font-bold">{{'borrow.Late'|translate}} {{dueIn*(-1)}} {{'borrow.days'|translate}}</h1>
-                </div>
-            }
-            @else {
-                <div class="flex items-center space-x-[5px]">
-                    <h1 class="subheadline font-bold">{{'borrow.Due-in'|translate}} {{dueIn}} {{'borrow.days'|translate}}</h1>
-                </div>
-            }
+<div class="container">
+    <div class="borrow-card">
+        <div class="borrow-info">
+            <img src="/book-covers/{{bookCover}}.jpg" alt="{{borrow.book.title}}" class="book-cover" (error)="onImageError($event)"/>
+            <div class="book-info-area">
+                <h1 class="headline">{{'borrow.Borrow'|translate}} #{{borrow.id}}</h1>
+                <h1 class="subheadline font-bold">{{borrow.book.title}}</h1>
+                <h2 class="caption-1">{{'book.Author'|translate}}: {{borrow.book.author}}</h2>
+                <h2 class="caption-1">{{'borrow.Borrow-on'|translate}}: {{formattedBorrowedOn}}</h2>
+                <h2 class="caption-1">{{'borrow.User'|translate}}: {{borrow.user.fullName}}</h2>
+                <h2 class="caption-1 font-bold">{{'borrow.Please-return-by'|translate}}: {{formattedDueDate}}</h2>
+                @if (isReturned) {
+                    <div class="flex items-center space-x-[5px] text-leaf-green">
+                        <span class="material-symbols-outlined">check</span>
+                        <h1 class="subheadline font-bold">{{'borrow.Returned'|translate}}</h1>
+                    </div>
+                }
+                @else if (dueIn <= 5 && dueIn > 0) {
+                    <div class="flex items-center space-x-[5px] text-bright-gold">
+                        <span class="material-symbols-outlined">error</span>
+                        <h1 class="subheadline font-bold">{{'borrow.Due-in'|translate}} {{dueIn}} {{'borrow.days'|translate}}</h1>
+                    </div>
+                }
+                @else if (dueIn == 0) {
+                    <div class="flex items-center space-x-[5px] text-bright-gold">
+                        <span class="material-symbols-outlined">error</span>
+                        <h1 class="subheadline font-bold">{{'borrow.Due-today'|translate}}</h1>
+                    </div>
+                }
+                @else if (dueIn < 0) {
+                    <div class="flex items-center space-x-[5px] text-tomato-red">
+                        <span class="material-symbols-outlined">error</span>
+                        <h1 class="subheadline font-bold">{{'borrow.Late'|translate}} {{dueIn*(-1)}} {{'borrow.days'|translate}}</h1>
+                    </div>
+                }
+                @else {
+                    <div class="flex items-center space-x-[5px]">
+                        <h1 class="subheadline font-bold">{{'borrow.Due-in'|translate}} {{dueIn}} {{'borrow.days'|translate}}</h1>
+                    </div>
+                }
+            </div>
         </div>
     </div>
-
-    @if (editable) {
-        <button class="p-[10px] bg-leaf-green text-soft-ice rounded-[10px] h-fit">{{'borrow.Returned'|translate}}</button>
+@if (editable) {
+    @if (isReturned) {
+        <div class="text-leaf-green flex items-center space-x-[5px]">
+            <span class="material-symbols-outlined">
+                check_circle
+            </span>
+            <p>Returned</p> 
+        </div>
     }
+    @else {
+        <button class="p-[10px] bg-leaf-green text-soft-ice rounded-[10px] h-fit w-full" (click)="handleReturn()">{{'borrow.Returned'|translate}}</button>
+    }
+}
 </div>

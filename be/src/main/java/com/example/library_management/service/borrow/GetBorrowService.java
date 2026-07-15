@@ -68,7 +68,7 @@ public class GetBorrowService {
         } else {
             borrows = hasSearch
                     ? borrowRepository.findBySearchQuery(searchQuery, pageable)
-                    : borrowRepository.findAll(pageable);
+                    : borrowRepository.findByIsActive(true, pageable);
         }
 
         return borrows.map(BorrowResponse::new);

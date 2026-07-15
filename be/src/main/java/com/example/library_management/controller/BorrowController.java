@@ -1,8 +1,10 @@
 package com.example.library_management.controller;
 
+import com.example.library_management.dto.request.BorrowRequest;
 import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.dto.response.BorrowResponse;
 import com.example.library_management.service.borrow.GetBorrowService;
+import com.example.library_management.service.borrow.UpdateBorrowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,19 @@ public class BorrowController {
 
     @Autowired
     GetBorrowService getBorrowService;
+
+    @Autowired
+    UpdateBorrowService updateBorrowService;
+
+    @PreAuthorize("@securityService.hasAccess('UPDATE_BORROW')")
+    @PatchMapping("/{id}")
+    public ResponseEntity<ApiResponse<BorrowResponse>> updateBorrow(
+            @PathVariable Long id,
+            @RequestBody BorrowRequest request
+            ){
+        request.setId(id);
+        return ResponseEntity.ok(ApiResponse.success(updateBorrowService.updateBorrow(request)));
+    }
 
     @PreAuthorize("@securityService.hasAccess('GET_BORROW')")
     @GetMapping("/my-borrows")
@@ -58,9 +73,9 @@ public class BorrowController {
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "dueDate") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir,
-            @RequestParam(required = false) String searchQuery) {
+            @RequestParam(required = false) String query) {
         return ResponseEntity.ok(
-                ApiResponse.success(getBorrowService.getBorrows(page, limit, sortBy, sortDir, searchQuery))
+                ApiResponse.success(getBorrowService.getBorrows(page, limit, sortBy, sortDir, query))
         );
     }
 }

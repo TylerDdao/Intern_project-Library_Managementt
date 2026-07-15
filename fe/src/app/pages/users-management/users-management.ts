@@ -14,6 +14,8 @@ import { RoleListComponent } from '../../components/role-list-component/role-lis
 import { Feature } from '../../models/feature';
 import { FeatureService } from '../../services/feature-service/feature-service';
 import { EditRoleForm } from '../../forms/edit-role-form/edit-role-form';
+import { first, last } from 'rxjs';
+import { Page } from '../../models/page';
 
 @Component({
   selector: 'app-users-management',
@@ -36,6 +38,13 @@ export class UsersManagement {
 
   editUser: User | null = null;
   editRole: Role | null = null;
+
+  roleListPage: Page = {
+    first: true,
+    last: true,
+    totalPages: 1,
+    number: 0
+  }
 
   
   constructor(
@@ -65,7 +74,7 @@ export class UsersManagement {
   })
 }
 
-  fetchRoles(){
+  fetchRolesAndUser(){
     this.userService.getAllRoles().subscribe({
         next: (data: any) => {
           if (data.code == "200") {
@@ -87,9 +96,20 @@ export class UsersManagement {
     });
   }
 
+  fetchRoles(page: Page = this.roleListPage, limit:number = 10){
+    this.userService.getAllRoles().subscribe({
+        next: (data: any) => {
+          if (data.code == "200") {
+            this.roles = data.data.content;
+          }
+        },
+        error: (err) => console.error(err)
+    });
+  }
+
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
-      this.fetchRoles();
+      this.fetchRolesAndUser();
       this.fetchFeatures();
     }
   }

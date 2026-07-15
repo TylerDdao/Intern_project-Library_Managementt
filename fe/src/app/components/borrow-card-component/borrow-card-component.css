@@ -1,13 +1,18 @@
 @media (min-width: 1024px) {  /* md */
+    .container{
+        padding: 10px;
+        background-color: var(--color-soft-ice);
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
     .borrow-card{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
         gap: 10px;
-        padding: 10px;
-        background-color: var(--color-soft-ice);
-        border-radius: 10px;
     }
 
     .borrow-info{
@@ -29,13 +34,19 @@
 }
 
 @media (max-width: 1023px) {  /* md */
+    .container{
+        padding: 10px;
+        background-color: var(--color-soft-ice);
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
     .borrow-card{
         display: flex;
         flex-direction: column;
         gap: 5px;
-        padding: 10px;
-        background-color: var(--color-soft-ice);
-        border-radius: 10px;
     }
 
     .book-cover{

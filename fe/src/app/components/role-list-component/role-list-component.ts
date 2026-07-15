@@ -5,10 +5,12 @@ import { isPlatformBrowser } from '@angular/common';
 import { LanguageService } from '../../services/language-service/language-service';
 import { TranslateModule } from '@ngx-translate/core';
 import { FeatureService } from '../../services/feature-service/feature-service';
+import { Page } from '../../models/page';
+import { PagesComponent } from '../pages-component/pages-component';
 
 @Component({
   selector: 'app-role-list-component',
-  imports: [TranslateModule],
+  imports: [TranslateModule, PagesComponent],
   templateUrl: './role-list-component.html',
   styleUrl: './role-list-component.css',
 })
@@ -24,7 +26,6 @@ export class RoleListComponent implements OnChanges {
     private userService: UserService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef,
-    private languageService: LanguageService
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {

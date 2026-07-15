@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="flex justify-between items-center">  <!-- ✅ remove fixed -->
+        <div class="headline">{{"borrowList.List"|translate}}</div>
+        <span (click)="close()" class="material-symbols-outlined select-none">close</span>
+    </div>
+    <div class="borrows-list">
+        @for (borrow of borrows; track borrow.id) {
+            <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
+        }
+        <app-pages-component [pages]="page" (onApply)="changePage($event)"></app-pages-component>
+    </div>
+</div>
