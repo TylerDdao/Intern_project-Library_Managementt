@@ -20,12 +20,12 @@
     </div>
 
     @if (isCreateNewUser) {
-        <div class="fixed inset-0 flex items-center justify-center">
+        <div class="fixed inset-0 flex items-center justify-center z-99">
             <app-new-user-form [roles]="roles" (onClose)="handleClose()"></app-new-user-form>
         </div>
     }
     @if (isEditUser && editUser) {
-        <div class="fixed inset-0 flex items-center justify-center">
+        <div class="fixed inset-0 flex items-center justify-center z-99">
             <app-edit-user-form 
             [roles]="roles" 
             (onClose)="handleClose()" 
@@ -35,13 +35,13 @@
     }
 
     @if(isCreateNewRole){
-        <div class="fixed inset-0 flex items-center justify-center">
+        <div class="fixed inset-0 flex items-center justify-center z-99">
             <app-new-role-form (onClose)="handleClose()" [features]="features"></app-new-role-form>
         </div>
     }
 
     @if(isEditRole && editRole){
-        <div class="fixed inset-0 flex items-center justify-center">
+        <div class="fixed inset-0 flex items-center justify-center z-99">
             <app-edit-role-form [role]="editRole" [features]="features" (onClose)="handleClose()"></app-edit-role-form>
         </div>
     }

@@ -2,15 +2,13 @@ import { ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnChanges, O
 import { Role } from '../../models/role';
 import { UserService } from '../../services/user-service/user-service';
 import { isPlatformBrowser } from '@angular/common';
-import { LanguageService } from '../../services/language-service/language-service';
 import { TranslateModule } from '@ngx-translate/core';
-import { FeatureService } from '../../services/feature-service/feature-service';
-import { Page } from '../../models/page';
-import { PagesComponent } from '../pages-component/pages-component';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-role-list-component',
-  imports: [TranslateModule, PagesComponent],
+  imports: [TranslateModule, FormsModule, TranslateModule],
   templateUrl: './role-list-component.html',
   styleUrl: './role-list-component.css',
 })
@@ -22,11 +20,32 @@ export class RoleListComponent implements OnChanges {
   @Output() onClose = new EventEmitter<void>();
   @Output() onChoose = new EventEmitter<Role>();
 
+  query: string = ''
+  resultRoles: Role[] = []
+
   constructor(
     private userService: UserService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef,
   ) {}
+
+  handleSearch(name: string){
+    this.userService.getRole(name).subscribe({
+      next: (data:any) => {
+        if(data.code == "200"){
+          this.resultRoles = data.data.content
+          this.cdr.markForCheck()
+        }
+      },
+      error(err) {console.error(err)}
+    })
+  }
+
+  handleClear(){
+    this.resultRoles = []
+    this.query = ""
+    this.cdr.markForCheck()
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['roles'] && this.roles.length > 0 && isPlatformBrowser(this.platformId)) {
@@ -42,7 +61,8 @@ export class RoleListComponent implements OnChanges {
           this.users.push({ role: role, users: data.data.totalElements }); // check exact path
           this.cdr.markForCheck();
         }
-      }
+      },
+      error(err) {console.error(err)}
     });
   }
 

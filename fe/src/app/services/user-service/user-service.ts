@@ -16,8 +16,14 @@ export class UserService {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  getAllRoles(page:number = 0, limit:number=100){
-    return this.http.get(`${this.baseUrl}/roles?page=${page}&limit=${limit}`, {
+  getAllRoles(page:number = 0, limit:number=1000){
+    return this.http.get(`${this.baseUrl}/roles?page=${page}&limit=${limit}&sortBy=name&sortDir=asc`, {
+      headers: getAuthHeaders(this.platformId)
+    });
+  }
+
+  getRole(name:string, page: number = 0, limit:number=1000){
+    return this.http.get(`${this.baseUrl}/roles?name=${name}&page=${page}&limit=${limit}&sortBy=name&sortDir=asc`, {
       headers: getAuthHeaders(this.platformId)
     });
   }

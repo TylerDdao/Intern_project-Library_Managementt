@@ -9,5 +9,6 @@
         gap: 30px;
         overflow-y: scroll;
         height: 80vh;
+        width: 50vw;
     }
 }

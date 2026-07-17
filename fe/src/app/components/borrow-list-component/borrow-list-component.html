@@ -1,7 +1,7 @@
 <div class="container">
     <div class="flex justify-between items-center">  <!-- ✅ remove fixed -->
         <div class="headline">{{"borrowList.List"|translate}}</div>
-        <span (click)="close()" class="material-symbols-outlined select-none">close</span>
+        <span (click)="close()" class="material-symbols-outlined cursor-pointer">close</span>
     </div>
     <div class="borrows-list">
         @for (borrow of borrows; track borrow.id) {

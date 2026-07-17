@@ -1,12 +1,29 @@
 <div class="container">
     <div class="flex justify-between items-center">
         <p class="headline font-bold">{{'roleList.Role_list'}}</p>
-        <span (click)="close()" class="material-symbols-outlined select-none">close</span>
+        <span (click)="close()" class="material-symbols-outlined cursor-pointer">close</span>
     </div>
-    @for (role of roles; track $index) {
-        <div class="py-[5px] px-[10px] w-[300px] border border-primary-1 text-primary-1 rounded-[10px] hover:bg-primary-1 hover:text-soft-ice ease-in-out transition" (click)="choose(role)">
+
+    <div class="flex justify-between items-center space-x-[5px]">
+        <input placeholder="{{'search.Search' | translate}}" type="text" class="w-full bg-cool-gray rounded-[10px]" [(ngModel)]="query"/>
+        <span (click)="handleSearch(query)" class="material-symbols-outlined cursor-pointer bg-steel-blue p-[5px] text-soft-ice rounded-[10px]">search</span>
+        <button (click)="handleClear()" class="bg-cool-gray p-[5px] rounded-[10px]">{{"search.Clear"|translate}}</button>
+    </div>
+    
+    @if (resultRoles.length == 0) {
+        @for (role of roles; track $index) {
+            <div class="w-full py-[5px] px-[10px] w-[300px] border border-primary-1 text-primary-1 rounded-[10px] hover:bg-primary-1 hover:text-soft-ice ease-in-out transition" (click)="choose(role)">
+                <div class="body font-bold select-none">{{role.name}}</div>
+                <div>{{getUserCount(role.name)}} {{'roleList.members' | translate}}</div>
+            </div>
+        }
+    }
+    @else {
+        @for (role of resultRoles; track $index) {
+        <div class="w-full py-[5px] px-[10px] w-[300px] border border-primary-1 text-primary-1 rounded-[10px] hover:bg-primary-1 hover:text-soft-ice ease-in-out transition" (click)="choose(role)">
             <div class="body font-bold select-none">{{role.name}}</div>
             <div>{{getUserCount(role.name)}} {{'roleList.members' | translate}}</div>
         </div>
+    }
     }
 </div>
