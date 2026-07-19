@@ -1,11 +1,38 @@
 @media (min-width: 1024px) {
     .container{
         padding: 50px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-width: calc(100dvw - 25px);
+    }
+
+    .book-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: start;
+        padding: 5px;
+        gap: 10px;
+    }
+
+    .book-cover-container{
+        height: 250px;
+        overflow-y: hidden;
+        
+    }
+
+    .book-cover{
+        /* width: 200px; */
+        border-radius: 8px;
+        height: 250px;
+        max-width: 250px;
+    }
+
+    .posts-container{
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items:center;
-        gap:30px;
-        min-width: calc(100dvw - 25px);
+        gap: 30px;
+        overflow-y: auto;
+        height: 75vh;
     }
 }

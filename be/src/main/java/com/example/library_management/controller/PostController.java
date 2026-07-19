@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/posts")
 public class PostController {
     @Autowired
     private GetPostService getPostService;
@@ -24,21 +25,35 @@ public class PostController {
     @Autowired
     private UserRepository userRepository;
 
+//    @PreAuthorize("@securityService.hasAccess('GET_POST')")
+//    @GetMapping()
+//    public ResponseEntity<ApiResponse<Page<PostResponse>>> getPostsByBookId(
+//            @RequestParam(defaultValue = "0") int page,
+//            @RequestParam(defaultValue = "10") int limit,
+//            @RequestParam(defaultValue = "createdAt") String sortBy,
+//            @RequestParam(defaultValue = "asc") String sortDir,
+//            @RequestParam(required = true) int bookId) {
+//        return ResponseEntity.ok(
+//                ApiResponse.success(getPostService.getPostsByBookId(page, limit, sortBy, sortDir, bookId))
+//        );
+//    }
+
     @PreAuthorize("@securityService.hasAccess('GET_POST')")
-    @GetMapping("/posts")
+    @GetMapping()
     public ResponseEntity<ApiResponse<Page<PostResponse>>> getPosts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir,
+            @RequestParam(required = false) int bookId,
             @RequestParam(required = false) String searchQuery) {
         return ResponseEntity.ok(
-                ApiResponse.success(getPostService.getPosts(page, limit, sortBy, sortDir, searchQuery))
+                ApiResponse.success(getPostService.getPosts(page, limit, sortBy, sortDir, searchQuery, bookId))
         );
     }
 
     @PreAuthorize("@securityService.hasAccess('UPDATE_POST')")
-    @PostMapping("/post/{postId}/like")
+    @PostMapping("/{postId}/like")
     public ResponseEntity<ApiResponse<String>> toggleLike(@PathVariable Long postId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username)
@@ -49,7 +64,7 @@ public class PostController {
     }
 
     @PreAuthorize("@securityService.hasAccess('GET_POST')")
-    @GetMapping("/posts/my-posts")
+    @GetMapping("/my-posts")
     public ResponseEntity<ApiResponse<Page<PostResponse>>> getMyPosts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,

@@ -8,9 +8,8 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 public class BorrowRequest {
-    private Long id;
+    private Long id = null;
     private Long bookId;
     private Long userId;
     private LocalDateTime dueDate;
-    private Boolean isActive;
 }

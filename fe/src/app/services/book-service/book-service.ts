@@ -58,8 +58,8 @@ export class BookService {
     });
   }
 
-  getBook(id: number, title: string | null = null){
-    return this.http.get(`${this.baseUrl}/book?id=${id}&title=${title}`, {
+  getBookById(id: number, title: string | null = null){
+    return this.http.get(`${this.baseUrl}/book?id=${id}`, {
       headers: getAuthHeaders(this.platformId)
     });
   }

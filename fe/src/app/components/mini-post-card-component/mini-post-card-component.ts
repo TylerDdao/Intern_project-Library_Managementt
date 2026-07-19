@@ -3,7 +3,7 @@ import { Post } from '../../models/post';
 import { formatNumber, formatTime } from '../../util/format-number';
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { LanguageService } from '../../services/language-service/language-service';
-import { PostsService } from '../../services/posts-service/posts-service';
+import { PostService } from '../../services/post-service/post-service';
 
 @Component({
   selector: 'app-mini-post-card-component',
@@ -20,11 +20,11 @@ export class MiniPostCardComponent {
   constructor(
     public langService: LanguageService,
     private cdr: ChangeDetectorRef,
-    private postsService: PostsService
+    private postService: PostService
   ) {}
 
   toggleLike() {
-    this.postsService.toggleLike(this.post.id).subscribe({
+    this.postService.toggleLike(this.post.id).subscribe({
         next: (data: any) => {
             if (data.code == "200") {
                 this.post = {

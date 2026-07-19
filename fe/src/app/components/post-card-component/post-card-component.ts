@@ -4,7 +4,7 @@ import { Post } from '../../models/post';
 import { formatNumber, formatTime } from '../../util/format-number';
 import { LanguageService } from '../../services/language-service/language-service';
 import { Subscription } from 'rxjs';
-import { PostsService } from '../../services/posts-service/posts-service';
+import { PostService } from '../../services/post-service/post-service';
 import { CommentBoxComponent } from '../comment-box-component/comment-box-component';
 import { CommentService } from '../../services/comment-service/comment-service';
 import { Comment } from '../../models/comment';
@@ -31,7 +31,7 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
     public langService: LanguageService, 
     private translate: TranslateService,
     private cdr: ChangeDetectorRef,
-    private postsService: PostsService,
+    private postService: PostService,
     private commentService: CommentService
   ) {}
 
@@ -47,7 +47,7 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   toggleLike() {
-    this.postsService.toggleLike(this.post.id).subscribe({
+    this.postService.toggleLike(this.post.id).subscribe({
         next: (data: any) => {
             if (data.code == "200") {
                 this.post = {

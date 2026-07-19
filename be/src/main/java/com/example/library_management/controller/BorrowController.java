@@ -3,6 +3,7 @@ package com.example.library_management.controller;
 import com.example.library_management.dto.request.BorrowRequest;
 import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.dto.response.BorrowResponse;
+import com.example.library_management.service.borrow.CreateBorrowService;
 import com.example.library_management.service.borrow.GetBorrowService;
 import com.example.library_management.service.borrow.UpdateBorrowService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,21 @@ import java.util.Map;
 @RestController
 @RequestMapping("/borrows")
 public class BorrowController {
-
+    @Autowired
+    CreateBorrowService createBorrowService;
     @Autowired
     GetBorrowService getBorrowService;
 
     @Autowired
     UpdateBorrowService updateBorrowService;
+
+    //TODO CHECK IF THE BOOK IS ALREADY BORROWED
+
+    @PreAuthorize("@securityService.hasAccess('CREATE_BORROW')")
+    @PostMapping()
+    public ResponseEntity<ApiResponse<BorrowResponse>> createBorrow(@RequestBody BorrowRequest request){
+        return ResponseEntity.ok(ApiResponse.success(createBorrowService.createBorrow(request)));
+    }
 
     @PreAuthorize("@securityService.hasAccess('UPDATE_BORROW')")
     @PatchMapping("/{id}")

@@ -2,6 +2,7 @@ package com.example.library_management.service.borrow;
 
 import com.example.library_management.dto.request.BorrowRequest;
 import com.example.library_management.dto.response.BorrowResponse;
+import com.example.library_management.exception.ApiException;
 import com.example.library_management.model.Book;
 import com.example.library_management.model.Borrow;
 import com.example.library_management.model.User;
@@ -16,9 +17,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+@Service
 public class CreateBorrowService {
     @Autowired
     private AuditLogger logger;
@@ -35,27 +40,28 @@ public class CreateBorrowService {
     @Autowired
     private MessageSource messageSource;
 
+    @Transactional
     public BorrowResponse createBorrow(BorrowRequest request){
         Optional<Borrow> existing = borrowRepository.findByUserIdAndBookId(request.getUserId(), request.getBookId());
-
         if (existing.isPresent()) {
-            Borrow borrow = existing.get();
-            borrow.setIsActive(false);
-            return new BorrowResponse(borrow);
+            throw new RuntimeException(messageSource.getMessage("error.borrow.already.existed",null, LocaleContextHolder.getLocale()));
         }
 
         Borrow newBorrow = new Borrow();
-        User user = userRepository.findById(request.getId()).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.id.not.found", null, LocaleContextHolder.getLocale())));
+        User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.id.not.found", null, LocaleContextHolder.getLocale())));
         Book book = bookRepository.findById(request.getBookId()).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.id.not.found", null, LocaleContextHolder.getLocale())));;
         if(book.getCopies() == 0){
-            newBorrow.setIsActive(false);
-            return new BorrowResponse(newBorrow);
+            throw new RuntimeException(messageSource.getMessage("error.book.is.not.available", null, LocaleContextHolder.getLocale()));
         }
+
+        book.setCopies(book.getCopies() - 1);
+
 
         newBorrow.setUser(user);
         newBorrow.setBook(book);
         newBorrow.setDueDate(request.getDueDate());
         borrowRepository.save(newBorrow);
+        bookRepository.save(book);
         return new BorrowResponse(newBorrow);
     }
 }

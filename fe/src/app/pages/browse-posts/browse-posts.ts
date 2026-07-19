@@ -5,7 +5,7 @@ import { SideBarQuery, SortSideBarComponent } from '../../components/sort-side-b
 import { PostCardComponent } from "../../components/post-card-component/post-card-component";
 import { Post } from '../../models/post';
 import { LanguageService } from '../../services/language-service/language-service';
-import { PostsService } from '../../services/posts-service/posts-service';
+import { PostService } from '../../services/post-service/post-service';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { PagesComponent } from '../../components/pages-component/pages-component';
@@ -34,7 +34,7 @@ export class BrowsePosts {
 
   constructor(
     public langService: LanguageService,
-    private postsService: PostsService,
+    private postService: PostService,
     protected router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef,
@@ -42,7 +42,7 @@ export class BrowsePosts {
   {}
 
   fetchAllPosts(page:Page = this.postPages):void{
-    this.postsService.getAllPost(page.number).subscribe({
+    this.postService.getAllPost(page.number).subscribe({
       next: (data:any) => {
         if(data.code == "200"){
           this.posts = data.data.content;
@@ -59,7 +59,7 @@ export class BrowsePosts {
   }
 
   handleLessPosts():void{
-    this.postsService.getAllPost(0).subscribe({
+    this.postService.getAllPost(0).subscribe({
       next: (data:any) => {
         console.log(data)
         if(data.code == "200"){
@@ -77,7 +77,7 @@ export class BrowsePosts {
 
   handleLoadMorePosts():void{
     this.postPages.number ++;
-    this.postsService.getAllPost(this.postPages.number).subscribe({
+    this.postService.getAllPost(this.postPages.number).subscribe({
       next: (data:any) => {
         if(data.code == "200"){
           this.posts.push(...data.data.content);
@@ -95,7 +95,7 @@ export class BrowsePosts {
   fetchSearchPosts(page: Page): void {
     // re-run the last query with the new page
     if (this.lastQuery) {
-        this.postsService.getPostsByQuery(this.lastQuery, page.number).subscribe({
+        this.postService.getPostsByQuery(this.lastQuery, page.number).subscribe({
             next: (data: any) => {
                 if (data.code == "200") {
                     this.searchPost = data.data.content;
@@ -120,7 +120,7 @@ export class BrowsePosts {
     this.isSearch = true;
     this.searchPost = [];
     this.isPostFound = true;
-    this.postsService.getPostsByQuery(query).subscribe({
+    this.postService.getPostsByQuery(query).subscribe({
       next: (data: any) => {
         if(data.code == "200"){
           if(data.data.totalElements > 0){

@@ -8,7 +8,7 @@ import { getAuthHeaders } from '../auth-service';
 @Injectable({
   providedIn: 'root',
 })
-export class PostsService {
+export class PostService {
   private baseUrl = `${environment.apiUrl}`;
 
   constructor(
@@ -44,5 +44,11 @@ export class PostsService {
     return this.http.post(`${this.baseUrl}/post/${postId}/like`, {}, {
       headers: getAuthHeaders(this.platformId)
     });
+  }
+
+  getPostsByBookId(bookId: number, page: number = 0, limit: number = 10){
+    return this.http.get(`${this.baseUrl}/posts?page=${page}&limit=${limit}&bookId=${bookId}`, {
+      headers: getAuthHeaders(this.platformId)
+    })
   }
 }

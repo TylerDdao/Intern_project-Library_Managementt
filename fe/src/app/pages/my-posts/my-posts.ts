@@ -4,7 +4,7 @@ import { SideBarQuery, SortSideBarComponent } from '../../components/sort-side-b
 import { PostCardComponent } from '../../components/post-card-component/post-card-component';
 import { Post } from '../../models/post';
 import { Router } from '@angular/router';
-import { PostsService } from '../../services/posts-service/posts-service';
+import { PostService } from '../../services/post-service/post-service';
 import { LanguageService } from '../../services/language-service/language-service';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -32,7 +32,7 @@ export class MyPosts {
 
   constructor(
     public langService: LanguageService,
-    private postsService: PostsService,
+    private postService: PostService,
     protected router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef,
@@ -47,7 +47,7 @@ export class MyPosts {
     }
 
     const userId = Number(JSON.parse(userJson).id);
-    this.postsService.getMyPosts(userId, page.number).subscribe({  // ← pass page.number
+    this.postService.getMyPosts(userId, page.number).subscribe({  // ← pass page.number
         next: (data: any) => {
             if (data.code == "200") {
                 this.posts = data.data.content;
@@ -60,7 +60,7 @@ export class MyPosts {
   }
 
   handleLessPosts():void{
-    this.postsService.getMyPosts(0).subscribe({
+    this.postService.getMyPosts(0).subscribe({
       next: (data:any) => {
         console.log(data)
         if(data.code == "200"){
@@ -78,7 +78,7 @@ export class MyPosts {
 
   handleLoadMorePosts():void{
     this.postPages.number ++;
-    this.postsService.getMyPosts(this.postPages.number).subscribe({
+    this.postService.getMyPosts(this.postPages.number).subscribe({
       next: (data:any) => {
         if(data.code == "200"){
           this.posts.push(...data.data.content);
@@ -104,7 +104,7 @@ export class MyPosts {
     this.isSearch = true;
     this.searchPost = [];
     this.isPostFound = true;
-    this.postsService.getPostsByQuery(query).subscribe({
+    this.postService.getPostsByQuery(query).subscribe({
       next: (data: any) => {
         if(data.code == "200"){
           if(data.data.totalElements > 0){

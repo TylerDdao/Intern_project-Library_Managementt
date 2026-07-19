@@ -30,4 +30,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Page<Post> findBySearchQuery(@Param("q") String query, Pageable pageable);
 
     Page<Post> findByCreatedBy(String createdBy, Pageable pageable);
+
+    Page<Post> findByBookId(int bookId, Pageable pageable);
 }

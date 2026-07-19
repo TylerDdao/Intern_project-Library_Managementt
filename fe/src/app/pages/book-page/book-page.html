@@ -1,12 +1,43 @@
 <app-navbar></app-navbar>
 <div class="container">
+    <div class="flex flex-col space-y-[10px] w-fit">
+        <div class="title-1 font-bold">{{"bookPage.Book-information"|translate}}</div>
+        @if (book) {
+            <div class="book-container">
+                <img src="/book-covers/{{bookCover}}.jpg" class="book-cover" (error)="onImageError($event)"/>
+                <div>
+                    <h1 class="title-3 font-bold book-info">{{book.title}}</h1>
+                    <h1 class="body font-bold book-info">{{'book.Author'|translate}}: {{book.author}}</h1>
+                    <h1 class="body book-info">{{'book.Genres'|translate}}: {{book.genres}}</h1>
+                    <h1 class="caption-1">{{'book.Available-copies'|translate}}: {{book.copies}}</h1>
+                </div>
+            </div>
+
+            @if (book.copies > 0) {
+                <button class="bg-primary-1 p-[5px] rounded-[10px] text-soft-ice body font-bold" (click)="handleBorrow()">{{'bookPage.Borrow'|translate}}</button>
+            }
+            @else {
+                <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice body font-bold">{{'bookPage.Book-is-not-available'|translate}}</button>
+            }
+        }
+        
+    </div>
+
     <div class="flex flex-col space-y-[10px] items-center">
-        <app-book-card-component [book]="book"></app-book-card-component>
-        @if (book.copies < 0) {
-            <button class="bg-primary-1 w-full p-[5px] rounded-[10px] text-soft-ice body font-bold">{{'bookPage.Borrow'|translate}}</button>
+        <div class="title-1 font-bold">{{"bookPage.Posts-about-this-book"|translate}}</div>
+        @if (isLoadingPosts) {
+            <div class="flex items-center justify-center w-full p-50">
+                <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+            </div>
         }
         @else {
-            <button class="bg-tomato-red/40 w-full p-[5px] rounded-[10px] text-soft-ice body font-bold">{{'bookPage.Book-is-not-available'|translate}}</button>
+            @if(posts.length > 0){
+                <div class="posts-container">
+                    @for (post of posts; track post.id) {
+                        <app-post-card-component [post]="post"></app-post-card-component>
+                    }
+                </div>
+            }
         }
     </div>
 </div>

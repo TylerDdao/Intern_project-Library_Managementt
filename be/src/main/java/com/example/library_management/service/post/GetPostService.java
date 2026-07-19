@@ -37,19 +37,25 @@ public class GetPostService {
     @Autowired
     private AuditLogger logger;
 
-    public Page<PostResponse> getPosts(int page, int limit, String sortBy, String sortDir, String searchQuery) {
+    public Page<PostResponse> getPosts(int page, int limit, String sortBy, String sortDir, String searchQuery, Integer bookId) {
         Sort sort = sortDir.equalsIgnoreCase("desc")
                 ? Sort.by(sortBy).descending()
                 : Sort.by(sortBy).ascending();
 
         Pageable pageable = PageRequest.of(page, limit, sort);
-        Page<Post> posts = searchQuery != null && !searchQuery.isBlank()
-                ? postRepository.findBySearchQuery(searchQuery, pageable)
-                : postRepository.findAll(pageable);
+
+        Page<Post> posts;
+
+        if (bookId == null) {
+            posts = searchQuery != null && !searchQuery.isBlank()
+                    ? postRepository.findBySearchQuery(searchQuery, pageable)
+                    : postRepository.findAll(pageable);
+        } else {
+            posts = postRepository.findByBookId(bookId, pageable);
+        }
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepository.findByUsername(username).orElseThrow();
-
         List<Long> likedPostIds = postLikeRepository.findLikedPostIdsByUser(currentUser);
 
         return posts.map(post -> new PostResponse(post, likedPostIds.contains(post.getId()), post.getCreatedBy().equals(username)));
@@ -65,5 +71,19 @@ public class GetPostService {
         Page<Post> posts = postRepository.findByCreatedBy(user.getUsername(), pageable);
         List<Long> likedPostIds = postLikeRepository.findLikedPostIdsByUser(user);
         return posts.map(post -> new PostResponse(post, likedPostIds.contains(post.getId()), post.getCreatedBy().equals(user.getUsername())));
+    }
+
+    public Page<PostResponse> getPostsByBookId(int page, int limit, String sortBy, String sortDir, int bookId){
+        Sort sort = sortDir.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userRepository.findByUsername(username).orElseThrow();
+
+        Pageable pageable = PageRequest.of(page, limit, sort);
+        Page<Post> posts = postRepository.findByBookId(bookId, pageable);
+        List<Long> likedPostIds = postLikeRepository.findLikedPostIdsByUser(currentUser);
+        return posts.map(post -> new PostResponse(post, likedPostIds.contains(post.getId()), post.getCreatedBy().equals(username)));
     }
 }

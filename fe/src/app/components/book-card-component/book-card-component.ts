@@ -10,6 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class BookCardComponent {
   @Input({ required: true }) book!: Book;
+  @Input() accessible: boolean = true
 
   bookCover = ''
 

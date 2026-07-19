@@ -37,4 +37,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(403)
                 .body(ApiResponse.error("403", message));
     }
+
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<ApiResponse<?>> handleCustomException(ApiException e) {
+        log.warn("Exception code {}: {}", e.getCode(), e.getMessage());
+        return ResponseEntity.status(e.getStatus())
+                .body(ApiResponse.error(e.getCode(), e.getMessage()));
+    }
 }

@@ -33,16 +33,10 @@ public class UpdateBorrowService {
     private AuditLogger logger;
 
     public BorrowResponse updateBorrow(BorrowRequest request){
-        Borrow borrow = borrowRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException(
-                        messageSource.getMessage("error.borrow.not.found", null, LocaleContextHolder.getLocale())
-                ));
+        Borrow borrow = borrowRepository.findByUserIdAndBookId(request.getUserId(), request.getBookId()).orElseThrow(()-> new RuntimeException(messageSource.getMessage("error.borrow.not.found", null, LocaleContextHolder.getLocale())));
 
         if (request.getDueDate() != null) {
             borrow.setDueDate(request.getDueDate());
-        }
-        if (request.getIsActive() != null) {
-            borrow.setIsActive(request.getIsActive());
         }
 
         borrowRepository.save(borrow);

@@ -7,7 +7,7 @@ import { ChartComponent } from '../../components/chart-component/chart-component
 import { PostCardComponent } from '../../components/post-card-component/post-card-component';
 import { BorrowCardComponent } from '../../components/borrow-card-component/borrow-card-component';
 import { Post } from '../../models/post';
-import { PostsService } from '../../services/posts-service/posts-service';
+import { PostService } from '../../services/post-service/post-service';
 import { isPlatformBrowser } from '@angular/common';
 import { BorrowService } from '../../services/borrow-service/borrow-service';
 import { Borrow } from '../../models/borrow';
@@ -46,7 +46,7 @@ export class Home {
 
   constructor(
     public langService: LanguageService,
-    private postsService: PostsService,
+    private postService: PostService,
     private borrowService: BorrowService,
     private genreService: GenreService,
     private bookService: BookService,
@@ -115,7 +115,7 @@ export class Home {
   }
 
   fetchMostLikesPosts():void{
-    this.postsService.getMostLikesPosts(0, 5).subscribe({
+    this.postService.getMostLikesPosts(0, 5).subscribe({
       next: (data:any) => {
         console.log(data)
         if(data.code == "200"){

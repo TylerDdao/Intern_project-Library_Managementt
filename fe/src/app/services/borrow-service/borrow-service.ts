@@ -5,6 +5,9 @@ import { environment } from '../../../environments/environment';
 import { getAuthHeaders } from '../auth-service';
 import { SideBarQuery } from '../../components/sort-side-bar-component/sort-side-bar-component';
 import { Borrow } from '../../models/borrow';
+import { Book } from '../../models/book';
+import { User } from '../../models/user';
+import { getUser } from '../../util/session-storage';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +32,7 @@ export class BorrowService {
     });
   }
 
-  getMyBorrows(isActive: string, page: number = 0, limit: number = 10) {
+  getMyBorrows(isActive: boolean, page: number = 0, limit: number = 10) {
     return this.http.get(`${this.baseUrl}/my-borrows?isActive=${isActive}&page=${page}&limit=${limit}`, {
       headers: getAuthHeaders(this.platformId)
     });
@@ -58,5 +61,13 @@ export class BorrowService {
       { id: borrow.id, isActive: false, dueDate: borrow.dueDate },
       { headers: getAuthHeaders(this.platformId) }
     );
+  }
+
+  createBorrow(book: Book, dueDate: String) {
+    const user = getUser();
+    return this.http.post(`${this.baseUrl}`,
+      {bookId: book.id, userId: user?.id, dueDate: dueDate},
+      {headers: getAuthHeaders(this.platformId)}
+    )
   }
 }
