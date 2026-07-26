@@ -101,12 +101,12 @@ export class CreatePost {
     }
   }
 
-  get formattedPostedAt(): string{
-    if(this.post){
-      return formatTime(this.post.createdAt, this.langService.currentLang)
-    }
-    else{return ""}
-  }
+  // get formattedPostedAt(): string{
+  //   if(this.post){
+  //     return formatTime(this.post.createdAt, this.langService.currentLang)
+  //   }
+  //   else{return ""}
+  // }
 
   onImageError(event: Event): void {
     (event.target as HTMLImageElement).src = '/book-covers/default.jpg';
