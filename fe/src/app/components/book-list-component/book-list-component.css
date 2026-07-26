@@ -1,0 +1,23 @@
+.container {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+    background: white;
+    border-radius: 10px;
+    gap: 10px;
+    height: 80vh;
+    width: 50vw;
+    /* align-items: center; */
+}
+
+.books-list {
+    /* display: flex;
+    flex-direction: column; */
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+    justify-items: center;
+    overflow-y: auto;
+    min-height: 0;
+}

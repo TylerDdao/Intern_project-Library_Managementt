@@ -12,6 +12,8 @@ import { ChangeDetectionStrategy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BorrowService } from '../../services/borrow-service/borrow-service';
 import { Borrow } from '../../models/borrow';
+import { formatTime } from '../../util/format-number';
+import { LanguageService } from '../../services/language-service/language-service';
 
 
 @Component({
@@ -30,7 +32,7 @@ export class BookPage{
   posts: Post[] = [];
 
   isBorrowing: boolean = true;
-  borrows: Borrow[] = []
+  borrow!: Borrow
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,
@@ -38,6 +40,7 @@ export class BookPage{
     private borrowService: BorrowService,
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
+    private langService: LanguageService,
     @Inject(PLATFORM_ID) private platformId: Object,
   ) {}
 
@@ -52,6 +55,9 @@ export class BookPage{
           if(data.code == "200"){
             alert("Borrow created")
             alert("Borrow dues on: " + new Date(data.data.dueDate).toDateString())
+            this.book.borrowed = true; 
+            this.borrow = data.data;
+            this.cdr.markForCheck();
           }
         },
         error: (err) => {
@@ -76,13 +82,27 @@ export class BookPage{
     })
   }
 
+  fetchBorrow(id: number){
+    this.borrowService.getMyBorrows(true, id).subscribe({
+      next: (data:any)=>{
+        if(data.code == "200"){
+          this.borrow = data.data.content[0];
+          this.cdr.markForCheck();
+        }
+      }
+    })
+  }
+
   fetchBook(id: number):void{
     this.bookService.getBookById(id).subscribe({
       next: (data: any) => {
         if (data.code == "200") {
-          this.ngZone.run(() => {  // ✅ forces Angular to detect changes
+          this.ngZone.run(() => {
             this.book = data.data;
             this.bookCover = this.book.title.replaceAll(' ', '-').toLowerCase();
+            if(this.book.borrowed){
+              this.fetchBorrow(this.book.id);
+            }
             this.cdr.markForCheck();
           });
         }
@@ -103,5 +123,9 @@ export class BookPage{
 
   onImageError(event: Event): void {
     (event.target as HTMLImageElement).src = '/book-covers/default.jpg';
+  }
+
+  get formattedDueDate(): string{
+    return formatTime(this.borrow.dueDate, this.langService.currentLang)
   }
 }

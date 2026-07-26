@@ -25,7 +25,6 @@ public class BorrowController {
     @Autowired
     UpdateBorrowService updateBorrowService;
 
-    //TODO CHECK IF THE BOOK IS ALREADY BORROWED
 
     @PreAuthorize("@securityService.hasAccess('CREATE_BORROW')")
     @PostMapping()
@@ -43,6 +42,16 @@ public class BorrowController {
         return ResponseEntity.ok(ApiResponse.success(updateBorrowService.updateBorrow(request)));
     }
 
+    @PreAuthorize("@securityService.hasAccess('UPDATE_BORROW')")
+    @PatchMapping("/return/{id}")
+    public ResponseEntity<ApiResponse<BorrowResponse>> returnBorrow(
+            @PathVariable Long id,
+            @RequestBody BorrowRequest request
+    ){
+        request.setId(id);
+        return ResponseEntity.ok(ApiResponse.success(updateBorrowService.returnBorrow(request)));
+    }
+
     @PreAuthorize("@securityService.hasAccess('GET_BORROW')")
     @GetMapping("/my-borrows")
     public ResponseEntity<ApiResponse<Page<BorrowResponse>>> getMyBorrows(
@@ -50,10 +59,11 @@ public class BorrowController {
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "dueDate") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir,
-            @RequestParam(defaultValue = "true") boolean isActive
+            @RequestParam(defaultValue = "true") boolean isActive,
+            @RequestParam(required = false) Long bookId
     ){
         return ResponseEntity.ok(
-                ApiResponse.success(getBorrowService.getMyBorrows(page, limit, sortBy, sortDir, isActive))
+                ApiResponse.success(getBorrowService.getMyBorrows(page, limit, sortBy, sortDir, isActive, bookId))
         );
     }
 

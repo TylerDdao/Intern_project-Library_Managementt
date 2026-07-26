@@ -38,14 +38,20 @@ public class PostController {
 //        );
 //    }
 
+    @PreAuthorize("@securityService.hasAccess('UPDATE_POST')")
+    @GetMapping("/{postId}")
+    public ResponseEntity<ApiResponse<PostResponse>> getPost(@PathVariable Long postId){
+        return ResponseEntity.ok(ApiResponse.success((getPostService.getPostById(postId))));
+    }
+
     @PreAuthorize("@securityService.hasAccess('GET_POST')")
     @GetMapping()
     public ResponseEntity<ApiResponse<Page<PostResponse>>> getPosts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "createdAt") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir,
-            @RequestParam(required = false) int bookId,
+            @RequestParam(defaultValue = "desc") String sortDir,
+            @RequestParam(required = false) Long bookId,
             @RequestParam(required = false) String searchQuery) {
         return ResponseEntity.ok(
                 ApiResponse.success(getPostService.getPosts(page, limit, sortBy, sortDir, searchQuery, bookId))

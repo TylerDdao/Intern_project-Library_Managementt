@@ -10,6 +10,7 @@
             (onApply)="handleApply($event)">
             </app-sort-side-bar-component>
             <button class="bg-primary-1 text-soft-ice p-[5px] rounded-[10px] headline">{{'booksManagement.Add-book'|translate}}</button>
+            <button class="text-soft-ice p-[5px] rounded-[10px] border bg-sky-blue headline" (click)="fetchBookList()">{{'booksManagement.Book-list'|translate}}</button>
             <button class="text-primary-1 p-[5px] rounded-[10px] border border-primary-1 headline">{{'management.Export'|translate}}</button>
         </div>
     </div>
@@ -80,4 +81,14 @@
             </div>
         }
     </div>
+    @if(isOpenBookList){
+        <div class="fixed inset-0 flex items-center justify-center z-99">
+            @if (bookList) {
+                <app-book-list-component [books]="bookList" [page]="bookListPage" (onClose)="handleCloseBookList()" (onChange)="fetchBookList($event)"></app-book-list-component>
+            }
+            @else {
+                <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+            }
+        </div>
+    }
 </div>

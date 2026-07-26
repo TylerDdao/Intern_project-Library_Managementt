@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, SimpleChanges, ViewChild, OnChanges, OnInit, OnDestroy, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, Input, SimpleChanges, ViewChild, OnChanges, OnInit, OnDestroy, Output, EventEmitter, ChangeDetectorRef, inject } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Post } from '../../models/post';
 import { formatNumber, formatTime } from '../../util/format-number';
@@ -8,6 +8,7 @@ import { PostService } from '../../services/post-service/post-service';
 import { CommentBoxComponent } from '../comment-box-component/comment-box-component';
 import { CommentService } from '../../services/comment-service/comment-service';
 import { Comment } from '../../models/comment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-card-component',
@@ -17,11 +18,14 @@ import { Comment } from '../../models/comment';
 })
 export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
   @Input({ required: true }) post!: Post;
+  @Input() accessible:boolean = true;
   @Output() onLikeToggled = new EventEmitter<Post>();
 
   bookCover: string = '';
   isOpenComment:boolean = false;
   comments!: Comment[]
+  private router = inject(Router);
+
   
   private langSubscription!: Subscription;
 
@@ -34,6 +38,12 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
     private postService: PostService,
     private commentService: CommentService
   ) {}
+
+  handleEditPost(){
+    if(this.post){
+      this.router.navigate([`/my-posts/${this.post.id}`])
+    }
+  }
 
   fetchComments(){
     this.commentService.getComments(this.post.id, 0, 10).subscribe({

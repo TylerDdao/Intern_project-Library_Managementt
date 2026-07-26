@@ -15,10 +15,11 @@ import { EMPTY, firstValueFrom } from 'rxjs';
 import { expand, reduce } from 'rxjs/operators';
 import { Page } from '../../models/page';
 import { PagesComponent } from '../../components/pages-component/pages-component';
+import { BookListComponent } from '../../components/book-list-component/book-list-component';
 
 @Component({
   selector: 'app-books-management',
-  imports: [NavbarComponent, SortSideBarComponent, BookCardComponent, TranslateModule, PagesComponent],
+  imports: [NavbarComponent, SortSideBarComponent, BookCardComponent, TranslateModule, PagesComponent, BookListComponent],
   templateUrl: './books-management.html',
   styleUrl: './books-management.css',
 })
@@ -32,6 +33,15 @@ export class BooksManagement {
     private cdr: ChangeDetectorRef
   ) 
   {}
+
+  bookList!: Book[]
+  bookListPage:Page = {
+    totalPages: 1,
+    number: 0,
+    last: true,
+    first: true
+  }
+  isOpenBookList:boolean = false;
 
   lastQuery: SideBarQuery | null = null;
 
@@ -49,7 +59,7 @@ export class BooksManagement {
     number: 0,
     last: true,
     first: true
-    }
+  }
 
   handleApply(query: SideBarQuery): void {
     if(query.isClear){
@@ -169,6 +179,23 @@ export class BooksManagement {
         console.error(err)
       }
     })
+  }
+
+  fetchBookList(page:Page = this.bookListPage){
+    this.bookService.getAllBooks(page.number).subscribe({
+      next:(data: any) => {
+        if(data.code == "200"){
+          this.bookList= data.data.content;
+          this.isOpenBookList = true;
+          this.cdr.markForCheck();
+        }
+      }
+    })
+  }
+
+  handleCloseBookList(){
+    this.isOpenBookList = false;
+    this.cdr.markForCheck();
   }
 
   ngOnInit() {

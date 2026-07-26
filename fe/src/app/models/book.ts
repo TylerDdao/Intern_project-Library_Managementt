@@ -4,4 +4,5 @@ export interface Book {
     author: string,
     genres: string[],
     copies: number,
+    borrowed?: boolean
 }

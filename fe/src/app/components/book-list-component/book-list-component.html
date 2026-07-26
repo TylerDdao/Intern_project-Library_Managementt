@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="flex justify-between items-center">
+        <div class="headline">{{"bookList.List"|translate}}</div>
+        <span (click)="close()" class="material-symbols-outlined cursor-pointer">close</span>
+    </div>
+    <div class="books-list">
+        @for (book of books; track book.id) {
+            @if (selectable) {
+                <div class="flex flex-col space-y-[5px]">
+                    <app-book-card-component [book]="book" [accessible]="false"></app-book-card-component>
+                    <button class="px-[10px] py-[5px] bg-primary-1 text-soft-ice rounded-[10px]" (click)="selectBook(book)">{{'bookList.Select-this-book'}}</button>
+                </div>
+            }
+            @else {
+                <app-book-card-component [book]="book" [accessible]="false"></app-book-card-component>
+            }
+        }
+    </div>
+    <div class="flex w-full justify-center"><app-pages-component [pages]="page" (onApply)="changePage($event)"></app-pages-component></div>
+</div>

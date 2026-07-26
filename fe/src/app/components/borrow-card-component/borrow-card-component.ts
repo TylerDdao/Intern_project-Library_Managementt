@@ -77,7 +77,7 @@ export class BorrowCardComponent implements OnChanges {
         const confirmed = confirm(message);
         if(confirmed){
             this.borrow.active = false
-            this.borrowService.updateBorrow(this.borrow).subscribe({
+            this.borrowService.returnBorrow(this.borrow).subscribe({
                 next: (data: any)=>{
                     if(data.code == "200"){
                         this.isReturned = true;

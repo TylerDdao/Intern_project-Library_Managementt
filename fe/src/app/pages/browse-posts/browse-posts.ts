@@ -41,6 +41,10 @@ export class BrowsePosts {
   ) 
   {}
 
+  handleNavigateCreatePost(){
+    this.router.navigate(['/create-post'])
+  }
+
   fetchAllPosts(page:Page = this.postPages):void{
     this.postService.getAllPost(page.number).subscribe({
       next: (data:any) => {

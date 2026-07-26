@@ -39,13 +39,16 @@ export class MyPosts {
   ) 
   {}
 
+  handleNavigateCreatePost(){
+    this.router.navigate(['/create-post'])
+  }
+
   fetchMyPosts(page: Page = this.postPages): void {
     const userJson = localStorage.getItem("user");
     if (!userJson) {
         this.router.navigate(['/login']);
         return;
     }
-
     const userId = Number(JSON.parse(userJson).id);
     this.postService.getMyPosts(userId, page.number).subscribe({  // ← pass page.number
         next: (data: any) => {

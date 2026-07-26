@@ -32,10 +32,17 @@ export class BorrowService {
     });
   }
 
-  getMyBorrows(isActive: boolean, page: number = 0, limit: number = 10) {
-    return this.http.get(`${this.baseUrl}/my-borrows?isActive=${isActive}&page=${page}&limit=${limit}`, {
-      headers: getAuthHeaders(this.platformId)
-    });
+  getMyBorrows(isActive: boolean, bookId: number | null = null, page: number = 0, limit: number = 10) {
+    if(bookId){
+      return this.http.get(`${this.baseUrl}/my-borrows?isActive=${isActive}&bookId=${bookId}&page=${page}&limit=${limit}`, {
+        headers: getAuthHeaders(this.platformId)
+      });
+    }
+    else{
+      return this.http.get(`${this.baseUrl}/my-borrows?isActive=${isActive}&page=${page}&limit=${limit}`, {
+        headers: getAuthHeaders(this.platformId)
+      });
+    }
   }
 
   getBorrowsCountByGenre() {
@@ -58,6 +65,13 @@ export class BorrowService {
 
   updateBorrow(borrow: Borrow) {
     return this.http.patch(`${this.baseUrl}/${borrow.id}`, 
+      { id: borrow.id, isActive: false, dueDate: borrow.dueDate },
+      { headers: getAuthHeaders(this.platformId) }
+    );
+  }
+
+  returnBorrow(borrow: Borrow){
+    return this.http.patch(`${this.baseUrl}/return/${borrow.id}`, 
       { id: borrow.id, isActive: false, dueDate: borrow.dueDate },
       { headers: getAuthHeaders(this.platformId) }
     );

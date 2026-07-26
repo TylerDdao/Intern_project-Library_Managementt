@@ -1,8 +1,11 @@
 package com.example.library_management.service.book;
 
+import com.example.library_management.dto.response.BorrowResponse;
 import com.example.library_management.dto.response.book.BookResponse;
 import com.example.library_management.model.Book;
+import com.example.library_management.model.Borrow;
 import com.example.library_management.repository.BookRepository;
+import com.example.library_management.repository.BorrowRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -11,18 +14,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
 public class GetBookService {
     @Autowired
     BookRepository bookRepository;
+
+    @Autowired
+    BorrowRepository borrowRepository;
 
     @Autowired
     MessageSource messageSource;
@@ -83,12 +91,31 @@ public class GetBookService {
         if(bookId != null){
             Book book = bookRepository.findById(bookId)
                     .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
-            return new BookResponse(book);
+//            System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
+            BookResponse bookResponse = new BookResponse(book);
+            Optional<Borrow> isBorrowed = borrowRepository.findByUserUsernameAndBookIdAndIsActive(SecurityContextHolder.getContext().getAuthentication().getName(), bookId, true);
+            if(isBorrowed.isPresent()){
+                bookResponse.setBorrowed(true);
+                return bookResponse;
+            }
+            else {
+                return bookResponse;
+            }
+
         }
         else {
             Book book = bookRepository.findByTitle(title)
                     .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
-            return new BookResponse(book);
+
+            BookResponse bookResponse = new BookResponse(book);
+            Optional<Borrow> isBorrowed = borrowRepository.findByUserUsernameAndBookIdAndIsActive(SecurityContextHolder.getContext().getAuthentication().getName(), bookId, true);
+            if(isBorrowed.isPresent()){
+                bookResponse.setBorrowed(true);
+                return bookResponse;
+            }
+            else {
+                return bookResponse;
+            }
         }
 
     }

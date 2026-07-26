@@ -1,1 +1,57 @@
-2026-07-15T13:31:25.193+07:00  WARN 31796 --- [library-management] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1d1h26m14s599ms855µs100ns).
+2026-07-26T20:37:21.094+07:00  WARN 38736 --- [library-management] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=6d8h29m56s116ms306µs200ns).
+2026-07-26T20:39:44.390+07:00 ERROR 38736 --- [library-management] [scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
+
+org.springframework.mail.MailSendException: Mail server connection failed. Failed messages: org.eclipse.angus.mail.util.MailConnectException: Couldn't connect to host, port: smtp.gmail.com, 587; timeout -1;
+  nested exception is:
+	java.net.UnknownHostException: smtp.gmail.com; message exceptions (1) are:
+Failed message 1: org.eclipse.angus.mail.util.MailConnectException: Couldn't connect to host, port: smtp.gmail.com, 587; timeout -1;
+  nested exception is:
+	java.net.UnknownHostException: smtp.gmail.com
+	at org.springframework.mail.javamail.JavaMailSenderImpl.doSend(JavaMailSenderImpl.java:397) ~[spring-context-support-7.0.7.jar:7.0.7]
+	at org.springframework.mail.javamail.JavaMailSenderImpl.send(JavaMailSenderImpl.java:304) ~[spring-context-support-7.0.7.jar:7.0.7]
+	at org.springframework.mail.MailSender.send(MailSender.java:42) ~[spring-context-support-7.0.7.jar:7.0.7]
+	at com.example.library_management.service.MailService.sendEmail(MailService.java:22) ~[classes/:na]
+	at com.example.library_management.service.borrow.BorrowReminderService.sendDueDateReminders(BorrowReminderService.java:46) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:128) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$1(ScheduledMethodRunnable.java:122) ~[spring-context-7.0.7.jar:7.0.7]
+	at io.micrometer.observation.Observation.observe(Observation.java:569) ~[micrometer-observation-1.16.5.jar:1.16.5]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:122) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:88) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.scheduling.concurrent.ReschedulingRunnable.run(ReschedulingRunnable.java:94) ~[spring-context-7.0.7.jar:7.0.7]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1575) ~[na:na]
+Caused by: org.eclipse.angus.mail.util.MailConnectException: Couldn't connect to host, port: smtp.gmail.com, 587; timeout -1;
+  nested exception is:
+	java.net.UnknownHostException: smtp.gmail.com
+	at org.eclipse.angus.mail.smtp.SMTPTransport.openServer(SMTPTransport.java:2243) ~[angus-mail-2.0.5.jar:na]
+	at org.eclipse.angus.mail.smtp.SMTPTransport.protocolConnect(SMTPTransport.java:729) ~[angus-mail-2.0.5.jar:na]
+	at jakarta.mail.Service.connect(Service.java:345) ~[jakarta.mail-api-2.1.5.jar:na]
+	at org.springframework.mail.javamail.JavaMailSenderImpl.connectTransport(JavaMailSenderImpl.java:467) ~[spring-context-support-7.0.7.jar:7.0.7]
+	at org.springframework.mail.javamail.JavaMailSenderImpl.doSend(JavaMailSenderImpl.java:386) ~[spring-context-support-7.0.7.jar:7.0.7]
+	... 19 common frames omitted
+Caused by: java.net.UnknownHostException: smtp.gmail.com
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:567) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:760) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:695) ~[na:na]
+	at org.eclipse.angus.mail.util.SocketFetcher.createSocket(SocketFetcher.java:368) ~[angus-mail-2.0.5.jar:na]
+	at org.eclipse.angus.mail.util.SocketFetcher.getSocket(SocketFetcher.java:243) ~[angus-mail-2.0.5.jar:na]
+	at org.eclipse.angus.mail.smtp.SMTPTransport.openServer(SMTPTransport.java:2193) ~[angus-mail-2.0.5.jar:na]
+	... 23 common frames omitted
+
+2026-07-26T20:45:11.971+07:00  INFO 38736 --- [library-management] [http-nio-8080-exec-5] c.e.library_management.util.AuditLogger  : [SYSTEM] Authorized @tyler, ID #1
+2026-07-26T20:58:41.866+07:00  INFO 38736 --- [library-management] [http-nio-8080-exec-10] c.e.library_management.util.AuditLogger  : [SYSTEM] Authorized @tyler, ID #1
+2026-07-26T21:45:47.701+07:00 ERROR 38736 --- [library-management] [http-nio-8080-exec-3] c.e.l.exception.GlobalExceptionHandler   : Exception code 500: No message found under code 'error.post.not.found' for locale 'en'.
+2026-07-26T21:47:16.247+07:00 ERROR 38736 --- [library-management] [http-nio-8080-exec-5] c.e.l.exception.GlobalExceptionHandler   : Exception code 500: No message found under code 'error.post.not.found' for locale 'en'.
+2026-07-26T21:47:17.583+07:00 ERROR 38736 --- [library-management] [http-nio-8080-exec-2] c.e.l.exception.GlobalExceptionHandler   : Exception code 500: No message found under code 'error.post.not.found' for locale 'en'.
+2026-07-26T21:47:17.892+07:00 ERROR 38736 --- [library-management] [http-nio-8080-exec-9] c.e.l.exception.GlobalExceptionHandler   : Exception code 500: No message found under code 'error.post.not.found' for locale 'en'.
+2026-07-26T21:50:27.372+07:00 ERROR 38736 --- [library-management] [http-nio-8080-exec-8] c.e.l.exception.GlobalExceptionHandler   : Exception code 500: No message found under code 'error.post.not.found' for locale 'en'.
+2026-07-26T21:50:33.478+07:00 ERROR 38736 --- [library-management] [http-nio-8080-exec-2] c.e.l.exception.GlobalExceptionHandler   : Exception code 500: No message found under code 'error.post.not.found' for locale 'en'.
+2026-07-26T21:50:47.458+07:00 ERROR 38736 --- [library-management] [http-nio-8080-exec-3] c.e.l.exception.GlobalExceptionHandler   : Exception code 500: No message found under code 'error.post.not.found' for locale 'en'.

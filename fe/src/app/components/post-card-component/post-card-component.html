@@ -1,3 +1,4 @@
+
 @if (post) {
     <div class="container">
         <div class="post-card">
@@ -38,10 +39,12 @@
             </div>
 
             @if (post.editable) {
-            <button class="edit-button cursor-pointer">
-                <span class="material-symbols-outlined">edit</span>
-                <h1 class="headline">{{'post.Edit-post'|translate}}</h1>
-            </button>
+            
+                <button class="edit-button cursor-pointer" (click)="handleEditPost()">
+                    <span class="material-symbols-outlined">edit</span>
+                    <h1 class="headline">{{'post.Edit-post'|translate}}</h1>
+                </button>
+            
             }
         </div>
         <div class="comment-box-overlay" [class.inactive]="!isOpenComment">

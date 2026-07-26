@@ -31,15 +31,21 @@ public class GetBorrowService {
     @Autowired
     private BorrowRepository borrowRepository;
 
-    public Page<BorrowResponse> getMyBorrows(int page, int limit, String sortBy, String sortDir, boolean isActive){
+    public Page<BorrowResponse> getMyBorrows(int page, int limit, String sortBy, String sortDir, boolean isActive, Long bookId){
         Sort sort = sortDir.equalsIgnoreCase("desc")
                 ? Sort.by(sortBy).descending()
                 : Sort.by(sortBy).ascending();
 
         Pageable pageable = PageRequest.of(page, limit, sort);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Page<Borrow> borrows = borrowRepository.findByIsActiveAndUserUsername(isActive, username, pageable);
-        return borrows.map(BorrowResponse::new);
+        if(bookId == null){
+            Page<Borrow> borrows = borrowRepository.findByIsActiveAndUserUsername(isActive, username, pageable);
+            return borrows.map(BorrowResponse::new);
+        }
+        else{
+            Page<Borrow> borrows = borrowRepository.findByIsActiveAndBookId(isActive, bookId, pageable);
+            return borrows.map(BorrowResponse::new);
+        }
     }
 
     public Page<BorrowResponse> getBorrows(int page, int limit, String sortBy, String sortDir, String searchQuery) {

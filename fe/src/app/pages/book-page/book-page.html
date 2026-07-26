@@ -10,14 +10,22 @@
                     <h1 class="body font-bold book-info">{{'book.Author'|translate}}: {{book.author}}</h1>
                     <h1 class="body book-info">{{'book.Genres'|translate}}: {{book.genres}}</h1>
                     <h1 class="caption-1">{{'book.Available-copies'|translate}}: {{book.copies}}</h1>
+                    @if(borrow && book.borrowed){
+                        <div class="caption-1 font-bold">{{"bookPage.Your-borrow-for-this-book-dues-on"|translate}}: {{formattedDueDate}}</div>
+                    }
                 </div>
             </div>
 
-            @if (book.copies > 0) {
-                <button class="bg-primary-1 p-[5px] rounded-[10px] text-soft-ice body font-bold" (click)="handleBorrow()">{{'bookPage.Borrow'|translate}}</button>
+            @if (book.borrowed) {
+                <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice body font-bold !cursor-not-allowed">{{'bookPage.You-are-borrowing-this-book'|translate}}</button>
             }
             @else {
-                <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice body font-bold">{{'bookPage.Book-is-not-available'|translate}}</button>
+                @if (book.copies > 0) {
+                    <button class="bg-primary-1 p-[5px] rounded-[10px] text-soft-ice body font-bold" (click)="handleBorrow()">{{'bookPage.Borrow'|translate}}</button>
+                }
+                @else {
+                    <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice body font-bold !cursor-not-allowed">{{'bookPage.Book-is-not-available'|translate}}</button>
+                }
             }
         }
         

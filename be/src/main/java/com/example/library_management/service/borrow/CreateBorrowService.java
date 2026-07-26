@@ -42,7 +42,7 @@ public class CreateBorrowService {
 
     @Transactional
     public BorrowResponse createBorrow(BorrowRequest request){
-        Optional<Borrow> existing = borrowRepository.findByUserIdAndBookId(request.getUserId(), request.getBookId());
+        Optional<Borrow> existing = borrowRepository.findByUserIdAndBookIdAndIsActive(request.getUserId(), request.getBookId(), true);
         if (existing.isPresent()) {
             throw new RuntimeException(messageSource.getMessage("error.borrow.already.existed",null, LocaleContextHolder.getLocale()));
         }

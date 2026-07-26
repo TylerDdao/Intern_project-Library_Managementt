@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = """
@@ -31,5 +33,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Page<Post> findByCreatedBy(String createdBy, Pageable pageable);
 
-    Page<Post> findByBookId(int bookId, Pageable pageable);
+    Page<Post> findByBookId(Long bookId, Pageable pageable);
+
+    Optional<Post> findById(Long postId);
 }

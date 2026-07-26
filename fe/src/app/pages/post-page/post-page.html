@@ -1,0 +1,57 @@
+<app-navbar></app-navbar>
+<div class="container">
+    <div class="post-container">
+    @if(post){        
+        <div class="flex justify-between items-start">
+            <div class="user-info-container">
+                <div class="headline font-bold">@{{post.createdBy}}</div>
+                <div class="caption-2">{{formattedPostedAt}}</div>
+            </div>
+            <div class="book-info-container select-none cursor-pointer" (click)="fetchBooks()">
+                <div class="flex space-x-[5px] items-start">
+                    <img src="/book-covers/{{bookCover}}.jpg" class="book-cover" (error)="onImageError($event)"/>
+                    <div>
+                        <h1 class="header font-bold">{{chosenBook.title}}</h1>
+                        <h1 class="subheader font-bold">{{'book.Author'|translate}}: {{chosenBook.author}}</h1>
+                        <h1 class="subheader">{{'book.Genres'|translate}}: {{chosenBook.genres}}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="form-container">
+            <div class="post-subject-container">
+                <input formControlName="subject" type="text" placeholder='{{"post.Subject"|translate}}' 
+                    class="bg-cool-gray text-deep-charcoal rounded-[10px] w-full p-[10px]"/>
+            </div>
+            <div class="post-content-container">
+                <textarea formControlName="content" placeholder='{{"post.Body"|translate}}' 
+                    class="bg-cool-gray text-deep-charcoal rounded-[10px] w-full p-[10px] h-full resize-none"></textarea>
+            </div>
+        </form>
+
+        <div class="flex space-x-[10px]">
+            @if (post) {
+                <button class="bg-leaf-green p-[5px] text-soft-ice rounded-[10px]">{{'form.Save'|translate}}</button>
+                <button class="border border-tomato-red p-[5px] text-tomato-red rounded-[10px]" (click)="handleCancel()">{{'form.Cancel'|translate}}</button>
+            }
+        </div>
+    }
+    @else {
+        <div class="flex items-center justify-center h-full">
+            <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+        </div>
+    }
+    </div>
+
+    @if(isOpenBookList){
+        <div class="fixed inset-0 flex items-center justify-center z-99">
+            @if (books) {
+                <app-book-list-component [selectable]="true" [books]="books" [page]="booksPage" (onClose)="handleCloseBookList()" (onChange)="fetchBooks($event)"></app-book-list-component>
+            }
+            @else {
+                <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+            }
+        </div>
+    }
+</div>

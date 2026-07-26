@@ -15,10 +15,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class GetPostService {
@@ -37,7 +39,7 @@ public class GetPostService {
     @Autowired
     private AuditLogger logger;
 
-    public Page<PostResponse> getPosts(int page, int limit, String sortBy, String sortDir, String searchQuery, Integer bookId) {
+    public Page<PostResponse> getPosts(int page, int limit, String sortBy, String sortDir, String searchQuery, Long bookId) {
         Sort sort = sortDir.equalsIgnoreCase("desc")
                 ? Sort.by(sortBy).descending()
                 : Sort.by(sortBy).ascending();
@@ -73,17 +75,18 @@ public class GetPostService {
         return posts.map(post -> new PostResponse(post, likedPostIds.contains(post.getId()), post.getCreatedBy().equals(user.getUsername())));
     }
 
-    public Page<PostResponse> getPostsByBookId(int page, int limit, String sortBy, String sortDir, int bookId){
-        Sort sort = sortDir.equalsIgnoreCase("desc")
-                ? Sort.by(sortBy).descending()
-                : Sort.by(sortBy).ascending();
+    public PostResponse getPostById(Long postId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = (auth != null && auth.isAuthenticated()) ? auth.getName() : null;
 
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User currentUser = userRepository.findByUsername(username).orElseThrow();
+        Post post = postRepository.findById(postId)
+        .orElseThrow(() -> new RuntimeException(
+                messageSource.getMessage("error.post.not.found", null, LocaleContextHolder.getLocale())
+        ));
 
-        Pageable pageable = PageRequest.of(page, limit, sort);
-        Page<Post> posts = postRepository.findByBookId(bookId, pageable);
-        List<Long> likedPostIds = postLikeRepository.findLikedPostIdsByUser(currentUser);
-        return posts.map(post -> new PostResponse(post, likedPostIds.contains(post.getId()), post.getCreatedBy().equals(username)));
+        boolean isLiked = username != null && postLikeRepository.findByPostIdAndUserUsername(postId, username).isPresent();
+        boolean isOwner = Objects.equals(post.getCreatedBy(), username);
+
+        return new PostResponse(post, isLiked, isOwner);
     }
 }

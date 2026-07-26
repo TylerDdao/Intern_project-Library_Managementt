@@ -15,7 +15,9 @@ import java.util.Optional;
 @Repository
 public interface BorrowRepository extends JpaRepository<Borrow, Long> {
     public List<Borrow> findByUserId(int userId);
-    public Optional<Borrow> findByUserIdAndBookId(Long userId, Long bookId);
+    public Optional<Borrow> findByUserIdAndBookIdAndIsActive(Long userId, Long bookId, Boolean isActive);
+    Optional<Borrow> findByUserUsernameAndBookIdAndIsActive(String username, Long bookId, Boolean isActive);
+
     public List<Borrow> findByDueDateBetweenAndIsActiveTrue(LocalDateTime start, LocalDateTime end);
     public Page<Borrow> findByDueDateBetweenAndIsActiveTrue(LocalDateTime start, LocalDateTime end, Pageable pageable);
     public Page<Borrow> findByDueDateLessThanAndIsActiveTrue(LocalDateTime date, Pageable pageable);
@@ -26,6 +28,7 @@ public interface BorrowRepository extends JpaRepository<Borrow, Long> {
     Page<Borrow> findByUserUsernameAndDueDateBetweenAndIsActiveTrue(String username, LocalDateTime start, LocalDateTime end, Pageable pageable);
     Page<Borrow> findByUserUsernameAndDueDateGreaterThanAndIsActiveTrue(String username, LocalDateTime date, Pageable pageable);
     Page<Borrow> findByUserUsernameAndIsActive(String username, boolean isActive, Pageable pageable);
+    Page<Borrow> findByIsActiveAndBookId(boolean isActive, Long bookId, Pageable pageable);
 
     Page<Borrow> findByUserUsername(String username, Pageable pageable);
 

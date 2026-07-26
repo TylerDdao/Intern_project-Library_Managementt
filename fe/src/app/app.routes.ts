@@ -16,6 +16,8 @@ import { BorrowsManagement } from './pages/borrows-management/borrows-management
 import { UsersManagement } from './pages/users-management/users-management';
 import { PostsManagement } from './pages/posts-management/posts-management';
 import { BookPage } from './pages/book-page/book-page';
+import { PostPage } from './pages/post-page/post-page';
+import { CreatePost } from './pages/create-post/create-post';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -29,9 +31,13 @@ export const routes: Routes = [
     { path: 'books/:book-id', component: BookPage, canActivate: [authGuard] },
 
     { path: 'posts', component: BrowsePosts, canActivate: [authGuard] },
+    { path: 'my-posts/:post-id', component: PostPage, canActivate: [authGuard]},
+
     { path: 'my-borrows', component: MyBorrows, canActivate: [authGuard]},
     { path: 'my-posts', component: MyPosts, canActivate: [authGuard]},
     { path: 'settings', component: Settings, canActivate: [authGuard]},
+
+    {path: 'create-post', component: CreatePost, canActivate: [authGuard]},
 
     { path: 'dashboard', component: Dashboard, canActivate: [adminGuard]},
     { path: 'books-management', component: BooksManagement, canActivate: [adminGuard]},
