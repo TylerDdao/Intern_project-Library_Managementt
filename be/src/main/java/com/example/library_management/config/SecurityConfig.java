@@ -88,7 +88,7 @@ public class SecurityConfig {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/auth/login", "/auth/register", "/mail").permitAll()
+                    .requestMatchers("/auth/login", "/auth/register", "/mail", "/book-covers/**").permitAll()
                     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .anyRequest().authenticated()
         )

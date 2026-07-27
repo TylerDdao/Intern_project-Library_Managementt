@@ -2,7 +2,8 @@ export interface Book {
     id: number,
     title: string,
     author: string,
-    genres: string[],
+    genres?: string[],
     copies: number,
-    borrowed?: boolean
+    borrowed?: boolean,
+    bookCover?: string,
 }

@@ -33,7 +33,7 @@ export class CreatePost {
   }
   isOpenBookList: boolean = false;
 
-  chosenBook!: Book;
+  chosenBook: Book | null = null;
 
   username!:String
 
@@ -52,6 +52,11 @@ export class CreatePost {
     content: new FormControl('', Validators.required),
     book: new FormControl<number | null>(null, Validators.required),
   });
+  
+  handleUnselectBook(){
+    this.chosenBook = null;
+    this.cdr.markForCheck();
+  }
 
   handleSelectBook(book:Book){
     console.log('handleSelectBook called', book);

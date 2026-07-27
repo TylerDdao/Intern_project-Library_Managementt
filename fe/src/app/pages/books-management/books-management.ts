@@ -16,10 +16,12 @@ import { expand, reduce } from 'rxjs/operators';
 import { Page } from '../../models/page';
 import { PagesComponent } from '../../components/pages-component/pages-component';
 import { BookListComponent } from '../../components/book-list-component/book-list-component';
+import { NewBookForm } from '../../forms/new-book-form/new-book-form';
+import { GenresManagementForm } from '../../forms/genres-management-form/genres-management-form';
 
 @Component({
   selector: 'app-books-management',
-  imports: [NavbarComponent, SortSideBarComponent, BookCardComponent, TranslateModule, PagesComponent, BookListComponent],
+  imports: [GenresManagementForm, NavbarComponent, SortSideBarComponent, BookCardComponent, TranslateModule, PagesComponent, BookListComponent, NewBookForm],
   templateUrl: './books-management.html',
   styleUrl: './books-management.css',
 })
@@ -33,6 +35,8 @@ export class BooksManagement {
     private cdr: ChangeDetectorRef
   ) 
   {}
+
+  isCreateNewBook:boolean = false;
 
   bookList!: Book[]
   bookListPage:Page = {
@@ -59,6 +63,18 @@ export class BooksManagement {
     number: 0,
     last: true,
     first: true
+  }
+
+  isOpenGenreManagement: boolean = false;
+
+  handleCloseGenreManagement(){
+    this.isOpenGenreManagement = false
+    this.cdr.markForCheck();
+  }
+
+  handleCloseCreateBookForm(){
+    this.isCreateNewBook = false;
+    this.cdr.markForCheck();
   }
 
   handleApply(query: SideBarQuery): void {

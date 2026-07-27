@@ -1,5 +1,6 @@
 <app-navbar></app-navbar>
 <div class="container">
+    <h1 class="title-1 font-bold">{{'createPost.Create-new-post'|translate}}</h1>
     <div class="post-container">
     @if(!post){        
         <div class="flex justify-between items-start">
@@ -7,15 +8,18 @@
                 <div class="headline font-bold">@{{username}}</div>
             </div>
             @if (chosenBook) {
-                <div class="book-info-container select-none cursor-pointer" (click)="fetchBooks()">
-                    <div class="flex space-x-[5px] items-start">
-                        <img src="/book-covers/{{bookCover}}.jpg" class="book-cover" (error)="onImageError($event)"/>
-                        <div>
-                            <h1 class="header font-bold">{{chosenBook.title}}</h1>
-                            <h1 class="subheader font-bold">{{'book.Author'|translate}}: {{chosenBook.author}}</h1>
-                            <h1 class="subheader">{{'book.Genres'|translate}}: {{chosenBook.genres}}</h1>
+                <div class="flex space-x-[5px] items-center">
+                    <div class="book-info-container select-none cursor-pointer" (click)="fetchBooks()">
+                        <div class="flex space-x-[5px] items-start">
+                            <img src="/book-covers/{{bookCover}}.jpg" class="book-cover" (error)="onImageError($event)"/>
+                            <div>
+                                <h1 class="header font-bold">{{chosenBook.title}}</h1>
+                                <h1 class="subheader font-bold">{{'book.Author'|translate}}: {{chosenBook.author}}</h1>
+                                <h1 class="subheader">{{'book.Genres'|translate}}: {{chosenBook.genres}}</h1>
+                            </div>
                         </div>
                     </div>
+                    <div class="select-none cursor-pointer" (click)="handleUnselectBook()"><span class="material-symbols-outlined text-tomato-red">close</span></div>
                 </div>
             }
             @else {

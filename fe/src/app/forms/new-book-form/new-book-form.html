@@ -1,1 +1,73 @@
-<p>new-book-form works!</p>
+<div class="container">
+    <div class="flex justify-between items-center">
+        <p class="headline font-bold">{{'newBookForm.Create-new-book'|translate}}</p>
+        <span (click)="close()" class="material-symbols-outlined cursor-pointer">close</span>
+    </div>
+    <div class="new-book-container">
+        <div class="flex flex-col space-y-[10px] items-start">
+            @if (preview) {
+                <img [src]="preview" class="book-cover"/>
+                <div class="flex space-x-[5px] items-center">
+                    <span class="material-symbols-outlined text-tomato-red cursor-pointer select-none" (click)="handleClearBookCover()">delete</span>
+                    <div>{{selectedFile?.name}}</div>
+                </div>
+            }
+            @else {
+                <div class="flex space-x-[5px] items-center px-[10px] py-[5px] bg-primary-1 rounded-[10px] text-soft-ice cursor-pointer w-fit" (click)="fileInput.click()">
+                    <span class="material-symbols-outlined">add_photo_alternate</span>
+                    <div>{{'newBookForm.Upload'|translate}}</div>
+                    <input type="file" accept="image/*" (change)="onFileSelected($event)" #fileInput hidden/>
+                </div>
+            }
+        </div>
+        <div class="flex flex-col space-y-[10px]">
+            <div class="flex flex-col space-y-[5px]">
+                <label for="title">{{'book.Title'|translate}}</label>
+                <input id="title" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]" placeholder="{{'book.Title'|translate}}"/>
+            </div>
+
+            <div class="flex flex-col space-y-[5px]">
+                <label for="author">{{'book.Author'|translate}}</label>
+                <input id="author" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]" placeholder="{{'book.Author'|translate}}"/>
+            </div>
+
+            <div class="flex flex-col space-y-[5px]">
+                <label for="copies">{{'book.Copies'|translate}}</label>
+                <input id="copies" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]" placeholder="{{'book.Copies'|translate}}"/>
+            </div>
+
+
+            <div class="">{{'book.Genres'|translate}}</div>
+            @if (chosenGenres) {
+                <div class="flex flex-col space-y-[5px] overflow-y-auto max-h-[200px]">
+                    @for (genre of chosenGenres; track $index) {
+                        <div (click)="toggleChosenGenre(genre)" class="px-[10px] py-[5px] rounded-[10px] bg-primary-1 text-soft-ice cursor-pointer select-none">{{genre.name}}</div>                
+                    }
+                </div>
+            }
+        </div>
+        <div class="flex flex-col space-y-[10px]">
+            <div>
+                <div class="body font-bold">{{'newBookForm.Available-genres'|translate}}</div>
+                @if (genres) {
+                    <div class="flex flex-col space-y-[5px] overflow-y-auto max-h-[500px]">
+                        @for (genre of genres; track $index) {
+                            <div class="flex items-center space-x-[5px]">
+                                <div (click)="toggleChosenGenre(genre)" class="w-full px-[10px] py-[5px] rounded-[10px] select-none cursor-pointer" [class]="chosenGenres.includes(genre) ? 'bg-primary-1 text-soft-ice' : 'border border-primary-1 text-primary-1 hover:bg-primary-1 hover:text-soft-ice transition ease-in-out'">{{genre.name}}</div>
+                            </div>                
+                        }
+                    </div>
+                    <app-pages-component [pages]="genresPage"></app-pages-component>
+                }
+                @else {
+                    <div class="flex justify-center"><div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div></div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="flex space-x-[10px]">
+        <button type="submit" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice body rounded-[10px]">{{'form.Save'|translate}}</button>
+        <button class="border border-tomato-red px-[10px] py-[5px] text-tomato-red body rounded-[10px]" (click)="close()">{{'form.Cancel'|translate}}</button>
+    </div>
+</div>

@@ -4,7 +4,7 @@ import { NavbarComponent } from '../../components/navbar/navbar';
 import { Book } from '../../models/book';
 import { BookService } from '../../services/book-service/book-service';
 import { BookCardComponent } from '../../components/book-card-component/book-card-component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Post } from '../../models/post';
 import { PostService } from '../../services/post-service/post-service';
 import { PostCardComponent } from '../../components/post-card-component/post-card-component';
@@ -41,13 +41,16 @@ export class BookPage{
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
     private langService: LanguageService,
+    private translate:TranslateService,
     @Inject(PLATFORM_ID) private platformId: Object,
   ) {}
 
   //TODO CHECK IF THE BOOK IS ALREADY BORROWED
 
   handleBorrow(){
-    if(this.book){
+    const message = this.translate.instant('bookPage.Confirm-borrow');
+    const confirmed = confirm(message);
+    if(this.book && confirmed){
       const dueDate = new Date();
       dueDate.setDate(dueDate.getDate() + 14);
       this.borrowService.createBorrow(this.book, dueDate.toISOString()).subscribe({
