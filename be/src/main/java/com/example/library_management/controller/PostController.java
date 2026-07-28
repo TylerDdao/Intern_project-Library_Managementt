@@ -75,10 +75,9 @@ public class PostController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "createdAt") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir,
-            @RequestParam(required = true) Long userId) {
+            @RequestParam(defaultValue = "desc") String sortDir) {
         return ResponseEntity.ok(
-                ApiResponse.success(getPostService.getPostsByUserId(page, limit, sortBy, sortDir, userId))
+                ApiResponse.success(getPostService.getMyPosts(page, limit, sortBy, sortDir))
         );
     }
 }

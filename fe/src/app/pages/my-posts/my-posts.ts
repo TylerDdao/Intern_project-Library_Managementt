@@ -30,6 +30,11 @@ export class MyPosts {
   isSearch:boolean = false;
   isPostFound:boolean = true;
 
+  isLoading: {[key:string]:boolean} = {
+    "posts": true,
+    "search": true
+  };
+
   constructor(
     public langService: LanguageService,
     private postService: PostService,
@@ -44,17 +49,13 @@ export class MyPosts {
   }
 
   fetchMyPosts(page: Page = this.postPages): void {
-    const userJson = localStorage.getItem("user");
-    if (!userJson) {
-        this.router.navigate(['/login']);
-        return;
-    }
-    const userId = Number(JSON.parse(userJson).id);
-    this.postService.getMyPosts(userId, page.number).subscribe({  // ← pass page.number
+    this.isLoading["posts"] = true
+    this.postService.getMyPosts(page.number).subscribe({
         next: (data: any) => {
             if (data.code == "200") {
                 this.posts = data.data.content;
                 this.postPages = data.data;
+                this.isLoading["posts"] = false;
                 this.cdr.markForCheck();
             }
         },
@@ -97,6 +98,7 @@ export class MyPosts {
   }
 
   handleApply(query: SideBarQuery): void {
+    this.isLoading["search"] = true
     if(query.isClear){
       this.isSearch = false;
       this.searchPost = [];
@@ -118,6 +120,7 @@ export class MyPosts {
             this.isPostFound = false;
             this.cdr.markForCheck();
           }
+          this.isLoading["search"] = false;
         }
       },
       error: (err) => {

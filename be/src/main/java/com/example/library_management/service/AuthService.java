@@ -6,7 +6,7 @@ import com.example.library_management.util.AuditLogger;
 import com.example.library_management.util.JwtUtil;
 import com.example.library_management.dto.request.LoginRequest;
 import com.example.library_management.dto.request.RegisterRequest;
-import com.example.library_management.dto.request.UserRequest;
+import com.example.library_management.dto.request.user.UserRequest;
 import com.example.library_management.dto.response.LoginResponse;
 import com.example.library_management.dto.response.UserResponse;
 import com.example.library_management.exception.AuthException;
@@ -84,15 +84,15 @@ public class AuthService {
             User user = userRepository.findByUsername(request.getUsername())
                     .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
 
-            Role newRole = roleRepository.findByName(request.getRole())
-                    .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
+//            Role newRole = roleRepository.findByName(request.getRoleId())
+//                    .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
 
             // update only the fields that should change
             if (request.getPhoneNumber() != null) user.setPhoneNumber(request.getPhoneNumber());
             if (request.getAddress() != null) user.setAddress(request.getAddress());
             if (request.getEmail() != null) user.setEmail(request.getEmail());
             if (request.getUsername() != null) user.setUsername(request.getUsername());
-            if (request.getRole() != null) user.setRole(newRole);
+//            if (request.getRoleId() != null) user.setRole(newRole);
             if (request.getFullName() != null) user.setFullName(request.getFullName());
             if (request.getPassword() != null) user.setPassword(request.getPassword());
 

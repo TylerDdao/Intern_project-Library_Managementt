@@ -16,6 +16,10 @@ public class GetUserService {
     @Autowired
     private UserRepository userRepository;
 
+    public Boolean checkUsername(String username){
+        return userRepository.findByUsername(username).isEmpty();
+    }
+
     public Page<UserResponse> getUsers(int page, int limit, String sortBy, String sortDir, String username, String fullName, String role) {
         Sort sort = sortDir.equalsIgnoreCase("desc")
                 ? Sort.by(sortBy).descending()

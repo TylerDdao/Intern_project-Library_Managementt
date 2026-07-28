@@ -1,17 +1,17 @@
-package com.example.library_management.dto.request;
+package com.example.library_management.dto.request.user;
 
+import com.example.library_management.dto.request.RoleRequest;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserRequest {
+    private Long id = null;
     private String username;
-    private String role;
+    private Long role;
     private String phoneNumber;
     private String fullName;
     private String address = null;

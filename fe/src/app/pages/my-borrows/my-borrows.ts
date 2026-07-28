@@ -37,6 +37,11 @@ export class MyBorrows {
   nearDueBorrows: Borrow[] = [];
   otherBorrows: Borrow[] = [];
 
+  isLoading: {[key:string]:boolean} = {
+    "borrowing": true,
+    "borrowHistory": true
+  };
+
   constructor(
     private borrowService: BorrowService,
     private cdr: ChangeDetectorRef,
@@ -51,6 +56,7 @@ export class MyBorrows {
         if(data.code == "200"){
           this.borrowing = data.data.content;
           this.borrowingPages = data.data;
+          this.isLoading["borrowing"] = false
           this.cdr.markForCheck();
         }
       }
@@ -65,6 +71,7 @@ export class MyBorrows {
         if(data.code == "200"){
           this.borrowsHistory = data.data.content;
           this.borrowsHistoryPages = data.data;
+          this.isLoading["borrowHistory"] = false;
           this.cdr.markForCheck();
         }
       }

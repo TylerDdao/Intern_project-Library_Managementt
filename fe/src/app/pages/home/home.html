@@ -10,7 +10,7 @@
                 type="bar"/>
         } 
         @else {
-            <p class="body">Loading...</p>
+            <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
         }       
     </div>
 
@@ -24,7 +24,7 @@
             type="bar"/>
         }
         @else {
-            <p class="body">Loading...</p>
+            <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
         } 
     </div>
 
@@ -36,7 +36,7 @@
                     <app-mini-post-card-component [post]="post" (onLikeToggled)="onPostLikeToggled($event)"></app-mini-post-card-component>
                 }
             } @else {
-                <p>Loading...</p>
+                <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
             }
         </div>
     </div>
@@ -44,12 +44,16 @@
     <div class="borrowed-books-area">
         <h1 class="headline">{{'home.Books-that-you-borrowed'|translate}}</h1>
         <div class="borrows-scrolling-area">
-            @if (borrows.length > 0) {
+            @if (isLoading["borrows"]) {
+                <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+            }
+            @else if (borrows.length > 0 && !isLoading["borrows"]) {
                 @for (borrow of borrows; track borrow.id) {
                     <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
                 }
-            } @else {
-                <p>Loading...</p>
+            } 
+            @else {
+                <div>{{"list.Empty"|translate}}</div>
             }
         </div>
         @if (!isLoading["borrows"] && borrows.length > 0) {

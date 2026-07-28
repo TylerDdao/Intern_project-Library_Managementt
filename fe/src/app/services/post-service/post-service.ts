@@ -9,7 +9,7 @@ import { getAuthHeaders } from '../auth-service';
   providedIn: 'root',
 })
 export class PostService {
-  private baseUrl = `${environment.apiUrl}`;
+  private baseUrl = `${environment.apiUrl}/posts`;
 
   constructor(
     private http: HttpClient,
@@ -17,37 +17,37 @@ export class PostService {
   ) {}
 
   getPostById(postId:number){
-    return this.http.get(`${this.baseUrl}/posts/${postId}`,{
+    return this.http.get(`${this.baseUrl}/${postId}`,{
       headers: getAuthHeaders(this.platformId)
     })
   }
 
   getMostLikesPosts(page: number = 0, limit: number = 10){
-    return this.http.get(`${this.baseUrl}/posts?page=${page}&limit=${limit}&sortBy=likeCount&sortDir=desc`, {
+    return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}&sortBy=likeCount&sortDir=desc`, {
       headers: getAuthHeaders(this.platformId)
     });
   } 
 
   getAllPost(page: number = 0, limit: number = 10) {
-    return this.http.get(`${this.baseUrl}/posts?page=${page}&limit=${limit}`, {
+    return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}`, {
       headers: getAuthHeaders(this.platformId)
     });
   }
 
   getPostsByQuery(query: SideBarQuery, page: number = 0, limit: number = 10){
-      return this.http.get(`${this.baseUrl}/posts?page=${page}&limit=${limit}&searchQuery=${query.searchQuery}&filterBy=${query.filterBy}&sortBy=createdAt`,{
+      return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}&searchQuery=${query.searchQuery}&filterBy=${query.filterBy}&sortBy=createdAt`,{
         headers: getAuthHeaders(this.platformId)
       });
   }
 
-  getMyPosts(userId: number, page: number = 0, limit: number = 10){
-      return this.http.get(`${this.baseUrl}/posts/my-posts?page=${page}&limit=${limit}&userId=${userId}`,{
+  getMyPosts(page: number = 0, limit: number = 10){
+      return this.http.get(`${this.baseUrl}/my-posts?page=${page}&limit=${limit}`,{
         headers: getAuthHeaders(this.platformId)
       });
   }
 
   toggleLike(postId: number) {
-    return this.http.post(`${this.baseUrl}/post/${postId}/like`, {}, {
+    return this.http.post(`${this.baseUrl}/${postId}/like`, {}, {
       headers: getAuthHeaders(this.platformId)
     });
   }

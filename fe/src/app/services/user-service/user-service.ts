@@ -4,12 +4,14 @@ import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../../../environments/environment';
 import { SideBarQuery } from '../../components/sort-side-bar-component/sort-side-bar-component';
 import { getAuthHeaders } from '../auth-service';
+import { User } from '../../models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private baseUrl = `${environment.apiUrl}`;
+  private userBaseUrl = `${environment.apiUrl}/users`;
+  private roleBaseUrl = `${environment.apiUrl}/roles`;
 
   constructor(
     private http: HttpClient,
@@ -17,20 +19,38 @@ export class UserService {
   ) {}
 
   getAllRoles(page:number = 0, limit:number=1000){
-    return this.http.get(`${this.baseUrl}/roles?page=${page}&limit=${limit}&sortBy=name&sortDir=asc`, {
+    return this.http.get(`${this.roleBaseUrl}?page=${page}&limit=${limit}&sortBy=name&sortDir=asc`, {
       headers: getAuthHeaders(this.platformId)
     });
   }
 
   getRole(name:string, page: number = 0, limit:number=1000){
-    return this.http.get(`${this.baseUrl}/roles?name=${name}&page=${page}&limit=${limit}&sortBy=name&sortDir=asc`, {
+    return this.http.get(`${this.roleBaseUrl}?name=${name}&page=${page}&limit=${limit}&sortBy=name&sortDir=asc`, {
       headers: getAuthHeaders(this.platformId)
     });
   }
 
   getUsersByRole(role: String, page: number = 0, limit:number = 10) {
-    return this.http.get(`${this.baseUrl}/users?page=${page}&limit=${limit}&role=${role}`, {
+    return this.http.get(`${this.userBaseUrl}?page=${page}&limit=${limit}&role=${role}`, {
       headers: getAuthHeaders(this.platformId)
     });
+  }
+
+  checkUsernameAvailability(username: String){
+    return this.http.get(`${this.userBaseUrl}/check-username?username=${username}`,
+      {headers: getAuthHeaders(this.platformId)
+      });
+  }
+
+  updateUser(user:User){
+    return this.http.patch(`${this.userBaseUrl}`,
+      {id: user.id, username: user.username, fullName: user.fullName, email: user.email, phoneNumber: user.phoneNumber, address: user.address},
+      {headers: getAuthHeaders(this.platformId)})
+  }
+
+  updateUserRole(user:User){
+    return this.http.patch(`${this.userBaseUrl}/update-role`,
+      { id: user.id, role: user.role?.id },
+      {headers: getAuthHeaders(this.platformId)})
   }
 }

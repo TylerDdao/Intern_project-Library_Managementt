@@ -75,6 +75,7 @@ export class UsersManagement {
 }
 
   fetchRolesAndUser(){
+    this.users = [];
     this.userService.getAllRoles().subscribe({
         next: (data: any) => {
           if (data.code == "200") {
@@ -96,17 +97,6 @@ export class UsersManagement {
     });
   }
 
-  fetchRoles(page: Page = this.roleListPage, limit:number = 10){
-    this.userService.getAllRoles().subscribe({
-        next: (data: any) => {
-          if (data.code == "200") {
-            this.roles = data.data.content;
-          }
-        },
-        error: (err) => console.error(err)
-    });
-  }
-
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
       this.fetchRolesAndUser();
@@ -122,6 +112,8 @@ export class UsersManagement {
 
     this.editRole = null;
     this.editUser = null;
+
+    this.fetchRolesAndUser()
 
     this.cdr.markForCheck()
   }

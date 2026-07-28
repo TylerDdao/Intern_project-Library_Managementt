@@ -63,6 +63,18 @@ public class GetPostService {
         return posts.map(post -> new PostResponse(post, likedPostIds.contains(post.getId()), post.getCreatedBy().equals(username)));
     }
 
+    public Page<PostResponse> getMyPosts(int page, int limit, String sortBy, String sortDir){
+        Sort sort = sortDir.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, limit, sort);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Page<Post> posts = postRepository.findByCreatedBy(username, pageable);
+        List<Long> likedPostIds = postLikeRepository.findLikedPostIdsByUserUsername(username);
+        return posts.map(post -> new PostResponse(post, likedPostIds.contains(post.getId()), post.getCreatedBy().equals(username)));
+    }
+
     public Page<PostResponse> getPostsByUserId(int page, int limit, String sortBy, String sortDir, Long userId){
         Sort sort = sortDir.equalsIgnoreCase("desc")
                 ? Sort.by(sortBy).descending()

@@ -97,9 +97,9 @@ export class Home {
   }
 
   fetchBorrowsByUserId(page: Page = this.borrowsPage):void{
-    const userId = JSON.parse(localStorage.getItem("user") ?? "{}").id
+    const userId = JSON.parse(sessionStorage.getItem("user") ?? "{}").id
     if (!userId) return;
-    this.borrowService.getBorrowsByUserId(userId, page.number).subscribe({
+    this.borrowService.getMyBorrows(true, null, page.number, 10).subscribe({
       next: (data:any) => {
         if(data.code == "200"){
           this.borrows = data.data.content;

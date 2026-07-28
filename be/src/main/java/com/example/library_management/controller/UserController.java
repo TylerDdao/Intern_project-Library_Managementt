@@ -1,7 +1,7 @@
 package com.example.library_management.controller;
 
 import com.example.library_management.dto.response.ApiResponse;
-import com.example.library_management.dto.request.UserRequest;
+import com.example.library_management.dto.request.user.UserRequest;
 import com.example.library_management.dto.response.UserResponse;
 import com.example.library_management.service.user.DeleteUserService;
 import com.example.library_management.service.user.GetUserService;
@@ -25,6 +25,14 @@ public class UserController {
     DeleteUserService deleteUserService;
 
     @PreAuthorize("@securityService.hasAccess('GET_USER')")
+    @GetMapping("/check-username")
+    public ResponseEntity<ApiResponse<Boolean>> checkUsername(
+            @RequestParam() String username
+    ){
+        return ResponseEntity.ok(ApiResponse.success(getUserService.checkUsername(username)));
+    }
+
+    @PreAuthorize("@securityService.hasAccess('GET_USER')")
     @GetMapping()
     public ResponseEntity<ApiResponse<Page<UserResponse>>> getUsers(
             @RequestParam(required = false) String username,
@@ -44,6 +52,13 @@ public class UserController {
     public ResponseEntity<ApiResponse<UserResponse>> updateUserByUsername(
             @RequestBody UserRequest request){
         return ResponseEntity.ok(ApiResponse.success(updateUserService.updateUser(request)));
+    }
+
+    @PreAuthorize("@securityService.hasAccess('UPDATE_USER_ROLE')")
+    @PatchMapping("/update-role")
+    public ResponseEntity<ApiResponse<UserResponse>> updateUserRoleByUsername(
+            @RequestBody UserRequest request){
+        return ResponseEntity.ok(ApiResponse.success(updateUserService.updateUserRole(request)));
     }
 
     @PreAuthorize("@securityService.hasAccess('DELETE_BOOK')")

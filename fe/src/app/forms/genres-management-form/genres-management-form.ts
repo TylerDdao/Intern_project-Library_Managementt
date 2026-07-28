@@ -9,7 +9,7 @@ import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-genres-management-form',
-  imports: [NavbarComponent, PagesComponent, TranslateModule],
+  imports: [PagesComponent, TranslateModule],
   templateUrl: './genres-management-form.html',
   styleUrl: './genres-management-form.css',
 })

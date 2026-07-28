@@ -28,6 +28,7 @@ export const authGuard: CanActivateFn = () => {
         map(() => true),
         catchError((err) => {
             if (err.status === 401) {
+                alert("Unauthorized access")
                 sessionStorage.clear();
                 router.navigate(['/login']);
             }
@@ -60,6 +61,7 @@ export const adminGuard: CanActivateFn = () => {
         map(() => true),
         catchError((err) => {
             if (err.status === 401) {
+                alert("Unauthorized access")
                 sessionStorage.clear();
                 router.navigate(['/login']);
             }

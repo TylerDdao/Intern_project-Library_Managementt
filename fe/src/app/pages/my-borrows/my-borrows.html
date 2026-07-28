@@ -10,13 +10,16 @@
         <div class="borrowing-container">
             <h1 class="headline">{{'home.Books-that-you-are-borrowing'|translate}}</h1>
             <div class="borrows-scrolling-area">
-                @if (borrowing.length > 0) {
+                @if (isLoading["borrowing"]) {
+                    <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+                }
+                @else if (borrowing.length > 0 && !isLoading["borrowing"]) {
                     @for (borrow of borrowing   ; track borrow.id) {
                         <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
                     }
                     
                 } @else {
-                    <p>Loading...</p>
+                    <p>{{'list.Empty'|translate}}</p>
                 }
             </div>
             <app-pages-component [pages]="borrowingPages" (onApply)="fetchBorrowsByUserId($event)"></app-pages-component>
@@ -25,12 +28,15 @@
         <div class="borrows-history-container">
             <h1 class="headline">{{'home.Borrows-history'|translate}}</h1>
             <div class="borrows-scrolling-area">
-                @if (borrowsHistory.length > 0) {
+                @if (isLoading["borrowHistory"]) {
+                    <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+                }
+                @else if (borrowsHistory.length > 0 && !isLoading["borrowHistory"]) {
                     @for (borrow of borrowsHistory; track borrow.id) {
                         <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
                     }
                 } @else {
-                    <p>Loading...</p>
+                    <p>{{'list.Empty'|translate}}</p>
                 }
             </div>
             <app-pages-component [pages]="borrowsHistoryPages" (onApply)="fetchBorrowsHistoryByUserId($event)"></app-pages-component>

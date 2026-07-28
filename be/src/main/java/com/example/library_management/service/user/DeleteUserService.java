@@ -1,6 +1,6 @@
 package com.example.library_management.service.user;
 
-import com.example.library_management.dto.request.UserRequest;
+import com.example.library_management.dto.request.user.UserRequest;
 import com.example.library_management.model.User;
 import com.example.library_management.repository.UserRepository;
 import com.example.library_management.util.AuditLogger;

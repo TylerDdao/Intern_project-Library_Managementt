@@ -32,7 +32,7 @@ export class BorrowService {
     });
   }
 
-  getMyBorrows(isActive: boolean, bookId: number | null = null, page: number = 0, limit: number = 10) {
+  getMyBorrows(isActive: boolean = true, bookId: number | null = null, page: number = 0, limit: number = 10) {
     if(bookId){
       return this.http.get(`${this.baseUrl}/my-borrows?isActive=${isActive}&bookId=${bookId}&page=${page}&limit=${limit}`, {
         headers: getAuthHeaders(this.platformId)

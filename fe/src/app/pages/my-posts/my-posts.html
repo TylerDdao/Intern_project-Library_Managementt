@@ -13,7 +13,10 @@
 
     <div class="posts-area">
         @if (!isSearch) {
-            @if (posts.length > 0) {
+            @if (isLoading["posts"]) {
+                <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+            }
+            @else if (posts.length > 0 && !isLoading["posts"]) {
                 @for (post of posts; track $index) {
                     <app-post-card-component 
                     [post]="post"
@@ -32,11 +35,14 @@
                 }
             }
             @else {
-                <h1 class="body">{{'browsePosts.Loading'|translate}}...</h1>
+                <h1 class="body">{{'List.Empty'|translate}}...</h1>
             }
         }
         @else {
-            @if (searchPost.length > 0) {
+            @if (isLoading["search"]) {
+                <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+            }
+            @else if (searchPost.length > 0 && !isLoading["search"]) {
                 @for (post of searchPost; track $index) {
                     <app-post-card-component 
                     [post]="post"
@@ -46,7 +52,7 @@
             }
             @else {
                 @if (isPostFound) {
-                    <h1 class="body">{{'browsePosts.Loading'|translate}}...</h1>
+                    <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
                 }
                 @else {
                     <h1 class="body">{{'browsePosts.Post-not-found'|translate}}</h1>

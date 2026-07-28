@@ -10,10 +10,13 @@
         @for (role of roles; track $index) {
             <div class="headline">{{role.name}}</div>
             <div class="users-container">
-                @for (user of getUsers(role); track $index) {
-                    <!-- <button (click)="handleEditUser(user)"><app-user-card [user]="user"></app-user-card></button> -->
-                    
-                    <div (click)="handleEditUser(user)"><app-user-card [user]="user"></app-user-card></div>
+                @if (getUsers(role).length > 0) {
+                    @for (user of getUsers(role); track $index) {                    
+                        <div (click)="handleEditUser(user)"><app-user-card [user]="user"></app-user-card></div>
+                    }
+                }
+                @else {
+                    <div>{{'list.Empty'|translate}}</div>
                 }
             </div>
         }
