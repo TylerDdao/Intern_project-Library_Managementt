@@ -2,11 +2,14 @@ package com.example.library_management.service.Auth;
 
 import com.example.library_management.dto.request.user.UserRequest;
 import com.example.library_management.model.EmailVerification;
+import com.example.library_management.repository.UserRepository;
 import com.example.library_management.repository.VerificationRepository;
 import com.example.library_management.service.MailService;
 import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,11 @@ public class VerificationService {
 
     @Autowired
     VerificationRepository verificationRepository;
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    MessageSource messageSource;
 
     private static final int CODE_LENGTH = 5;
     private static final int EXPIRY_MINUTES = 10;
@@ -41,9 +49,12 @@ public class VerificationService {
         verificationRepository.deleteByExpiresAtBeforeAndVerifiedFalse(LocalDateTime.now());
     }
 
-    public boolean sendVerificationEmail(UserRequest request, Locale locale){
+    public String sendVerificationEmail(UserRequest request, Locale locale){
+        if (userRepository.existsByEmail(request.getEmail())){
+            return "error.Email.has.been.used";
+        }
         if(verificationRepository.existsByEmailAndVerifiedFalseAndExpiresAtAfter(request.getEmail(), LocalDateTime.now())){
-            return false;
+            return "error.Code.is.already.sent";
         }
         String code;
         do {
@@ -60,10 +71,10 @@ public class VerificationService {
         try {
             mailService.sentVerificationEmail(request.getEmail(), request.getFullName(), code, locale);
             verificationRepository.save(verification);
-            return true;
+            return "verification.Code.is.sent";
         }
         catch (MessagingException e){
-            return false;
+            return e.toString();
         }
     }
 

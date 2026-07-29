@@ -17,6 +17,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
@@ -43,13 +44,18 @@ public class AuthController {
             @RequestHeader(value = "Accept-Language", required = false) String lang
             ) {
         Locale locale = (lang != null) ? Locale.forLanguageTag(lang) : Locale.ENGLISH;
-        if(verificationService.sendVerificationEmail(request, locale)){
-            return ResponseEntity.ok(ApiResponse.success("Email sent successfully"));
+        String message = verificationService.sendVerificationEmail(request, locale);
+        if(message.equals("verification.Code.is.sent")){
+            return ResponseEntity.ok(ApiResponse.success(messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
         }
-        else {
-            return ResponseEntity.ok(ApiResponse.error("500", "There is an error while sending verification email"));
+        else if(message.equals("error.Code.is.already.sent")){
+          return ResponseEntity.ok(ApiResponse.error("CODE-ALREADY-SENT", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
         }
-
+        else if (message.equals("error.Email.has.been.used")) {
+            return ResponseEntity.ok(ApiResponse.error("EMAIL-IN-USE", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
+        } else{
+            return ResponseEntity.internalServerError().body(ApiResponse.error("SERVER-ERROR", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
+        }
     }
 
     @PostMapping("/verify")

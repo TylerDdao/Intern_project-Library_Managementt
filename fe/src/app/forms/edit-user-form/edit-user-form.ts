@@ -7,6 +7,7 @@ import { User } from '../../models/user';
 import { isPlatformBrowser } from '@angular/common';
 import { UserService } from '../../services/user-service/user-service';
 import { AuthService } from '../../services/auth-service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-user-form',
@@ -29,6 +30,8 @@ export class EditUserForm implements OnChanges {
   isEmailVerified:boolean=false;
   isEmailInvalid: boolean = false;
   isSendingVerificationEmail:boolean = false;
+
+  isEmailUsed: boolean = false;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -59,14 +62,26 @@ export class EditUserForm implements OnChanges {
         if(data.code == "200"){
           const message = this.translate.instant("verification.Your-verification-code-has-been-sent-to-your-email");
           alert(message)
-          this.isSendingVerificationEmail = false;
-          this.cdr.markForCheck();
+          
         }
+        if(data.code == "CODE-ALREADY-SENT"){
+          const message = this.translate.instant("verification.Your-verification-code-has-already-been-sent-to-your-email");
+          alert(message +"\n" + data.code)
+        }
+        if(data.code == "EMAIL-IN-USE"){
+          const message = this.translate.instant("verification.Email-has-been-used");
+          alert(message +"\n" + data.code)
+          this.isVerifyingEmail = false;
+        }
+        this.isSendingVerificationEmail = false;
+        this.cdr.markForCheck();
       },
-      error: (err)=>{
+      error: (err: HttpErrorResponse)=>{
         const message = this.translate.instant("verification.There-is-an-error-while-sending-verification-code");
-        alert(message)
-        console.error(err)
+        alert(message + '\n' + err.error.code + ': ' + err.error.message )
+        this.isSendingVerificationEmail = false;
+        console.error(err.error.message);
+        this.cdr.markForCheck();
       }
     })
     this.cdr.markForCheck();
@@ -102,6 +117,7 @@ export class EditUserForm implements OnChanges {
   handleResetEmail(){
     this.isEmailVerified = false;
     this.isVerifyingEmail = false;
+    this.isEmailUsed = false;
     this.newUserForm.patchValue({
       email: this.user.email
     })
