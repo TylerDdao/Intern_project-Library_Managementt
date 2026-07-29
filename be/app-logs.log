@@ -1082,3 +1082,453 @@ com.example.library_management.controller.UserController#updateUserRoleByUsernam
 2026-07-28T11:54:38.691+07:00  INFO 53032 --- [library-management] [http-nio-8080-exec-8] c.e.library_management.util.AuditLogger  : [Updated role for @{}, ID #{} to {}] marcus_v_test
 2026-07-28T11:54:38.693+07:00  INFO 53032 --- [library-management] [http-nio-8080-exec-5] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] marcus_v_test
 2026-07-28T11:54:38.703+07:00  INFO 53032 --- [library-management] [http-nio-8080-exec-4] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] marcus_v_test
+2026-07-29T10:27:31.055+07:00  INFO 61608 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Starting LibraryManagementApplication using Java 23.0.2 with PID 61608 (C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be\target\classes started by baona in C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be)
+2026-07-29T10:27:31.061+07:00  INFO 61608 --- [library-management] [main] c.e.l.LibraryManagementApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-07-29T10:27:32.297+07:00  INFO 61608 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-29T10:27:32.384+07:00  INFO 61608 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 78 ms. Found 9 JPA repository interfaces.
+2026-07-29T10:27:33.975+07:00  INFO 61608 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-07-29T10:27:34.019+07:00  INFO 61608 --- [library-management] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-29T10:27:34.020+07:00  INFO 61608 --- [library-management] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-07-29T10:27:34.145+07:00  INFO 61608 --- [library-management] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2983 ms
+2026-07-29T10:27:34.340+07:00  INFO 61608 --- [library-management] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-29T10:27:34.415+07:00  INFO 61608 --- [library-management] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-07-29T10:27:34.902+07:00  INFO 61608 --- [library-management] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-29T10:27:34.938+07:00  INFO 61608 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-29T10:27:35.509+07:00  INFO 61608 --- [library-management] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@220be130
+2026-07-29T10:27:35.511+07:00  INFO 61608 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-29T10:27:35.617+07:00  INFO 61608 --- [library-management] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/library_db?zeroDateTimeBehavior=CONVERT_TO_NULL]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.39
+	Default catalog/schema: library_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-29T10:27:36.931+07:00  INFO 61608 --- [library-management] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-29T10:27:37.078+07:00  INFO 61608 --- [library-management] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-29T10:27:37.163+07:00  INFO 61608 --- [library-management] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-29T10:27:37.587+07:00  INFO 61608 --- [library-management] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-07-29T10:27:37.587+07:00  WARN 61608 --- [library-management] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-07-29T10:27:39.007+07:00  WARN 61608 --- [library-management] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-29T10:27:39.764+07:00  INFO 61608 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/api'
+2026-07-29T10:27:39.777+07:00  INFO 61608 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Started LibraryManagementApplication in 9.433 seconds (process running for 10.15)
+2026-07-29T10:27:45.348+07:00  INFO 61608 --- [library-management] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-29T10:27:45.349+07:00  INFO 61608 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-29T10:27:45.350+07:00  INFO 61608 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-07-29T10:27:46.153+07:00  INFO 61608 --- [library-management] [http-nio-8080-exec-1] c.e.library_management.util.AuditLogger  : [SYSTEM] Authorized @tyler, ID #1
+2026-07-29T10:30:51.633+07:00  INFO 61608 --- [library-management] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-07-29T10:30:51.648+07:00  INFO 61608 --- [library-management] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-07-29T10:30:51.659+07:00  INFO 61608 --- [library-management] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-29T10:30:51.667+07:00  INFO 61608 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-07-29T10:30:51.677+07:00  INFO 61608 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-07-29T10:30:57.152+07:00  INFO 28932 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Starting LibraryManagementApplication using Java 23.0.2 with PID 28932 (C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be\target\classes started by baona in C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be)
+2026-07-29T10:30:57.155+07:00  INFO 28932 --- [library-management] [main] c.e.l.LibraryManagementApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-07-29T10:30:57.942+07:00  INFO 28932 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-29T10:30:58.010+07:00  INFO 28932 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 61 ms. Found 9 JPA repository interfaces.
+2026-07-29T10:30:58.593+07:00  INFO 28932 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-07-29T10:30:58.605+07:00  INFO 28932 --- [library-management] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-29T10:30:58.606+07:00  INFO 28932 --- [library-management] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-07-29T10:30:58.649+07:00  INFO 28932 --- [library-management] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1432 ms
+2026-07-29T10:30:58.765+07:00  INFO 28932 --- [library-management] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-29T10:30:58.821+07:00  INFO 28932 --- [library-management] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-07-29T10:30:59.302+07:00  INFO 28932 --- [library-management] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-29T10:30:59.351+07:00  INFO 28932 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-29T10:30:59.986+07:00  INFO 28932 --- [library-management] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2d0778d0
+2026-07-29T10:30:59.989+07:00  INFO 28932 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-29T10:31:00.136+07:00  INFO 28932 --- [library-management] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/library_db?zeroDateTimeBehavior=CONVERT_TO_NULL]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.39
+	Default catalog/schema: library_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-29T10:31:01.563+07:00  INFO 28932 --- [library-management] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-29T10:31:01.675+07:00  INFO 28932 --- [library-management] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-29T10:31:01.734+07:00  INFO 28932 --- [library-management] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-29T10:31:02.083+07:00  INFO 28932 --- [library-management] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-07-29T10:31:02.084+07:00  WARN 28932 --- [library-management] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-07-29T10:31:03.363+07:00  WARN 28932 --- [library-management] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-29T10:31:03.872+07:00  INFO 28932 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/api'
+2026-07-29T10:31:03.879+07:00  INFO 28932 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Started LibraryManagementApplication in 7.254 seconds (process running for 7.795)
+2026-07-29T10:31:06.796+07:00  INFO 28932 --- [library-management] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-29T10:31:06.796+07:00  INFO 28932 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-29T10:31:06.798+07:00  INFO 28932 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-07-29T10:35:02.653+07:00  INFO 28932 --- [library-management] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-07-29T10:35:02.662+07:00  INFO 28932 --- [library-management] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-07-29T10:35:02.667+07:00  INFO 28932 --- [library-management] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-29T10:35:02.669+07:00  INFO 28932 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-07-29T10:35:02.673+07:00  INFO 28932 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-07-29T10:35:07.744+07:00  INFO 38200 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Starting LibraryManagementApplication using Java 23.0.2 with PID 38200 (C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be\target\classes started by baona in C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be)
+2026-07-29T10:35:07.746+07:00  INFO 38200 --- [library-management] [main] c.e.l.LibraryManagementApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-07-29T10:35:08.597+07:00  INFO 38200 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-29T10:35:08.673+07:00  INFO 38200 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 68 ms. Found 9 JPA repository interfaces.
+2026-07-29T10:35:09.272+07:00  INFO 38200 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-07-29T10:35:09.284+07:00  INFO 38200 --- [library-management] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-29T10:35:09.284+07:00  INFO 38200 --- [library-management] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-07-29T10:35:09.392+07:00  INFO 38200 --- [library-management] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1575 ms
+2026-07-29T10:35:09.581+07:00  INFO 38200 --- [library-management] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-29T10:35:09.779+07:00  INFO 38200 --- [library-management] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-07-29T10:35:10.255+07:00  INFO 38200 --- [library-management] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-29T10:35:10.281+07:00  INFO 38200 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-29T10:35:10.691+07:00  INFO 38200 --- [library-management] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@42db955e
+2026-07-29T10:35:10.693+07:00  INFO 38200 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-29T10:35:10.764+07:00  INFO 38200 --- [library-management] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/library_db?zeroDateTimeBehavior=CONVERT_TO_NULL]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.39
+	Default catalog/schema: library_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-29T10:35:11.776+07:00  INFO 38200 --- [library-management] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-29T10:35:11.852+07:00  INFO 38200 --- [library-management] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-29T10:35:11.907+07:00  INFO 38200 --- [library-management] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-29T10:35:12.224+07:00  INFO 38200 --- [library-management] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-07-29T10:35:12.225+07:00  WARN 38200 --- [library-management] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-07-29T10:35:13.475+07:00  WARN 38200 --- [library-management] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-29T10:35:14.021+07:00  INFO 38200 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/api'
+2026-07-29T10:35:14.032+07:00  INFO 38200 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Started LibraryManagementApplication in 6.852 seconds (process running for 7.461)
+2026-07-29T10:35:16.893+07:00  INFO 38200 --- [library-management] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-29T10:35:16.893+07:00  INFO 38200 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-29T10:35:16.896+07:00  INFO 38200 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-07-29T11:23:17.909+07:00  INFO 38200 --- [library-management] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-07-29T11:23:17.948+07:00  INFO 38200 --- [library-management] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-07-29T11:23:17.982+07:00  INFO 38200 --- [library-management] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-29T11:23:18.019+07:00  INFO 38200 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-07-29T11:23:18.031+07:00  INFO 38200 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-07-29T11:23:24.746+07:00  INFO 48508 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Starting LibraryManagementApplication using Java 23.0.2 with PID 48508 (C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be\target\classes started by baona in C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be)
+2026-07-29T11:23:24.748+07:00  INFO 48508 --- [library-management] [main] c.e.l.LibraryManagementApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-07-29T11:23:26.071+07:00  INFO 48508 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-29T11:23:26.224+07:00  INFO 48508 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 126 ms. Found 10 JPA repository interfaces.
+2026-07-29T11:23:27.920+07:00  INFO 48508 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-07-29T11:23:27.938+07:00  INFO 48508 --- [library-management] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-29T11:23:27.939+07:00  INFO 48508 --- [library-management] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-07-29T11:23:28.023+07:00  INFO 48508 --- [library-management] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 3202 ms
+2026-07-29T11:23:28.240+07:00  INFO 48508 --- [library-management] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-29T11:23:28.364+07:00  INFO 48508 --- [library-management] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-07-29T11:23:29.106+07:00  INFO 48508 --- [library-management] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-29T11:23:29.160+07:00  INFO 48508 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-29T11:23:29.828+07:00  INFO 48508 --- [library-management] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@69419d59
+2026-07-29T11:23:29.834+07:00  INFO 48508 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-29T11:23:30.034+07:00  INFO 48508 --- [library-management] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/library_db?zeroDateTimeBehavior=CONVERT_TO_NULL]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.39
+	Default catalog/schema: library_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-29T11:23:31.670+07:00  INFO 48508 --- [library-management] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-29T11:23:32.125+07:00  INFO 48508 --- [library-management] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-29T11:23:32.192+07:00  INFO 48508 --- [library-management] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-29T11:23:32.650+07:00  INFO 48508 --- [library-management] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-07-29T11:23:32.651+07:00  WARN 48508 --- [library-management] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-07-29T11:23:33.880+07:00  WARN 48508 --- [library-management] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-29T11:23:34.393+07:00  INFO 48508 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/api'
+2026-07-29T11:23:34.401+07:00  INFO 48508 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Started LibraryManagementApplication in 10.491 seconds (process running for 11.103)
+2026-07-29T11:23:48.765+07:00  INFO 48508 --- [library-management] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-29T11:23:48.765+07:00  INFO 48508 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-29T11:23:48.768+07:00  INFO 48508 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-07-29T11:26:50.005+07:00  INFO 48508 --- [library-management] [http-nio-8080-exec-6] c.e.library_management.util.AuditLogger  : [SYSTEM] Authorized @tyler, ID #1
+2026-07-29T11:26:50.187+07:00  WARN 48508 --- [library-management] [http-nio-8080-exec-5] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-07-29T11:36:34.622+07:00  INFO 48508 --- [library-management] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-07-29T11:36:34.631+07:00  INFO 48508 --- [library-management] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-07-29T11:36:34.637+07:00  INFO 48508 --- [library-management] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-29T11:36:34.639+07:00  INFO 48508 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-07-29T11:36:34.643+07:00  INFO 48508 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-07-29T11:36:38.752+07:00  INFO 80652 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Starting LibraryManagementApplication using Java 23.0.2 with PID 80652 (C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be\target\classes started by baona in C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be)
+2026-07-29T11:36:38.756+07:00  INFO 80652 --- [library-management] [main] c.e.l.LibraryManagementApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-07-29T11:36:39.752+07:00  INFO 80652 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-29T11:36:39.836+07:00  INFO 80652 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 76 ms. Found 10 JPA repository interfaces.
+2026-07-29T11:36:40.412+07:00  INFO 80652 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-07-29T11:36:40.423+07:00  INFO 80652 --- [library-management] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-29T11:36:40.424+07:00  INFO 80652 --- [library-management] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-07-29T11:36:40.483+07:00  INFO 80652 --- [library-management] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1657 ms
+2026-07-29T11:36:40.602+07:00  INFO 80652 --- [library-management] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-29T11:36:40.661+07:00  INFO 80652 --- [library-management] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-07-29T11:36:41.218+07:00  INFO 80652 --- [library-management] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-29T11:36:41.280+07:00  INFO 80652 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-29T11:36:41.859+07:00  INFO 80652 --- [library-management] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@17dbca0a
+2026-07-29T11:36:41.861+07:00  INFO 80652 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-29T11:36:41.977+07:00  INFO 80652 --- [library-management] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/library_db?zeroDateTimeBehavior=CONVERT_TO_NULL]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.39
+	Default catalog/schema: library_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-29T11:36:43.663+07:00  INFO 80652 --- [library-management] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-29T11:36:43.785+07:00  INFO 80652 --- [library-management] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-29T11:36:43.887+07:00  INFO 80652 --- [library-management] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-29T11:36:44.463+07:00  INFO 80652 --- [library-management] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-07-29T11:36:44.465+07:00  WARN 80652 --- [library-management] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-07-29T11:36:46.850+07:00  WARN 80652 --- [library-management] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-29T11:36:47.813+07:00  INFO 80652 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/api'
+2026-07-29T11:36:47.824+07:00  INFO 80652 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Started LibraryManagementApplication in 9.476 seconds (process running for 9.897)
+2026-07-29T11:36:53.523+07:00  INFO 80652 --- [library-management] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-29T11:36:53.523+07:00  INFO 80652 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-29T11:36:53.526+07:00  INFO 80652 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-07-29T11:36:54.084+07:00 ERROR 80652 --- [library-management] [http-nio-8080-exec-1] c.e.l.exception.GlobalExceptionHandler   : Exception code 500: No message found under code 'email.verification.greeting' for locale 'vi'.
+2026-07-29T11:37:22.922+07:00  INFO 80652 --- [library-management] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-07-29T11:37:22.930+07:00  INFO 80652 --- [library-management] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-07-29T11:37:22.935+07:00  INFO 80652 --- [library-management] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-29T11:37:22.936+07:00  INFO 80652 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-07-29T11:37:22.941+07:00  INFO 80652 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-07-29T11:37:26.233+07:00  INFO 71280 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Starting LibraryManagementApplication using Java 23.0.2 with PID 71280 (C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be\target\classes started by baona in C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be)
+2026-07-29T11:37:26.237+07:00  INFO 71280 --- [library-management] [main] c.e.l.LibraryManagementApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-07-29T11:37:26.924+07:00  INFO 71280 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-29T11:37:26.994+07:00  INFO 71280 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 63 ms. Found 10 JPA repository interfaces.
+2026-07-29T11:37:27.502+07:00  INFO 71280 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-07-29T11:37:27.510+07:00  INFO 71280 --- [library-management] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-29T11:37:27.511+07:00  INFO 71280 --- [library-management] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-07-29T11:37:27.548+07:00  INFO 71280 --- [library-management] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1256 ms
+2026-07-29T11:37:27.652+07:00  INFO 71280 --- [library-management] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-29T11:37:27.685+07:00  INFO 71280 --- [library-management] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-07-29T11:37:28.008+07:00  INFO 71280 --- [library-management] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-29T11:37:28.029+07:00  INFO 71280 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-29T11:37:28.284+07:00  INFO 71280 --- [library-management] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1b10f60e
+2026-07-29T11:37:28.285+07:00  INFO 71280 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-29T11:37:28.342+07:00  INFO 71280 --- [library-management] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/library_db?zeroDateTimeBehavior=CONVERT_TO_NULL]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.39
+	Default catalog/schema: library_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-29T11:37:29.494+07:00  INFO 71280 --- [library-management] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-29T11:37:29.568+07:00  INFO 71280 --- [library-management] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-29T11:37:29.620+07:00  INFO 71280 --- [library-management] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-29T11:37:29.911+07:00  INFO 71280 --- [library-management] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-07-29T11:37:29.912+07:00  WARN 71280 --- [library-management] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-07-29T11:37:31.000+07:00  WARN 71280 --- [library-management] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-29T11:37:31.480+07:00  INFO 71280 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/api'
+2026-07-29T11:37:31.487+07:00  INFO 71280 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Started LibraryManagementApplication in 5.649 seconds (process running for 6.061)
+2026-07-29T11:37:34.358+07:00  INFO 71280 --- [library-management] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-29T11:37:34.359+07:00  INFO 71280 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-29T11:37:34.360+07:00  INFO 71280 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-07-29T11:59:47.075+07:00  INFO 71280 --- [library-management] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-07-29T11:59:47.090+07:00  INFO 71280 --- [library-management] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-07-29T11:59:47.101+07:00  INFO 71280 --- [library-management] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-29T11:59:47.111+07:00  INFO 71280 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-07-29T11:59:47.119+07:00  INFO 71280 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-07-29T11:59:51.532+07:00  INFO 77776 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Starting LibraryManagementApplication using Java 23.0.2 with PID 77776 (C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be\target\classes started by baona in C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be)
+2026-07-29T11:59:51.537+07:00  INFO 77776 --- [library-management] [main] c.e.l.LibraryManagementApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-07-29T11:59:52.455+07:00  INFO 77776 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-29T11:59:52.550+07:00  INFO 77776 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 88 ms. Found 10 JPA repository interfaces.
+2026-07-29T11:59:53.118+07:00  INFO 77776 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-07-29T11:59:53.130+07:00  INFO 77776 --- [library-management] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-29T11:59:53.130+07:00  INFO 77776 --- [library-management] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-07-29T11:59:53.183+07:00  INFO 77776 --- [library-management] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1590 ms
+2026-07-29T11:59:53.306+07:00  INFO 77776 --- [library-management] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-29T11:59:53.370+07:00  INFO 77776 --- [library-management] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-07-29T11:59:53.903+07:00  INFO 77776 --- [library-management] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-29T11:59:53.959+07:00  INFO 77776 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-29T11:59:54.586+07:00  INFO 77776 --- [library-management] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6f67ece5
+2026-07-29T11:59:54.588+07:00  INFO 77776 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-29T11:59:54.729+07:00  INFO 77776 --- [library-management] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/library_db?zeroDateTimeBehavior=CONVERT_TO_NULL]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.39
+	Default catalog/schema: library_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-29T11:59:57.028+07:00  INFO 77776 --- [library-management] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-29T11:59:57.451+07:00  INFO 77776 --- [library-management] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-29T11:59:57.564+07:00  INFO 77776 --- [library-management] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-29T11:59:58.267+07:00  INFO 77776 --- [library-management] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-07-29T11:59:58.268+07:00  WARN 77776 --- [library-management] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-07-29T12:00:00.787+07:00  WARN 77776 --- [library-management] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-29T12:00:01.687+07:00  INFO 77776 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/api'
+2026-07-29T12:00:01.697+07:00  INFO 77776 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Started LibraryManagementApplication in 10.63 seconds (process running for 11.088)
+2026-07-29T12:00:58.026+07:00  INFO 77776 --- [library-management] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-29T12:00:58.027+07:00  INFO 77776 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-29T12:00:58.029+07:00  INFO 77776 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-07-29T12:09:31.078+07:00  INFO 77776 --- [library-management] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-07-29T12:09:31.091+07:00  INFO 77776 --- [library-management] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-07-29T12:09:31.100+07:00  INFO 77776 --- [library-management] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-29T12:09:31.107+07:00  INFO 77776 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-07-29T12:09:31.113+07:00  INFO 77776 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-07-29T12:09:36.330+07:00  INFO 80788 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Starting LibraryManagementApplication using Java 23.0.2 with PID 80788 (C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be\target\classes started by baona in C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be)
+2026-07-29T12:09:36.333+07:00  INFO 80788 --- [library-management] [main] c.e.l.LibraryManagementApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-07-29T12:09:37.425+07:00  INFO 80788 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-29T12:09:37.501+07:00  INFO 80788 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 68 ms. Found 10 JPA repository interfaces.
+2026-07-29T12:09:38.076+07:00  INFO 80788 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-07-29T12:09:38.086+07:00  INFO 80788 --- [library-management] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-29T12:09:38.087+07:00  INFO 80788 --- [library-management] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-07-29T12:09:38.138+07:00  INFO 80788 --- [library-management] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1748 ms
+2026-07-29T12:09:38.270+07:00  INFO 80788 --- [library-management] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-29T12:09:38.337+07:00  INFO 80788 --- [library-management] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-07-29T12:09:38.695+07:00  INFO 80788 --- [library-management] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-29T12:09:38.724+07:00  INFO 80788 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-29T12:09:39.081+07:00  INFO 80788 --- [library-management] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@652a1a17
+2026-07-29T12:09:39.082+07:00  INFO 80788 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-29T12:09:39.166+07:00  INFO 80788 --- [library-management] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/library_db?zeroDateTimeBehavior=CONVERT_TO_NULL]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.39
+	Default catalog/schema: library_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-29T12:09:40.133+07:00  INFO 80788 --- [library-management] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-29T12:09:40.223+07:00  INFO 80788 --- [library-management] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-29T12:09:40.278+07:00  INFO 80788 --- [library-management] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-29T12:09:40.591+07:00  INFO 80788 --- [library-management] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-07-29T12:09:40.591+07:00  WARN 80788 --- [library-management] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-07-29T12:09:41.790+07:00  WARN 80788 --- [library-management] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-29T12:09:42.323+07:00  INFO 80788 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/api'
+2026-07-29T12:09:42.330+07:00  INFO 80788 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Started LibraryManagementApplication in 6.535 seconds (process running for 7.181)
+2026-07-29T12:09:51.678+07:00  INFO 80788 --- [library-management] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-29T12:09:51.679+07:00  INFO 80788 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-29T12:09:51.682+07:00  INFO 80788 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-07-29T12:24:35.714+07:00  WARN 80788 --- [library-management] [http-nio-8080-exec-9] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-07-29T12:33:52.502+07:00  INFO 80788 --- [library-management] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-07-29T12:33:52.520+07:00  INFO 80788 --- [library-management] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-07-29T12:33:52.535+07:00  INFO 80788 --- [library-management] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-29T12:33:52.547+07:00  INFO 80788 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-07-29T12:33:52.553+07:00  INFO 80788 --- [library-management] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-07-29T12:33:58.759+07:00  INFO 49272 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Starting LibraryManagementApplication using Java 23.0.2 with PID 49272 (C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be\target\classes started by baona in C:\Users\baona\Desktop\School\25-26\Co-op 26\TT Viettel\Project\TT_Viettel_Software-Library_Management\be)
+2026-07-29T12:33:58.763+07:00  INFO 49272 --- [library-management] [main] c.e.l.LibraryManagementApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-07-29T12:33:59.546+07:00  INFO 49272 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-29T12:33:59.612+07:00  INFO 49272 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 61 ms. Found 10 JPA repository interfaces.
+2026-07-29T12:34:00.206+07:00  INFO 49272 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-07-29T12:34:00.217+07:00  INFO 49272 --- [library-management] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-29T12:34:00.218+07:00  INFO 49272 --- [library-management] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-07-29T12:34:00.262+07:00  INFO 49272 --- [library-management] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1441 ms
+2026-07-29T12:34:00.389+07:00  INFO 49272 --- [library-management] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-29T12:34:00.452+07:00  INFO 49272 --- [library-management] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-07-29T12:34:00.823+07:00  INFO 49272 --- [library-management] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-29T12:34:00.853+07:00  INFO 49272 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-29T12:34:01.185+07:00  INFO 49272 --- [library-management] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5c9e6d95
+2026-07-29T12:34:01.187+07:00  INFO 49272 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-29T12:34:01.268+07:00  INFO 49272 --- [library-management] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/library_db?zeroDateTimeBehavior=CONVERT_TO_NULL]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.39
+	Default catalog/schema: library_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-29T12:34:02.221+07:00  INFO 49272 --- [library-management] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-29T12:34:02.318+07:00  INFO 49272 --- [library-management] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-29T12:34:02.375+07:00  INFO 49272 --- [library-management] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-29T12:34:02.691+07:00  INFO 49272 --- [library-management] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-07-29T12:34:02.691+07:00  WARN 49272 --- [library-management] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-07-29T12:34:03.918+07:00  WARN 49272 --- [library-management] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-29T12:34:04.487+07:00  INFO 49272 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/api'
+2026-07-29T12:34:04.495+07:00  INFO 49272 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Started LibraryManagementApplication in 6.209 seconds (process running for 6.705)
+2026-07-29T12:34:07.449+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-29T12:34:07.449+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-29T12:34:07.449+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-07-29T12:43:16.595+07:00  WARN 49272 --- [library-management] [http-nio-8080-exec-9] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-07-29T12:43:30.099+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-6] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:30.099+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-1] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:31.114+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-2] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:31.114+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-8] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:31.312+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-7] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:31.313+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-10] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:31.527+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-4] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:31.527+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-3] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:33.996+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-5] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:33.996+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-9] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:34.237+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-6] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:34.237+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-1] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:34.541+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-2] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:34.541+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-8] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:34.919+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-10] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:34.919+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-7] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:36.077+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-5] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:36.077+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-9] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:36.291+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-1] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:36.291+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-6] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:40.587+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-8] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:40.587+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-2] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:40.809+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-7] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:43:40.809+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-10] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:20.124+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-2] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:20.124+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-1] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:20.634+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-6] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:20.635+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-8] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:20.845+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-3] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:20.845+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-5] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:21.125+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-7] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:21.125+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-10] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:21.404+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-9] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:21.404+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-4] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:31.199+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-7] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:31.199+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-10] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:31.578+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-9] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:31.578+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-4] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:31.764+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-6] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:31.764+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-2] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:38.405+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-3] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:38.407+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-5] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:38.713+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-10] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:38.713+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-7] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:41.637+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-4] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:41.637+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-9] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:42.202+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-2] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:44:42.202+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-6] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:46:18.772+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-5] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:46:18.772+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-8] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:46:27.404+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-8] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:46:27.404+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-2] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:46:35.978+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-10] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:46:35.978+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-4] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:47:51.703+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-9] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:47:51.704+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-7] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:48:43.559+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-2] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:48:43.559+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-6] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:55:35.811+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-2] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:55:35.811+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-10] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:55:57.964+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-5] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l
+2026-07-29T12:55:57.965+07:00  INFO 49272 --- [library-management] [http-nio-8080-exec-6] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] chloe_l

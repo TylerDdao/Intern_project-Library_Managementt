@@ -6,6 +6,7 @@ import { Role } from '../../models/role';
 import { User } from '../../models/user';
 import { isPlatformBrowser } from '@angular/common';
 import { UserService } from '../../services/user-service/user-service';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-edit-user-form',
@@ -25,12 +26,15 @@ export class EditUserForm implements OnChanges {
   isUsernameInvalid: boolean = false;
 
   isVerifyingEmail:boolean = false;
-  isEmailVerified:boolean | null=null;
+  isEmailVerified:boolean=false;
+  isEmailInvalid: boolean = false;
+  isSendingVerificationEmail:boolean = false;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private userService: UserService, 
     private translate: TranslateService,
+    private authService: AuthService,
     private cdr: ChangeDetectorRef) {}
 
   newUserForm = new FormGroup({
@@ -39,16 +43,64 @@ export class EditUserForm implements OnChanges {
     phoneNumber: new FormControl('', Validators.required),
     email: new FormControl('', Validators.required),
     address: new FormControl(''),
-    role: new FormControl<number | null>(null, Validators.required)
+    role: new FormControl<number | null>(null, Validators.required),
+    verificationCode: new FormControl('')
   });
 
   handleSendVerificationCode(){
     this.isVerifyingEmail = true;
+    this.isSendingVerificationEmail = true;
+    const email = this.newUserForm.get("email")?.value?.trim().toLowerCase();
+    if (!email) {
+      return;
+    }
+    this.authService.sendVerificationCode(email, this.user.fullName).subscribe({
+      next: (data:any)=>{
+        if(data.code == "200"){
+          const message = this.translate.instant("verification.Your-verification-code-has-been-sent-to-your-email");
+          alert(message)
+          this.isSendingVerificationEmail = false;
+          this.cdr.markForCheck();
+        }
+      },
+      error: (err)=>{
+        const message = this.translate.instant("verification.There-is-an-error-while-sending-verification-code");
+        alert(message)
+        console.error(err)
+      }
+    })
     this.cdr.markForCheck();
   }
 
+  handleVerify(){
+    const email = this.newUserForm.get("email")?.value?.trim().toLowerCase();
+    if (!email) {
+      return;
+    }
+    const verificationCode = this.newUserForm.get("verificationCode")?.value?.trim().toLowerCase();
+    if(!verificationCode){
+      return;
+    }
+    this.authService.submitVerificationCode(email, verificationCode).subscribe({
+      next: (data:any)=>{
+        if(data.code == "200"){
+          const message = this.translate.instant("verification.Your-email-has-been-verified");
+          alert(message)
+          this.isEmailVerified = true;
+          this.isEmailInvalid = false;
+          this.cdr.markForCheck();
+        }
+      },
+      error: (err)=>{
+        const message = this.translate.instant("verification.There-is-an-error-while-verifying-your-email");
+        alert(message)
+        console.error(err)
+      }
+    })
+  }
+
   handleResetEmail(){
-    this.isEmailVerified = null;
+    this.isEmailVerified = false;
     this.isVerifyingEmail = false;
     this.newUserForm.patchValue({
       email: this.user.email
@@ -111,6 +163,13 @@ export class EditUserForm implements OnChanges {
         return;
       }
     }
+    if(email?.trim().toLocaleLowerCase() !== this.user.email.trim().toLocaleLowerCase()){
+      if(this.isEmailVerified == false){
+        this.isEmailInvalid = true;
+        return;
+      }
+    }
+
     let newUser: User = {...this.user};
     newUser.id = userId;
     newUser.username = this.newUserForm.get('username')?.value?.trim() ?? this.user.username;
@@ -176,6 +235,10 @@ export class EditUserForm implements OnChanges {
       this.newUserForm.get('username')?.valueChanges.subscribe(() => {
         this.isUsernameAvailable = null;
         this.isUsernameInvalid = false;
+        this.cdr.markForCheck();
+      });
+      this.newUserForm.get('email')?.valueChanges.subscribe(() => {
+        this.isEmailInvalid = false;
         this.cdr.markForCheck();
       });
     }

@@ -2,15 +2,24 @@ package com.example.library_management.controller;
 
 import com.example.library_management.dto.request.LoginRequest;
 import com.example.library_management.dto.request.RegisterRequest;
+import com.example.library_management.dto.request.auth.VerificationRequest;
 import com.example.library_management.dto.request.user.UserRequest;
 import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.dto.response.LoginResponse;
 import com.example.library_management.dto.response.UserResponse;
-import com.example.library_management.service.AuthService;
+import com.example.library_management.dto.response.auth.VerificationResponse;
+import com.example.library_management.service.Auth.AuthService;
+import com.example.library_management.service.Auth.VerificationService;
+import com.example.library_management.service.MailService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/auth")
@@ -18,6 +27,44 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private MailService mailService;
+
+    @Autowired
+    private MessageSource messageSource;
+
+    @Autowired
+    private VerificationService verificationService;
+
+    @PostMapping("/send-verification-code")
+    public ResponseEntity<ApiResponse<String>> SendVerificationEmail(
+            @RequestBody UserRequest request,
+            @RequestHeader(value = "Accept-Language", required = false) String lang
+            ) {
+        Locale locale = (lang != null) ? Locale.forLanguageTag(lang) : Locale.ENGLISH;
+        if(verificationService.sendVerificationEmail(request, locale)){
+            return ResponseEntity.ok(ApiResponse.success("Email sent successfully"));
+        }
+        else {
+            return ResponseEntity.ok(ApiResponse.error("500", "There is an error while sending verification email"));
+        }
+
+    }
+
+    @PostMapping("/verify")
+    public ResponseEntity<ApiResponse<VerificationResponse>> BerifyEmail(
+            @RequestBody VerificationRequest request
+    ){
+        if (verificationService.verifyCode(request.getEmail(), request.getCode())){
+            VerificationResponse response = new VerificationResponse(request.getEmail(), true);
+            return ResponseEntity.ok(ApiResponse.success(response));
+        }
+        else{
+            VerificationResponse response = new VerificationResponse(request.getEmail(), false);
+            return ResponseEntity.ok(ApiResponse.success(response));
+        }
+    }
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<UserResponse>> register(@RequestBody RegisterRequest request) {

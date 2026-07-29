@@ -1,7 +1,8 @@
-package com.example.library_management.service;
+package com.example.library_management.service.Auth;
 
 import com.example.library_management.model.Feature;
 import com.example.library_management.repository.FeatureRepository;
+import com.example.library_management.service.TokenBlacklistService;
 import com.example.library_management.util.AuditLogger;
 import com.example.library_management.util.JwtUtil;
 import com.example.library_management.dto.request.LoginRequest;

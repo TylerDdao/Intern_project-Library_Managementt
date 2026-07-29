@@ -6,15 +6,15 @@ import com.example.library_management.dto.response.GenreResponse;
 import com.example.library_management.service.MailService;
 import com.example.library_management.service.SmsService;
 import com.example.library_management.service.borrow.BorrowReminderService;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Locale;
 
 @RestController
 public class MailSenderController {
@@ -29,10 +29,16 @@ public class MailSenderController {
 
     @PreAuthorize("@securityService.hasAccess('GET_GENRE')")
     @GetMapping("/mail")
-    public ResponseEntity<ApiResponse<String>> sendMail(){
-        return ResponseEntity.ok(
-                ApiResponse.success(borrowReminderService.test())
-        );
+    public ResponseEntity<ApiResponse<String>> sendMail(
+            @RequestHeader(value = "Accept-Language", required = false) String lang
+    ) {
+        try {
+            Locale locale = (lang != null) ? Locale.forLanguageTag(lang) : Locale.ENGLISH;
+            mailService.sentVerificationEmail("baonamdao05@gmail.com", "Tyler", "ABC123", locale);
+            return ResponseEntity.ok(ApiResponse.success("Email sent successfully"));
+        } catch (MessagingException e) {
+            return ResponseEntity.ok(ApiResponse.error("500", "Failed to send email: " + e.getMessage()));
+        }
     }
 
     @PreAuthorize("@securityService.hasAccess('GET_GENRE')")

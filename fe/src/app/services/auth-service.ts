@@ -23,6 +23,27 @@ export class AuthService {
 
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
 
+  sendVerificationCode(email: string, fullName:string){
+    const body = {
+      "email": email,
+      "fullName": fullName
+    }
+    return this.http.post(`${this.baseUrl}/send-verification-code`, body, {
+      headers:getAuthHeaders(this.platformId)
+    })
+  }
+
+  submitVerificationCode(email: string, code: string){
+    const body = {
+      "email": email,
+      "code": code
+    }
+
+    return this.http.post(`${this.baseUrl}/verify`, body,{
+      headers: getAuthHeaders(this.platformId)
+    })
+  }
+
   login(username: string, password: string){
     const body = {
       'username': username,

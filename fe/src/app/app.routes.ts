@@ -18,6 +18,7 @@ import { PostsManagement } from './pages/posts-management/posts-management';
 import { BookPage } from './pages/book-page/book-page';
 import { PostPage } from './pages/post-page/post-page';
 import { CreatePost } from './pages/create-post/create-post';
+import { TestPage } from './pages/test-page/test-page';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -44,6 +45,8 @@ export const routes: Routes = [
     { path: 'borrows-management', component: BorrowsManagement, canActivate: [adminGuard]},
     { path: 'posts-management', component: PostsManagement, canActivate: [adminGuard]},
     { path: 'users-management', component: UsersManagement, canActivate: [adminGuard]},
+
+    {path: 'test', component: TestPage},
 
     { path: '**', component: NotFound }
 ];
