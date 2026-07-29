@@ -5,7 +5,7 @@ import { User } from '../../models/user';
 import { UserService } from '../../services/user-service/user-service';
 import { Role } from '../../models/role';
 import { isPlatformBrowser } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language-service/language-service';
 import { NewUserForm } from '../../forms/new-user-form/new-user-form';
 import { EditUserForm } from '../../forms/edit-user-form/edit-user-form';
@@ -53,6 +53,7 @@ export class UsersManagement {
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
     public langService: LanguageService,
+    private translate: TranslateService
     
   ){}
 
@@ -106,16 +107,40 @@ export class UsersManagement {
 
   handleClose(){
     this.isCreateNewUser = false;
-    this.isEditUser = false;
+    
     this.isRoleListOpen = false;
     this.isCreateNewRole = false;
 
     this.editRole = null;
+    
+
+    // this.fetchRolesAndUser()
+
+    // this.cdr.markForCheck()
+  }
+
+  handleCloseEditUser(){
     this.editUser = null;
+    this.isEditUser = false;
+  }
 
-    this.fetchRolesAndUser()
+  handleSaveEditUser(isSave:boolean){
+    if(isSave){
+      const message = this.translate.instant("userManagement.User-is-saved")
+      alert(message)
+      this.editUser = null;
+      this.isEditUser = false;
+      this.fetchRolesAndUser()
 
-    this.cdr.markForCheck()
+      this.cdr.markForCheck()
+    }
+    else{
+      const message = this.translate.instant("userManagement.There-is-an-error-when-saving-user")
+      alert(message)
+      this.editUser = null;
+      this.isEditUser = false;
+    }
+    
   }
 
   handleChooseRole(role: Role){

@@ -18,11 +18,14 @@ export class EditUserForm implements OnChanges {
   @Input() roles: Role[] = [];
   @Input() user!: User;
   @Output() onClose = new EventEmitter<void>();
-  @Output() onChange = new EventEmitter<boolean>()
+  @Output() onChange = new EventEmitter<boolean>();
 
   isUsernameAvailable : boolean | null = null;
 
   isUsernameInvalid: boolean = false;
+
+  isVerifyingEmail:boolean = false;
+  isEmailVerified:boolean | null=null;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -38,6 +41,20 @@ export class EditUserForm implements OnChanges {
     address: new FormControl(''),
     role: new FormControl<number | null>(null, Validators.required)
   });
+
+  handleSendVerificationCode(){
+    this.isVerifyingEmail = true;
+    this.cdr.markForCheck();
+  }
+
+  handleResetEmail(){
+    this.isEmailVerified = null;
+    this.isVerifyingEmail = false;
+    this.newUserForm.patchValue({
+      email: this.user.email
+    })
+    this.cdr.markForCheck()
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['user'] && this.user) {
@@ -103,31 +120,55 @@ export class EditUserForm implements OnChanges {
     newUser.address = this.newUserForm.get('address')?.value?.trim() ?? this.user.address;
     const roleId = this.newUserForm.get('role')?.value;
     newUser.role = roleId != null ? { id: Number(roleId) } as Role : this.user.role;
-    this.userService.updateUser(newUser).subscribe({
-      next: (data:any)=>{
-        if(data.code == "200"){
 
+    if(newUser.role?.id == this.user.role?.id){
+      this.userService.updateUser(newUser).subscribe({
+        next: (data:any)=>{
+          if(data.code == "200"){
+            this.save(true);
+          }
+        },
+        error:(err)=>{
+          console.error(err)
+          this.save(false);
         }
-      },
-      error:(err)=>{
-        console.error(err)
-      }
-    })
+      })
+    }
+    else{
+      this.userService.updateUser(newUser).subscribe({
+        next: (data:any)=>{
+          if(data.code == "200"){
+            this.userService.updateUserRole(newUser).subscribe({
+              next: (data:any) => {
+                if(data.code == "200"){
+                  this.save(true);
+                }
+              },
+              error: (err)=>{
+                console.error(err)
+                this.save(false);
+              }
+            })
+          }
+        },
+        error:(err)=>{
+          console.error(err)
+          this.save(false);
+        }
+      })
+      
+    }
+    
 
-    this.userService.updateUserRole(newUser).subscribe({
-      next: (data:any) => {
-        if(data.code == "200"){
-          this.close();
-        }
-      },
-      error: (err)=>{
-        console.error(err)
-      }
-    })
+    
   }
 
   close(): void {
     this.onClose.emit();
+  }
+
+  save(isSave:boolean):void{
+    this.onChange.emit(isSave);
   }
 
   ngOnInit(){
