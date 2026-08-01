@@ -8,16 +8,14 @@ import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.dto.response.LoginResponse;
 import com.example.library_management.dto.response.UserResponse;
 import com.example.library_management.dto.response.auth.VerificationResponse;
-import com.example.library_management.service.Auth.AuthService;
-import com.example.library_management.service.Auth.VerificationService;
+import com.example.library_management.service.auth.AuthService;
+import com.example.library_management.service.auth.VerificationService;
 import com.example.library_management.service.MailService;
-import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
@@ -39,42 +37,32 @@ public class AuthController {
     private VerificationService verificationService;
 
     @PostMapping("/send-verification-code")
-    public ResponseEntity<ApiResponse<String>> SendVerificationEmail(
+    public ResponseEntity<ApiResponse<String>> sendVerificationEmail(
             @RequestBody UserRequest request,
             @RequestHeader(value = "Accept-Language", required = false) String lang
             ) {
         Locale locale = (lang != null) ? Locale.forLanguageTag(lang) : Locale.ENGLISH;
         String message = verificationService.sendVerificationEmail(request, locale);
-        if(message.equals("verification.Code.is.sent")){
-            return ResponseEntity.ok(ApiResponse.success(messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
-        }
-        else if(message.equals("error.Code.is.already.sent")){
-          return ResponseEntity.ok(ApiResponse.error("CODE-ALREADY-SENT", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
-        }
-        else if (message.equals("error.Email.has.been.used")) {
-            return ResponseEntity.ok(ApiResponse.error("EMAIL-IN-USE", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
-        } else{
-            return ResponseEntity.internalServerError().body(ApiResponse.error("SERVER-ERROR", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
-        }
+        return switch (message) {
+            case "verification.Code.is.sent" -> ResponseEntity.ok(ApiResponse.success(messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
+            case "error.Code.is.already.sent" -> ResponseEntity.badRequest().body(ApiResponse.error("CODE-ALREADY-SENT", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
+            case "error.Email.has.been.used" -> ResponseEntity.badRequest().body(ApiResponse.error("EMAIL-IN-USE", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
+            default -> ResponseEntity.internalServerError().body(ApiResponse.error("SERVER-ERROR", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
+        };
     }
 
     @PostMapping("/verify")
-    public ResponseEntity<ApiResponse<VerificationResponse>> BerifyEmail(
+    public ResponseEntity<ApiResponse<VerificationResponse>> verifyEmail(
             @RequestBody VerificationRequest request
     ){
-        if (verificationService.verifyCode(request.getEmail(), request.getCode())){
-            VerificationResponse response = new VerificationResponse(request.getEmail(), true);
-            return ResponseEntity.ok(ApiResponse.success(response));
-        }
-        else{
-            VerificationResponse response = new VerificationResponse(request.getEmail(), false);
-            return ResponseEntity.ok(ApiResponse.success(response));
-        }
+        VerificationResponse response = new VerificationResponse(request.getEmail(), verificationService.verifyCode(request.getEmail(), request.getCode()));
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<UserResponse>> register(@RequestBody RegisterRequest request) {
-        return ResponseEntity.status(201).body(ApiResponse.success(authService.register(request)));
+    public ResponseEntity<ApiResponse<UserResponse>> register(@RequestBody RegisterRequest request, @RequestHeader(value = "Accept-Language", required = false) String lang) {
+        Locale locale = (lang != null) ? Locale.forLanguageTag(lang) : Locale.ENGLISH;
+        return ResponseEntity.status(201).body(ApiResponse.success(authService.register(request, locale)));
     }
 
     @PostMapping("/login")

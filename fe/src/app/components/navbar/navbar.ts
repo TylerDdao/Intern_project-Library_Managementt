@@ -69,7 +69,7 @@ export class NavbarComponent {
         const user = JSON.parse(sessionStorage.getItem('user') ?? '{}');
         this.fullName = user.fullName || '';
         
-        if (user.role.name == "ROLE_ROOT") {
+        if (user.role?.name == "ROLE_ROOT") {
             this.pages = this.allPages;
         } 
         else {

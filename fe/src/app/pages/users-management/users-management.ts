@@ -80,7 +80,12 @@ export class UsersManagement {
     this.userService.getAllRoles().subscribe({
         next: (data: any) => {
           if (data.code == "200") {
-            this.roles = data.data.content;            
+            this.roles = data.data.content;
+            this.roles = data.data.content.sort((a: Role, b: Role) => {
+              if (a.name === 'ROLE_ROOT') return -1;
+              if (b.name === 'ROLE_ROOT') return 1;
+              return a.name.localeCompare(b.name);
+            });
             this.roles.forEach(role => {
                 this.userService.getUsersByRole(role.name).subscribe({
                     next: (userData: any) => {

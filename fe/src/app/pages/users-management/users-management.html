@@ -8,7 +8,13 @@
     </div>
     <div>
         @for (role of roles; track $index) {
-            <div class="headline">{{role.name}}</div>
+            <div class="flex items-center space-x-[5px] py-[5px]">
+                <div class="headline">{{role.name}}</div>
+                @if (role.name == "ROLE_ROOT") {
+                    <span class="material-symbols-outlined [font-variation-settings:'FILL'_1,'wght'_400,'GRAD'_0,'opsz'_24] text-primary-1">star</span>
+                }
+            </div>
+            
             <div class="users-container">
                 @if (getUsers(role).length > 0) {
                     @for (user of getUsers(role); track $index) {                    

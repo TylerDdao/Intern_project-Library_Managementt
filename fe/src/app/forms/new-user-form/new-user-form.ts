@@ -20,6 +20,8 @@ export class NewUserForm {
     private cdr: ChangeDetectorRef
   ){}
 
+  isUsernameInvalid:boolean = false;
+
   isVerifyingEmail:boolean = false;
   isEmailVerified:boolean=false;
   isEmailInvalid: boolean = false;
@@ -32,7 +34,7 @@ export class NewUserForm {
     phoneNumber: new FormControl('', Validators.required),
     email: new FormControl('', Validators.required),
     address: new FormControl(''),
-    role: new FormControl('4', Validators.required),
+    role: new FormControl<number | null>(null, Validators.required),
     verificationCode: new FormControl('', Validators.required)
   });
 

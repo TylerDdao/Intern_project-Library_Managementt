@@ -26,6 +26,9 @@
                         {{'form.Reset'|translate}}
                     </button>
                 </div>
+                @if (isUsernameInvalid) {
+                    <small>{{"verification.Please-verify-your-username"|translate}}</small>
+                }
             </div>
 
             <div class="flex flex-col">
@@ -53,6 +56,9 @@
                         {{'form.Reset'|translate}}
                     </button>
                 </div>
+                @if (isEmailInvalid) {
+                    <small>{{"verification.Please-verify-your-email"|translate}}</small>
+                }
             </div>
 
             @if (isVerifyingEmail){

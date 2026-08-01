@@ -1,15 +1,15 @@
-package com.example.library_management.service.Auth;
+package com.example.library_management.service.auth;
 
 import com.example.library_management.dto.request.user.UserRequest;
 import com.example.library_management.model.EmailVerification;
 import com.example.library_management.repository.UserRepository;
 import com.example.library_management.repository.VerificationRepository;
 import com.example.library_management.service.MailService;
+import com.example.library_management.util.AuditLogger;
 import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +30,7 @@ public class VerificationService {
     UserRepository userRepository;
 
     @Autowired
-    MessageSource messageSource;
+    private AuditLogger logger;
 
     private static final int CODE_LENGTH = 5;
     private static final int EXPIRY_MINUTES = 10;
@@ -93,6 +93,7 @@ public class VerificationService {
         vc.setVerified(true);
         vc.setIsActive(false);
         verificationRepository.save(vc);
+        logger.log("Verified email {}", email);
         return true;
     }
 }

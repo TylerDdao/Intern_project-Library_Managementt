@@ -1,45 +1,108 @@
 <app-navbar></app-navbar>
-<div class="min-h-screen flex flex-col justify-center items-center p-[10px]">
-    <div class="signup-area">
-        <h1 class="large-title font-bold text-steel-blue">Library Management System</h1>
-        <div class="flex flex-col justify-center items-center w-full space-y-[20px]">
-            <h1 class="headline text-steel-blue">{{"signup.Sign-up" | translate}}</h1>
-            @if(invalidInformation){
-                <div class="flex justify-end w-full">
-                    <h1 class="text-tomato-red subheadline">{{'signup.Please-check-your-information-again'|translate}}</h1>
-                </div>
-            }
-            <form id="signupForm" [formGroup]="signupForm" class="flex flex-col space-y-[10px] w-full" (ngSubmit)="onSubmit()" (input)="invalidInformation=false">
-            <div class="flex justify-between items-start space-x-[20px]">
-                <div class="flex flex-col space-y-[10px] w-full">
-                    <h1 class="headline text-steel-blue">{{"signup.account-information"|translate}}</h1>
-                        <input formControlName="username" type="text" [placeholder]="('account.username' | translate) + '*'" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
-                        <input formControlName="password" type="text" [placeholder]="('account.password' | translate) + '*'" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
-                        <input formControlName="email" type="text" [placeholder]="('account.email' | translate) + '*'" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
+<div class="fixed inset-0 flex items-center justify-center z-99">
+    <div class="container">
+        <div class="flex justify-between items-center">
+            <p class="headline font-bold">{{'signup.Signup'|translate}}</p>
+        </div>
+        <div class="info-container">
+            <form [formGroup]="newUserForm" id="newUserForm" (ngSubmit)="onSubmit()">
+                <div class="flex flex-col">
+                    <label for="username">{{'user.Username' |translate}}<sup class="text-tomato-red">*</sup></label>
+                    <div class="flex space-x-[5px]">
+                        <input id="username" formControlName="username" placeholder="{{'user.Username' | translate}}" type="text" class="rounded-[10px] w-full" [class]="isUsernameInvalid ? 'bg-pastel-red text-tomato-red' : 'bg-pastel-blue text-dodger-blue '"/>
+                        <button class="bg-steel-blue text-soft-ice rounded-[10px] px-[10px] text-nowrap">{{'form.Check-username'|translate}}</button>
+                    </div>
+                    @if (isUsernameInvalid) {
+                        <small>{{"verification.Please-verify-your-username"|translate}}</small>
+                    }
                 </div>
 
-                <div class="flex flex-col space-y-[10px] w-full">
-                    <h1 class="headline text-steel-blue">{{"account.personal-information"|translate}}</h1>
-                    <input formControlName="fullName" type="text" [placeholder]="('account.full-name' | translate) + '*'" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
-                    <input formControlName="phoneNumber" type="text" [placeholder]="('account.phone-number' | translate) + '*'" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
-                    <h1 class="headline text-steel-blue">{{("account.address"|translate) + ' (' + ("account.optional"|translate) + ')'}}</h1>
-                    <input formControlName="address" type="text" [placeholder]="('account.address' | translate)" class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"/>
+                <div class="flex flex-col">
+                    <label for="fullName">{{'user.Full-name' |translate}}<sup class="text-tomato-red">*</sup></label>
+                    <input id="fullName" formControlName="fullName" placeholder="{{'user.Full-name' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]"/>
                 </div>
-            </div>
+
+                <div class="flex flex-col">
+                    <label for="email">{{'user.Email' |translate}}<sup class="text-tomato-red">*</sup></label>
+                    <div class="flex space-x-[5px]">
+                        <input id="email" formControlName="email" placeholder="{{'user.Email' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full"/>
+                        
+
+                        @if (!isEmailVerified) {
+                            @if (!isSendingVerificationEmail) {
+                                <button type="button" class="bg-steel-blue text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px]" (click)="handleSendVerificationCode()">
+                                    {{'email.Verify'|translate}}
+                                </button>
+                            }
+                            @else {
+                                <div type="button" class="bg-steel-blue/70 text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px] cursor-not-allowed">
+                                    {{'email.Sending'|translate}}...
+                                </div>
+                            }
+                        }
+                        @else {
+                            <span class="material-symbols-outlined text-leaf-green">check_circle</span>
+                        }
+                    </div>
+                    @if (newUserForm.get('email')?.touched && newUserForm.get('email')?.invalid) {
+                        @if (newUserForm.get('email')?.errors?.['required']) {
+                            <small>{{'verification.Email-is-required'|translate}}</small>
+                        }
+
+                        @if (newUserForm.get('email')?.errors?.['email']) {
+                            <small>{{'verification.Please-enter-a-valid-email'|translate}}</small>
+                        }
+                    }
+                </div>
+
+                <div class="flex flex-col">
+                        <label for="verification">{{'email.Verification-code' |translate}}<sup class="text-tomato-red">*</sup></label>
+                        <div class="flex space-x-[5px] items-center">
+                            <input id="verification" formControlName="verificationCode" placeholder="{{'email.Verification-code' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full"/>
+                            
+                            @if (!isEmailVerified) {
+                                <button type="button" class="bg-steel-blue text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px]" (click)="handleVerify()">
+                                    {{'form.Send'|translate}}
+                                </button>
+                            }
+                            <!-- @else {
+                                <span class="material-symbols-outlined text-leaf-green">check_circle</span>
+                            } -->
+                        </div>
+                        @if (isEmailInvalid) {
+                            <small>{{"verification.Please-verify-your-email"|translate}}</small>
+                        }
+                    </div>
+
+                <div class="flex flex-col">
+                    <label for="password">{{'user.Password' |translate}}<sup class="text-tomato-red">*</sup></label>
+                    <input id="password" formControlName="password" placeholder="{{'user.Password' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]"/>
+                </div>
+
+                <div class="flex flex-col">
+                    <label for="phoneNumber">{{'user.Phone-number' |translate}}<sup class="text-tomato-red">*</sup></label>
+                    <input id="phoneNumber" formControlName="phoneNumber" placeholder="{{'user.Phone-number' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]"/>
+                    @if (newUserForm.get('phoneNumber')?.touched && newUserForm.get('phoneNumber')?.invalid) {
+                        @if (newUserForm.get('phoneNumber')?.errors?.['required']) {
+                            <small>{{'verification.Phone-number-is-required'|translate}}</small>
+                        }
+
+                        @if (newUserForm.get('phoneNumber')?.errors?.['pattern']) {
+                            <small>{{'verification.Please-enter-a-valid-phone-number'|translate}}</small>
+                        }
+                    }
+                </div>
+
+                <div class="flex flex-col">
+                    <label for="address">{{'user.Address' |translate}}</label>
+                    <input id="address" formControlName="address" placeholder="{{'user.Address' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]"/>
+                </div>
             </form>
         </div>
 
-        <div class="flex flex-col w-full items-end space-y-[10px]">
-            <button type="submit" form="signupForm" class="bg-steel-blue rounded-lg p-[10px] font-bold w-full text-soft-ice">{{'signup.Sign-up' | translate}}</button>
-            <p class="text-deep-charcoal font-bold">{{('signup.Already-had-an-account'|translate) + '?'}} <a routerLink="/login"><span class="text-steel-blue">{{'login.login' |translate}}</span></a></p>
+        <div class="flex space-x-[10px]">
+            <button type="submit" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice body rounded-[10px]">{{'form.Save'|translate}}</button>
+            <button class="border border-tomato-red px-[10px] py-[5px] text-tomato-red body rounded-[10px]" (click)="close()">{{'signup.Back-to-login'|translate}}</button>
         </div>
     </div>
-
-    
-    @if(signupCompleted){
-        <div class="complete-box">
-            <h1 class="text-leaf-green headline text-steel-blue">{{('signup.signup-completed' | translate) + '!'}}</h1>
-            <button (click)="router.navigate(['/login'])" class="bg-steel-blue rounded-lg p-[10px] font-bold w-full text-soft-ice">  {{'signup.back-to-login' | translate}}</button>
-        </div>
-    }
 </div>

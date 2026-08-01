@@ -1,6 +1,7 @@
 package com.example.library_management.dto.request.user;
 
 import com.example.library_management.dto.request.RoleRequest;
+import com.example.library_management.model.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,4 +18,19 @@ public class UserRequest {
     private String address = null;
     private String email;
     private String password = null;
+
+    public UserRequest(){
+
+    }
+
+    public UserRequest(User user){
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.role = user.getRole().getId();
+        this.phoneNumber = user.getPhoneNumber();
+        this.fullName = user.getFullName();
+        this.address = user.getAddress();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+    }
 }

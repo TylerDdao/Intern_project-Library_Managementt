@@ -1,4 +1,4 @@
-package com.example.library_management.service.Auth;
+package com.example.library_management.service.auth;
 
 import com.example.library_management.model.Feature;
 import com.example.library_management.repository.FeatureRepository;
@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Locale;
 
 @Slf4j
 @Service
@@ -55,6 +56,9 @@ public class AuthService {
 
     @Autowired
     private MessageSource messageSource;
+
+    @Autowired
+    private VerificationService verificationService;
 
     @Autowired
     AuditLogger logger;
@@ -119,7 +123,7 @@ public class AuthService {
         logger.log(username,"Logged out @{}", username);
     }
 
-    public UserResponse register(RegisterRequest request) {
+    public UserResponse register(RegisterRequest request, Locale locale) {
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new RuntimeException(messageSource.getMessage("error.username.taken", null, LocaleContextHolder.getLocale()));
         }
@@ -135,19 +139,11 @@ public class AuthService {
         user.setAddress(request.getAddress());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(defaultRole);
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        boolean isUser = auth == null
-//                || !auth.isAuthenticated()
-//                || auth instanceof AnonymousAuthenticationToken
-//                || auth.getAuthorities().stream()
-//                .anyMatch(a -> "ROLE_USER".equals(a.getAuthority()));
-//
-//        if(isUser) user.setRole(defaultRole);
-//        else {
-//            Role role = roleRepository.findByName("ROLE_USER")
-//                    .orElse(defaultRole);
-//            user.setRole(role);
-//        }
+
+        UserRequest userRequest = new UserRequest(user);
+
+        verificationService.sendVerificationEmail(userRequest, locale);
+
         User savedUser = userRepository.save(user);
         logger.log("SYSTEM","Registered @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
         return new UserResponse(savedUser);

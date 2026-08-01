@@ -1,57 +1,8 @@
-2026-07-29T09:31:46.166+07:00  INFO 7071 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Starting LibraryManagementApplication using Java 26.0.1 with PID 7071 (/Users/tylerdao/Desktop/Viettel Software/library-management/be/target/classes started by tylerdao in /Users/tylerdao/Desktop/Viettel Software/library-management/be/src/main/java)
-2026-07-29T09:31:46.169+07:00  INFO 7071 --- [library-management] [main] c.e.l.LibraryManagementApplication       : No active profile set, falling back to 1 default profile: "default"
-2026-07-29T09:31:46.579+07:00  INFO 7071 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-07-29T09:31:46.607+07:00  INFO 7071 --- [library-management] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 24 ms. Found 9 JPA repository interfaces.
-2026-07-29T09:31:46.898+07:00  INFO 7071 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
-2026-07-29T09:31:46.903+07:00  INFO 7071 --- [library-management] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-07-29T09:31:46.903+07:00  INFO 7071 --- [library-management] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
-2026-07-29T09:31:46.920+07:00  INFO 7071 --- [library-management] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 723 ms
-2026-07-29T09:31:46.982+07:00  INFO 7071 --- [library-management] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
-2026-07-29T09:31:47.010+07:00  INFO 7071 --- [library-management] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
-2026-07-29T09:31:47.185+07:00  INFO 7071 --- [library-management] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-07-29T09:31:47.197+07:00  INFO 7071 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-07-29T09:31:47.367+07:00  INFO 7071 --- [library-management] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@ec3944
-2026-07-29T09:31:47.368+07:00  INFO 7071 --- [library-management] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-07-29T09:31:47.414+07:00  INFO 7071 --- [library-management] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [jdbc:mysql://localhost:3306/library_db?zeroDateTimeBehavior=CONVERT_TO_NULL]
-	Database driver: MySQL Connector/J
-	Database dialect: MySQLDialect
-	Database version: 9.7
-	Default catalog/schema: library_db/undefined
-	Autocommit mode: undefined/unknown
-	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
-	JDBC fetch size: none
-	Pool: DataSourceConnectionProvider
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-07-29T09:31:47.852+07:00  INFO 7071 --- [library-management] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-07-29T09:31:47.929+07:00  INFO 7071 --- [library-management] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-07-29T09:31:47.957+07:00  INFO 7071 --- [library-management] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-07-29T09:31:48.113+07:00  INFO 7071 --- [library-management] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2026-07-29T09:31:48.114+07:00  WARN 7071 --- [library-management] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
-2026-07-29T09:31:48.702+07:00  WARN 7071 --- [library-management] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-07-29T09:31:48.966+07:00  INFO 7071 --- [library-management] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/api'
-2026-07-29T09:31:48.971+07:00  INFO 7071 --- [library-management] [main] c.e.l.LibraryManagementApplication       : Started LibraryManagementApplication in 3.028 seconds (process running for 3.276)
-2026-07-29T09:32:06.277+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-07-29T09:32:06.277+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-07-29T09:32:06.278+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2026-07-29T09:32:06.489+07:00  WARN 7071 --- [library-management] [http-nio-8080-exec-2] c.e.l.exception.GlobalExceptionHandler   : Exception code 401: Invalid username or password
-2026-07-29T09:32:17.382+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-4] c.e.library_management.util.AuditLogger  : [SYSTEM] Authorized @tyler, ID #1
-2026-07-29T09:32:17.513+07:00  WARN 7071 --- [library-management] [http-nio-8080-exec-2] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
-	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
-	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
-
-2026-07-29T09:37:28.743+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-10] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] marcus_vtest
-2026-07-29T09:37:28.743+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-8] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] marcus_vtest
-2026-07-29T09:37:29.761+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-7] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] marcus_vtest
-2026-07-29T09:37:29.764+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-2] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] marcus_vtest
-2026-07-29T09:38:38.888+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-9] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] marcus_vtest
-2026-07-29T09:38:38.888+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-3] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] marcus_vtest
-2026-07-29T09:38:50.383+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-8] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] marcus_v
-2026-07-29T09:38:50.383+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-7] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] marcus_v
-2026-07-29T09:38:50.427+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-2] c.e.library_management.util.AuditLogger  : [Updated role for @{}, ID #{} to {}] marcus_v
-2026-07-29T09:38:50.428+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-3] c.e.library_management.util.AuditLogger  : [Updated role for @{}, ID #{} to {}] marcus_v
-2026-07-29T09:38:55.202+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-9] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] marcus_v
-2026-07-29T09:38:55.205+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-6] c.e.library_management.util.AuditLogger  : [Updated @{}, ID #{}] marcus_v
-2026-07-29T09:38:55.224+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-4] c.e.library_management.util.AuditLogger  : [Updated role for @{}, ID #{} to {}] marcus_v
-2026-07-29T09:38:55.225+07:00  INFO 7071 --- [library-management] [http-nio-8080-exec-1] c.e.library_management.util.AuditLogger  : [Updated role for @{}, ID #{} to {}] marcus_v
+2026-08-01T01:17:44.430+07:00  WARN 20491 --- [library-management] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m37s454ms).
+2026-08-01T02:28:59.311+07:00  WARN 20491 --- [library-management] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=11m14s143ms).
+2026-08-01T03:13:52.528+07:00  WARN 20491 --- [library-management] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m21s322ms).
+2026-08-01T04:33:34.814+07:00  WARN 20491 --- [library-management] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m41s397ms).
+2026-08-01T05:56:42.769+07:00  WARN 20491 --- [library-management] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=14m7s55ms).
+2026-08-01T07:16:57.990+07:00  WARN 20491 --- [library-management] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m14s382ms).
+2026-08-01T08:39:19.835+07:00  WARN 20491 --- [library-management] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=13m20s988ms).
+2026-08-01T08:41:10.584+07:00  WARN 20491 --- [library-management] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m50s750ms).
