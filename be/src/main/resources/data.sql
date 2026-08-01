@@ -86,7 +86,7 @@ INSERT IGNORE INTO genres (id, name) VALUES
 
 INSERT IGNORE INTO books (id, title, author, copies, created_at, cover_url) VALUES
     (1, 'Project Hail Mary', 'Andy Weir', 10, DATE_SUB(NOW(), INTERVAL 6 DAY), '1.jpg'),
-    (2, 'Go for it, Nakamura-kun', 'Syundei', 5, DATE_SUB(NOW(), INTERVAL 6 DAY), '2.jpg'),
+    (2, 'We Are Legion (We Are Bob)', 'Dennis E. Taylor', 5, DATE_SUB(NOW(), INTERVAL 6 DAY), '2.jpg'),
     (3, 'The Song of Achilles', 'Madeline Miller', 1, DATE_SUB(NOW(), INTERVAL 18 DAY), '3.jpg'),
     (4, 'The Martian', 'Andy Weir', 0, DATE_SUB(NOW(), INTERVAL 10 DAY), '4.jpg'),
     (5, 'Dune', 'Frank Herbert', 0, DATE_SUB(NOW(), INTERVAL 19 DAY), '5.jpg'),
@@ -112,7 +112,7 @@ INSERT IGNORE INTO books (id, title, author, copies, created_at, cover_url) VALU
 
 INSERT IGNORE INTO books_genres (book_id, genre_id) VALUES
     (1, 1),
-    (2, 2), (2, 3),
+    (2, 1),
     (3, 2), (3, 4), (3, 5),
     (4, 1),
     (5, 1),
@@ -156,7 +156,8 @@ INSERT IGNORE INTO posts (id, created_at, created_by, is_active, is_deleted, upd
 
     -- Posts from 8 days ago
     (7, DATE_SUB(NOW(), INTERVAL 8 DAY), 'tyler', true, false, null, null, 'Just finished Dune. The political intrigue and world-building live up to every bit of the hype.', 'Dune lived up to the hype', 5),
-    (8, DATE_SUB(NOW(), INTERVAL 7 DAY), 'tyler', true, false, null, null, 'The relationship dynamics in this manga are incredibly pure. A quick, comforting read.', 'Highly recommend this cute manga', 2),
+    (8, DATE_SUB(NOW(), INTERVAL 7 DAY), 'tyler', true, false, null, null, 'Bob Johansson wakes up as an AI in a Von Neumann probe. The humor and science blend perfectly.', 'We Are Legion is endlessly fun', 2),
+
     -- Posts from 6 days ago
     (9, DATE_SUB(NOW(), INTERVAL 6 DAY), 'tyler', true, false, null, null, 'William Gibson essentially predicted the modern internet framework back in 1984. Mind-blowing prose.', 'Cyberpunk roots: Neuromancer', 6),
     (10, DATE_SUB(NOW(), INTERVAL 5 DAY), 'tyler', true, false, null, null, 'Currently weeping. Madeline Miller has a way of writing heartbreak that lingers for days.', 'Song of Achilles broke me', 3),
@@ -184,7 +185,7 @@ INSERT IGNORE INTO posts (id, created_at, created_by, is_active, is_deleted, upd
     (24, DATE_SUB(NOW(), INTERVAL 4 HOUR), 'sarah_j', true, false, null, null, 'The transition from lighthearted high school comedy to high-stakes psychological warfare is epic.', 'Mind games and romance mixed perfectly', 18),
     (25, DATE_SUB(NOW(), INTERVAL 2 HOUR), 'marcus_v', true, false, null, null, 'The emotional bond between the main characters makes the inevitable tragedy sting so much worse.', 'A modern classic mythology retelling', 3),
     (26, DATE_SUB(NOW(), INTERVAL 15 MINUTE), 'sarah_j', true, false, null, null, 'The action choreography paneling is some of the cleanest I have ever seen in modern manga.', 'Tanjiros journey begins here', 10),
-    (27, DATE_SUB(NOW(), INTERVAL 17 MINUTE), 'chloe_l', true, false, null, null, 'This is a nice manga', 'Review of my favorite manga recently!!', 2);
+    (27, DATE_SUB(NOW(), INTERVAL 17 MINUTE), 'chloe_l', true, false, null, null, 'Dennis Taylor writes Bob with such humor and heart. A must-read for sci-fi fans.', 'We Are Legion is a hidden gem', 2);
 
 INSERT IGNORE INTO policies (policy_key, policy_value) VALUES
     ("borrow_duration", "14");
