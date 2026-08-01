@@ -5,9 +5,11 @@ import com.example.library_management.dto.response.BorrowResponse;
 import com.example.library_management.exception.ApiException;
 import com.example.library_management.model.Book;
 import com.example.library_management.model.Borrow;
+import com.example.library_management.model.Policy;
 import com.example.library_management.model.User;
 import com.example.library_management.repository.BookRepository;
 import com.example.library_management.repository.BorrowRepository;
+import com.example.library_management.repository.PolicyRepository;
 import com.example.library_management.repository.UserRepository;
 import com.example.library_management.util.AuditLogger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -40,6 +43,9 @@ public class CreateBorrowService {
     @Autowired
     private MessageSource messageSource;
 
+    @Autowired
+    private PolicyRepository policyRepository;
+
     @Transactional
     public BorrowResponse createBorrow(BorrowRequest request){
         Optional<Borrow> existing = borrowRepository.findByUserIdAndBookIdAndIsActive(request.getUserId(), request.getBookId(), true);
@@ -56,10 +62,14 @@ public class CreateBorrowService {
 
         book.setCopies(book.getCopies() - 1);
 
+        Policy borrowDuration = policyRepository.findByKey("borrow_duration").orElseThrow(()->new RuntimeException(messageSource.getMessage("error.policy.not.found",null, LocaleContextHolder.getLocale())));
 
         newBorrow.setUser(user);
         newBorrow.setBook(book);
-        newBorrow.setDueDate(request.getDueDate());
+
+        int days = Integer.parseInt(borrowDuration.getValue());
+        newBorrow.setDueDate(LocalDateTime.now().plusDays(days));
+
         borrowRepository.save(newBorrow);
         bookRepository.save(book);
         return new BorrowResponse(newBorrow);

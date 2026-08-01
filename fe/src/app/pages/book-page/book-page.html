@@ -4,7 +4,7 @@
         <div class="title-1 font-bold">{{"bookPage.Book-information"|translate}}</div>
         @if (book) {
             <div class="book-container">
-                <img src="/book-covers/{{bookCover}}.jpg" class="book-cover" (error)="onImageError($event)"/>
+                <img src="http://127.0.0.1:8080/api/book-covers/{{book.coverUrl}}" class="book-cover" (error)="onImageError($event)"/>
                 <div>
                     <h1 class="title-3 font-bold book-info">{{book.title}}</h1>
                     <h1 class="body font-bold book-info">{{'book.Author'|translate}}: {{book.author}}</h1>

@@ -4,6 +4,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { SideBarQuery } from '../../components/sort-side-bar-component/sort-side-bar-component';
 import { environment } from '../../../environments/environment';
 import { getAuthHeaders } from '../auth-service';
+import { Book } from '../../models/book';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,16 @@ export class BookService {
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
+
+  createBook(bookData: any, file: File | null) {
+    const formData = new FormData();
+    formData.append('data', new Blob([JSON.stringify(bookData)], { type: 'application/json' }));
+    if (file) {
+      formData.append('file', file);
+    }
+
+    return this.http.post(`${this.baseUrl}`, formData, { headers: getAuthHeaders(this.platformId) });
+  }
 
   getAllBooks(page: number = 0, limit: number = 10) {
     return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}`, {

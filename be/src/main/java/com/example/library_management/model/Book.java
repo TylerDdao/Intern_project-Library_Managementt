@@ -27,6 +27,9 @@ public class Book extends BaseEntity {
     @Column(nullable = false)
     private int copies;
 
+    @Column(length = 255)
+    private String coverUrl;
+
     @ManyToMany
     @JoinTable(
             name = "Books_Genres",

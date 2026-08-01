@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="flex flex-col space-y-[30px]">
+        <div class="flex justify-between items-center">
+            <p class="headline font-bold">{{'borrowPolicyForm.Borrow-policy'|translate}}</p>
+            <span (click)="close()" class="material-symbols-outlined cursor-pointer">close</span>
+        </div>
+        
+        @if (policy) {
+            <form  [formGroup]="borrowPolicyForm" id="borrowPolicyForm" (ngSubmit)="onSubmit()">
+                <div>
+                    <label for="borrow-duration">{{"borrowPolicy.Borrow-duration"}}</label>
+                    <div class="flex items-center space-x-[5px]">
+                        <input id="borrow-duration" formControlName="borrowDuration" placeholder="{{'Borrow.Borrow-duation' | translate}}" type="number" class="rounded-[10px] w-full bg-pastel-blue text-dodger-blue "/>
+                        <div class="headline">{{"borrow.Days"|translate}}</div>
+                    </div>
+                </div>
+            </form>
+        }
+        @else {
+            <app-loading-component></app-loading-component>
+        }
+    </div>
+
+    <div class="flex space-x-[10px]">
+        <button type="submit" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice body rounded-[10px]" (click)="onSubmit()">{{'form.Save'|translate}}</button>
+        <button class="border border-tomato-red px-[10px] py-[5px] text-tomato-red body rounded-[10px]" (click)="close()">{{'form.Cancel'|translate}}</button>
+    </div>
+</div>

@@ -51,9 +51,7 @@ export class BookPage{
     const message = this.translate.instant('bookPage.Confirm-borrow');
     const confirmed = confirm(message);
     if(this.book && confirmed){
-      const dueDate = new Date();
-      dueDate.setDate(dueDate.getDate() + 14);
-      this.borrowService.createBorrow(this.book, dueDate.toISOString()).subscribe({
+      this.borrowService.createBorrow(this.book).subscribe({
         next: (data:any)=>{
           if(data.code == "200"){
             alert("Borrow created")

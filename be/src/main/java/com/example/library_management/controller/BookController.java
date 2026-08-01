@@ -9,9 +9,11 @@ import com.example.library_management.service.book.GetBookService;
 import com.example.library_management.service.book.UpdateBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -110,9 +112,20 @@ public class BookController {
     }
 
     @PreAuthorize("@securityService.hasAccess('CREATE_BOOK')")
-    @PostMapping("")
-    public ResponseEntity<ApiResponse<BookResponse>> addBook(@RequestBody BookRequest request){
+    @PostMapping()
+    public ResponseEntity<ApiResponse<BookResponse>> addBook(
+            @RequestBody BookRequest request
+    ) {
         return ResponseEntity.ok(ApiResponse.success(createBookService.addBook(request)));
+    }
+
+    @PreAuthorize("@securityService.hasAccess('CREATE_BOOK')")
+    @PostMapping("/upload-book-cover")
+    public ResponseEntity<ApiResponse<Boolean>> uploadBookCover(
+            @RequestParam() Long id,
+            @RequestPart(value = "file", required = false) MultipartFile file
+    ){
+        return ResponseEntity.ok(ApiResponse.success(createBookService.uploadBookCover(id, file)));
     }
 
     @PreAuthorize("@securityService.hasAccess('UPDATE_BOOK')")

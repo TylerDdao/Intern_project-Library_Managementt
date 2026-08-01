@@ -7,6 +7,7 @@ import { Page } from '../../models/page';
 import { isPlatformBrowser } from '@angular/common';
 import { PagesComponent } from '../../components/pages-component/pages-component';
 import { LanguageService } from '../../services/language-service/language-service';
+import { BookService } from '../../services/book-service/book-service';
 
 @Component({
   selector: 'app-new-book-form',
@@ -16,6 +17,7 @@ import { LanguageService } from '../../services/language-service/language-servic
 })
 export class NewBookForm {
 @Output() onClose = new EventEmitter<void>();
+@Output() onChange = new EventEmitter<boolean>();
 
   selectedFile: File | null = null;
   preview: string | null = null;
@@ -33,15 +35,15 @@ export class NewBookForm {
   constructor(
     private cdr: ChangeDetectorRef,
     private genreService: GenreService,
-    private translate: TranslateService,
     @Inject(PLATFORM_ID) private platformId: Object,
+    private bookService: BookService
   ){}
 
   newBookForm = new FormGroup({
     title: new FormControl('', Validators.required),
     author: new FormControl('', Validators.required),
     copies: new FormControl('', Validators.required),
-    genres: new FormControl<string[]>([], Validators.required),
+    genres: new FormControl<string[]>([], Validators.required)
   });
 
   // handleAddGenre(genre: Genre){
@@ -82,7 +84,22 @@ export class NewBookForm {
   }
 
   onSubmit(){
-    console.log("Submit")
+    const bookData = {
+      title: this.newBookForm.get('title')?.value,
+      author: this.newBookForm.get('author')?.value,
+      copies: this.newBookForm.get('copies')?.value,
+      genres: this.chosenGenres.map(g => g.name)
+    };
+
+    this.bookService.createBook(bookData, this.selectedFile).subscribe({
+      next: (data: any) => {
+        if (data.code == "200") {
+          this.onChange.emit(true);
+          this.close();
+        }
+      },
+      error: (err) => console.error(err)
+    });
   }
 
   close(): void {

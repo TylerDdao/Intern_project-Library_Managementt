@@ -65,9 +65,19 @@ export class Signup {
         if(data.code == "200"){
           const message = this.translate.instant("verification.Your-verification-code-has-been-sent-to-your-email");
           alert(message)
-          this.isSendingVerificationEmail = false;
-          this.cdr.markForCheck();
+          
         }
+        if(data.code == "CODE-ALREADY-SENT"){
+          const message = this.translate.instant("verification.Your-verification-code-has-already-been-sent-to-your-email");
+          alert(message +"\n" + data.code)
+        }
+        if(data.code == "EMAIL-IN-USE"){
+          const message = this.translate.instant("verification.Email-has-been-used");
+          alert(message +"\n" + data.code)
+          this.isVerifyingEmail = false;
+        }
+        this.isSendingVerificationEmail = false;
+        this.cdr.markForCheck();
       },
       error: (err)=>{
         const message = this.translate.instant("verification.There-is-an-error-while-sending-verification-code");

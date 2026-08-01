@@ -17,6 +17,7 @@ public class BookResponse {
     private List<String> genres = new ArrayList<>();
     private int copies;
     private boolean isBorrowed;
+    private String coverUrl;
 
     public BookResponse(Book book){
         this.id = book.getId();
@@ -26,5 +27,6 @@ public class BookResponse {
         genres.forEach(genre -> this.genres.add(genre.getName()));
         this.copies = book.getCopies();
         this.isBorrowed = false;
+        this.coverUrl = book.getCoverUrl();
     }
 }

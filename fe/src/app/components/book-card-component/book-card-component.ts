@@ -12,12 +12,9 @@ export class BookCardComponent {
   @Input({ required: true }) book!: Book;
   @Input() accessible: boolean = true
 
-  bookCover = ''
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['book'] && this.book) {
-        this.bookCover = this.book.title.replaceAll(' ', '-').toLowerCase();
-    }
+
   }
 
   onImageError(event: Event): void {

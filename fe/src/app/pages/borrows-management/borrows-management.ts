@@ -9,14 +9,17 @@ import { Borrow } from '../../models/borrow';
 import { PagesComponent } from '../../components/pages-component/pages-component';
 import { Page } from '../../models/page';
 import { BorrowListComponent } from '../../components/borrow-list-component/borrow-list-component';
+import { BorrowPolicyForm } from '../../forms/borrow-policy-form/borrow-policy-form';
 
 @Component({
   selector: 'app-borrows-management',
-  imports: [TranslateModule, NavbarComponent, SortSideBarComponent, BorrowCardComponent, PagesComponent, BorrowListComponent],
+  imports: [TranslateModule, NavbarComponent, SortSideBarComponent, BorrowCardComponent, PagesComponent, BorrowListComponent, BorrowPolicyForm],
   templateUrl: './borrows-management.html',
   styleUrl: './borrows-management.css',
 })
 export class BorrowsManagement {
+  isBorrowPolicyOpen: boolean = false;
+
   isSearch: boolean = false;
 
   result: Borrow[] = []
@@ -81,6 +84,11 @@ export class BorrowsManagement {
     protected cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
   ){}
+
+  handleCloseBorrowPolicy(){
+    this.isBorrowPolicyOpen = false;
+    this.cdr.markForCheck();
+  }
 
   handleCloseList(){
     this.isOpenActiveList = false;

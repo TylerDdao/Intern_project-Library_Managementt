@@ -1,0 +1,28 @@
+@media (min-width: 1024px) {
+    .container{
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+        background: white;
+        border-radius: 10px;
+        gap: 30px;
+        min-width: 50vw;
+        max-height: 80vh;
+    }
+
+    .new-book-container{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+        flex: 1;
+        min-height: 0
+    }
+
+    .book-cover{
+        border-radius: 10px;
+        height: 300px;
+        max-width: 300px;
+        width: fit-content;
+    }
+}

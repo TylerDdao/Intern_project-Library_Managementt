@@ -42,7 +42,9 @@ INSERT IGNORE INTO features (id, name) VALUES
     (31, 'DELETE_POST_MULTI'),
     (32, 'DELETE_COMMENT_MULTI'),
     (33, 'GET_BORROW_MULTI'),
-    (34, 'UPDATE_USER_ROLE');
+    (34, 'UPDATE_USER_ROLE'),
+    (35, 'GET_POLICY'),
+    (36, 'UPDATE_POLICY');
 
 INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
     (4, 5),  (4, 6),  (4, 8),  (4, 9),  (4, 10),
@@ -82,31 +84,31 @@ INSERT IGNORE INTO genres (id, name) VALUES
     (9, 'Dystopian'),
     (10, 'Self-Help');
 
-INSERT IGNORE INTO books (id, title, author, copies, created_at) VALUES
-    (1, 'Project Hail Mary', 'Andy Weir', 10, DATE_SUB(NOW(), INTERVAL 6 DAY)),
-    (2, 'Go for it, Nakamura-kun', 'Syundei', 5, DATE_SUB(NOW(), INTERVAL 6 DAY)),
-    (3, 'The Song of Achilles', 'Madeline Miller', 1, DATE_SUB(NOW(), INTERVAL 18 DAY)),
-    (4, 'The Martian', 'Andy Weir', 0, DATE_SUB(NOW(), INTERVAL 10 DAY)),
-    (5, 'Dune', 'Frank Herbert', 0, DATE_SUB(NOW(), INTERVAL 19 DAY)),
-    (6, 'Neuromancer', 'William Gibson', 0, DATE_SUB(NOW(), INTERVAL 5 DAY)),
-    (7, 'Pride and Prejudice', 'Jane Austen', 0, DATE_SUB(NOW(), INTERVAL 1 DAY)),
-    (8, 'The Seven Husbands of Evelyn Hugo', 'Taylor Jenkins Reid', 0, DATE_SUB(NOW(), INTERVAL 17 DAY)),
-    (9, 'Spy x Family, Vol. 1', 'Tatsuya Endo', 0, DATE_SUB(NOW(), INTERVAL 1 DAY)),
-    (10, 'Demon Slayer: Kimetsu no Yaiba, Vol. 1', 'Koyoharu Gotouge', 0, DATE_SUB(NOW(), INTERVAL 2 DAY )),
-    (11, 'Chainsaw Man, Vol. 1', 'Tatsuki Fujimoto', 11, DATE_SUB(NOW(), INTERVAL 9 DAY)),
-    (12, 'The Book Thief', 'Markus Zusak', 5, DATE_SUB(NOW(), INTERVAL 2 DAY)),
-    (13, 'All the Light We Cannot See', 'Anthony Doerr', 0, DATE_SUB(NOW(), INTERVAL 18 DAY)),
-    (14, 'The Nightingale', 'Kristin Hannah', 6, DATE_SUB(NOW(), INTERVAL 20 DAY)),
-    (15, 'Circe', 'Madeline Miller', 4, DATE_SUB(NOW(), INTERVAL 9 DAY)),
-    (16, 'Snow Crash', 'Neal Stephenson', 3, DATE_SUB(NOW(), INTERVAL 0 DAY)),
-    (17, 'A Court of Thorns and Roses', 'Sarah J. Maas', 8, DATE_SUB(NOW(), INTERVAL 1 DAY)),
-    (18, 'Kaguya-sama: Love Is War, Vol. 1', 'Aka Akasaka', 0, DATE_SUB(NOW(), INTERVAL 6 DAY)),
-    (19, 'The Hobbit', 'J.R.R. Tolkien', 12, DATE_SUB(NOW(), INTERVAL 5 DAY)),
-    (20, 'The Fellowship of the Ring', 'J.R.R. Tolkien', 8, DATE_SUB(NOW(), INTERVAL 4 DAY)),
-    (21, 'Gone Girl', 'Gillian Flynn', 6, DATE_SUB(NOW(), INTERVAL 3 DAY)),
-    (22, 'The Girl with the Dragon Tattoo', 'Stieg Larsson', 0, DATE_SUB(NOW(), INTERVAL 9 DAY)),
-    (23, '1984', 'George Orwell', 15, DATE_SUB(NOW(), INTERVAL 7 DAY)),
-    (24, 'Atomic Habits', 'James Clear', 0, DATE_SUB(NOW(), INTERVAL 8 DAY));
+INSERT IGNORE INTO books (id, title, author, copies, created_at, cover_url) VALUES
+    (1, 'Project Hail Mary', 'Andy Weir', 10, DATE_SUB(NOW(), INTERVAL 6 DAY), '1.jpg'),
+    (2, 'Go for it, Nakamura-kun', 'Syundei', 5, DATE_SUB(NOW(), INTERVAL 6 DAY), '2.jpg'),
+    (3, 'The Song of Achilles', 'Madeline Miller', 1, DATE_SUB(NOW(), INTERVAL 18 DAY), '3.jpg'),
+    (4, 'The Martian', 'Andy Weir', 0, DATE_SUB(NOW(), INTERVAL 10 DAY), '4.jpg'),
+    (5, 'Dune', 'Frank Herbert', 0, DATE_SUB(NOW(), INTERVAL 19 DAY), '5.jpg'),
+    (6, 'Neuromancer', 'William Gibson', 0, DATE_SUB(NOW(), INTERVAL 5 DAY), '6.jpg'),
+    (7, 'Pride and Prejudice', 'Jane Austen', 0, DATE_SUB(NOW(), INTERVAL 1 DAY), '7.jpg'),
+    (8, 'The Seven Husbands of Evelyn Hugo', 'Taylor Jenkins Reid', 0, DATE_SUB(NOW(), INTERVAL 17 DAY), '8.jpg'),
+    (9, 'Spy x Family, Vol. 1', 'Tatsuya Endo', 0, DATE_SUB(NOW(), INTERVAL 1 DAY), '9.jpg'),
+    (10, 'Demon Slayer: Kimetsu no Yaiba, Vol. 1', 'Koyoharu Gotouge', 0, DATE_SUB(NOW(), INTERVAL 2 DAY), '10.jpg'),
+    (11, 'Chainsaw Man, Vol. 1', 'Tatsuki Fujimoto', 11, DATE_SUB(NOW(), INTERVAL 9 DAY), '11.jpg'),
+    (12, 'The Book Thief', 'Markus Zusak', 5, DATE_SUB(NOW(), INTERVAL 2 DAY), '12.jpg'),
+    (13, 'All the Light We Cannot See', 'Anthony Doerr', 0, DATE_SUB(NOW(), INTERVAL 18 DAY), '13.jpg'),
+    (14, 'The Nightingale', 'Kristin Hannah', 6, DATE_SUB(NOW(), INTERVAL 20 DAY), '14.jpg'),
+    (15, 'Circe', 'Madeline Miller', 4, DATE_SUB(NOW(), INTERVAL 9 DAY), '15.jpg'),
+    (16, 'Snow Crash', 'Neal Stephenson', 3, DATE_SUB(NOW(), INTERVAL 0 DAY), '16.jpg'),
+    (17, 'A Court of Thorns and Roses', 'Sarah J. Maas', 8, DATE_SUB(NOW(), INTERVAL 1 DAY), '17.jpg'),
+    (18, 'Kaguya-sama: Love Is War, Vol. 1', 'Aka Akasaka', 0, DATE_SUB(NOW(), INTERVAL 6 DAY), '18.jpg'),
+    (19, 'The Hobbit', 'J.R.R. Tolkien', 12, DATE_SUB(NOW(), INTERVAL 5 DAY), '19.jpg'),
+    (20, 'The Fellowship of the Ring', 'J.R.R. Tolkien', 8, DATE_SUB(NOW(), INTERVAL 4 DAY), '20.jpg'),
+    (21, 'Gone Girl', 'Gillian Flynn', 6, DATE_SUB(NOW(), INTERVAL 3 DAY), '21.jpg'),
+    (22, 'The Girl with the Dragon Tattoo', 'Stieg Larsson', 0, DATE_SUB(NOW(), INTERVAL 9 DAY), '22.jpg'),
+    (23, '1984', 'George Orwell', 15, DATE_SUB(NOW(), INTERVAL 7 DAY), '23.jpg'),
+    (24, 'Atomic Habits', 'James Clear', 0, DATE_SUB(NOW(), INTERVAL 8 DAY), '24.jpg');
 
 INSERT IGNORE INTO books_genres (book_id, genre_id) VALUES
     (1, 1),
@@ -183,6 +185,9 @@ INSERT IGNORE INTO posts (id, created_at, created_by, is_active, is_deleted, upd
     (25, DATE_SUB(NOW(), INTERVAL 2 HOUR), 'marcus_v', true, false, null, null, 'The emotional bond between the main characters makes the inevitable tragedy sting so much worse.', 'A modern classic mythology retelling', 3),
     (26, DATE_SUB(NOW(), INTERVAL 15 MINUTE), 'sarah_j', true, false, null, null, 'The action choreography paneling is some of the cleanest I have ever seen in modern manga.', 'Tanjiros journey begins here', 10),
     (27, DATE_SUB(NOW(), INTERVAL 17 MINUTE), 'chloe_l', true, false, null, null, 'This is a nice manga', 'Review of my favorite manga recently!!', 2);
+
+INSERT IGNORE INTO policies (policy_key, policy_value) VALUES
+    ("borrow_duration", "14");
 
 INSERT IGNORE INTO post_likes (id, post_id, user_id) VALUES
     (1, 2, 1),

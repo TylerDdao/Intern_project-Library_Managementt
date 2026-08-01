@@ -53,7 +53,7 @@ export class PostService {
   }
 
   getPostsByBookId(bookId: number, page: number = 0, limit: number = 10){
-    return this.http.get(`${this.baseUrl}/posts?page=${page}&limit=${limit}&bookId=${bookId}`, {
+    return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}&bookId=${bookId}`, {
       headers: getAuthHeaders(this.platformId)
     })
   }

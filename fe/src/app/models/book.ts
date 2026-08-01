@@ -5,5 +5,5 @@ export interface Book {
     genres?: string[],
     copies: number,
     borrowed?: boolean,
-    bookCover?: string,
+    coverUrl?: string,
 }

@@ -1,7 +1,7 @@
 <div class="container">
     <div class="borrow-card">
         <div class="borrow-info">
-            <img src="http://127.0.0.1:8080/book-covers/{{bookCover}}.jpg" alt="{{borrow.book.title}}" class="book-cover" (error)="onImageError($event)"/>
+            <img src="http://127.0.0.1:8080/api/book-covers/{{borrow.book.coverUrl}}" alt="{{borrow.book.title}}" class="book-cover" (error)="onImageError($event)"/>
             <div class="book-info-area">
                 <h1 class="headline">{{'borrow.Borrow'|translate}} #{{borrow.id}}</h1>
                 <h1 class="subheadline font-bold">{{borrow.book.title}}</h1>

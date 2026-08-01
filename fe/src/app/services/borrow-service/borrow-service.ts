@@ -77,10 +77,10 @@ export class BorrowService {
     );
   }
 
-  createBorrow(book: Book, dueDate: String) {
+  createBorrow(book: Book) {
     const user = getUser();
     return this.http.post(`${this.baseUrl}`,
-      {bookId: book.id, userId: user?.id, dueDate: dueDate},
+      {bookId: book.id, userId: user?.id},
       {headers: getAuthHeaders(this.platformId)}
     )
   }

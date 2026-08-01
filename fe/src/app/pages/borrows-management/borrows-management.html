@@ -7,6 +7,7 @@
             <button class="bg-primary-1 text-soft-ice p-[5px] rounded-[10px] headline" (click)="fetchActiveBorrows()">{{'borrowsManagement.All-active-borrows'|translate}}</button>
             <button class="bg-leaf-green text-soft-ice p-[5px] rounded-[10px] headline" (click)="fetchReturnedBorrows()">{{'borrowsManagement.All-returned-borrows'|translate}}</button>
             <button class="text-primary-1 p-[5px] rounded-[10px] border border-primary-1 headline">{{'management.Export'|translate}}</button>
+            <button class="text-leaf-green p-[5px] rounded-[10px] border border-leaf-green headline" (click)="isBorrowPolicyOpen = true">{{'borrowsManagement.Modify-borrow-policy'|translate}}</button>
         </div>
     </div>
 
@@ -119,6 +120,12 @@
                     }
                 </div>
             }
+        </div>
+    }
+
+    @if (isBorrowPolicyOpen) {
+        <div class="fixed inset-0 flex items-center justify-center z-99">
+            <app-borrow-policy-form (onClose)="handleCloseBorrowPolicy()"></app-borrow-policy-form>
         </div>
     }
 </div>
