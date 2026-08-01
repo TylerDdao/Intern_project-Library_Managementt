@@ -197,17 +197,17 @@ export class BooksManagement {
     })
   }
 
-  fetchBookList(page:Page = this.bookListPage){
-    this.bookService.getAllBooks(page.number).subscribe({
-      next:(data: any) => {
-        if(data.code == "200"){
-          this.bookList= data.data.content;
-          this.isOpenBookList = true;
-          this.cdr.markForCheck();
-        }
-      }
-    })
-  }
+  // fetchBookList(page:Page = this.bookListPage){
+  //   this.bookService.getAllBooks(page.number).subscribe({
+  //     next:(data: any) => {
+  //       if(data.code == "200"){
+  //         this.bookList= data.data.content;
+  //         this.isOpenBookList = true;
+  //         this.cdr.markForCheck();
+  //       }
+  //     }
+  //   })
+  // }
 
   handleCloseBookList(){
     this.isOpenBookList = false;

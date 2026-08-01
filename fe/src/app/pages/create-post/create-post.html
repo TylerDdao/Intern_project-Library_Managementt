@@ -11,7 +11,7 @@
                 <div class="flex space-x-[5px] items-center">
                     <div class="book-info-container select-none cursor-pointer" (click)="fetchBooks()">
                         <div class="flex space-x-[5px] items-start">
-                            <img src="/book-covers/{{bookCover}}.jpg" class="book-cover" (error)="onImageError($event)"/>
+                            <img src="{{backendUrl}}/api/book-covers/{{chosenBook.coverUrl}}" class="book-cover" (error)="onImageError($event)"/>
                             <div>
                                 <h1 class="header font-bold">{{chosenBook.title}}</h1>
                                 <h1 class="subheader font-bold">{{'book.Author'|translate}}: {{chosenBook.author}}</h1>
@@ -53,7 +53,7 @@
     @if(isOpenBookList){
         <div class="fixed inset-0 flex items-center justify-center z-99">
             @if (books) {
-                <app-book-list-component [selectable]="true" [books]="books" [page]="booksPage" (onClose)="handleCloseBookList()" (onChange)="fetchBooks($event)" (onSelect)="handleSelectBook($event)"></app-book-list-component>
+                <app-book-list-component [selectable]="true" (onClose)="handleCloseBookList()" (onChange)="fetchBooks($event)" (onSelect)="handleSelectBook($event)"></app-book-list-component>
             }
             @else {
                 <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>

@@ -3,18 +3,34 @@
         <div class="headline">{{"bookList.List"|translate}}</div>
         <span (click)="close()" class="material-symbols-outlined cursor-pointer">close</span>
     </div>
-    <div class="books-list">
-        @for (book of books; track book.id) {
-            @if (selectable) {
-                <div class="flex flex-col space-y-[5px]">
-                    <app-book-card-component [book]="book"></app-book-card-component>
-                    <button class="px-[10px] py-[5px] bg-primary-1 text-soft-ice rounded-[10px]" (click)="selectBook(book)">{{'bookList.Select-this-book'}}</button>
-                </div>
-            }
-            @else {
-                <app-book-card-component [book]="book"></app-book-card-component>
-            }
+    @if (isLoadingBookList) {
+        <div class="flex justify-center w-full h-full items-center">
+            <app-loading-component></app-loading-component>
+        </div>
+    }
+    @else{
+        @if (bookList.length > 0) {
+            <div>{{"bookList.Total-number-of-book"|translate}}: {{totalBooks}}</div>
+            <div class="books-list">
+                @for (book of bookList; track book.id) {
+                    @if (selectable) {
+                        <div class="flex flex-col space-y-[5px]">
+                            <app-book-card-component [book]="book"></app-book-card-component>
+                            <button class="px-[10px] py-[5px] bg-primary-1 text-soft-ice rounded-[10px]" (click)="selectBook(book)">{{'bookList.Select-this-book' |translate}}</button>
+                        </div>
+                    }
+                    @else {
+                        <app-book-card-component [book]="book"></app-book-card-component>
+                    }
+                }   
+            </div>
         }
-    </div>
-    <div class="flex w-full justify-center"><app-pages-component [pages]="page" (onApply)="changePage($event)"></app-pages-component></div>
+        @else {
+            <div class="flex justify-center w-full h-full items-center">
+                <div>{{"list.Empty" |translate}}</div>
+            </div>
+        }
+    }
+    
+    <div class="flex w-full justify-center"><app-pages-component [pages]="bookListPage" (onApply)="fetchBookList($event)"></app-pages-component></div>
 </div>

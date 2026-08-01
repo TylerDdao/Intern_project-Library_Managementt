@@ -34,9 +34,9 @@
     }
     @else {
         <div class="borrow-sections-container">
-            <div class="title-3 borrows-count font-bold">{{'borrowsManagement.Total-borrows-that-have-not-been-returned'|translate}}: {{onGoingBorrows.length + nearDueBorrows.length + passedDueBorrows.length}} {{'borrow.Borrows'}}</div>
+            <div class="title-3 borrows-count font-bold">{{'borrowsManagement.Total-borrows-that-have-not-been-returned'|translate}}: {{onGoingBorrows.length + nearDueBorrows.length + passedDueBorrows.length}} {{'borrow.Borrows' |translate}}</div>
             <div class="borrows-container">
-                <h1 class="headline">{{'borrowManagement.On-going-borrows'|translate}}</h1>
+                <h1 class="headline">{{'borrowsManagement.On-going-borrows'|translate}}</h1>
                 <div class="borrows-scrolling-area">
                     @if (isLoadingOnGoingBorrows) {
                         <div class="flex items-center justify-center">
@@ -59,7 +59,7 @@
             </div>
 
             <div class="borrows-container">
-                <h1 class="headline">{{'borrowManagement.Near-due-date-borrows'|translate}}</h1>
+                <h1 class="headline">{{'borrowsManagement.Near-due-date-borrows'|translate}}</h1>
                 <div class="borrows-scrolling-area">
                     @if (isLoadingNearDueBorrows) {
                         <div class="flex items-center justify-center">
@@ -83,7 +83,7 @@
             </div>
 
             <div class="borrows-container">
-                <h1 class="headline">{{'borrowManagement.Passed-due-date-borrows'|translate}}</h1>
+                <h1 class="headline">{{'borrowsManagement.Passed-due-date-borrows'|translate}}</h1>
                 <div class="borrows-scrolling-area">
                     @if (isLoadingPassedDueBorrows) {
                         <div class="flex items-center justify-center">

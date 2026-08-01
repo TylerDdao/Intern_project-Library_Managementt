@@ -5,13 +5,22 @@
             <span (click)="close()" class="material-symbols-outlined cursor-pointer">close</span>
         </div>
         
-        @if (policy) {
+        @if (borrowDuration && latePenaltyPerDay) {
             <form  [formGroup]="borrowPolicyForm" id="borrowPolicyForm" (ngSubmit)="onSubmit()">
-                <div>
-                    <label for="borrow-duration">{{"borrowPolicy.Borrow-duration"}}</label>
-                    <div class="flex items-center space-x-[5px]">
-                        <input id="borrow-duration" formControlName="borrowDuration" placeholder="{{'Borrow.Borrow-duation' | translate}}" type="number" class="rounded-[10px] w-full bg-pastel-blue text-dodger-blue "/>
-                        <div class="headline">{{"borrow.Days"|translate}}</div>
+                <div class="flex flex-col space-y-[10px]">
+                    <div>
+                        <label for="borrow-duration">{{"borrowPolicy.Borrow-duration"|translate}}</label>
+                        <div class="flex items-center space-x-[5px]">
+                            <input id="borrow-duration" formControlName="borrowDuration" placeholder="{{'Borrow.Borrow-duation' | translate}}" type="number" class="rounded-[10px] w-full bg-pastel-blue text-dodger-blue "/>
+                            <div class="headline">{{"borrow.Days"|translate}}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="late-penalty">{{"borrowPolicy.Late-penalty"|translate}}/{{"borrow.day"|translate}}</label>
+                        <div class="flex items-center space-x-[5px]">
+                            <input id="late-penalty" formControlName="latePenaltyPerDay" placeholder="{{'Borrow.Late-penalty-per-day' | translate}}" type="number" class="rounded-[10px] w-full bg-pastel-blue text-dodger-blue "/>
+                            <div class="headline">VND </div>
+                        </div>
                     </div>
                 </div>
             </form>

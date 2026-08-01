@@ -6,6 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { LoadingComponent } from '../../components/loading-component/loading-component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { formatCurrency } from '../../util/format-number';
 
 @Component({
   selector: 'app-borrow-policy-form',
@@ -24,30 +25,34 @@ export class BorrowPolicyForm implements OnChanges{
     private translate: TranslateService
   ){}
 
-  policy!: Policy
+  isLoadingpolicies: boolean= true;
+
+  borrowDuration!: Policy
+  latePenaltyPerDay!: Policy
 
   borrowPolicyForm = new FormGroup({
-    borrowDuration: new FormControl<number>(14, Validators.required),
+    borrowDuration: new FormControl<number>(14),
+    latePenaltyPerDay: new FormControl<number>(0)
   });
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['borrowDuration'] && this.policy) {
+    if (changes['borrowDuration'] && this.borrowDuration) {
       this.borrowPolicyForm.patchValue({
-        borrowDuration: Number(this.policy.value)
+        borrowDuration: Number(this.borrowDuration.value)
       });
     }
   }
 
   fetchPolicy(){
+    this.isLoadingpolicies = true;
     this.policyService.getPolicyByKey("borrow_duration").subscribe({
       next: (data: any)=>{
         if(data.code == "200"){
-          this.policy = data.data;
+          this.borrowDuration = data.data;
           this.borrowPolicyForm.patchValue({
-            borrowDuration: Number(this.policy.value)
+            borrowDuration: Number(this.borrowDuration.value)
           });
-          this.cdr.markForCheck();
-          this.cdr.markForCheck()
+          this.checkLoadingDone();
         }
       },
       error: (err:HttpErrorResponse)=>{
@@ -56,6 +61,32 @@ export class BorrowPolicyForm implements OnChanges{
         console.error(err.error.code + ": " + err.error.message)
       }
     })
+
+    this.policyService.getPolicyByKey("late_penalty_per_day").subscribe({
+      next: (data: any)=>{
+        if(data.code == "200"){
+          this.latePenaltyPerDay = data.data;
+          this.borrowPolicyForm.patchValue({
+            latePenaltyPerDay: Number(this.latePenaltyPerDay.value)
+          });
+          this.checkLoadingDone();
+        }
+      },
+      error: (err:HttpErrorResponse)=>{
+        const message = this.translate.instant("error.An-error-has-occured")
+        alert(message + "\n" + err.error.code)
+        console.error(err.error.code + ": " + err.error.message)
+      }
+    })
+
+    this.isLoadingpolicies = false;
+  }
+
+  checkLoadingDone(){
+    if(this.borrowDuration && this.latePenaltyPerDay){
+      this.isLoadingpolicies = false;
+      this.cdr.markForCheck();
+    }
   }
 
   ngOnInit(){

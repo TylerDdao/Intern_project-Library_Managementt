@@ -4,6 +4,7 @@ import { formatNumber, formatTime } from '../../util/format-number';
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { LanguageService } from '../../services/language-service/language-service';
 import { PostService } from '../../services/post-service/post-service';
+import { backendUrl, errorImage } from '../../../assets/constants';
 
 @Component({
   selector: 'app-mini-post-card-component',
@@ -22,6 +23,8 @@ export class MiniPostCardComponent {
     private cdr: ChangeDetectorRef,
     private postService: PostService
   ) {}
+
+  backendUrl = backendUrl;
 
   toggleLike() {
     this.postService.toggleLike(this.post.id).subscribe({
@@ -60,6 +63,6 @@ export class MiniPostCardComponent {
   }
 
   onImageError(event: Event): void {
-    (event.target as HTMLImageElement).src = '/book-covers/default.jpg';
+    (event.target as HTMLImageElement).src = errorImage;
   }
 }

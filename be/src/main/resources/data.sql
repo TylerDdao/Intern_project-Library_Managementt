@@ -143,7 +143,6 @@ INSERT IGNORE INTO books_genres (book_id, genre_id) VALUES
 
 INSERT IGNORE INTO posts (id, created_at, created_by, is_active, is_deleted, updated_at, updated_by, content, subject, book_id) VALUES
     -- Posts from 14 days ago
-    (1, DATE_SUB(NOW(), INTERVAL 14 DAY), 'tyler', true, false, null, null, 'This is a nice manga', 'Review of my favorite manga recently!!', 2),
     (2, DATE_SUB(NOW(), INTERVAL 13 DAY), 'tyler', true, false, null, null, 'This novel is written by Andy Weir, who is the author of Martian.', 'Review of my favorite novel recently!!', 1),
 
     -- Posts from 12 days ago
@@ -186,9 +185,6 @@ INSERT IGNORE INTO posts (id, created_at, created_by, is_active, is_deleted, upd
     (25, DATE_SUB(NOW(), INTERVAL 2 HOUR), 'marcus_v', true, false, null, null, 'The emotional bond between the main characters makes the inevitable tragedy sting so much worse.', 'A modern classic mythology retelling', 3),
     (26, DATE_SUB(NOW(), INTERVAL 15 MINUTE), 'sarah_j', true, false, null, null, 'The action choreography paneling is some of the cleanest I have ever seen in modern manga.', 'Tanjiros journey begins here', 10),
     (27, DATE_SUB(NOW(), INTERVAL 17 MINUTE), 'chloe_l', true, false, null, null, 'Dennis Taylor writes Bob with such humor and heart. A must-read for sci-fi fans.', 'We Are Legion is a hidden gem', 2);
-
-INSERT IGNORE INTO policies (policy_key, policy_value) VALUES
-    ("borrow_duration", "14");
 
 INSERT IGNORE INTO post_likes (id, post_id, user_id) VALUES
     (1, 2, 1),
@@ -277,7 +273,9 @@ INSERT IGNORE INTO borrows (id, created_at, created_by, is_active, is_deleted, u
     -- Active: Due in 5 days
     (10, NOW(), 'tyler', 1, 0, null, null, DATE_ADD(NOW(), INTERVAL 5 DAY), 19, 1);
 
-
+INSERT IGNORE INTO policies (policy_key, policy_value) VALUES
+    ("borrow_duration", "14"),
+    ("late_penalty_per_day", "10000");
 #     (11, NOW(), 'tyler', 1, 0, null, null, DATE_ADD(NOW(), INTERVAL 10 DAY), 1, 1),
 #     (12, NOW(), 'tyler', 1, 0, null, null, DATE_ADD(NOW(), INTERVAL 7 DAY), 2, 1),
 #     (13, '2026-04-25 10:00:00', 'tyler', 0, 0, null, null, '2026-05-10', 3, 1),

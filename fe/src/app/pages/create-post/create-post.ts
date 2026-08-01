@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LanguageService } from '../../services/language-service/language-service';
 import { PostService } from '../../services/post-service/post-service';
 import { BookService } from '../../services/book-service/book-service';
+import { backendUrl } from '../../../assets/constants';
 
 @Component({
   selector: 'app-create-post',
@@ -23,6 +24,8 @@ export class CreatePost {
   post!:Post
   postId!:number;
   bookCover: string = ""
+
+  backendUrl = backendUrl;
 
   books!: Book[];
   booksPage: Page = {

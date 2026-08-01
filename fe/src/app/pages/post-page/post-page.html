@@ -48,7 +48,7 @@
     @if(isOpenBookList){
         <div class="fixed inset-0 flex items-center justify-center z-99">
             @if (books) {
-                <app-book-list-component [selectable]="true" [books]="books" [page]="booksPage" (onClose)="handleCloseBookList()" (onChange)="fetchBooks($event)"></app-book-list-component>
+                <app-book-list-component [selectable]="true" (onClose)="handleCloseBookList()" (onChange)="fetchBooks($event)"></app-book-list-component>
             }
             @else {
                 <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>

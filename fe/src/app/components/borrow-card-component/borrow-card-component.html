@@ -1,14 +1,18 @@
 <div class="container">
     <div class="borrow-card">
         <div class="borrow-info">
-            <img src="http://127.0.0.1:8080/api/book-covers/{{borrow.book.coverUrl}}" alt="{{borrow.book.title}}" class="book-cover" (error)="onImageError($event)"/>
+            <img src="{{backendUrl}}/api/book-covers/{{borrow.book.coverUrl}}" alt="{{borrow.book.title}}" class="book-cover" (error)="onImageError($event)"/>
             <div class="book-info-area">
                 <h1 class="headline">{{'borrow.Borrow'|translate}} #{{borrow.id}}</h1>
                 <h1 class="subheadline font-bold">{{borrow.book.title}}</h1>
                 <h2 class="caption-1">{{'book.Author'|translate}}: {{borrow.book.author}}</h2>
                 <h2 class="caption-1">{{'borrow.Borrow-on'|translate}}: {{formattedBorrowedOn}}</h2>
-                <h2 class="caption-1">{{'borrow.User'|translate}}: {{borrow.user.fullName}}</h2>
+                <h2 class="caption-1">{{'user.User'|translate}}: {{borrow.user.fullName}}</h2>
                 <h2 class="caption-1 font-bold">{{'borrow.Please-return-by'|translate}}: {{formattedDueDate}}</h2>
+                <h2 class="caption-1">{{"borrow.Applied-late-fee"|translate}}: {{penaltyFee}}/{{"borrow.day"|translate}}</h2>
+                @if (borrow.penalty) {
+                    <h2 class="caption-1 font-bold">{{'borrow.Penalty'|translate}}: {{penalty}}</h2>
+                }
                 @if (isReturned) {
                     <div class="flex items-center space-x-[5px] text-leaf-green">
                         <span class="material-symbols-outlined">check</span>
@@ -47,11 +51,11 @@
             <span class="material-symbols-outlined">
                 check_circle
             </span>
-            <p>Returned</p> 
+            <p>{{"borrow.Returned" | translate}}</p> 
         </div>
     }
     @else {
-        <button class="p-[10px] bg-leaf-green text-soft-ice rounded-[10px] h-fit w-full" (click)="handleReturn()">{{'borrow.Returned'|translate}}</button>
+        <button class="p-[10px] bg-leaf-green text-soft-ice rounded-[10px] h-fit w-full" (click)="handleReturn()">{{'borrow.Return'|translate}}</button>
     }
 }
 </div>

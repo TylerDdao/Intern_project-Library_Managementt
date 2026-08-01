@@ -25,6 +25,12 @@ public class AuditLogger {
         log.info("[{}] {}", user, formatted);
     }
 
+    public void error(String message, Object... args){
+        String user = getCurrentUser();
+        String formatted = MessageFormatter.arrayFormat(message, args).getMessage();
+        log.error("[{}] {}", user, formatted);
+    }
+
     private Object[] prepend(Object first, Object[] rest) {
         Object[] result = new Object[rest.length + 1];
         result[0] = first;

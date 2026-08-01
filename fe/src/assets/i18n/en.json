@@ -1,4 +1,24 @@
 {
+  "role":{
+    "Role": "Role"
+  },
+  "user":{
+    "User": "User",
+    "Username": "Username",
+    "Full-name": "Full name",
+    "Email": "Email",
+    "Phone-number": "Phone number",
+    "Address": "Address"
+  },
+  "email":{
+    "Verify": "Verify",
+    "Verification-code": "Verification code"
+  },
+  "usersManagement":{
+    "Create-user": "Create user",
+    "Create-role": "Create role",
+    "Role-list": "Role list"
+  },
   "book": {
     "Title": "Title",
     "Author": "Author",
@@ -10,8 +30,50 @@
     "Please-return-by": "Please return by",
     "Due-in": "Due in",
     "days": "days",
+    "day": "day",
     "Late": "Late",
-    "Due-today": "Due today"
+    "Due-today": "Due today",
+    "Borrows": "Borrows",
+    "Return": "Return",
+    "Returned": "Returned",
+    "Applied-late-fee": "Applied late fee",
+    "Borrow":"Borrow"
+  },
+  "borrowPolicy":{
+    "Late-penalty": "Late penalty",
+    "Borrow-duration": "Borrow duration"
+  },
+  "form":{
+    "Save": "Save",
+    "Cancel": "Cancel",
+    "Reset": "Reset",
+    "Send": "Send",
+    "Check-username": "Check username"
+  },
+  "newUserForm":{
+    "Create-new-user": "Create new user"
+  },
+  "editUserForm":{
+    "Edit-user": "Edit user"
+  },
+  "verification":{
+    "Email-is-required": "Email is required",
+    "Please-verify-your-email":"Please verify your email",
+    "Please-enter-a-valid-email": "Please enter a valid email",
+    "Please-enter-a-valid-phone-number":"Please enter a valid phone number",
+    "Phone-number-is-required": "Phone number is required"
+  },
+  "borrowPolicyForm":{
+    "Borrow-policy": "Borrow policy"
+  },
+  "borrowsManagement":{
+    "Modify-borrow-policy": "Modify borrow policy",
+    "All-returned-borrows": "All returned borrows",
+    "All-active-borrows": "All active borrows",
+    "On-going-borrows": "On going borrow",
+    "Near-due-date-borrows":"Near due date borrows",
+    "Passed-due-date-borrows": "Passed due date borrows",
+    "Total-borrows-that-have-not-been-returned": "Total borrows that have not been returned"
   },
   "post": {
     "Edit-post": "Edit post"

@@ -43,8 +43,8 @@ export class EditUserForm implements OnChanges {
   newUserForm = new FormGroup({
     username: new FormControl('', Validators.required),
     fullName: new FormControl('', Validators.required),
-    phoneNumber: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required),
+    phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^(0|\+84)[0-9]{9}$/)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     address: new FormControl(''),
     role: new FormControl<number | null>(null, Validators.required),
     verificationCode: new FormControl('')

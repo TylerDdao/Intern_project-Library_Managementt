@@ -1,10 +1,10 @@
 <app-navbar></app-navbar>
 
 <div class="min-h-screen container">
-    <div class="flex flex-col space-y-[10px] buttons-container">
-        <button class="p-[10px] bg-steel-blue text-soft-ice headline text-center rounded-[10px] w-full" (click)="isCreateNewUser = true;">{{'user.Create-user' | translate}}</button>
-        <button class="p-[10px] bg-leaf-green text-soft-ice headline text-center rounded-[10px] w-full" (click)="isCreateNewRole = true">{{'role.Create-role' | translate}}</button>
-        <button class="p-[10px] bg-sky-blue text-soft-ice headline text-center rounded-[10px] w-full" (click)="isRoleListOpen = true">{{'userManagement.Role-list' | translate}}</button>
+    <div class="buttons-container">
+        <button class="p-[10px] bg-steel-blue text-soft-ice headline text-center rounded-[10px] w-full" (click)="isCreateNewUser = true;">{{'usersManagement.Create-user' | translate}}</button>
+        <button class="p-[10px] bg-leaf-green text-soft-ice headline text-center rounded-[10px] w-full" (click)="isCreateNewRole = true">{{'usersManagement.Create-role' | translate}}</button>
+        <button class="p-[10px] bg-sky-blue text-soft-ice headline text-center rounded-[10px] w-full" (click)="isRoleListOpen = true">{{'usersManagement.Role-list' | translate}}</button>
     </div>
     <div>
         @for (role of roles; track $index) {

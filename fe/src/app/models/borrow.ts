@@ -11,6 +11,7 @@ export interface Borrow{
     updatedAt: string,
 
     active: boolean
+    penalty?: number
     // updatedBy: string,
     // createdBy: string,
 }

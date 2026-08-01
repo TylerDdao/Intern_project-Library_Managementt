@@ -41,6 +41,15 @@
                         <span class="material-symbols-outlined text-leaf-green">check_circle</span>
                     }
                 </div>
+                @if (newUserForm.get('email')?.touched && newUserForm.get('email')?.invalid) {
+                    @if (newUserForm.get('email')?.errors?.['required']) {
+                        <small>{{'verification.Email-is-required'|translate}}</small>
+                    }
+
+                    @if (newUserForm.get('email')?.errors?.['email']) {
+                        <small>{{'verification.Please-enter-a-valid-email'|translate}}</small>
+                    }
+                }
                 @if (isEmailInvalid) {
                     <small>{{"verification.Please-verify-your-email"|translate}}</small>
                 }
@@ -70,6 +79,15 @@
             <div class="flex flex-col">
                 <label for="phoneNumber">{{'user.Phone-number' |translate}}</label>
                 <input id="phoneNumber" formControlName="phoneNumber" placeholder="{{'user.Phone-number' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]"/>
+                @if (newUserForm.get('phoneNumber')?.touched && newUserForm.get('phoneNumber')?.invalid) {
+                    @if (newUserForm.get('phoneNumber')?.errors?.['required']) {
+                        <small>{{'verification.Phone-number-is-required'|translate}}</small>
+                    }
+
+                    @if (newUserForm.get('phoneNumber')?.errors?.['pattern']) {
+                        <small>{{'verification.Please-enter-a-valid-phone-number'|translate}}</small>
+                    }
+                }
             </div>
 
             <div class="flex flex-col">

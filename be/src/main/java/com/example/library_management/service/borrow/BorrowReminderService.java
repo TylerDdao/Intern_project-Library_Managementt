@@ -3,6 +3,8 @@ package com.example.library_management.service.borrow;
 import com.example.library_management.model.Borrow;
 import com.example.library_management.repository.BorrowRepository;
 import com.example.library_management.service.MailService;
+import com.example.library_management.util.AuditLogger;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +32,9 @@ public class BorrowReminderService {
     @Autowired
     private MessageSource messageSource;
 
+    @Autowired
+    AuditLogger logger;
+
     @Scheduled(cron = "0 0 8 * * *") // runs every day at 8:00 AM
     public void sendDueDateReminders() {
         LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
@@ -36,14 +43,29 @@ public class BorrowReminderService {
         List<Borrow> dueBorrows = borrowRepository.findByDueDateBetweenAndIsActiveTrue(startOfDay, endOfDay);
 
         for (Borrow borrow : dueBorrows) {
-            String email = borrow.getUser().getEmail();
-            String subject = "Book Due Today";
-            String body = "Dear " + borrow.getUser().getUsername() + ",\n\n" +
-                    "Your borrowed book \"" + borrow.getBook().getTitle() + "\" is due today.\n" +
-                    "Please return it to avoid any penalties.\n\n" +
-                    "Library Management System";
+            try {
+                mailService.sendBorrowDueReminder(borrow.getUser().getEmail(), borrow.getUser().getFullName(), borrow.getBook().getTitle(), LocaleContextHolder.getLocale());
+            }
+            catch (MessagingException e){
+                logger.error("An error has occurred while sending borrow reminder emails: " + e.getMessage());
+            }
+        }
+    }
 
-            mailService.sendEmail(email, subject, body);
+    @Scheduled(cron = "0 0 8 * * *") // runs every day at 8:00 AM
+    public void sendLateDueDateReminders() {
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+
+        List<Borrow> lateBorrows = borrowRepository.findByDueDateLessThanAndIsActiveTrue(startOfDay);
+
+        for (Borrow borrow : lateBorrows) {
+            try {
+                long lateDays = ChronoUnit.DAYS.between(borrow.getDueDate().toLocalDate(), LocalDate.now());
+                mailService.sendLateBorrowReminder(borrow.getUser().getEmail(), borrow.getUser().getFullName(), borrow.getBook().getTitle(), lateDays, LocaleContextHolder.getLocale());
+            }
+            catch (MessagingException e){
+                logger.error("An error has occurred while sending borrow reminder emails: " + e.getMessage());
+            }
         }
     }
 

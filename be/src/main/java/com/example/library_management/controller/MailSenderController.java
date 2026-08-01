@@ -22,31 +22,15 @@ public class MailSenderController {
     MailService mailService;
 
     @Autowired
-    SmsService smsService;
-
-    @Autowired
     BorrowReminderService borrowReminderService;
 
     @PreAuthorize("@securityService.hasAccess('GET_GENRE')")
     @GetMapping("/mail")
     public ResponseEntity<ApiResponse<String>> sendMail(
-            @RequestHeader(value = "Accept-Language", required = false) String lang
+//            @RequestHeader(value = "Accept-Language", required = false) String lang
     ) {
-        try {
-            Locale locale = (lang != null) ? Locale.forLanguageTag(lang) : Locale.ENGLISH;
-            mailService.sentVerificationEmail("baonamdao05@gmail.com", "Tyler", "ABC123", locale);
-            return ResponseEntity.ok(ApiResponse.success("Email sent successfully"));
-        } catch (MessagingException e) {
-            return ResponseEntity.ok(ApiResponse.error("500", "Failed to send email: " + e.getMessage()));
-        }
+        borrowReminderService.sendLateDueDateReminders();
+        return ResponseEntity.ok(ApiResponse.success("Email sent successfully"));
     }
-
-    @PreAuthorize("@securityService.hasAccess('GET_GENRE')")
-    @GetMapping("/sms")
-    public ResponseEntity<ApiResponse<String>> sendTestSms(@Valid @RequestBody SmsRequest request) {
-        smsService.sendSms(request.getToNumber(), request.getMessage());
-        return ResponseEntity.ok(ApiResponse.success("SMS sent to " + request.getToNumber()));
-    }
-
 
 }

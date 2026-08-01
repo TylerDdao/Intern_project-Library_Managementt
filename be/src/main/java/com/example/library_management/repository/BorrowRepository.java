@@ -19,6 +19,8 @@ public interface BorrowRepository extends JpaRepository<Borrow, Long> {
     Optional<Borrow> findByUserUsernameAndBookIdAndIsActive(String username, Long bookId, Boolean isActive);
 
     public List<Borrow> findByDueDateBetweenAndIsActiveTrue(LocalDateTime start, LocalDateTime end);
+    public List<Borrow> findByDueDateLessThanAndIsActiveTrue(LocalDateTime date);
+
     public Page<Borrow> findByDueDateBetweenAndIsActiveTrue(LocalDateTime start, LocalDateTime end, Pageable pageable);
     public Page<Borrow> findByDueDateLessThanAndIsActiveTrue(LocalDateTime date, Pageable pageable);
     public Page<Borrow> findByDueDateGreaterThanAndIsActiveTrue(LocalDateTime date, Pageable pageable);

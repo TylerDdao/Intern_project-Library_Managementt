@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, Inject, PLATFORM_ID, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Router, RouterOutlet } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -10,9 +11,25 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class App {
   protected readonly title = signal('library-management-fe');
-  constructor(private translate: TranslateService) {
-  }
-  switchLanguage(lang: string) {
-    this.translate.use(lang);
+  
+  constructor(
+    private translate: TranslateService, 
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    if (isPlatformBrowser(this.platformId)) {
+      const token = sessionStorage.getItem('token') || localStorage.getItem('token');
+      const currentPath = window.location.pathname;
+
+      if (token) {
+        if (currentPath === '/' || currentPath === '/login') {
+          this.router.navigate(['/home']);
+        }
+      } else {
+        if (currentPath !== '/login' && currentPath !== '/register') {
+          this.router.navigate(['/login']);
+        }
+      }
+    }
   }
 }

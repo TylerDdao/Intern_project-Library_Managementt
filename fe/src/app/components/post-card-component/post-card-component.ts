@@ -9,6 +9,7 @@ import { CommentBoxComponent } from '../comment-box-component/comment-box-compon
 import { CommentService } from '../../services/comment-service/comment-service';
 import { Comment } from '../../models/comment';
 import { Router } from '@angular/router';
+import { backendUrl, errorImage } from '../../../assets/constants';
 
 @Component({
   selector: 'app-post-card-component',
@@ -38,6 +39,7 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
     private postService: PostService,
     private commentService: CommentService
   ) {}
+  backendUrl = backendUrl;
 
   handleEditPost(){
     if(this.post){
@@ -124,6 +126,6 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   onImageError(event: Event): void {
-    (event.target as HTMLImageElement).src = '/book-covers/default.jpg';
+    (event.target as HTMLImageElement).src = errorImage;
   }
 }
