@@ -1,51 +1,13 @@
 @media (min-width: 1024px) {
-    .signup-area{
-        box-shadow: 0px 0px 20px 0px var(--color-cool-gray);
-        padding: 20px;
-        border-radius: 8px;
+    .container{
+        padding: 30px;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+        background: white;
+        border-radius: 10px;
         gap: 30px;
+        max-height: 80vh;
+        min-width: 50vw;
     }
-
-    .complete-box{
-        box-shadow: 0px 0px 20px 0px var(--color-cool-gray);
-        padding: 20px;
-        border-radius: 8px;
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-
-        position: absolute;
-        background-color: white;
-    }
-}
-
-@media (max-width: 1023px) {
-    .signup-area{
-        box-shadow: 0px 0px 20px 0px var(--color-cool-gray);
-        padding: 20px;
-        border-radius: 8px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 30px;
-    }
-
-    .complete-box{
-        box-shadow: 0px 0px 20px 0px var(--color-cool-gray);
-        padding: 20px;
-        border-radius: 8px;
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-
-        position: absolute;
-        background-color: white;
-    }
-}
-
-label{
-    color: var(--color-steel-blue);
 }

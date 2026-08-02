@@ -20,7 +20,6 @@ import { CreatePost } from './pages/create-post/create-post';
 import { TestPage } from './pages/test-page/test-page';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: Login },
     { path: 'signup', component: Signup },
     { path: 'forgot-password', component: ForgotPassword},

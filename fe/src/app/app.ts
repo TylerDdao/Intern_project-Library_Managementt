@@ -26,7 +26,7 @@ export class App {
           this.router.navigate(['/home']);
         }
       } else {
-        if (currentPath !== '/login' && currentPath !== '/register') {
+        if (currentPath !== '/login' && currentPath !== '/signup') {
           this.router.navigate(['/login']);
         }
       }

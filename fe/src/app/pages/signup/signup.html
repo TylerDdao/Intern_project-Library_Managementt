@@ -2,7 +2,7 @@
 <div class="fixed inset-0 flex items-center justify-center z-99">
     <div class="container">
         <div class="flex justify-between items-center">
-            <p class="headline font-bold">{{'signup.Signup'|translate}}</p>
+            <p class="headline font-bold">{{'signup.Sign/-up'|translate}}</p>
         </div>
         <div class="info-container">
             <form [formGroup]="newUserForm" id="newUserForm" (ngSubmit)="onSubmit()">
@@ -93,6 +93,35 @@
                 <div class="flex flex-col">
                     <label for="address">{{'user.Address' |translate}}</label>
                     <input id="address" formControlName="address" placeholder="{{'user.Address' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]"/>
+                </div>
+
+                <div class="flex flex-col">
+                    <label for="password">{{'user.Password' |translate}}</label>
+                    <input id="password" formControlName="password" placeholder="{{'user.Password' | translate}}" type="password" class="rounded-[10px]" [class]="isPasswordMatch ? 'bg-pastel-blue text-dodger-blue':'bg-pastel-red text-tomato-red'"/>
+                </div>
+                <div class="flex flex-col">
+                    <label for="confirm-password">{{'user.Confirm-password' |translate}}</label>
+                    <input id="confirm-password" formControlName="confirmPassword" placeholder="{{'user.Confirm-password' | translate}}" type="password" class="rounded-[10px]" [class]="isPasswordMatch ? 'bg-pastel-blue text-dodger-blue':'bg-pastel-red text-tomato-red'"/>
+                </div>
+                @if (!isPasswordMatch) {
+                    <small>{{"verification.Your-passswod-is-not-match"|translate}}</small>
+                }
+
+                <div class="flex flex-col">
+                    @if (isPasswordValid) {
+                        <p>{{'signup.Your-password-must-have'|translate}}:</p>
+                        <ul class="list-disc list-inside">
+                            <li>{{'signup.At-least-8-characters' | translate}}</li>
+                            <li>{{"signup.1-special-character" | translate}}</li>
+                        </ul>
+                    }
+                    @else {
+                        <p class="text-tomato-red">{{'signup.Your-password-must-have'|translate}}:</p>
+                        <ul class="list-disc list-inside text-tomato-red">
+                            <li>{{'signup.At-least-8-characters' | translate}}</li>
+                            <li>{{"signup.1-special-character" | translate}}</li>
+                        </ul>
+                    }
                 </div>
             </form>
         </div>

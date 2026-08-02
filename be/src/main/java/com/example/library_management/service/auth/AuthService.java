@@ -6,7 +6,7 @@ import com.example.library_management.service.TokenBlacklistService;
 import com.example.library_management.util.AuditLogger;
 import com.example.library_management.util.JwtUtil;
 import com.example.library_management.dto.request.LoginRequest;
-import com.example.library_management.dto.request.RegisterRequest;
+import com.example.library_management.dto.request.auth.RegisterRequest;
 import com.example.library_management.dto.request.user.UserRequest;
 import com.example.library_management.dto.response.LoginResponse;
 import com.example.library_management.dto.response.UserResponse;
@@ -129,7 +129,7 @@ public class AuthService {
         }
 
         Role defaultRole = roleRepository.findByName("ROLE_USER")
-                .orElseThrow(() -> new RuntimeException("Error: Default Role 'ROLE_USER' not found in the database."));
+                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.fount", null, LocaleContextHolder.getLocale())));
 
         User user = new User();
         user.setUsername(request.getUsername());

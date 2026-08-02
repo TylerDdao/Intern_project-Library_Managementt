@@ -47,12 +47,13 @@ export class EditUserForm implements OnChanges {
     email: new FormControl('', [Validators.required, Validators.email]),
     address: new FormControl(''),
     role: new FormControl<number | null>(null, Validators.required),
-    verificationCode: new FormControl('')
+    verificationCode: new FormControl(''),
   });
 
   handleSendVerificationCode(){
     this.isVerifyingEmail = true;
     this.isSendingVerificationEmail = true;
+    this.newUserForm.get('verificationCode')?.enable();
     const email = this.newUserForm.get("email")?.value?.trim().toLowerCase();
     if (!email) {
       return;
@@ -99,10 +100,17 @@ export class EditUserForm implements OnChanges {
     this.authService.submitVerificationCode(email, verificationCode).subscribe({
       next: (data:any)=>{
         if(data.code == "200"){
-          const message = this.translate.instant("verification.Your-email-has-been-verified");
-          alert(message)
-          this.isEmailVerified = true;
-          this.isEmailInvalid = false;
+          if(data.data.verified){
+            const message = this.translate.instant("verification.Your-email-has-been-verified");
+            alert(message)
+            this.isEmailVerified = true;
+            this.isEmailInvalid = false;
+            this.newUserForm.get('verificationCode')?.disable();
+          }
+          else{
+            const message = this.translate.instant("verification.Incorrect-verification-code");
+            alert(message)
+          }
           this.cdr.markForCheck();
         }
       },

@@ -82,8 +82,13 @@ export class UsersManagement {
           if (data.code == "200") {
             this.roles = data.data.content;
             this.roles = data.data.content.sort((a: Role, b: Role) => {
-              if (a.name === 'ROLE_ROOT') return -1;
-              if (b.name === 'ROLE_ROOT') return 1;
+              const order = ['ROLE_ROOT', 'ROLE_USER'];
+              const aIndex = order.indexOf(a.name);
+              const bIndex = order.indexOf(b.name);
+
+              if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+              if (aIndex !== -1) return -1;
+              if (bIndex !== -1) return 1;
               return a.name.localeCompare(b.name);
             });
             this.roles.forEach(role => {
@@ -131,7 +136,7 @@ export class UsersManagement {
 
   handleSaveEditUser(isSave:boolean){
     if(isSave){
-      const message = this.translate.instant("userManagement.User-is-saved")
+      const message = this.translate.instant("usersManagement.User-is-saved")
       alert(message)
       this.editUser = null;
       this.isEditUser = false;
@@ -140,7 +145,7 @@ export class UsersManagement {
       this.cdr.markForCheck()
     }
     else{
-      const message = this.translate.instant("userManagement.There-is-an-error-when-saving-user")
+      const message = this.translate.instant("error.An-error-has-occurred")
       alert(message)
       this.editUser = null;
       this.isEditUser = false;

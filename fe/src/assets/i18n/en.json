@@ -3,7 +3,8 @@
     "Role": "Role",
     "Role-name": "Role name",
     "Assigned-features":"Assigned features",
-    "Unassigned-features": "Unassigned features"
+    "Unassigned-features": "Unassigned features",
+    "Default-role":"Default role"
   },
   "features":{
     "Features":"Features"
@@ -19,7 +20,10 @@
     "Full-name": "Full name",
     "Email": "Email",
     "Phone-number": "Phone number",
-    "Address": "Address"
+    "Address": "Address",
+    "Password":"Password",
+    "Your-account-has-been-saved":"Your account has been saved",
+    "Confirm-password":"Confirm password"
   },
   "email":{
     "Verify": "Verify",
@@ -28,7 +32,8 @@
   "usersManagement":{
     "Create-user": "Create user",
     "Create-role": "Create role",
-    "Role-list": "Role list"
+    "Role-list": "Role list",
+    "User-is-saved":"User is saved"
   },
   "book": {
     "Title": "Title",
@@ -73,7 +78,12 @@
     "Please-verify-your-email":"Please verify your email",
     "Please-enter-a-valid-email": "Please enter a valid email",
     "Please-enter-a-valid-phone-number":"Please enter a valid phone number",
-    "Phone-number-is-required": "Phone number is required"
+    "Phone-number-is-required": "Phone number is required",
+    "Your-verification-code-has-been-sent-to-your-email": "Your verification code has been sent to your email",
+    "There-is-an-error-while-sending-verification-code":"There is an error while sending sending verification code",
+    "Your-email-has-been-verified":"Your email has been verified",
+    "Incorrect-verification-code":"Incorrect verification code",
+    "Please-verify-your-username":"Please verify your username"
   },
   "borrowPolicyForm":{
     "Borrow-policy": "Borrow policy"
@@ -157,34 +167,19 @@
     }
   },
   "login": {
-    "login": "Login",
-    "username": "Username",
-    "password": "Password",
-    "dont-have-an-account-yet": "Don't have an account yet",
-    "signup": "Sign up",
-    "forgot-password": "Forgot password",
+    "Login": "Login",
+    "Dont-have-an-account-yet": "Don't have an account yet",
+    "Forgot-password": "Forgot password",
     "username-or-password-is-wrong": "Username or password is wrong"
   },
   "signup": {
-    "sign-up": "Sign Up",
-    "signup-completed": "Signup Completed",
-    "email": "Email",
-    "optional": "Optional",
-    "account-information": "Account information",
-    "personal-information": "Personal information",
-    "full-name": "Full name",
-    "phone-number": "Phone number",
-    "address": "Address",
-    "province": "Province",
-    "city": "City",
-    "address-line-1": "Address line 1",
-    "address-line-2": "Address line 2",
-    "already-had-an-account": "Already had an account",
-    "back-to-login": "Back to login"
-  },
-  "forgotPassword": {
-    "forgot-password": "Forgot password",
-    "confirm": "Confirm"
+    "Sign/-up": "Sign-up",
+    "Signup-completed": "Signup Completed",
+    "Optional": "Optional",
+    "Account-information": "Account information",
+    "Personal-information": "Personal information",
+    "Already-had-an-account": "Already had an account",
+    "Back-to-login": "Back to login"
   },
   "search": {
     "Filter-by": "Filter by",
@@ -218,5 +213,8 @@
   },
   "list":{
     "Empty":"Empty"
+  },
+  "error":{
+    "An-error-has-occurred": "An error has occurred"
   }
 }

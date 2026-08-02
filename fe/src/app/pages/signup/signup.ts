@@ -12,6 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NewUserForm } from '../../forms/new-user-form/new-user-form';
 import { UserService } from '../../services/user-service/user-service';
 import { isPlatformBrowser } from '@angular/common';
+import { errorNoti } from '../../util/error-notification';
 
 @Component({
   selector: 'app-signup',
@@ -35,7 +36,11 @@ export class Signup {
   ) 
   {}
 
+  isPasswordMatch:boolean = true;
+  isPasswordValid:boolean = true;
+
   isUsernameInvalid: boolean = false;
+  isUsernameAvailable : boolean | null = null;
 
   isVerifyingEmail:boolean = false;
   isEmailVerified:boolean=false;
@@ -44,17 +49,19 @@ export class Signup {
 
   newUserForm = new FormGroup({
     username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
     fullName: new FormControl('', Validators.required),
     phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^(0|\+84)[0-9]{9}$/)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     address: new FormControl(''),
-    verificationCode: new FormControl('', Validators.required)
+    verificationCode: new FormControl('', Validators.required),
+    password: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/)]),
+    confirmPassword: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/)])
   });
 
   handleSendVerificationCode(){
     this.isVerifyingEmail = true;
     this.isSendingVerificationEmail = true;
+    this.newUserForm.get('verificationCode')?.enable();
     const email = this.newUserForm.get("email")?.value?.trim().toLowerCase();
     if (!email) {
       return;
@@ -79,10 +86,8 @@ export class Signup {
         this.isSendingVerificationEmail = false;
         this.cdr.markForCheck();
       },
-      error: (err)=>{
-        const message = this.translate.instant("verification.There-is-an-error-while-sending-verification-code");
-        alert(message)
-        console.error(err)
+      error: (err:HttpErrorResponse)=>{
+        errorNoti(err, this.translate)
       }
     })
     this.cdr.markForCheck();
@@ -100,37 +105,93 @@ export class Signup {
     this.authService.submitVerificationCode(email, verificationCode).subscribe({
       next: (data:any)=>{
         if(data.code == "200"){
-          const message = this.translate.instant("verification.Your-email-has-been-verified");
-          alert(message)
-          this.isEmailVerified = true;
-          this.isEmailInvalid = false;
-          this.newUserForm.get('verificationCode')?.disable();
+          if(data.data.verified){
+            const message = this.translate.instant("verification.Your-email-has-been-verified");
+            alert(message)
+            this.isEmailVerified = true;
+            this.isEmailInvalid = false;
+            this.newUserForm.get('verificationCode')?.disable();
+          }
+          else{
+            const message = this.translate.instant("verification.Incorrect-verification-code");
+            alert(message)
+          }
           this.cdr.markForCheck();
         }
       },
-      error: (err)=>{
-        const message = this.translate.instant("verification.There-is-an-error-while-verifying-your-email");
-        alert(message)
-        console.error(err)
+      error: (err:HttpErrorResponse)=>{
+        errorNoti(err, this.translate)
       }
     })
   }
 
   onSubmit(){
     console.log("Submit")
+    const {username, fullName, phoneNumber, email, address, password, confirmPassword} = this.newUserForm.value;
+    if(password!=confirmPassword){
+      this.isPasswordMatch = false;
+      this.cdr.markForCheck();
+      return;
+    }
+    if(this.isUsernameAvailable == false || this.isUsernameAvailable == null){
+        this.isUsernameInvalid = true;
+        return;
+      }
+    if(this.isEmailVerified == false){
+      this.isEmailInvalid = true;
+      return;
+    }
+    if(username && fullName && phoneNumber && email){
+      this.user.username = username;
+      this.user.fullName = fullName;
+      this.user.email = email;
+      this.user.phoneNumber = phoneNumber;
+      if(address){
+        this.user.address = address
+      }
+    }
+  }
+
+  checkUsername() {
+    this.isUsernameInvalid = false;
+    const username = this.newUserForm.get('username')?.value?.trim();
+    if (!username){
+      return;
+    }
+
+    this.userService.checkUsernameAvailability(username).subscribe({
+      next: (data: any) => {
+        if(data.data === true){
+          this.isUsernameAvailable = true;
+          this.isUsernameInvalid = false;
+        }
+        else{
+          this.isUsernameAvailable = false;
+        }
+        this.cdr.markForCheck();
+      },
+      error: (err:HttpErrorResponse) =>{
+        errorNoti(err, this.translate)
+      } 
+    });
   }
 
   ngOnInit(){
     if (isPlatformBrowser(this.platformId)) {
-      // this.newUserForm.get('username')?.valueChanges.subscribe(() => {
-      //   this.isUsernameAvailable = null;
-      //   this.isUsernameInvalid = false;
-      //   this.cdr.markForCheck();
-      // });
+      this.newUserForm.get('username')?.valueChanges.subscribe(() => {
+        this.isUsernameAvailable = null;
+        this.isUsernameInvalid = false;
+        this.cdr.markForCheck();
+      });
       this.newUserForm.get('email')?.valueChanges.subscribe(() => {
         this.isEmailInvalid = false;
         this.isEmailVerified = false;
         this.newUserForm.get('verificationCode')?.enable();
+        this.cdr.markForCheck();
+      });
+      this.newUserForm.get('password')?.valueChanges.subscribe(() => {
+        this.isPasswordValid = this.newUserForm.get('password')?.valid ?? false;
+        this.isPasswordMatch = true;
         this.cdr.markForCheck();
       });
     }

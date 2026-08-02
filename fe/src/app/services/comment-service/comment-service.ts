@@ -26,6 +26,6 @@ export class CommentService {
   }
 
   deleteComment(id:number){
-
+    return this.http.delete(`${this.baseUrl}?id=${id}`, {headers: getAuthHeaders(this.platformId)});
   }
 }

@@ -4,6 +4,7 @@ import com.example.library_management.dto.request.comment.CommentRequest;
 import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.dto.response.comment.CommentResponse;
 import com.example.library_management.service.comment.CreateCommentService;
+import com.example.library_management.service.comment.DeleteCommentService;
 import com.example.library_management.service.comment.GetCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,8 @@ public class CommentController {
     private GetCommentService getCommentService;
     @Autowired
     private CreateCommentService createCommentService;
+    @Autowired
+    private DeleteCommentService deleteCommentService;
 
     @PreAuthorize("@securityService.hasAccess('GET_COMMENT')")
     @GetMapping()
@@ -38,5 +41,13 @@ public class CommentController {
             @RequestBody CommentRequest request
             ){
         return ResponseEntity.ok(ApiResponse.success(createCommentService.createComment(request)));
+    }
+
+    @PreAuthorize("@securityService.hasAccess('DELETE_COMMENT')")
+    @DeleteMapping()
+    public ResponseEntity<ApiResponse<Boolean>> deleteComment(
+            @RequestParam() Long id
+    ){
+        return ResponseEntity.ok(ApiResponse.success(deleteCommentService.deleteComment(id)));
     }
 }

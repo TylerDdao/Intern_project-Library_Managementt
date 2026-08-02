@@ -8,7 +8,8 @@
         border-radius: 10px;
         gap: 30px;
         min-width: 50vw;
-        height: 80vh;
+        max-height: 80vh;
+        overflow-y: scroll;
     }
 }
 

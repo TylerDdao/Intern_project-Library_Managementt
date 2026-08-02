@@ -9,12 +9,12 @@
                 }
                 <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col space-y-[10px] w-full">
                     <input formControlName="username" type="text"
-                        placeholder="{{'user.username' | translate}}"
+                        placeholder="{{'user.Username' | translate}}"
                         class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"
                         (input)="wrongCredential = false"/>
 
                     <input formControlName="password" type="password"
-                        placeholder="{{'user.password' | translate}}"
+                        placeholder="{{'user.Password' | translate}}"
                         class="rounded-lg p-[10px] bg-pastel-blue text-dodger-blue w-full placeholder"
                         (input)="wrongCredential = false"/>
                 </form>
@@ -23,7 +23,7 @@
             
             <div class="flex flex-col w-full items-end space-y-[10px]">
                 <button type="submit" form="loginForm" class="bg-steel-blue rounded-lg p-[10px] caption-1 font-bold w-full text-soft-ice">{{'login.Login' | translate}}</button>
-                <p class="text-deep-charcoal font-bold caption-2">{{'login.Dont-have-an-account-yet' |translate}}? <a routerLink="/signup"><span class="text-steel-blue">{{'signup.Signup' |translate}}</span></a></p>
+                <p class="text-deep-charcoal font-bold caption-2">{{'login.Dont-have-an-account-yet' |translate}}? <a routerLink="/signup"><span class="text-steel-blue">{{'signup.Sign/-up' |translate}}</span></a></p>
             </div>
         </div>
     </div>

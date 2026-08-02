@@ -13,6 +13,9 @@
                 @if (role.name == "ROLE_ROOT") {
                     <span class="material-symbols-outlined [font-variation-settings:'FILL'_1,'wght'_400,'GRAD'_0,'opsz'_24] text-primary-1">star</span>
                 }
+                @if (role.name == "ROLE_USER") {
+                    <div class="px-[10px]  rounded-3xl bg-cool-gray text-deep-charcoal">{{"role.Default-role" | translate}}</div>
+                }
             </div>
             
             <div class="users-container">

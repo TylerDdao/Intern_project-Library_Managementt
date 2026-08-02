@@ -65,9 +65,6 @@
                                 {{'form.Send'|translate}}
                             </button>
                         }
-                        @else {
-                            <span class="material-symbols-outlined text-leaf-green">check_circle</span>
-                        }
                     </div>
                 </div>
 
@@ -104,6 +101,35 @@
                         </option>
                     }
                 </select>
+            </div>
+
+            <div class="flex flex-col">
+                <label for="password">{{'user.Password' |translate}}</label>
+                <input id="password" formControlName="password" placeholder="{{'user.Password' | translate}}" type="password" class="rounded-[10px]" [class]="isPasswordMatch ? 'bg-pastel-blue text-dodger-blue':'bg-pastel-red text-tomato-red'"/>
+            </div>
+            <div class="flex flex-col">
+                <label for="confirm-password">{{'user.Confirm-password' |translate}}</label>
+                <input id="confirm-password" formControlName="confirmPassword" placeholder="{{'user.Confirm-password' | translate}}" type="password" class="rounded-[10px]" [class]="isPasswordMatch ? 'bg-pastel-blue text-dodger-blue':'bg-pastel-red text-tomato-red'"/>
+            </div>
+            @if (!isPasswordMatch) {
+                <small>{{"verification.Your-passswod-is-not-match"|translate}}</small>
+            }
+
+            <div class="flex flex-col">
+                @if (isPasswordValid) {
+                    <p>{{'signup.Your-password-must-have'|translate}}:</p>
+                    <ul class="list-disc list-inside">
+                        <li>{{'signup.At-least-8-characters' | translate}}</li>
+                        <li>{{"signup.1-special-character" | translate}}</li>
+                    </ul>
+                }
+                @else {
+                    <p class="text-tomato-red">{{'signup.Your-password-must-have'|translate}}:</p>
+                    <ul class="list-disc list-inside text-tomato-red">
+                        <li>{{'signup.At-least-8-characters' | translate}}</li>
+                        <li>{{"signup.1-special-character" | translate}}</li>
+                    </ul>
+                }
             </div>
         </form>
     </div>

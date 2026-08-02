@@ -1,7 +1,7 @@
 package com.example.library_management.controller;
 
 import com.example.library_management.dto.request.LoginRequest;
-import com.example.library_management.dto.request.RegisterRequest;
+import com.example.library_management.dto.request.auth.RegisterRequest;
 import com.example.library_management.dto.request.auth.VerificationRequest;
 import com.example.library_management.dto.request.user.UserRequest;
 import com.example.library_management.dto.response.ApiResponse;

@@ -1,3 +1,5 @@
+import { LanguageService } from "../services/language-service/language-service";
+
 export function formatNumber(num: number): string {
     if (num >= 1_000_000) {
         return (num / 1_000_000).toFixed(num % 1_000_000 === 0 ? 0 : 1) + 'M';
@@ -13,7 +15,8 @@ export function formatTime(time: string | Date, lang: string = 'en'): string {
         year: 'numeric',
         month: 'long',
         day: '2-digit',
-        hour: '2-digit'
+        hour: '2-digit',
+        minute: '2-digit'
     });
 }
 

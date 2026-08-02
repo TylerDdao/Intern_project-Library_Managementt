@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { LoadingComponent } from '../loading-component/loading-component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LanguageService } from '../../services/language-service/language-service';
 
 @Component({
   selector: 'app-comment-box-component',
@@ -22,7 +23,8 @@ export class CommentBoxComponent {
   constructor(
     private commentService: CommentService,
     private cdr: ChangeDetectorRef,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private langService: LanguageService
   ){
 
   }
@@ -51,7 +53,14 @@ export class CommentBoxComponent {
   });
 
   handleDeleteComment(comment:Comment){
-    console.log("Delete" + " " + comment.content);
+    this.commentService.deleteComment(comment.id).subscribe({
+      next: (data:any)=>{
+        if(data.code == "200"){
+          this.fetchComments();
+          this.cdr.markForCheck();
+        }
+      }
+    })
   }
 
   onSubmit(){
@@ -87,6 +96,6 @@ export class CommentBoxComponent {
   }
 
   getFormattedCreatedAt(time: string): string {
-    return formatTime(time);
+    return formatTime(time, this.langService.currentLang);
   }
 }
