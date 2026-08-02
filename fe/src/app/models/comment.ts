@@ -5,5 +5,5 @@ export interface Comment{
     createdAt: string,
     updatedBy?: string,
     updatedAt?: string,
-    editable: boolean
+    owner:boolean
 }

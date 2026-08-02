@@ -22,7 +22,7 @@
             }
             @else {
                 @if (book.copies > 0) {
-                    <button class="bg-primary-1 p-[5px] rounded-[10px] text-soft-ice body font-bold" (click)="handleBorrow()">{{'bookPage.Borrow'|translate}}</button>
+                    <button class="bg-primary-1 p-[5px] rounded-[10px] text-soft-ice body font-bold" (click)="handleBorrow()">{{'bookPage.Borrow-this-book'|translate}}</button>
                 }
                 @else {
                     <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice body font-bold !cursor-not-allowed">{{'bookPage.Book-is-not-available'|translate}}</button>
@@ -33,7 +33,7 @@
     </div>
 
     <div class="flex flex-col space-y-[10px] items-center">
-        <div class="title-1 font-bold">{{"bookPage.Posts-about-this-book"|translate}}</div>
+        <div class="title-1 font-bold text-start w-full">{{"bookPage.Posts-about-this-book"|translate}}</div>
         @if (isLoadingPosts) {
             <div class="flex items-center justify-center w-full p-50">
                 <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>

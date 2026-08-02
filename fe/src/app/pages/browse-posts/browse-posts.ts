@@ -10,14 +10,16 @@ import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { PagesComponent } from '../../components/pages-component/pages-component';
 import { Page } from '../../models/page';
+import { LoadingComponent } from '../../components/loading-component/loading-component';
 
 @Component({
   selector: 'app-browse-posts',
-  imports: [NavbarComponent, TranslateModule, SortSideBarComponent, PostCardComponent, PagesComponent],
+  imports: [NavbarComponent, TranslateModule, SortSideBarComponent, PostCardComponent, PagesComponent, LoadingComponent],
   templateUrl: './browse-posts.html',
   styleUrl: './browse-posts.css',
 })
 export class BrowsePosts {
+  isLoadPosts: boolean = true;
   posts:Post[] =[];
   postPages:Page = {
   totalPages: 1,
@@ -30,7 +32,6 @@ export class BrowsePosts {
   searchPost: Post[] = []
   isSearch:boolean = false;
   isPostFound:boolean = true;
-  isLoading: boolean = true;
 
   constructor(
     public langService: LanguageService,
@@ -51,7 +52,7 @@ export class BrowsePosts {
         if(data.code == "200"){
           this.posts = data.data.content;
           this.postPages = data.data;
-          this.isLoading = false;
+          this.isLoadPosts = false;
           this.cdr.markForCheck();
         }
       },

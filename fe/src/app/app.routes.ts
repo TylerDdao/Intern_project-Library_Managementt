@@ -14,7 +14,6 @@ import { Dashboard } from './pages/dashboard/dashboard';
 import { BooksManagement } from './pages/books-management/books-management';
 import { BorrowsManagement } from './pages/borrows-management/borrows-management';
 import { UsersManagement } from './pages/users-management/users-management';
-import { PostsManagement } from './pages/posts-management/posts-management';
 import { BookPage } from './pages/book-page/book-page';
 import { PostPage } from './pages/post-page/post-page';
 import { CreatePost } from './pages/create-post/create-post';
@@ -43,7 +42,6 @@ export const routes: Routes = [
     { path: 'dashboard', component: Dashboard, canActivate: [adminGuard]},
     { path: 'books-management', component: BooksManagement, canActivate: [adminGuard]},
     { path: 'borrows-management', component: BorrowsManagement, canActivate: [adminGuard]},
-    { path: 'posts-management', component: PostsManagement, canActivate: [adminGuard]},
     { path: 'users-management', component: UsersManagement, canActivate: [adminGuard]},
 
     {path: 'test', component: TestPage},

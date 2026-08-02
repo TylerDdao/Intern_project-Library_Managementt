@@ -1,6 +1,6 @@
 package com.example.library_management.service.comment;
 
-import com.example.library_management.dto.response.CommentResponse;
+import com.example.library_management.dto.response.comment.CommentResponse;
 import com.example.library_management.model.Comment;
 import com.example.library_management.repository.CommentRepository;
 import com.example.library_management.repository.PostRepository;

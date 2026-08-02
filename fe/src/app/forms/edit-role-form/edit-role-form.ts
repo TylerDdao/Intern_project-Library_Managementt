@@ -34,6 +34,11 @@ export class EditRoleForm implements OnChanges {
     );
     this.cdr.markForCheck();
   }
+  if(changes['roleName'] || changes["role"] && this.role){
+    this.newRoleForm.patchValue({
+      roleName: this.role.name
+    })
+  }
 }
 
   newRoleForm = new FormGroup({

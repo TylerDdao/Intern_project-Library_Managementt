@@ -8,7 +8,7 @@
     <div class="borrows-container">
         <div class="title-3 borrows-count font-bold">{{'borrowsManagement.Total-borrows-that-have-not-been-returned'|translate}}: {{borrowing.length}} {{'borrow.Borrows'}}</div>
         <div class="borrowing-container">
-            <h1 class="headline">{{'home.Books-that-you-are-borrowing'|translate}}</h1>
+            <h1 class="headline">{{'myBorrow.Books-that-you-are-borrowing'|translate}}</h1>
             <div class="borrows-scrolling-area">
                 @if (isLoading["borrowing"]) {
                     <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
@@ -26,7 +26,7 @@
         </div>
 
         <div class="borrows-history-container">
-            <h1 class="headline">{{'home.Borrows-history'|translate}}</h1>
+            <h1 class="headline">{{'myBorrow.Borrows-history'|translate}}</h1>
             <div class="borrows-scrolling-area">
                 @if (isLoading["borrowHistory"]) {
                     <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>

@@ -15,10 +15,11 @@ import { EMPTY, firstValueFrom } from 'rxjs';
 import { expand, reduce } from 'rxjs/operators';
 import { Page } from '../../models/page';
 import { PagesComponent } from '../../components/pages-component/pages-component';
+import { LoadingComponent } from '../../components/loading-component/loading-component';
 
 @Component({
   selector: 'app-browse-books',
-  imports: [NavbarComponent, SortSideBarComponent, BookCardComponent, TranslateModule, PagesComponent],
+  imports: [NavbarComponent, SortSideBarComponent, BookCardComponent, TranslateModule, PagesComponent, LoadingComponent],
   templateUrl: './browse-books.html',
   styleUrl: './browse-books.css',
 })
@@ -36,8 +37,14 @@ export class BrowseBooks {
   lastQuery: SideBarQuery | null = null;
 
   mostPostsBooks:Book[] = []
+  isLoadMostPostsBooks:boolean = true;
+
   mostBorrowedBooks: Book[] = []
+  isLoadMostBorrowedBooks:boolean = true;
+
   newlyArrivedBooks: Book[] = []
+  isLoadNewlyArrivedBooks:boolean = true;
+
   genres: string[] = []
 
   searchBooks: Book[] = []
@@ -138,6 +145,7 @@ export class BrowseBooks {
       next: (data: any) =>{
         if(data.code ="200"){
           this.mostBorrowedBooks = data.data.content;
+          this.isLoadMostBorrowedBooks = false;
           this.cdr.markForCheck();
         }
       },
@@ -150,6 +158,7 @@ export class BrowseBooks {
       next: (data: any) =>{
         if(data.code ="200"){
           this.mostPostsBooks = data.data.content;
+          this.isLoadMostPostsBooks = false
           this.cdr.markForCheck();
         }
       },
@@ -162,6 +171,7 @@ export class BrowseBooks {
       next: (data: any) =>{
         if(data.code ="200"){
           this.newlyArrivedBooks = data.data.content;
+          this.isLoadNewlyArrivedBooks = false;
           this.cdr.markForCheck();
         }
       },

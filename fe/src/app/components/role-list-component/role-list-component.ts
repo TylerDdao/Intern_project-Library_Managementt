@@ -58,7 +58,7 @@ export class RoleListComponent implements OnChanges {
     this.userService.getUsersByRole(role).subscribe({
       next: (data: any) => {
         if (data.code == "200") {
-          this.users.push({ role: role, users: data.data.totalElements }); // check exact path
+          this.users.push({ role: role, users: data.data.totalElements });
           this.cdr.markForCheck();
         }
       },

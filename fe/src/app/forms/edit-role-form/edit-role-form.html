@@ -5,7 +5,7 @@
     </div>
     <form [formGroup]="newRoleForm" id="newRoleForm" (ngSubmit)="onSubmit()" class="form-container">
         <div class="flex flex-col">
-            <label for="roleName">{{"form.Role-name"|translate}}</label>
+            <label for="roleName">{{"role.Role-name"|translate}}</label>
             <input id="roleName" formControlName="roleName" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full" [placeholder]="role.name"/>
         </div>
 

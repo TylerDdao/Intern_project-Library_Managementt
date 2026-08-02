@@ -15,13 +15,18 @@
             <div>
                 <h1 class="title font-bold">{{'browseBooks.Top-borrowed-books'|translate}}</h1>
                 <div class="book-scrolling-area">
-                    @if(mostBorrowedBooks.length > 0){
-                        @for (book of mostBorrowedBooks; track $index) {
-                            <app-book-card-component [book]="book"></app-book-card-component>
-                        }
+                    @if (isLoadMostBorrowedBooks) {
+                        <app-loading-component></app-loading-component>
                     }
                     @else {
-                        <h1 class="body">Loading...</h1>
+                        @if(mostBorrowedBooks.length > 0){
+                            @for (book of mostBorrowedBooks; track $index) {
+                                <app-book-card-component [book]="book"></app-book-card-component>
+                            }
+                        }
+                        @else {
+                            <div>{{"list.Empty"|translate}}</div>
+                        }
                     }
                 </div>
             </div>
@@ -29,13 +34,18 @@
             <div>
                 <h1 class="title font-bold">{{'browseBooks.People-are-writing-about-these-books'|translate}}</h1>
                 <div class="book-scrolling-area">
-                    @if(mostPostsBooks.length > 0){
-                        @for (book of mostPostsBooks; track $index) {
-                            <app-book-card-component [book]="book"></app-book-card-component>
-                        }
+                    @if (isLoadMostPostsBooks) {
+                        <app-loading-component></app-loading-component>
                     }
                     @else {
-                        <h1 class="body">{{'browseBooks.Loading'|translate}}...</h1>
+                        @if(mostPostsBooks.length > 0){
+                            @for (book of mostPostsBooks; track $index) {
+                                <app-book-card-component [book]="book"></app-book-card-component>
+                            }
+                        }
+                        @else {
+                            <div>{{"list.Empty"|translate}}</div>
+                        }
                     }
                 </div>
             </div>
@@ -43,14 +53,20 @@
             <div>
                 <h1 class="title font-bold">{{'browseBooks.Newly-arrived'|translate}}</h1>
                 <div class="book-scrolling-area">
-                    @if(newlyArrivedBooks.length > 0){
-                        @for (book of newlyArrivedBooks; track $index) {
-                            <app-book-card-component [book]="book"></app-book-card-component>
-                        }
+                    @if (isLoadNewlyArrivedBooks) {
+                        <app-loading-component></app-loading-component>
                     }
                     @else {
-                        <h1 class="body">{{'browseBooks.Loading'|translate}}...</h1>
+                        @if(newlyArrivedBooks.length > 0){
+                            @for (book of newlyArrivedBooks; track $index) {
+                                <app-book-card-component [book]="book"></app-book-card-component>
+                            }
+                        }
+                        @else {
+                            <div>{{"list.Empty"|translate}}</div>
+                        }
                     }
+                    
                 </div>
             </div>
         }
@@ -65,7 +81,7 @@
                     }
                     @else {
                         @if (isBookFound) {
-                            <h1 class="body">{{'browseBooks.Loading'|translate}}...</h1>
+                            <app-loading-component></app-loading-component>
                         }
                         @else {
                             <h1 class="body">{{'browseBooks.Book-not-found'|translate}}</h1>

@@ -1,6 +1,17 @@
 {
   "role":{
-    "Role": "Role"
+    "Role": "Role",
+    "Role-name": "Role name",
+    "Assigned-features":"Assigned features",
+    "Unassigned-features": "Unassigned features"
+  },
+  "features":{
+    "Features":"Features"
+  },
+  "roleList":{
+    "Role-list":"Role list",
+    "members":"members",
+    "Edit-ROLE_ROOT-is-not-permitted":"Edit ROLE_ROOT is not permitted"
   },
   "user":{
     "User": "User",
@@ -37,7 +48,8 @@
     "Return": "Return",
     "Returned": "Returned",
     "Applied-late-fee": "Applied late fee",
-    "Borrow":"Borrow"
+    "Borrow":"Borrow",
+    "Penalty": "Penalty"
   },
   "borrowPolicy":{
     "Late-penalty": "Late penalty",
@@ -75,14 +87,54 @@
     "Passed-due-date-borrows": "Passed due date borrows",
     "Total-borrows-that-have-not-been-returned": "Total borrows that have not been returned"
   },
-  "post": {
+  "myBorrow":{
+    "Books-that-you-are-borrowing": "Books that you are borrowing",
+    "Borrows-history": "Borrows history"
+  },
+  "booksManagement": {
+    "Add-book": "Add book",
+    "Book-list": "Book list",
+    "Genres-management": "Genres management"
+  },
+  "postsManagement": {
+    "Create-post": "Create post"
+  },
+  "postPage":{
     "Edit-post": "Edit post"
+  },
+  "createPost":{
+    "Create-new-post": "Create new post",
+    "Pick-a-book": "Pick a book"
+  },
+  "management":{
+    "Export": "Export"
+  },
+  "bookPage":{
+    "Book-information":"Book information",
+    "Posts-about-this-book": "Posts about this book",
+    "Borrow-this-book":"Borrow this book",
+    "Book-is-not-available":"Book is not available"
+  },
+  "post": {
+    "Edit-post": "Edit post",
+    "Subject":"Subject",
+    "Body": "Body"
+  },
+  "comment":{
+    "Comment-box":"Comment box",
+    "Write-a-comment":"Write a comment"
   },
   "home": {
     "Top-5-posts-have-most-likes": "Top 5 posts have most likes",
     "Number-of-books-by-genre": "Number of books by genre",
     "Number-of-borrowed-books-by-genre": "Number of borrowed books by genre",
-    "Books-that-you-borrowed": "Books that you borrowed"
+    "Books-that-you-borrowed": "Books that you borrowed",
+    "Number-of-borrows-by-genre": "Number of borrows by genre"
+  },
+  "dashboard":{
+    "Number-of-borrows-by-status": "Number of borrows by status",
+    "Unavailable-books":"Unavailable books",
+    "Late-borrows": "Late borrows"
   },
   "navBar": {
     "hello": "Hello",
@@ -136,7 +188,10 @@
   },
   "search": {
     "Filter-by": "Filter by",
-    "Sort-by": "Sort by"
+    "Sort-by": "Sort by",
+    "Result": "Result",
+    "Search":"Search",
+    "Clear":"Clear"
   },
   "browseBooks": {
     "Loading": "Loading",
@@ -160,5 +215,8 @@
   },
   "page": {
     "Page": "Page"
+  },
+  "list":{
+    "Empty":"Empty"
   }
 }

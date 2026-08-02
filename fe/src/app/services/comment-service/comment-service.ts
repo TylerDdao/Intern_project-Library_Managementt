@@ -8,7 +8,7 @@ import { getAuthHeaders } from '../auth-service';
   providedIn: 'root',
 })
 export class CommentService {
-  private baseUrl = `${environment.apiUrl}`;
+  private baseUrl = `${environment.apiUrl}/comments`;
 
   constructor(
     private http: HttpClient,
@@ -16,8 +16,16 @@ export class CommentService {
   ) {}
 
   getComments(postId: number, page: number = 0, limit: number = 10) {
-    return this.http.get(`${this.baseUrl}/comments?page=${page}&limit=${limit}&postId=${postId}`, {
+    return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}&postId=${postId}`, {
       headers: getAuthHeaders(this.platformId)
     });
+  }
+
+  createComment(content: string, postId: number){
+    return this.http.post(`${this.baseUrl}`,{content: content, postId: postId}, {headers: getAuthHeaders(this.platformId)})
+  }
+
+  deleteComment(id:number){
+
   }
 }

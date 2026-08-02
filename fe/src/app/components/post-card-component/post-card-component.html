@@ -48,7 +48,7 @@
             }
         </div>
         <div class="comment-box-overlay" [class.inactive]="!isOpenComment">
-            <app-comment-box-component [comments]="comments" (onClose)="handleCloseComment()"></app-comment-box-component>
+            <app-comment-box-component [post]="post" (onClose)="handleCloseComment()"></app-comment-box-component>
         </div>
     </div>
     

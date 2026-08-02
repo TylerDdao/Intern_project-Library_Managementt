@@ -6,20 +6,39 @@
         </span>
     </div>
     <div class="comments-area">
-        @if (comments && comments.length > 0) {
-            @for (comment of comments; track $index) {
-                <div class="comment">
-                    <div>
-                        <h1 class="headline">{{comment.createdBy}}</h1>
-                        <h1 class="caption-1">{{getFormattedCreatedAt(comment.createdAt)}}</h1>
+        @if (isLoadingComments) {
+            <div class="w-full h-full flex items-center justify-center">
+                <app-loading-component></app-loading-component>
+            </div>
+        }
+        @else {
+            @if (comments.length > 0) {
+                @for (comment of comments; track $index) {
+                    <div class="comment">
+                        <div>
+                            <div class="flex justify-between items-center">
+                                <h1 class="headline">{{comment.createdBy}}</h1>
+                                @if (comment.owner) {
+                                    <button class="flex items-center" (click)="handleDeleteComment(comment)"><span class="material-symbols-outlined text-tomato-red select-none">delete</span></button>
+                                }
+                            </div>
+                            <h1 class="caption-1">{{getFormattedCreatedAt(comment.createdAt)}}</h1>
+                        </div>
+                        <p class="body">{{comment.content}}</p>
                     </div>
-                    <p class="body">{{comment.content}}</p>
+                }
+            }
+            @else {
+                <div class="w-full h-full flex items-center justify-center">
+                    <div class="text-deep-charcoal/30">{{"list.Empty"|translate}}</div>
                 </div>
             }
         }
     </div>
-    <div class="w-full border border-deep-charcoal rounded-[8px] flex items-center justify-between px-[10px] py-[5px] space-x-[5px] bg-white">
-        <input type="text" placeholder="Write a comment..." class="w-full"/>
-        <span class="material-symbols-outlined text-sky-blue cursor-pointer">send</span>
-    </div>
+    <form [formGroup]="newCommentForm" id="newRoleForm" (ngSubmit)="onSubmit()">
+        <div class="w-full border border-deep-charcoal rounded-[8px] flex items-center justify-between px-[10px] py-[5px] space-x-[5px] bg-white">
+            <input formControlName="content" type="text" placeholder="{{'comment.Write-a-comment'|translate}}" class="w-full"/>
+            <button class="flex items-center"><span class="material-symbols-outlined text-sky-blue cursor-pointer">send</span></button>
+        </div>
+    </form>
 </div>

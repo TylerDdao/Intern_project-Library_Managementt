@@ -61,16 +61,11 @@
     }
 
     .comment-box-overlay {
-        /* position: absolute;
-        top: 0;
-        left: 0; */
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
         height: 100%;
-        z-index: 100;
-        /* background-color: rgb(from var(--color-deep-charcoal) r g b / 30%); */
     }
 
     .comment-box-overlay.inactive{

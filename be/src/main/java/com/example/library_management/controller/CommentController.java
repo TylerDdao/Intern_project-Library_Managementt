@@ -1,23 +1,26 @@
 package com.example.library_management.controller;
 
+import com.example.library_management.dto.request.comment.CommentRequest;
 import com.example.library_management.dto.response.ApiResponse;
-import com.example.library_management.dto.response.CommentResponse;
-import com.example.library_management.dto.response.PostResponse;
+import com.example.library_management.dto.response.comment.CommentResponse;
+import com.example.library_management.service.comment.CreateCommentService;
 import com.example.library_management.service.comment.GetCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/comments")
 public class CommentController {
     @Autowired
     private GetCommentService getCommentService;
+    @Autowired
+    private CreateCommentService createCommentService;
+
     @PreAuthorize("@securityService.hasAccess('GET_COMMENT')")
-    @GetMapping("/comments")
+    @GetMapping()
     public ResponseEntity<ApiResponse<Page<CommentResponse>>> getComments(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
@@ -27,5 +30,13 @@ public class CommentController {
         return ResponseEntity.ok(
                 ApiResponse.success(getCommentService.getCommentByPostId(page, limit, sortBy, sortDir, postId))
         );
+    }
+
+    @PreAuthorize("@securityService.hasAccess('CREATE_COMMENT')")
+    @PostMapping()
+    public ResponseEntity<ApiResponse<CommentResponse>> createComment(
+            @RequestBody CommentRequest request
+            ){
+        return ResponseEntity.ok(ApiResponse.success(createCommentService.createComment(request)));
     }
 }

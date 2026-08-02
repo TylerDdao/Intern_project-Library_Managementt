@@ -70,7 +70,7 @@ public class UpdateBorrowService {
         Borrow borrow = borrowRepository.findById(request.getId()).orElseThrow(()-> new RuntimeException(messageSource.getMessage("error.borrow.not.found", null, LocaleContextHolder.getLocale())));
 
         borrow.setIsActive(request.getIsActive());
-        Book book = bookRepository.findById(borrow.getBook().getId()).orElseThrow(() ->new RuntimeException(messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
+        Book book = bookRepository.findByIdForUpdate(borrow.getBook().getId()).orElseThrow(() ->new RuntimeException(messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
         book.setCopies(book.getCopies() + 1);
         borrowRepository.save(borrow);
         bookRepository.save(book);

@@ -55,7 +55,7 @@ public class CreateBorrowService {
 
         Borrow newBorrow = new Borrow();
         User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.id.not.found", null, LocaleContextHolder.getLocale())));
-        Book book = bookRepository.findById(request.getBookId()).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.id.not.found", null, LocaleContextHolder.getLocale())));;
+        Book book = bookRepository.findByIdForUpdate(request.getBookId()).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.id.not.found", null, LocaleContextHolder.getLocale())));;
         if(book.getCopies() == 0){
             throw new RuntimeException(messageSource.getMessage("error.book.is.not.available", null, LocaleContextHolder.getLocale()));
         }
