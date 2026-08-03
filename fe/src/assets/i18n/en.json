@@ -23,7 +23,8 @@
     "Address": "Address",
     "Password":"Password",
     "Your-account-has-been-saved":"Your account has been saved",
-    "Confirm-password":"Confirm password"
+    "Confirm-password":"Confirm password",
+    "New-user":"New user"
   },
   "email":{
     "Verify": "Verify",
@@ -83,7 +84,8 @@
     "There-is-an-error-while-sending-verification-code":"There is an error while sending sending verification code",
     "Your-email-has-been-verified":"Your email has been verified",
     "Incorrect-verification-code":"Incorrect verification code",
-    "Please-verify-your-username":"Please verify your username"
+    "Please-verify-your-username":"Please verify your username",
+    "This-email-has-been-used":"This email has been used"
   },
   "borrowPolicyForm":{
     "Borrow-policy": "Borrow policy"
@@ -174,12 +176,17 @@
   },
   "signup": {
     "Sign/-up": "Sign-up",
-    "Signup-completed": "Signup Completed",
+    "Sign/-up-completed": "Signup Completed",
+    "Sign-up": "Sign up",
     "Optional": "Optional",
     "Account-information": "Account information",
     "Personal-information": "Personal information",
     "Already-had-an-account": "Already had an account",
     "Back-to-login": "Back to login"
+  },
+  "settings":{
+    "Settings": "Settings",
+    "Change-password": "Change password"
   },
   "search": {
     "Filter-by": "Filter by",

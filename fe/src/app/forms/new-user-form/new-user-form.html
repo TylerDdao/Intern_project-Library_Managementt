@@ -7,9 +7,19 @@
         <form [formGroup]="newUserForm" id="newUserForm" (ngSubmit)="onSubmit()">
             <div class="flex flex-col">
                 <label for="username">{{'user.Username' |translate}}</label>
-                <div class="flex space-x-[5px]">
+                <div class="flex space-x-[5px] items-center">
                     <input id="username" formControlName="username" placeholder="{{'user.Username' | translate}}" type="text" class="rounded-[10px] w-full" [class]="isUsernameInvalid ? 'bg-pastel-red text-tomato-red' : 'bg-pastel-blue text-dodger-blue '"/>
-                    <button class="bg-steel-blue text-soft-ice rounded-[10px] px-[10px] text-nowrap">{{'form.Check-username'|translate}}</button>
+                    @if(isUsernameAvailable == null){
+                        <button type="button" class="bg-steel-blue text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px]" (click)="checkUsername()">
+                            {{'form.Check-username'|translate}}
+                        </button>
+                    }
+                    @else if (isUsernameAvailable == true) {
+                        <span class="material-symbols-outlined text-leaf-green">check_circle</span>
+                    }
+                    @else {
+                        <span class="material-symbols-outlined text-tomato-red">cancel</span>
+                    }
                 </div>
                 @if (isUsernameInvalid) {
                     <small>{{"verification.Please-verify-your-username"|translate}}</small>
@@ -58,7 +68,8 @@
             <div class="flex flex-col">
                     <label for="verification">{{'email.Verification-code' |translate}}</label>
                     <div class="flex space-x-[5px] items-center">
-                        <input id="verification" formControlName="verificationCode" placeholder="{{'email.Verification-code' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full"/>
+                        <input id="verification" formControlName="verificationCode" placeholder="{{'email.Verification-code' | translate}}" type="text"
+                        [class]="isEmailVerified ? 'bg-pastel-blue/50 text-dodger-blue/50 rounded-[10px] w-full cursor-not-allowed' : 'bg-pastel-blue text-dodger-blue rounded-[10px] w-full'"/>
                         
                         @if (!isEmailVerified) {
                             <button type="button" class="bg-steel-blue text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px]" (click)="handleVerify()">

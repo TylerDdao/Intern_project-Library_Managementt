@@ -8,7 +8,7 @@
             <div class="flex flex-col">
                 <label for="username">{{'user.Username' |translate}}</label>
                 <div class="flex space-x-[5px] items-center">
-                    <input id="username" formControlName="username" placeholder="{{'user.Username' | translate}}" type="text" class="rounded-[10px] w-full" [class]="isUsernameInvalid ? 'bg-pastel-red text-tomato-red' : 'bg-pastel-blue text-dodger-blue '"/>
+                    <input id="username" formControlName="username" placeholder="{{'user.Username' | translate}}" type="text" class="rounded-[10px] w-full" [class]="isUsernameVerified == false ? 'bg-pastel-red text-tomato-red' : 'bg-pastel-blue text-dodger-blue '"/>
                     @if (newUserForm.get('username')?.value?.trim() !== user.username.trim()) {
                         @if(isUsernameAvailable == null){
                             <button type="button" class="bg-steel-blue text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px]" (click)="checkUsername()">
@@ -18,7 +18,7 @@
                         @else if (isUsernameAvailable == true) {
                             <span class="material-symbols-outlined text-leaf-green">check_circle</span>
                         }
-                        @else {
+                        @else if(isUsernameAvailable == false){
                             <span class="material-symbols-outlined text-tomato-red">cancel</span>
                         }
                     }
@@ -26,7 +26,7 @@
                         {{'form.Reset'|translate}}
                     </button>
                 </div>
-                @if (isUsernameInvalid) {
+                @if (!isUsernameVerified && newUserForm.get('username')?.value?.trim()?.toLowerCase() !== user.username.trim().toLowerCase()) {
                     <small>{{"verification.Please-verify-your-username"|translate}}</small>
                 }
             </div>
@@ -38,9 +38,9 @@
 
             <div class="flex flex-col">
                 <label for="email">{{'user.Email' |translate}}</label>
-                <div class="flex space-x-[5px]">
-                    <input id="email" formControlName="email" placeholder="{{'user.Email' | translate}}" type="text" class="rounded-[10px] w-full"  [class]="isEmailInvalid ? 'bg-pastel-red text-tomato-red' : 'bg-pastel-blue text-dodger-blue '"/>
-                    @if (newUserForm.get('email')?.value?.trim() !== user.email.trim()){
+                <div class="flex space-x-[5px] items-center">
+                    <input id="email" formControlName="email" placeholder="{{'user.Email' | translate}}" type="text" class="rounded-[10px] w-full"  [class]="isEmailVerified == false || newUserForm.get('email')?.errors?.['email'] || isEmailUsed ? 'bg-pastel-red text-tomato-red' : 'bg-pastel-blue text-dodger-blue'"/>
+                    @if (newUserForm.get('email')?.value?.trim() !== user.email.trim() && !isEmailVerified){
                         @if (!isSendingVerificationEmail) {
                             <button type="button" class="bg-steel-blue text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px]" (click)="handleSendVerificationCode()">
                                 {{'email.Verify'|translate}}
@@ -52,13 +52,13 @@
                             </div>
                         }
                     }
+                    @else if(isEmailVerified){
+                        <span class="material-symbols-outlined text-leaf-green">check_circle</span>
+                    }
                     <button type="button" class="bg-tomato-red text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px]" (click)="handleResetEmail()">
                         {{'form.Reset'|translate}}
                     </button>
                 </div>
-                @if (isEmailInvalid) {
-                    <small>{{"verification.Please-verify-your-email"|translate}}</small>
-                }
                 @if (newUserForm.get('email')?.touched && newUserForm.get('email')?.invalid) {
                     @if (newUserForm.get('email')?.errors?.['required']) {
                         <small>{{'verification.Email-is-required'|translate}}</small>
@@ -68,22 +68,28 @@
                         <small>{{'verification.Please-enter-a-valid-email'|translate}}</small>
                     }
                 }
+                @else {
+                    @if(isEmailUsed){
+                        <small>{{"verification.This-email-has-been-used"|translate}}</small>
+                    }
+                    @else if (!isEmailVerified && newUserForm.get('email')?.value?.trim()?.toLowerCase() !== user.email.trim().toLowerCase()) {
+                        <small>{{"verification.Please-verify-your-email"|translate}}</small>
+                    }
+                }
             </div>
 
 
-            @if (isVerifyingEmail){
+            @if (isVerifyingEmail && !isEmailUsed){
                 <div class="flex flex-col">
                     <label for="verification">{{'email.Verification-code' |translate}}</label>
                     <div class="flex space-x-[5px] items-center">
-                        <input id="verification" formControlName="verificationCode" placeholder="{{'email.Verification-code' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full"/>
+                        <input id="verification" formControlName="verificationCode" placeholder="{{'email.Verification-code' | translate}}" type="text"
+                        [class]="isEmailVerified ? 'bg-pastel-blue/50 text-dodger-blue/50 rounded-[10px] w-full cursor-not-allowed' : 'bg-pastel-blue text-dodger-blue rounded-[10px] w-full'"/>
                         
                         @if (!isEmailVerified) {
                             <button type="button" class="bg-steel-blue text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px]" (click)="handleVerify()">
                                 {{'form.Send'|translate}}
                             </button>
-                        }
-                        @else {
-                            <span class="material-symbols-outlined text-leaf-green">check_circle</span>
                         }
                     </div>
                 </div>
@@ -91,7 +97,7 @@
 
             <div class="flex flex-col">
                 <label for="phoneNumber">{{'user.Phone-number' |translate}}</label>
-                <input id="phoneNumber" formControlName="phoneNumber" placeholder="{{'user.Phone-number' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]"/>
+                <input id="phoneNumber" formControlName="phoneNumber" placeholder="{{'user.Phone-number' | translate}}" type="text" class="rounded-[10px]" [class]="newUserForm.get('phoneNumber')?.errors?.['pattern'] ? 'bg-pastel-red text-tomato-red' : 'bg-pastel-blue text-dodger-blue'"/>
                 @if (newUserForm.get('phoneNumber')?.touched && newUserForm.get('phoneNumber')?.invalid) {
                     @if (newUserForm.get('phoneNumber')?.errors?.['required']) {
                         <small>{{'verification.Phone-number-is-required'|translate}}</small>
@@ -122,7 +128,7 @@
     </div>
 
     <div class="flex space-x-[10px]">
-        <button type="submit" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice body rounded-[10px]" (click)="onSubmit()">{{'form.Save'|translate}}</button>
+        <button type="submit" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice body rounded-[10px]">{{'form.Save'|translate}}</button>
         <button type="button" class="border border-tomato-red px-[10px] py-[5px] text-tomato-red body rounded-[10px]" (click)="close()">{{'form.Cancel'|translate}}</button>
     </div>
 

@@ -36,6 +36,17 @@ import java.util.List;
 @EnableJpaAuditing(auditorAwareRef = "auditorAwareImpl")
 public class SecurityConfig {
 
+    private static final String[] WHITE_LIST = {
+            "/auth/login",
+            "/auth/register",
+            "/mail",
+            "/book-covers/**",
+            "/auth/send-verification-code",
+            "/auth/verify",
+            "/test",
+            "/users/check-username"
+    };
+
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
@@ -88,7 +99,7 @@ public class SecurityConfig {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/auth/login", "/auth/register", "/mail", "/book-covers/**", "/auth/send-verification-code", "/auth/verify").permitAll()
+                    .requestMatchers(WHITE_LIST).permitAll()
                     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .anyRequest().authenticated()
         )

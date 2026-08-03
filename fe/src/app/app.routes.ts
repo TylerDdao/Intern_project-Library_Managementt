@@ -18,11 +18,14 @@ import { BookPage } from './pages/book-page/book-page';
 import { PostPage } from './pages/post-page/post-page';
 import { CreatePost } from './pages/create-post/create-post';
 import { TestPage } from './pages/test-page/test-page';
+import { SignupSuccess } from './pages/signup-success/signup-success';
+import { ChangePassword } from './pages/change-password/change-password';
 
 export const routes: Routes = [
     { path: 'login', component: Login },
     { path: 'signup', component: Signup },
-    { path: 'forgot-password', component: ForgotPassword},
+    { path: 'signup/success', component: SignupSuccess },
+    { path: 'forgot-password', component: ForgotPassword },
 
     { path: 'home', component: Home, canActivate: [authGuard] },
 
@@ -35,6 +38,7 @@ export const routes: Routes = [
     { path: 'my-borrows', component: MyBorrows, canActivate: [authGuard]},
     { path: 'my-posts', component: MyPosts, canActivate: [authGuard]},
     { path: 'settings', component: Settings, canActivate: [authGuard]},
+    { path: 'settings/change-password', component: ChangePassword, canActivate: [authGuard]},
 
     {path: 'create-post', component: CreatePost, canActivate: [authGuard]},
 

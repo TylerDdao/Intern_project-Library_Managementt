@@ -39,7 +39,7 @@ export class NewUserForm {
   newUserForm = new FormGroup({
     username: new FormControl('', Validators.required),
     fullName: new FormControl('', Validators.required),
-    phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^(0|\+84)[0-9]{9}$/)]),
+    phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^(?:(?:0|\+84)\d{9}|(?:\+1)?\d{10})$/)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     address: new FormControl(''),
     role: new FormControl<number | null>(null, Validators.required),

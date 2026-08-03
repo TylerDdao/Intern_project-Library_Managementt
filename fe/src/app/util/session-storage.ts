@@ -1,11 +1,14 @@
 import { User } from "../models/user";
 
 export function getUser(): User | null {
-    const user = sessionStorage.getItem("user");
+  if (typeof sessionStorage === 'undefined') {
+    return null;
+  }
 
-    if (!user) {
-        return null;
-    }
+  const user = sessionStorage.getItem('user');
+  return user ? JSON.parse(user) : null;
+}
 
-    return JSON.parse(user) as User;
+export function saveUser(user:User):void{
+    sessionStorage.setItem("user", JSON.stringify(user));
 }

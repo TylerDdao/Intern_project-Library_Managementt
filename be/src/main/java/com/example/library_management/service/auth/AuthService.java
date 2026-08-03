@@ -2,6 +2,7 @@ package com.example.library_management.service.auth;
 
 import com.example.library_management.model.Feature;
 import com.example.library_management.repository.FeatureRepository;
+import com.example.library_management.service.MailService;
 import com.example.library_management.service.TokenBlacklistService;
 import com.example.library_management.util.AuditLogger;
 import com.example.library_management.util.JwtUtil;
@@ -15,6 +16,7 @@ import com.example.library_management.model.Role;
 import com.example.library_management.model.User;
 import com.example.library_management.repository.RoleRepository;
 import com.example.library_management.repository.UserRepository;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -62,6 +64,9 @@ public class AuthService {
 
     @Autowired
     AuditLogger logger;
+
+    @Autowired
+    MailService mailService;
 
     public LoginResponse login(LoginRequest request) {
         try {
@@ -123,7 +128,7 @@ public class AuthService {
         logger.log(username,"Logged out @{}", username);
     }
 
-    public UserResponse register(RegisterRequest request, Locale locale) {
+    public UserResponse register(RegisterRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new RuntimeException(messageSource.getMessage("error.username.taken", null, LocaleContextHolder.getLocale()));
         }
@@ -142,10 +147,21 @@ public class AuthService {
 
         UserRequest userRequest = new UserRequest(user);
 
-        verificationService.sendVerificationEmail(userRequest, locale);
+//        try {
+//            verificationService.sendVerificationEmail(userRequest);
+//        } catch (Exception e) {
+//            throw new RuntimeException(messageSource.getMessage("error.email.failed", null, LocaleContextHolder.getLocale()), e);
+//        }
 
         User savedUser = userRepository.save(user);
-        logger.log("SYSTEM","Registered @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
+        logger.log("SYSTEM", "Registered @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
+
+        try {
+            mailService.sendWelcomeEmail(savedUser);
+        } catch (Exception e) {
+            logger.error("Failed to send welcome email to @{}: {}", savedUser.getUsername(), e.getMessage());
+        }
+
         return new UserResponse(savedUser);
     }
 

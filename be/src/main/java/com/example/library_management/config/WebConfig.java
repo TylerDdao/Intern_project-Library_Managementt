@@ -18,7 +18,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         File dir = new File(System.getProperty("user.dir"), uploadDir);
         String absolutePath = dir.getAbsolutePath() + "/";
-        System.out.println("Serving from: " + absolutePath);
+//        System.out.println("Serving from: " + absolutePath);
         registry.addResourceHandler("/book-covers/**")
                 .addResourceLocations("file:" + absolutePath);
     }

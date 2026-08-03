@@ -31,6 +31,6 @@ public class TokenBlacklistService {
     public void removeExpiredTokens() {
         Date now = new Date();
         blacklistedTokens.entrySet().removeIf(entry -> entry.getValue().before(now));
-        System.out.println("Cleaned blacklist, remaining: " + blacklistedTokens.size());
+//        System.out.println("Cleaned blacklist, remaining: " + blacklistedTokens.size());
     }
 }

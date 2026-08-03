@@ -5,6 +5,8 @@ import { environment } from '../../../environments/environment';
 import { SideBarQuery } from '../../components/sort-side-bar-component/sort-side-bar-component';
 import { getAuthHeaders } from '../auth-service';
 import { User } from '../../models/user';
+import { BehaviorSubject } from 'rxjs';
+import { getUser, saveUser } from '../../util/session-storage';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +19,21 @@ export class UserService {
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
+
+  private userSubject = new BehaviorSubject<User | null>(getUser());
+
+  user$ = this.userSubject.asObservable();
+
+  setCurrentUser(user: User) {
+    if(isPlatformBrowser(this.platformId)){
+      saveUser(user);
+      this.userSubject.next(user);
+    }
+  }
+
+  getCurrentUser() {
+    return this.userSubject.value;
+  }
 
   getAllRoles(page:number = 0, limit:number=1000){
     return this.http.get(`${this.roleBaseUrl}?page=${page}&limit=${limit}&sortBy=name&sortDir=asc`, {

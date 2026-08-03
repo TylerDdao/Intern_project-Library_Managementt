@@ -13,10 +13,11 @@ import { NewUserForm } from '../../forms/new-user-form/new-user-form';
 import { UserService } from '../../services/user-service/user-service';
 import { isPlatformBrowser } from '@angular/common';
 import { errorNoti } from '../../util/error-notification';
+import { LoadingComponent } from "../../components/loading-component/loading-component";
 
 @Component({
   selector: 'app-signup',
-  imports: [TranslateModule, NavbarComponent, ReactiveFormsModule],
+  imports: [TranslateModule, NavbarComponent, ReactiveFormsModule, LoadingComponent],
   templateUrl: './signup.html',
   styleUrl: './signup.css',
 })
@@ -24,6 +25,7 @@ export class Signup {
   invalidInformation = false;
   signupCompleted = false;
   user!:User
+  isRegister:boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -50,7 +52,7 @@ export class Signup {
   newUserForm = new FormGroup({
     username: new FormControl('', Validators.required),
     fullName: new FormControl('', Validators.required),
-    phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^(0|\+84)[0-9]{9}$/)]),
+    phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^(?:(?:0|\+84)\d{9}|(?:\+1)?\d{10})$/)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     address: new FormControl(''),
     verificationCode: new FormControl('', Validators.required),
@@ -67,6 +69,8 @@ export class Signup {
       return;
     }
     const name = this.translate.instant("user.New-user")
+    console.log(this.translate.instant("user.New-user"))
+    console.log(name)
     this.authService.sendVerificationCode(email, name).subscribe({
       next: (data:any)=>{
         if(data.code == "200"){
@@ -88,6 +92,7 @@ export class Signup {
       },
       error: (err:HttpErrorResponse)=>{
         errorNoti(err, this.translate)
+        this.isSendingVerificationEmail = false;
       }
     })
     this.cdr.markForCheck();
@@ -126,29 +131,46 @@ export class Signup {
   }
 
   onSubmit(){
-    console.log("Submit")
+    this.isRegister =true;
     const {username, fullName, phoneNumber, email, address, password, confirmPassword} = this.newUserForm.value;
     if(password!=confirmPassword){
       this.isPasswordMatch = false;
+      this.isRegister = false;
       this.cdr.markForCheck();
       return;
     }
     if(this.isUsernameAvailable == false || this.isUsernameAvailable == null){
         this.isUsernameInvalid = true;
+        this.isRegister = false;
         return;
       }
     if(this.isEmailVerified == false){
       this.isEmailInvalid = true;
+      this.isRegister = false;
       return;
     }
-    if(username && fullName && phoneNumber && email){
-      this.user.username = username;
-      this.user.fullName = fullName;
-      this.user.email = email;
-      this.user.phoneNumber = phoneNumber;
-      if(address){
-        this.user.address = address
-      }
+    if(username && fullName && phoneNumber && email && password){
+      this.user = {
+        username,
+        fullName,
+        email,
+        phoneNumber,
+        password,
+        address: address ?? ''
+      };
+
+      this.authService.signup(this.user).subscribe({
+        next:(data:any)=>{
+          if(data.code == "200"){
+            this.isRegister = false;
+            this.router.navigate(['/signup/success'])
+          }
+        },
+        error:(err:HttpErrorResponse)=>{
+          errorNoti(err, this.translate);
+        }
+      })
+
     }
   }
 

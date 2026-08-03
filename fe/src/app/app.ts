@@ -11,6 +11,10 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class App {
   protected readonly title = signal('library-management-fe');
+
+  whiteList:string[] = [
+    "/login", "/signup", "/signup/success"
+  ]
   
   constructor(
     private translate: TranslateService, 
@@ -26,7 +30,7 @@ export class App {
           this.router.navigate(['/home']);
         }
       } else {
-        if (currentPath !== '/login' && currentPath !== '/signup') {
+        if (!this.whiteList.includes(currentPath)) {
           this.router.navigate(['/login']);
         }
       }

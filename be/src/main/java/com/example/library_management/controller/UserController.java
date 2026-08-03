@@ -24,7 +24,6 @@ public class UserController {
     @Autowired
     DeleteUserService deleteUserService;
 
-    @PreAuthorize("@securityService.hasAccess('GET_USER')")
     @GetMapping("/check-username")
     public ResponseEntity<ApiResponse<Boolean>> checkUsername(
             @RequestParam() String username

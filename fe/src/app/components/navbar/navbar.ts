@@ -5,6 +5,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from '../../services/auth-service';
 import { User } from '../../models/user';
+import { UserService } from '../../services/user-service/user-service';
 
 interface Page{
   name: string,
@@ -21,8 +22,7 @@ interface Page{
 })
 export class NavbarComponent {
   isMobileMenuOpen = false;
-  user!: User;
-  fullName: string = "";
+  user!: User | null;
   pages: Page[] = [];
   userAuthorities: string[] = [];
   allPages: Page[] = [
@@ -33,12 +33,17 @@ export class NavbarComponent {
     { name: 'navBar.user.My-posts', path: '/my-posts', authorities: ['GET_POST'] },
     { name: 'navBar.admin.Dashboard', path: '/dashboard', authorities: ['UPDATE_BOOK', 'UPDATE_BORROW'] },
     { name: 'navBar.admin.Books-management', path: '/books-management', authorities: ['UPDATE_BOOK', 'DELETE_BOOK'] },
-    // { name: 'navBar.admin.Posts-management', path: '/posts-management', authorities: ['DELETE_POST_MULTI', 'DELETE_COMMENT_MULTI'] },
     { name: 'navBar.admin.Borrows-management', path: '/borrows-management', authorities: ['GET_BORROW_MULTI', 'UPDATE_BORROW', 'DELETE_BORROW'] },
     { name: 'navBar.admin.Users-management', path: '/users-management', authorities: ['UPDATE_USER', 'DELETE_USER'] },
   ];
   
-  constructor(public langService: LanguageService, private cdr: ChangeDetectorRef, @Inject(PLATFORM_ID) private platformId: Object, private authService: AuthService, private router:Router) {}
+  constructor(
+    public langService: LanguageService, 
+    private cdr: ChangeDetectorRef, 
+    @Inject(PLATFORM_ID) private platformId: Object, 
+    private authService: AuthService, 
+    private router:Router,
+    private userService:UserService) {}
 
   get validateUser(): boolean {
     if (typeof sessionStorage === 'undefined') return false;
@@ -65,23 +70,33 @@ export class NavbarComponent {
   }
 
   ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-        const user = JSON.parse(sessionStorage.getItem('user') ?? '{}');
-        this.fullName = user.fullName || '';
-        
-        if (user.role?.name == "ROLE_ROOT") {
-            this.pages = this.allPages;
-        } 
-        else {
-          
-            const authorities = JSON.parse(sessionStorage.getItem('authorities') ?? '[]');
-            this.userAuthorities = authorities || [];
-            this.pages = this.allPages.filter(page =>
-                !page.authorities || page.authorities.some(auth => this.userAuthorities.includes(auth))
-            );
-            console.log('filtered pages:', this.pages); // add this
-        }
-        this.cdr.markForCheck();
-    }
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    this.userService.user$.subscribe(user => {
+      this.user = user;
+
+      if (!user) {
+        this.pages = [];
+        return;
+      }
+
+      if (user.role?.name === 'ROLE_ROOT') {
+        this.pages = this.allPages;
+      } else {
+        const authorities = JSON.parse(
+          sessionStorage.getItem('authorities') ?? '[]'
+        );
+
+        this.userAuthorities = authorities;
+
+        this.pages = this.allPages.filter(
+          page =>
+            !page.authorities ||
+            page.authorities.some(auth => authorities.includes(auth))
+        );
+      }
+
+      this.cdr.markForCheck();
+    });
   }
 }

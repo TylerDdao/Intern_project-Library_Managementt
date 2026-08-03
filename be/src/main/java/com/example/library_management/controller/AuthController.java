@@ -11,6 +11,7 @@ import com.example.library_management.dto.response.auth.VerificationResponse;
 import com.example.library_management.service.auth.AuthService;
 import com.example.library_management.service.auth.VerificationService;
 import com.example.library_management.service.MailService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -38,11 +39,8 @@ public class AuthController {
 
     @PostMapping("/send-verification-code")
     public ResponseEntity<ApiResponse<String>> sendVerificationEmail(
-            @RequestBody UserRequest request,
-            @RequestHeader(value = "Accept-Language", required = false) String lang
-            ) {
-        Locale locale = (lang != null) ? Locale.forLanguageTag(lang) : Locale.ENGLISH;
-        String message = verificationService.sendVerificationEmail(request, locale);
+            @RequestBody UserRequest request) {
+        String message = verificationService.sendVerificationEmail(request);
         return switch (message) {
             case "verification.Code.is.sent" -> ResponseEntity.ok(ApiResponse.success(messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
             case "error.Code.is.already.sent" -> ResponseEntity.badRequest().body(ApiResponse.error("CODE-ALREADY-SENT", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
@@ -60,9 +58,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<UserResponse>> register(@RequestBody RegisterRequest request, @RequestHeader(value = "Accept-Language", required = false) String lang) {
-        Locale locale = (lang != null) ? Locale.forLanguageTag(lang) : Locale.ENGLISH;
-        return ResponseEntity.status(201).body(ApiResponse.success(authService.register(request, locale)));
+    public ResponseEntity<ApiResponse<UserResponse>> register(@RequestBody RegisterRequest request) throws MessagingException {
+        return ResponseEntity.status(201).body(ApiResponse.success(authService.register(request)));
     }
 
     @PostMapping("/login")

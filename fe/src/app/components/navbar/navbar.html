@@ -22,7 +22,7 @@
 
             <div class="flex items-center space-x-[5px]">
                 <span routerLink='/settings' class="material-symbols-outlined icon-size cursor-pointer">account_circle</span>
-                <h1 class="headline">{{('navBar.hello'|translate)}}: {{fullName}}</h1>
+                <h1 class="headline">{{('navBar.hello'|translate)}}: {{user?.fullName}}</h1>
             </div>
 
             <div class="border border-white mx-[10px]"></div> 
@@ -61,7 +61,7 @@
 
             <div class="flex items-center space-x-[5px]">
                 <span class="material-symbols-outlined icon-size cursor-pointer" routerLink="/settings">account_circle</span>
-                <h1 class="headline">{{('navBar.hello'|translate)}}: {{fullName}}</h1>
+                <h1 class="headline">{{('navBar.hello'|translate)}}: {{user?.fullName}}</h1>
             </div>
             <button class="border border-soft-ice p-[10px] rounded-[10px] caption-1 font-bold" (click)="handleLogout()">Logout</button>
         </div>

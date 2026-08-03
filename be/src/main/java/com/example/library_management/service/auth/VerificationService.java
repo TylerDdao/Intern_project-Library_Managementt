@@ -49,7 +49,7 @@ public class VerificationService {
         verificationRepository.deleteByExpiresAtBeforeAndVerifiedFalse(LocalDateTime.now());
     }
 
-    public String sendVerificationEmail(UserRequest request, Locale locale){
+    public String sendVerificationEmail(UserRequest request){
         if (userRepository.existsByEmail(request.getEmail())){
             return "error.Email.has.been.used";
         }
@@ -69,11 +69,11 @@ public class VerificationService {
         verification.setExpiresAt(now.plusMinutes(EXPIRY_MINUTES));
 
         try {
-            mailService.sentVerificationEmail(request.getEmail(), request.getFullName(), code, locale);
+            mailService.sentVerificationEmail(request.getEmail(), request.getFullName(), code);
             verificationRepository.save(verification);
             return "verification.Code.is.sent";
         }
-        catch (MessagingException e){
+        catch (Exception e){
             return e.toString();
         }
     }

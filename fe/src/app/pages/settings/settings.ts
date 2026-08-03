@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, Inject, OnChanges, PLATFORM_ID, SimpleChanges } from '@angular/core';
 import { AuthService } from '../../services/auth-service';
-import { LanguageService } from '../../services/language-service/language-service';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NavbarComponent } from '../../components/navbar/navbar';
@@ -10,25 +9,23 @@ import { UserService } from '../../services/user-service/user-service';
 import { User } from '../../models/user';
 import { getUser } from '../../util/session-storage';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Role } from '../../models/role';
 import { errorNoti } from '../../util/error-notification';
 
 @Component({
   selector: 'app-settings',
-  imports: [TranslateModule, NavbarComponent, ReactiveFormsModule, RouterLink],
+  imports: [TranslateModule, NavbarComponent, ReactiveFormsModule],
   templateUrl: './settings.html',
   styleUrl: './settings.css',
 })
-export class Settings implements OnChanges{
-  user!:User
+export class Settings{
+  user!:User;
   isUsernameAvailable : boolean | null = null;
+  isUsernameVerified: boolean | null = null;
 
-  isUsernameInvalid: boolean = false;
-
-  isVerifyingEmail:boolean = false;
-  isEmailVerified:boolean=false;
-  isEmailInvalid: boolean = false;
+  isEmailVerified:boolean | null = null;
   isSendingVerificationEmail:boolean = false;
+  isVerifyingEmail:boolean = false;
+
 
   isEmailUsed: boolean = false;
 
@@ -37,49 +34,46 @@ export class Settings implements OnChanges{
     private userService: UserService, 
     private translate: TranslateService,
     private authService: AuthService,
-    private cdr: ChangeDetectorRef) {}
+    private cdr: ChangeDetectorRef,
+    private router:Router) {}
 
   newUserForm = new FormGroup({
     username: new FormControl('', Validators.required),
     fullName: new FormControl('', Validators.required),
-    phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^(0|\+84)[0-9]{9}$/)]),
+    phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^(?:(?:0|\+84)\d{9}|(?:\+1)?\d{10})$/)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     address: new FormControl(''),
     verificationCode: new FormControl('')
   });
 
+  handleChangePassword(){
+    this.router.navigate(['/settings/change-password'])
+  }
+
   handleSendVerificationCode(){
-    this.isVerifyingEmail = true;
     this.isSendingVerificationEmail = true;
+    this.isEmailUsed = false;
     this.newUserForm.get('verificationCode')?.enable();
     const email = this.newUserForm.get("email")?.value?.trim().toLowerCase();
     if (!email) {
       return;
     }
-    this.authService.sendVerificationCode(email, this.user?.fullName).subscribe({
+    this.authService.sendVerificationCode(email, this.user.fullName).subscribe({
       next: (data:any)=>{
         if(data.code == "200"){
           const message = this.translate.instant("verification.Your-verification-code-has-been-sent-to-your-email");
           alert(message)
-          
-        }
-        if(data.code == "CODE-ALREADY-SENT"){
-          const message = this.translate.instant("verification.Your-verification-code-has-already-been-sent-to-your-email");
-          alert(message +"\n" + data.code)
-        }
-        if(data.code == "EMAIL-IN-USE"){
-          const message = this.translate.instant("verification.Email-has-been-used");
-          alert(message +"\n" + data.code)
-          this.isVerifyingEmail = false;
+          this.isVerifyingEmail = true;
         }
         this.isSendingVerificationEmail = false;
         this.cdr.markForCheck();
       },
       error: (err: HttpErrorResponse)=>{
-        const message = this.translate.instant("verification.There-is-an-error-while-sending-verification-code");
-        alert(message + '\n' + err.error.code + ': ' + err.error.message )
+        errorNoti(err, this.translate);
+        if (err.error.code === "EMAIL-IN-USE") {
+          this.isEmailUsed = true;
+        }
         this.isSendingVerificationEmail = false;
-        console.error(err.error.message);
         this.cdr.markForCheck();
       }
     })
@@ -102,10 +96,10 @@ export class Settings implements OnChanges{
             const message = this.translate.instant("verification.Your-email-has-been-verified");
             alert(message)
             this.isEmailVerified = true;
-            this.isEmailInvalid = false;
             this.newUserForm.get('verificationCode')?.disable();
           }
           else{
+            this.isEmailVerified = false;
             const message = this.translate.instant("verification.Incorrect-verification-code");
             alert(message)
           }
@@ -113,7 +107,9 @@ export class Settings implements OnChanges{
         }
       },
       error: (err)=>{
-        errorNoti(err, this.translate)
+        const message = this.translate.instant("verification.There-is-an-error-while-verifying-your-email");
+        alert(message)
+        console.error(err)
       }
     })
   }
@@ -128,20 +124,8 @@ export class Settings implements OnChanges{
     this.cdr.markForCheck()
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['user'] && this.user) {
-      this.newUserForm.patchValue({
-        username: this.user.username,
-        fullName: this.user.fullName,
-        phoneNumber: this.user.phoneNumber,
-        email: this.user.email,
-        address: this.user.address,
-      });
-    }
-  }
-
   handleResetUsername(){
-    this.isUsernameInvalid = false;
+    this.isUsernameAvailable = null;
     this.newUserForm.patchValue({
       username: this.user.username
     })
@@ -150,7 +134,7 @@ export class Settings implements OnChanges{
   }
 
   checkUsername() {
-    this.isUsernameInvalid = false;
+    this.isUsernameVerified = true;
     const username = this.newUserForm.get('username')?.value?.trim();
     if (!username){
       return;
@@ -160,33 +144,33 @@ export class Settings implements OnChanges{
       next: (data: any) => {
         if(data.data === true){
           this.isUsernameAvailable = true;
-          this.isUsernameInvalid = false;
         }
         else{
           this.isUsernameAvailable = false;
         }
         this.cdr.markForCheck();
       },
-      error: (err:HttpErrorResponse) =>{
-        errorNoti(err, this.translate)
-      } 
+      error: (err) => console.error(err)
     });
   }
 
   onSubmit(){
     const userId = this.user.id;
+
     const {username, fullName, phoneNumber, email, address} = this.newUserForm.value;
-    if(username?.trim() !== this.user.username.trim()){
-      if(this.isUsernameAvailable == false || this.isUsernameAvailable == null){
-        this.isUsernameInvalid = true;
-        return;
-      }
+
+    if(this.user.username.trim().toLocaleLowerCase() !== username?.trim().toLocaleLowerCase() && this.isUsernameAvailable == null){
+      this.isUsernameVerified = false;
+      return;
     }
-    if(email?.trim().toLocaleLowerCase() !== this.user.email.trim().toLocaleLowerCase()){
-      if(this.isEmailVerified == false){
-        this.isEmailInvalid = true;
-        return;
-      }
+
+    if(this.user.email.trim().toLocaleLowerCase() !== email?.trim().toLocaleLowerCase()){
+      this.isEmailVerified = false;
+      return;
+    }
+    if(!this.newUserForm.valid){
+      
+      return
     }
 
     let newUser: User = {...this.user};
@@ -200,8 +184,10 @@ export class Settings implements OnChanges{
     this.userService.updateUser(newUser).subscribe({
       next: (data:any)=>{
         if(data.code == "200"){
-          const message = this.translate.instant("user.Your-account-has-been-saved");
+          this.userService.setCurrentUser(newUser);
+          const message = this.translate.instant("user.Your-account-has-been-saved")
           alert(message)
+          this.cdr.markForCheck();
         }
       },
       error:(err:HttpErrorResponse)=>{
@@ -212,9 +198,9 @@ export class Settings implements OnChanges{
 
   ngOnInit(){
     if (isPlatformBrowser(this.platformId)) {
-      const user = getUser();
-      if (user) {
-        this.user = user;
+      const sessionUser = getUser();
+      if(sessionUser){
+        this.user = sessionUser;
         this.newUserForm.patchValue({
           username: this.user.username,
           fullName: this.user.fullName,
@@ -225,15 +211,12 @@ export class Settings implements OnChanges{
       }
       this.newUserForm.get('username')?.valueChanges.subscribe(() => {
         this.isUsernameAvailable = null;
-        this.isUsernameInvalid = false;
+        this.isUsernameVerified = null;
         this.cdr.markForCheck();
       });
       this.newUserForm.get('email')?.valueChanges.subscribe(() => {
-        this.isEmailInvalid = false;
-        this.isEmailVerified=false;
-        this.newUserForm.patchValue({
-          verificationCode: ""
-        })
+        this.isEmailVerified = null;
+        this.isEmailUsed = false;
         this.cdr.markForCheck();
       });
     }

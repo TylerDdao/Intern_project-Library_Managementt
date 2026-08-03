@@ -33,7 +33,7 @@ public class BorrowReminderService {
     private MessageSource messageSource;
 
     @Autowired
-    AuditLogger logger;
+    AuditLogger log;
 
     @Scheduled(cron = "0 0 8 * * *") // runs every day at 8:00 AM
     public void sendDueDateReminders() {
@@ -43,11 +43,11 @@ public class BorrowReminderService {
         List<Borrow> dueBorrows = borrowRepository.findByDueDateBetweenAndIsActiveTrue(startOfDay, endOfDay);
 
         for (Borrow borrow : dueBorrows) {
-            try {
-                mailService.sendBorrowDueReminder(borrow.getUser().getEmail(), borrow.getUser().getFullName(), borrow.getBook().getTitle(), LocaleContextHolder.getLocale());
+            try{
+                mailService.sendBorrowDueReminder(borrow.getUser(), borrow.getBook().getTitle());
             }
-            catch (MessagingException e){
-                logger.error("An error has occurred while sending borrow reminder emails: " + e.getMessage());
+            catch (Exception e){
+                log.error("Failed to send reminder for borrow id {}", borrow.getId(), e);
             }
         }
     }
@@ -60,33 +60,40 @@ public class BorrowReminderService {
 
         for (Borrow borrow : lateBorrows) {
             try {
-                long lateDays = ChronoUnit.DAYS.between(borrow.getDueDate().toLocalDate(), LocalDate.now());
-                mailService.sendLateBorrowReminder(borrow.getUser().getEmail(), borrow.getUser().getFullName(), borrow.getBook().getTitle(), lateDays, LocaleContextHolder.getLocale());
-            }
-            catch (MessagingException e){
-                logger.error("An error has occurred while sending borrow reminder emails: " + e.getMessage());
+                long lateDays = ChronoUnit.DAYS.between(
+                        borrow.getDueDate().toLocalDate(),
+                        LocalDate.now()
+                );
+
+                mailService.sendLateBorrowReminder(
+                        borrow.getUser(),
+                        borrow.getBook().getTitle(),
+                        lateDays
+                );
+            } catch (Exception e) {
+                log.error("Failed to send reminder for borrow id {}", borrow.getId(), e);
             }
         }
     }
 
-    public String test() {
-        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
-        LocalDateTime endOfDay = LocalDate.now().atTime(23, 59, 59);
-
-        List<Borrow> borrows = borrowRepository.findByUserId(1);
-
-        for (Borrow borrow : borrows) {
-            String email = "baonamdao05@gmail.com";
-            String subject = messageSource.getMessage("borrow.due.email.subject", null, LocaleContextHolder.getLocale());
-            String body = messageSource.getMessage(
-                    "borrow.due.email.body",
-                    new Object[]{borrow.getUser().getUsername(), borrow.getBook().getTitle()},
-                    LocaleContextHolder.getLocale()
-            );
-
-            mailService.sendEmail(email, subject, body);
-            break;
-        }
-        return "Emails sent";
-    }
+//    public String test() {
+//        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+//        LocalDateTime endOfDay = LocalDate.now().atTime(23, 59, 59);
+//
+//        List<Borrow> borrows = borrowRepository.findByUserId(1);
+//
+//        for (Borrow borrow : borrows) {
+//            String email = "baonamdao05@gmail.com";
+//            String subject = messageSource.getMessage("borrow.due.email.subject", null, LocaleContextHolder.getLocale());
+//            String body = messageSource.getMessage(
+//                    "borrow.due.email.body",
+//                    new Object[]{borrow.getUser().getUsername(), borrow.getBook().getTitle()},
+//                    LocaleContextHolder.getLocale()
+//            );
+//
+//            mailService.sendEmail(email, subject, body);
+//            break;
+//        }
+//        return "Emails sent";
+//    }
 }
