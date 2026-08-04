@@ -1,7 +1,8 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { Book } from '../../models/book';
 import { TranslateModule } from '@ngx-translate/core';
-import { backendUrl, errorImage } from '../../../assets/constants';
+import { errorImage } from '../../../assets/constants';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-book-card-component',
@@ -13,7 +14,7 @@ export class BookCardComponent {
   @Input({ required: true }) book!: Book;
   @Input() accessible: boolean = true
 
-  backendUrl = backendUrl;
+  backendUrl = environment.apiUrl;
 
   ngOnChanges(changes: SimpleChanges): void {
 

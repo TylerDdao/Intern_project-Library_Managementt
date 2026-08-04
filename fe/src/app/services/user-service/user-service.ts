@@ -61,7 +61,7 @@ export class UserService {
 
   updateUser(user:User){
     return this.http.patch(`${this.userBaseUrl}`,
-      {id: user.id, username: user.username, fullName: user.fullName, email: user.email, phoneNumber: user.phoneNumber, address: user.address},
+      {id: user.id, username: user.username, fullName: user.fullName, email: user.email, phoneNumber: user.phoneNumber, address: user.address, password: user.password},
       {headers: getAuthHeaders(this.platformId)})
   }
 

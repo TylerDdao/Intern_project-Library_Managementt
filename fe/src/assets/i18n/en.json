@@ -23,18 +23,22 @@
     "Address": "Address",
     "Password":"Password",
     "Your-account-has-been-saved":"Your account has been saved",
-    "Confirm-password":"Confirm password",
-    "New-user":"New user"
+    "New-user":"New user",
+    "Old-password": "Old password",
+    "New-password": "New password",
+    "Confirm-password": "Confirm password"
   },
   "email":{
     "Verify": "Verify",
-    "Verification-code": "Verification code"
+    "Verification-code": "Verification code",
+    "Sending": "Sending"
   },
   "usersManagement":{
     "Create-user": "Create user",
     "Create-role": "Create role",
     "Role-list": "Role list",
-    "User-is-saved":"User is saved"
+    "User-is-saved":"User is saved",
+    "Password-is-changed": "Password is changed"
   },
   "book": {
     "Title": "Title",
@@ -66,7 +70,8 @@
     "Cancel": "Cancel",
     "Reset": "Reset",
     "Send": "Send",
-    "Check-username": "Check username"
+    "Check-username": "Check username",
+    "Confirm": "Confirm"
   },
   "newUserForm":{
     "Create-new-user": "Create new user"
@@ -85,7 +90,9 @@
     "Your-email-has-been-verified":"Your email has been verified",
     "Incorrect-verification-code":"Incorrect verification code",
     "Please-verify-your-username":"Please verify your username",
-    "This-email-has-been-used":"This email has been used"
+    "This-email-has-been-used":"This email has been used",
+    "Your-passswod-is-not-match":"Your password is not match",
+    "Your-passswod-is-incorrect": "Your password is incorrect"
   },
   "borrowPolicyForm":{
     "Borrow-policy": "Borrow policy"
@@ -172,7 +179,7 @@
     "Login": "Login",
     "Dont-have-an-account-yet": "Don't have an account yet",
     "Forgot-password": "Forgot password",
-    "username-or-password-is-wrong": "Username or password is wrong"
+    "Username-or-password-is-wrong": "Username or password is wrong"
   },
   "signup": {
     "Sign/-up": "Sign-up",
@@ -182,7 +189,10 @@
     "Account-information": "Account information",
     "Personal-information": "Personal information",
     "Already-had-an-account": "Already had an account",
-    "Back-to-login": "Back to login"
+    "Back-to-login": "Back to login",
+    "At-least-8-characters": "At least 8 characters",
+    "1-special-character": "1 special character",
+    "Your-password-must-have":"Your password must have"
   },
   "settings":{
     "Settings": "Settings",
@@ -222,6 +232,10 @@
     "Empty":"Empty"
   },
   "error":{
-    "An-error-has-occurred": "An error has occurred"
+    "An-error-has-occurred": "An error has occurred",
+    "Page-not-found": "Page not found",
+    "Unauthorized-access": "Unauthorized access",
+    "An-error-has-occurred,-please-login-again": "An error has occurred, please login again",
+    "Please-enter-a-different-password":"Please enter a different password"
   }
 }

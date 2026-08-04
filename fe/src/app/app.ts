@@ -1,4 +1,4 @@
-import { Component, Inject, PLATFORM_ID, signal } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -9,20 +9,20 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements OnInit {
   protected readonly title = signal('library-management-fe');
 
-  whiteList:string[] = [
-    "/login", "/signup", "/signup/success"
-  ]
-  
+  whiteList: string[] = ['/login', '/signup', '/signup/success'];
+
   constructor(
-    private translate: TranslateService, 
+    private translate: TranslateService,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {
+  ) {}
+
+  ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-      const token = sessionStorage.getItem('token') || localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const currentPath = window.location.pathname;
 
       if (token) {

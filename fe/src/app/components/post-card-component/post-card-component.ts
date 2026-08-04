@@ -9,7 +9,8 @@ import { CommentBoxComponent } from '../comment-box-component/comment-box-compon
 import { CommentService } from '../../services/comment-service/comment-service';
 import { Comment } from '../../models/comment';
 import { Router } from '@angular/router';
-import { backendUrl, errorImage } from '../../../assets/constants';
+import { errorImage } from '../../../assets/constants';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-post-card-component',
@@ -39,7 +40,7 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
     private postService: PostService,
     private commentService: CommentService
   ) {}
-  backendUrl = backendUrl;
+  backendUrl = environment.apiUrl;
 
   handleEditPost(){
     if(this.post){

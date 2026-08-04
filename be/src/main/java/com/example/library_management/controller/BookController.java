@@ -81,13 +81,12 @@ public class BookController {
     @PreAuthorize("@securityService.hasAccess('GET_BOOK')")
     @GetMapping("/newly-arrived")
     public ResponseEntity<ApiResponse<Page<BookResponse>>> getRecentBooks(
-            @RequestParam(defaultValue = "5") int dayRange,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "title") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir) {
         return ResponseEntity.ok(
-                ApiResponse.success(getBookService.getRecentBooks(page, limit, sortBy, sortDir, dayRange))
+                ApiResponse.success(getBookService.getRecentBooks(page, limit, sortBy, sortDir))
         );
     }
 

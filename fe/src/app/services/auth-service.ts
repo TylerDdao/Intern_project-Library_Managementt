@@ -44,6 +44,14 @@ export class AuthService {
     })
   }
 
+  verifyPassword(username: string, password: string){
+    const body = {
+      'username': username,
+      'password': password
+    }
+    return this.http.post(`${this.baseUrl}/verify-password`, body, {headers:getAuthHeaders(this.platformId)});
+  }
+
   login(username: string, password: string){
     const body = {
       'username': username,
@@ -65,16 +73,6 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/register`, body)
   }
 
-  update(user: User){
-    let address;
-    const body = {
-      'username': user.username,
-      'email': user.email,
-      'fullName': user.fullName,
-      'phoneNumber': user.phoneNumber,
-      'address': user.address
-    }
-  }
 
   logout(){
     return this.http.post(`${this.baseUrl}/logout`, {}, {

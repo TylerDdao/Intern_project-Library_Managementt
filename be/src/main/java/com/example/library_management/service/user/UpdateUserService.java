@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -28,6 +29,9 @@ public class UpdateUserService {
 
     @Autowired
     private AuditLogger logger;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserResponse updateUserRole(UserRequest request){
         System.out.println(request);
@@ -62,6 +66,9 @@ public class UpdateUserService {
         if (request.getEmail() != null) user.setEmail(request.getEmail());
         if (request.getUsername() != null) user.setUsername(request.getUsername());
         if (request.getFullName() != null) user.setFullName(request.getFullName());
+        if (request.getPassword() != null){
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
 
         User savedUser = userRepository.save(user);
         logger.log("Updated @{}, ID #{}", savedUser.getUsername(),savedUser.getId());

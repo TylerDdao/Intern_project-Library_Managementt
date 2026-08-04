@@ -4,11 +4,16 @@ import { CanActivateFn, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { TranslateService } from '@ngx-translate/core';
+const baseUrl = environment.apiUrl
+
 
 export const authGuard: CanActivateFn = () => {
     const router = inject(Router);
     const http = inject(HttpClient);
     const platformId = inject(PLATFORM_ID);
+    const translate = inject(TranslateService);
 
     if (!isPlatformBrowser(platformId)) {
         return true;
@@ -22,13 +27,14 @@ export const authGuard: CanActivateFn = () => {
       return false;
     }
 
-    return http.get('http://localhost:8080/api/auth/check', {
+    return http.get(`${baseUrl}/auth/check`, {
         headers: { Authorization: `Bearer ${token}` }
     }).pipe(
         map(() => true),
         catchError((err) => {
             if (err.status === 401) {
-                alert("Unauthorized access")
+                const message = translate.instant("error.Unauthorized-access")
+                alert(message)
                 sessionStorage.clear();
                 router.navigate(['/login']);
             }
@@ -38,6 +44,8 @@ export const authGuard: CanActivateFn = () => {
 };
 
 export const adminGuard: CanActivateFn = () => {
+    
+    const translate = inject(TranslateService); 
     const router = inject(Router);
     const http = inject(HttpClient);
     const platformId = inject(PLATFORM_ID);
@@ -55,13 +63,14 @@ export const adminGuard: CanActivateFn = () => {
       return false;
     }
 
-    return http.get('http://localhost:8080/api/auth/check', {
+    return http.get(`${baseUrl}/auth/check`, {
         headers: { Authorization: `Bearer ${token}` }
     }).pipe(
         map(() => true),
         catchError((err) => {
             if (err.status === 401) {
-                alert("Unauthorized access")
+                const message = translate.instant("error.Unauthorized-access")
+                alert(message)
                 sessionStorage.clear();
                 router.navigate(['/login']);
             }

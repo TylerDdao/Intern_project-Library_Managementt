@@ -6,6 +6,7 @@ import com.example.library_management.repository.BookRepository;
 import com.example.library_management.util.AuditLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class DeleteBookService {
     @Autowired
     private AuditLogger logger;
 
+    @CacheEvict(value = "books", key = "#request.id")
     public String deleteBook(BookRequest request){
         Book book = bookRepository.findByTitle(request.getTitle())
                 .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));

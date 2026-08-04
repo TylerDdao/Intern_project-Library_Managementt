@@ -68,6 +68,22 @@ public class AuthService {
     @Autowired
     MailService mailService;
 
+    public Boolean verifyPassword(LoginRequest request) {
+        try {
+            User user = userRepository.findByUsername(request.getUsername())
+                    .orElseThrow(() -> new AuthException(
+                            messageSource.getMessage("error.invalid.credential", null, LocaleContextHolder.getLocale())
+                    ));
+            if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+                String message = messageSource.getMessage("error.invalid.credential", null, LocaleContextHolder.getLocale());
+                throw new AuthException(message);
+            }
+            return true;
+        } catch (AuthException e) {
+            return false;
+        }
+    }
+
     public LoginResponse login(LoginRequest request) {
         try {
             Authentication auth = authenticationManager.authenticate(
@@ -144,14 +160,6 @@ public class AuthService {
         user.setAddress(request.getAddress());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(defaultRole);
-
-        UserRequest userRequest = new UserRequest(user);
-
-//        try {
-//            verificationService.sendVerificationEmail(userRequest);
-//        } catch (Exception e) {
-//            throw new RuntimeException(messageSource.getMessage("error.email.failed", null, LocaleContextHolder.getLocale()), e);
-//        }
 
         User savedUser = userRepository.save(user);
         logger.log("SYSTEM", "Registered @{}, ID #{}", savedUser.getUsername(), savedUser.getId());

@@ -4,7 +4,8 @@ import { formatNumber, formatTime } from '../../util/format-number';
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { LanguageService } from '../../services/language-service/language-service';
 import { PostService } from '../../services/post-service/post-service';
-import { backendUrl, errorImage } from '../../../assets/constants';
+import { errorImage } from '../../../assets/constants';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-mini-post-card-component',
@@ -24,7 +25,7 @@ export class MiniPostCardComponent {
     private postService: PostService
   ) {}
 
-  backendUrl = backendUrl;
+  backendUrl = environment.apiUrl;
 
   toggleLike() {
     this.postService.toggleLike(this.post.id).subscribe({

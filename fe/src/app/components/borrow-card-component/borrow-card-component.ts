@@ -4,11 +4,12 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Borrow } from '../../models/borrow';
 import { BorrowService } from '../../services/borrow-service/borrow-service';
 import { errorNoti } from '../../util/error-notification';
-import { backendUrl, errorImage } from '../../../assets/constants';
+import { errorImage } from '../../../assets/constants';
 import { formatCurrency } from '../../util/format-number';
 import { Policy } from '../../models/policy';
 import { PolicyService } from '../../services/policy-service/policy-service';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
 selector: 'app-borrow-card-component',
@@ -20,7 +21,7 @@ export class BorrowCardComponent implements OnChanges {
     @Input({ required: true }) borrow!: Borrow;
     @Input() editable: boolean = false;
 
-    backendUrl = backendUrl;
+    backendUrl = environment.apiUrl;
 
     dueIn: number = 0;
     dueDate: Date = new Date();

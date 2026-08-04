@@ -37,6 +37,19 @@ public class AuthController {
     @Autowired
     private VerificationService verificationService;
 
+    @GetMapping("/forgot-password")
+    public ResponseEntity<ApiResponse<String>> sendResetPasswordEmail(
+            @RequestParam String email
+    ){
+        String message = verificationService.sendVerificationEmail(email);
+        return switch (message) {
+            case "verification.Code.is.sent" -> ResponseEntity.ok(ApiResponse.success(messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
+            case "error.Code.is.already.sent" -> ResponseEntity.badRequest().body(ApiResponse.error("CODE-ALREADY-SENT", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
+            case "error.Email.has.been.used" -> ResponseEntity.badRequest().body(ApiResponse.error("EMAIL-IN-USE", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
+            default -> ResponseEntity.internalServerError().body(ApiResponse.error("SERVER-ERROR", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
+        };
+    }
+
     @PostMapping("/send-verification-code")
     public ResponseEntity<ApiResponse<String>> sendVerificationEmail(
             @RequestBody UserRequest request) {
@@ -64,9 +77,13 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody LoginRequest request) {
-        System.out.println("Login called");
         LoginResponse response = authService.login(request);
         return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    @PostMapping("/verify-password")
+    public ResponseEntity<ApiResponse<Boolean>> verifyPassword(@RequestBody LoginRequest request){
+        return ResponseEntity.ok((ApiResponse.success(authService.verifyPassword(request))));
     }
 
     @PostMapping("/logout")
