@@ -8,10 +8,11 @@ import { LanguageService } from '../../services/language-service/language-servic
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
 import { isPlatformBrowser } from '@angular/common';
+import { LoadingComponent } from '../../components/loading-component/loading-component';
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [TranslateModule,NavbarComponent, ReactiveFormsModule],
+  imports: [TranslateModule,NavbarComponent, ReactiveFormsModule, LoadingComponent],
   templateUrl: './forgot-password.html',
   styleUrl: './forgot-password.css',
 })
@@ -56,6 +57,7 @@ export class ForgotPassword {
             const message = this.translate.instant('email.Email-has-been-sent')
             alert(message)
             this.isSendingEmail = false;
+            this.cdr.markForCheck();
           }
         },
         error: (err:HttpErrorResponse)=>{

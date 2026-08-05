@@ -7,7 +7,7 @@
             </div>
             <div>
                 <div class="flex items-start space-x-[5px]">
-                    <img src="{{backendUrl}}/api/book-covers/{{post.book.coverUrl}}" alt={{post.book.title}} class="book-cover" (error)="onImageError($event)">
+                    <img src="{{backendUrl}}/book-covers/{{post.book.coverUrl}}" alt={{post.book.title}} class="book-cover" (error)="onImageError($event)">
                     <div>
                         <h1 class="caption-1 font-bold line-clamp-2">{{post.book.title}}</h1>
                         <h1 class="caption-2 line-clamp-1">{{'book.Author'|translate}}: {{post.book.author}}</h1>

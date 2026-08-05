@@ -1,7 +1,7 @@
 @if (accessible) {
     <a href='/books/{{book.id}}'>
         <div class="container">
-            <img src="{{backendUrl}}/api/book-covers/{{book.coverUrl}}" class="book-cover" (error)="onImageError($event)"/>
+            <img src="{{backendUrl}}/book-covers/{{book.coverUrl}}" class="book-cover" (error)="onImageError($event)"/>
             <h1 class="subheadline font-bold book-info">{{book.title}}</h1>
             <h1 class="caption-1 font-bold book-info">{{'book.Author'|translate}}: {{book.author}}</h1>
             <h1 class="caption-1 book-info">{{'book.Genres'|translate}}: {{book.genres}}</h1>
@@ -11,7 +11,7 @@
 }
 @else {
     <div class="container">
-        <img src="{{backendUrl}}/api/book-covers/{{book.coverUrl}}.jpg" class="book-cover" (error)="onImageError($event)"/>
+        <img src="{{backendUrl}}/book-covers/{{book.coverUrl}}.jpg" class="book-cover" (error)="onImageError($event)"/>
         <h1 class="subheadline font-bold book-info">{{book.title}}</h1>
         <h1 class="caption-1 font-bold book-info">{{'book.Author'|translate}}: {{book.author}}</h1>
         <h1 class="caption-1 book-info">{{'book.Genres'|translate}}: {{book.genres}}</h1>

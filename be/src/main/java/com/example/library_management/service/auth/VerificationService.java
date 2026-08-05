@@ -13,6 +13,7 @@ import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -43,6 +44,9 @@ public class VerificationService {
     @Autowired
     private MessageSource messageSource;
 
+    @Value("${frontend.url}")
+    private String frontendUrl;
+
     private static final int CODE_LENGTH = 5;
     private static final int EXPIRY_MINUTES = 10;
 
@@ -72,7 +76,11 @@ public class VerificationService {
         }
         while (resetPasswordCodeRepository.existsByUser_EmailAndCodeAndIsResetFalseAndExpiresAtAfter(email, code, LocalDateTime.now()));
 
-        String resetLink = "http://localhost/reset-password?code=" + code + "&email=" + email;
+        String resetLink = frontendUrl
+                + "/reset-password/"
+                + code
+                + "/"
+                + email;
 
         ResetPasswordCode resetPasswordCode = new ResetPasswordCode();
         resetPasswordCode.setCode(code);

@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth-service';
 import { Router, RouterLink } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { LanguageService } from '../../services/language-service/language-service';
+import { UserService } from '../../services/user-service/user-service';
 
 @Component({
   selector: 'app-login',
@@ -19,16 +20,19 @@ export class Login {
     public langService: LanguageService,
     private authService: AuthService,
     protected router: Router,
-    private cdr: ChangeDetectorRef) 
+    private cdr: ChangeDetectorRef,
+    private userService: UserService
+  ) 
   {}
 
-  async login(username: string, password: string){
+  login(username: string, password: string){
+    sessionStorage.clear()
     this.authService.login(username, password).subscribe({
       next: (data: any) => {
         console.log(data)
         if(data.code == 200){
           sessionStorage.setItem("token", data.data.token);
-          sessionStorage.setItem("user", JSON.stringify(data.data.user));
+          this.userService.setCurrentUser(data.data.user);
           sessionStorage.setItem("authorities", JSON.stringify(data.data.authorities));
           this.router.navigate(['/home']);
         }

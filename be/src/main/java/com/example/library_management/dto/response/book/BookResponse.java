@@ -4,6 +4,7 @@ import com.example.library_management.model.Book;
 import com.example.library_management.model.Genre;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class BookResponse implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

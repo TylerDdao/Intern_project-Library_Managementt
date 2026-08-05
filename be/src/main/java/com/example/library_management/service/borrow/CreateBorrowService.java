@@ -13,6 +13,7 @@ import com.example.library_management.repository.PolicyRepository;
 import com.example.library_management.repository.UserRepository;
 import com.example.library_management.util.AuditLogger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
@@ -47,6 +48,7 @@ public class CreateBorrowService {
     private PolicyRepository policyRepository;
 
     @Transactional
+//    @CacheEvict(value = "books", key = "#request.id")
     public BorrowResponse createBorrow(BorrowRequest request){
         Optional<Borrow> existing = borrowRepository.findByUserIdAndBookIdAndIsActive(request.getUserId(), request.getBookId(), true);
         if (existing.isPresent()) {

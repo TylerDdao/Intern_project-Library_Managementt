@@ -45,7 +45,8 @@ public class SecurityConfig {
             "/auth/verify",
             "/test",
             "/users/check-username",
-            "/auth/forgot-password"
+            "/auth/forgot-password",
+            "/auth/reset-password"
     };
 
     @Autowired

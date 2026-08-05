@@ -29,9 +29,6 @@ public class AuthController {
     private AuthService authService;
 
     @Autowired
-    private MailService mailService;
-
-    @Autowired
     private MessageSource messageSource;
 
     @Autowired

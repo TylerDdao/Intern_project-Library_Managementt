@@ -241,6 +241,8 @@
   },
   "forgotPassword":{
     "Forgot-password": "Forgot password",
-    "Reset-password": "Reset password"
+    "Reset-password": "Reset password",
+    "Please-enter-your-email": "Please enter your email",
+    "Your-password-is-reset": "Your password is reset"
   }
 }

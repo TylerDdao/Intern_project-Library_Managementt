@@ -37,17 +37,17 @@ public class GetBookService {
     @Autowired
     MessageSource messageSource;
 
-    @Autowired
-    @Lazy
-    private GetBookService self;
+//    @Autowired
+//    @Lazy
+//    private GetBookService self;
 
-    @Cacheable(value = "books", key = "#bookId")
-    public Book getBookById(Long bookId) {
-        return bookRepository.findById(bookId)
-                .orElseThrow(() -> new RuntimeException(
-                        messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())
-                ));
-    }
+//    @Cacheable(value = "books", key = "#bookId")
+//    public Book getBookById(Long bookId) {
+//        return bookRepository.findById(bookId)
+//                .orElseThrow(() -> new RuntimeException(
+//                        messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())
+//                ));
+//    }
 
     public Page<BookResponse> getUnavailableBooks(int page, int limit, String sortBy, String sortDir){
         Sort sort = sortDir.equalsIgnoreCase("desc")
@@ -101,7 +101,8 @@ public class GetBookService {
 
     public BookResponse getBook(Long bookId, String title){
         if(bookId != null){
-            Book book = self.getBookById(bookId);
+//            Book book = self.getBookById(bookId);
+            Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
             BookResponse bookResponse = new BookResponse(book);
             Optional<Borrow> isBorrowed = borrowRepository.findByUserUsernameAndBookIdAndIsActive(SecurityContextHolder.getContext().getAuthentication().getName(), book.getId(), true);
             if(isBorrowed.isPresent()){

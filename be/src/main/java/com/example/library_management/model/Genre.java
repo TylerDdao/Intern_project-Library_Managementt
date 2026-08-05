@@ -1,5 +1,6 @@
 package com.example.library_management.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,5 +22,6 @@ public class Genre extends BaseEntity{
     private String name;
 
     @ManyToMany(mappedBy = "genres")
+    @JsonIgnore
     private List<Book> books;
 }

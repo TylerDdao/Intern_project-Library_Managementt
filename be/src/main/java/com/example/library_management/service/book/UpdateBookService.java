@@ -32,7 +32,7 @@ public class UpdateBookService {
     @Autowired
     AuditLogger logger;
 
-    @CacheEvict(value = "books", key = "#request.id")
+//    @CacheEvict(value = "books", key = "#request.id")
     public BookResponse updateBook(BookRequest request){
         Book book = bookRepository.findByTitle(request.getTitle())
                 .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
