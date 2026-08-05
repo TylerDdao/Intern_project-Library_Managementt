@@ -1,7 +1,9 @@
 package com.example.library_management.service.auth;
 
 import com.example.library_management.model.Feature;
+import com.example.library_management.model.ResetPasswordCode;
 import com.example.library_management.repository.FeatureRepository;
+import com.example.library_management.repository.ResetPasswordCodeRepository;
 import com.example.library_management.service.MailService;
 import com.example.library_management.service.TokenBlacklistService;
 import com.example.library_management.util.AuditLogger;
@@ -68,11 +70,33 @@ public class AuthService {
     @Autowired
     MailService mailService;
 
+    @Autowired
+    ResetPasswordCodeRepository resetPasswordCodeRepository;
+
+    public Boolean resetPassword(UserRequest request){
+        try{
+            User user = userRepository.findByEmail(request.getEmail()).orElseThrow(()->new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+            userRepository.save(user);
+            ResetPasswordCode resetCode = resetPasswordCodeRepository
+                    .findTopByUser_EmailOrderByCreatedAtDesc(request.getEmail())
+                    .orElseThrow();
+            resetCode.setReset(true);
+            resetPasswordCodeRepository.save(resetCode);
+            logger.log("SYSTEM", "Password reset for @{}", user.getUsername());
+            return true;
+        }
+        catch (Exception e){
+            log.error("Failed to reset password: {}", e.getMessage());
+            return false;
+        }
+    }
+
     public Boolean verifyPassword(LoginRequest request) {
         try {
             User user = userRepository.findByUsername(request.getUsername())
-                    .orElseThrow(() -> new AuthException(
-                            messageSource.getMessage("error.invalid.credential", null, LocaleContextHolder.getLocale())
+                    .orElseThrow(() -> new RuntimeException(
+                            messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())
                     ));
             if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
                 String message = messageSource.getMessage("error.invalid.credential", null, LocaleContextHolder.getLocale());
@@ -120,7 +144,7 @@ public class AuthService {
             if (request.getUsername() != null) user.setUsername(request.getUsername());
 //            if (request.getRoleId() != null) user.setRole(newRole);
             if (request.getFullName() != null) user.setFullName(request.getFullName());
-            if (request.getPassword() != null) user.setPassword(request.getPassword());
+            if (request.getPassword() != null) user.setPassword(passwordEncoder.encode(request.getPassword()));
 
             User savedUser = userRepository.save(user);
             logger.log("Updated @{}, ID #{}", savedUser.getUsername(), savedUser.getId());

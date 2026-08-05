@@ -31,7 +31,8 @@
   "email":{
     "Verify": "Verify",
     "Verification-code": "Verification code",
-    "Sending": "Sending"
+    "Sending": "Sending",
+    "Email-has-been-sent": "Email has been sent"
   },
   "usersManagement":{
     "Create-user": "Create user",
@@ -237,5 +238,9 @@
     "Unauthorized-access": "Unauthorized access",
     "An-error-has-occurred,-please-login-again": "An error has occurred, please login again",
     "Please-enter-a-different-password":"Please enter a different password"
+  },
+  "forgotPassword":{
+    "Forgot-password": "Forgot password",
+    "Reset-password": "Reset password"
   }
 }

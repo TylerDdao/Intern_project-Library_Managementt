@@ -12,7 +12,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class App implements OnInit {
   protected readonly title = signal('library-management-fe');
 
-  whiteList: string[] = ['/login', '/signup', '/signup/success'];
+  whiteList: string[] = ['/login', '/signup', '/signup/success', '/reset-password', '/test'];
 
   constructor(
     private translate: TranslateService,
@@ -22,6 +22,7 @@ export class App implements OnInit {
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
+      
       const token = sessionStorage.getItem('token');
       const currentPath = window.location.pathname;
 
@@ -30,7 +31,9 @@ export class App implements OnInit {
           this.router.navigate(['/home']);
         }
       } else {
-        if (!this.whiteList.includes(currentPath)) {
+        const isWhitelisted = this.whiteList.some(path => currentPath.startsWith(path));
+        if (!isWhitelisted) {
+          console.log("WHITE LIST")
           this.router.navigate(['/login']);
         }
       }

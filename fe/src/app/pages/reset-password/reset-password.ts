@@ -8,16 +8,19 @@ import { getUser } from '../../util/session-storage';
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
 import { UserService } from '../../services/user-service/user-service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LoadingComponent } from '../../components/loading-component/loading-component';
 
 @Component({
-  selector: 'app-change-password',
-  imports: [NavbarComponent, TranslateModule, ReactiveFormsModule],
-  templateUrl: './change-password.html',
-  styleUrl: './change-password.css',
+  selector: 'app-reset-password',
+  imports: [TranslateModule, ReactiveFormsModule, NavbarComponent, LoadingComponent],
+  templateUrl: './reset-password.html',
+  styleUrl: './reset-password.css',
 })
-export class ChangePassword {
+export class ResetPassword {
 
-  isOldPasswordCorrect: boolean = true;
+  isCodeCorrect: boolean | null = null;
+  
   isPasswordValid: boolean = true;
   isPasswordMatch: boolean = true;
 
@@ -26,21 +29,22 @@ export class ChangePassword {
     private authService:AuthService,
     private userService: UserService,
     private translate: TranslateService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    private router: Router
   ){}
 
   passwordForm = new FormGroup({
-    oldPassword: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/)]),
     newPassword: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/)]),
   });
 
+  handleBackToLogin(){
+    this.router.navigate(['/login'])
+  }
+
   ngOnInit(){
     if(isPlatformBrowser(this.platformId)){
-      this.passwordForm.get("oldPassword")?.valueChanges.subscribe(()=>{
-        this.isOldPasswordCorrect = true;
-      })
-
       this.passwordForm.get("newPassword")?.valueChanges.subscribe(()=>{
         this.isPasswordValid = this.passwordForm.get('newPassword')?.valid ?? false;
       })
@@ -48,18 +52,31 @@ export class ChangePassword {
       this.passwordForm.get("confirmPassword")?.valueChanges.subscribe(()=>{
         this.isPasswordMatch = true
       })
+
+      const code = Number(this.route.snapshot.paramMap.get("code"))
+      const email = String(this.route.snapshot.paramMap.get("email"))
+      this.authService.verifyResetPasswordCode(code, email).subscribe({
+        next:(data:any)=>{
+          if(data.data == true){
+            this.isCodeCorrect = true;
+          }
+          else{
+            this.isCodeCorrect = false;
+          }
+          this.cdr.markForCheck()
+        },
+        error:(err:HttpErrorResponse)=>{
+          errorNoti(err, this.translate)
+          this.cdr.markForCheck()
+        }
+      })
     }
   }
 
   onSubmit(){
-    const {oldPassword, newPassword, confirmPassword} = this.passwordForm.value
-    const user = getUser()
-    if(!user){
-      const message = this.translate.instant("error.An-error-has-occurred,-please-login-again");
-      alert(message);
-      return;
-    }
-    if(oldPassword && newPassword && confirmPassword){
+    const {newPassword, confirmPassword} = this.passwordForm.value
+    const email = String(this.route.snapshot.paramMap.get("email"))
+    if(newPassword && confirmPassword && email){
       if(newPassword !== confirmPassword){
         this.isPasswordMatch = false;
         return
@@ -67,40 +84,20 @@ export class ChangePassword {
       if(this.isPasswordValid == false){
         return
       }
-      if(oldPassword == newPassword){
-        const message = this.translate.instant("error.Please-enter-a-different-password");
-        alert(message);
-      }
-      this.authService.verifyPassword(user?.username, oldPassword).subscribe({
+      this.authService.resetPassword(email, newPassword).subscribe({
         next:(data:any)=>{
           if(data.data == true){
-            this.isOldPasswordCorrect = true;
-            user.password = newPassword;
-            this.userService.updateUser(user).subscribe({
-              next: (data:any)=>{
-                if(data.code == "200"){
-                  const message = this.translate.instant("usersManagement.Password-is-changed")
-                  alert(message)
-                  this.clearForm();
-                  this.cdr.markForCheck();
-                  return;
-                }
-              },
-              error:(err:HttpErrorResponse)=>{
-                errorNoti(err, this.translate)
-                return
-              }
-            })
+            const message = this.translate.instant("forgotPassword.Your-password-is-reset")
+            alert(message)
+            this.router.navigate(['/login'])
           }
           else{
-            this.isOldPasswordCorrect = false;
-            this.cdr.markForCheck()
-            return;
+            const message = this.translate.instant("error.An-error-has-occurred")
+            alert(message)
           }
         },
-        error: (err:HttpErrorResponse)=>{
+        error:(err:HttpErrorResponse)=>{
           errorNoti(err, this.translate);
-          return;
         }
       })
     }
@@ -108,11 +105,9 @@ export class ChangePassword {
 
   clearForm(){
     this.passwordForm.patchValue({
-      oldPassword: "",
       newPassword: "",
       confirmPassword: ""
     })
-    this.isOldPasswordCorrect = true;
     this.isPasswordMatch = true;
     this.isPasswordValid = true;
     this.cdr.markForCheck();

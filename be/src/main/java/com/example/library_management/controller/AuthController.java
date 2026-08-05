@@ -37,13 +37,28 @@ public class AuthController {
     @Autowired
     private VerificationService verificationService;
 
+    @PatchMapping("/reset-password")
+    public ResponseEntity<ApiResponse<Boolean>> resetPassword(
+            @RequestBody UserRequest request
+    ){
+        return ResponseEntity.ok(ApiResponse.success(authService.resetPassword(request)));
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<ApiResponse<Boolean>> verifyResetPasswordCode(
+            @RequestParam String code,
+            @RequestParam String email
+    ){
+        return ResponseEntity.ok(ApiResponse.success(verificationService.verifyResetPasswordCode(email, code)));
+    }
+
     @GetMapping("/forgot-password")
     public ResponseEntity<ApiResponse<String>> sendResetPasswordEmail(
             @RequestParam String email
     ){
-        String message = verificationService.sendVerificationEmail(email);
+        String message = verificationService.sendResetPasswordEmail(email);
         return switch (message) {
-            case "verification.Code.is.sent" -> ResponseEntity.ok(ApiResponse.success(messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
+            case "reset.password.Link.is.sent" -> ResponseEntity.ok(ApiResponse.success(messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
             case "error.Code.is.already.sent" -> ResponseEntity.badRequest().body(ApiResponse.error("CODE-ALREADY-SENT", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
             case "error.Email.has.been.used" -> ResponseEntity.badRequest().body(ApiResponse.error("EMAIL-IN-USE", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
             default -> ResponseEntity.internalServerError().body(ApiResponse.error("SERVER-ERROR", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));

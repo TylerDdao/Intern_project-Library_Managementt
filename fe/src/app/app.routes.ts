@@ -20,12 +20,14 @@ import { CreatePost } from './pages/create-post/create-post';
 import { TestPage } from './pages/test-page/test-page';
 import { SignupSuccess } from './pages/signup-success/signup-success';
 import { ChangePassword } from './pages/change-password/change-password';
+import { ResetPassword } from './pages/reset-password/reset-password';
 
 export const routes: Routes = [
     { path: 'login', component: Login },
     { path: 'signup', component: Signup },
     { path: 'signup/success', component: SignupSuccess },
     { path: 'forgot-password', component: ForgotPassword },
+    { path: 'reset-password/:code/:email', component: ResetPassword},
 
     { path: 'home', component: Home, canActivate: [authGuard] },
 

@@ -44,6 +44,22 @@ export class AuthService {
     })
   }
 
+  sendResetPasswordLink(email:string){
+    return this.http.get(`${this.baseUrl}/forgot-password?email=${email}`, {headers:getAuthHeaders(this.platformId)})
+  }
+
+  resetPassword(email:string, password:string){
+    const body = {
+      'email': email,
+      'password': password
+    }
+    return this.http.patch(`${this.baseUrl}/reset-password`, body, {headers:getAuthHeaders(this.platformId)})
+  }
+
+  verifyResetPasswordCode(code: Number, email: string){
+    return this.http.post(`${this.baseUrl}/forgot-password?email=${email}&code=${code}`, {header:getAuthHeaders(this.platformId)})
+  }
+
   verifyPassword(username: string, password: string){
     const body = {
       'username': username,
