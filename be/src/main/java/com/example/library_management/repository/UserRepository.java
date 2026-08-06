@@ -13,17 +13,17 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    List<User> findByRole_Name(String roleName);
+    List<User> findByRole_NameAndIsDeletedFalse(String roleName);
 
     @EntityGraph(attributePaths = {"role", "role.features"})
-    Optional<User> findByUsername(String username);
+    Optional<User> findByUsernameAndIsDeletedFalse(String username);
 
-    Optional<User> findByEmail(String email);
+    Optional<User> findByEmailAndIsDeletedFalse(String email);
 
-    boolean existsByUsername(String username);
-    Page<User> findByUsernameContaining(String username, Pageable pageable);
-    Page<User> findByFullNameContaining(String fullName, Pageable pageable);
-    Page<User> findByRole_NameContaining(String role, Pageable pageable);
+    boolean existsByUsernameAndIsDeletedFalse(String username);
+    Page<User> findByUsernameContainingAndIsDeletedFalse(String username, Pageable pageable);
+    Page<User> findByFullNameContainingAndIsDeletedFalse(String fullName, Pageable pageable);
+    Page<User> findByRole_NameContainingAndIsDeletedFalse(String role, Pageable pageable);
 
-    boolean existsByEmail(String email);
+    boolean existsByEmailAndIsDeletedFalse(String email);
 }

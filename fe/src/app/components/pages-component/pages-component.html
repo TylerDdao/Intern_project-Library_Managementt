@@ -1,15 +1,21 @@
 @if (pages) {
-    <div class="flex space-x-[5px] items-center py-[10px]">
+    <div class="container py-[10px]">
         @if (!pages.first) {
             <span class="material-symbols-outlined cursor-pointer select-none" (click)="apply(pages.number-1)">
-                arrow_back_ios
+                chevron_left
             </span>
         }
-        <p>{{'page.Page'|translate}}: {{pages.number + 1}}/{{pages.totalPages}}</p>
+        @else {
+            <div></div>
+        }
+        <p class="select-none">{{pages.number + 1}}/{{pages.totalPages}}</p>
         @if (!pages.last) {
             <span class="material-symbols-outlined cursor-pointer select-none" (click)="apply(pages.number+1)">
-                arrow_forward_ios
+                chevron_right
             </span>
+        }
+        @else {
+            <div></div>
         }
     </div>
 }

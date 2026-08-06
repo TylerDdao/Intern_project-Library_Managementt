@@ -17,10 +17,12 @@ import { EditRoleForm } from '../../forms/edit-role-form/edit-role-form';
 import { first, last } from 'rxjs';
 import { Page } from '../../models/page';
 import { RoleService } from '../../services/role-service/role-service';
+import { ExportService } from '../../services/export-service/export-service';
+import { ExportUsersForm } from '../../forms/export/export-users-form/export-users-form';
 
 @Component({
   selector: 'app-users-management',
-  imports: [NavbarComponent, UserCard, TranslateModule, NewUserForm, EditUserForm, NewRoleForm, RoleListComponent, EditRoleForm],
+  imports: [NavbarComponent, UserCard, TranslateModule, NewUserForm, EditUserForm, NewRoleForm, RoleListComponent, EditRoleForm, ExportUsersForm],
   templateUrl: './users-management.html',
   styleUrl: './users-management.css',
 })
@@ -47,6 +49,7 @@ export class UsersManagement {
     number: 0
   }
 
+  isExportUser:boolean = false;
   
   constructor(
     private userService: UserService,
@@ -55,9 +58,13 @@ export class UsersManagement {
     @Inject(PLATFORM_ID) private platformId: Object,
     public langService: LanguageService,
     private translate: TranslateService,
-    private roleService: RoleService
-    
+    private roleService: RoleService,
+    private exportService: ExportService
   ){}
+
+  handleCloseExportUser(){
+    this.isExportUser = false
+  }
 
   handleEditUser(user: User){
     this.editUser = user;
@@ -93,7 +100,6 @@ export class UsersManagement {
               if (bIndex !== -1) return 1;
               return a.name.localeCompare(b.name);
             });
-            console.log(this.roles)
             this.roles.forEach(role => {role.name = role.name.replace("ROLE_", "");});
             this.roles.forEach(role => {
                 this.userService.getUsersByRole(role.name).subscribe({
@@ -181,7 +187,7 @@ export class UsersManagement {
 
   handleSaveNewUser(isSave: boolean){
     if(isSave){
-      const message = this.translate.instant("role.Role-is-created")
+      const message = this.translate.instant("usersManagement.User-is-created")
       alert(message)
       this.fetchRolesAndUser();
       this.isCreateNewUser = false;

@@ -1,8 +1,57 @@
 {
+  "role": {
+    "Role": "Rôle",
+    "Role-name": "Nom du rôle",
+    "Assigned-features": "Fonctionnalités attribuées",
+    "Unassigned-features": "Fonctionnalités non attribuées",
+    "Default-role": "Rôle par défaut",
+    "Role-is-updated": "Rôle mis à jour",
+    "Role-is-created": "Rôle créé",
+    "Set-default": "Définir par défaut"
+  },
+  "features": {
+    "Features": "Fonctionnalités"
+  },
+  "roleList": {
+    "Role-list": "Liste des rôles",
+    "members": "Membres",
+    "Edit-ROLE_ROOT-is-not-permitted": "La modification de ROLE_ROOT n'est pas autorisée"
+  },
+  "user": {
+    "User": "Utilisateur",
+    "Username": "Nom d'utilisateur",
+    "Full-name": "Nom complet",
+    "Email": "E-mail",
+    "Phone-number": "Numéro de téléphone",
+    "Address": "Adresse",
+    "Password": "Mot de passe",
+    "Your-account-has-been-saved": "Votre compte a été enregistré",
+    "New-user": "Nouvel utilisateur",
+    "Old-password": "Ancien mot de passe",
+    "New-password": "Nouveau mot de passe",
+    "Confirm-password": "Confirmer le mot de passe"
+  },
+  "email": {
+    "Verify": "Vérifier",
+    "Verification-code": "Code de vérification",
+    "Sending": "Envoi en cours",
+    "Email-has-been-sent": "E-mail envoyé"
+  },
+  "usersManagement": {
+    "Create-user": "Créer un utilisateur",
+    "Create-role": "Créer un rôle",
+    "Role-list": "Liste des rôles",
+    "User-is-saved": "Utilisateur enregistré",
+    "Password-is-changed": "Mot de passe modifié",
+    "User-is-created": "Utilisateur créé",
+    "Delete-user": "Supprimer l'utilisateur"
+  },
   "book": {
     "Title": "Titre",
     "Author": "Auteur",
-    "Genres": "Genres"
+    "Genres": "Genres",
+    "Available-copies": "Exemplaires disponibles",
+    "Copies": "Exemplaires"
   },
   "borrow": {
     "Borrow-on": "Emprunté le",
@@ -11,67 +60,173 @@
     "days": "jours",
     "day": "jour",
     "Late": "En retard",
-    "Due-today": "À rendre aujourd'hui"
+    "Due-today": "À rendre aujourd'hui",
+    "Borrows": "Emprunts",
+    "Return": "Retourner",
+    "Returned": "Retourné",
+    "Applied-late-fee": "Frais de retard appliqués",
+    "Borrow": "Emprunter",
+    "Penalty": "Pénalité"
+  },
+  "borrowPolicy": {
+    "Late-penalty": "Pénalité de retard",
+    "Borrow-duration": "Durée d'emprunt"
+  },
+  "form": {
+    "Save": "Enregistrer",
+    "Cancel": "Annuler",
+    "Reset": "Réinitialiser",
+    "Send": "Envoyer",
+    "Check-username": "Vérifier le nom d'utilisateur",
+    "Confirm": "Confirmer",
+    "Delete": "Supprimer",
+    "Confirm-delete": "Confirmer la suppression"
+  },
+  "newUserForm": {
+    "Create-new-user": "Créer un nouvel utilisateur"
+  },
+  "editUserForm": {
+    "Edit-user": "Modifier l'utilisateur"
+  },
+  "verification": {
+    "Email-is-required": "L'e-mail est requis",
+    "Please-verify-your-email": "Veuillez vérifier votre e-mail",
+    "Please-enter-a-valid-email": "Veuillez entrer un e-mail valide",
+    "Please-enter-a-valid-phone-number": "Veuillez entrer un numéro de téléphone valide",
+    "Phone-number-is-required": "Le numéro de téléphone est requis",
+    "Your-verification-code-has-been-sent-to-your-email": "Votre code de vérification a été envoyé sur votre e-mail",
+    "There-is-an-error-while-sending-verification-code": "Une erreur s'est produite lors de l'envoi du code de vérification",
+    "Your-email-has-been-verified": "Votre e-mail a été vérifié",
+    "Incorrect-verification-code": "Code de vérification incorrect",
+    "Please-verify-your-username": "Veuillez vérifier votre nom d'utilisateur",
+    "This-email-has-been-used": "Cet e-mail est déjà utilisé",
+    "Your-passswod-is-not-match": "Les mots de passe ne correspondent pas",
+    "Your-passswod-is-incorrect": "Votre mot de passe est incorrect"
+  },
+  "borrowPolicyForm": {
+    "Borrow-policy": "Règlement d'emprunt"
+  },
+  "borrowsManagement": {
+    "Modify-borrow-policy": "Modifier le règlement d'emprunt",
+    "All-returned-borrows": "Tous les emprunts retournés",
+    "All-active-borrows": "Tous les emprunts actifs",
+    "On-going-borrows": "Emprunts en cours",
+    "Near-due-date-borrows": "Emprunts proches de l'échéance",
+    "Passed-due-date-borrows": "Emprunts en retard",
+    "Total-borrows-that-have-not-been-returned": "Total des emprunts non retournés"
+  },
+  "myBorrow": {
+    "Books-that-you-are-borrowing": "Livres que vous empruntez",
+    "Borrows-history": "Historique des emprunts"
+  },
+  "booksManagement": {
+    "Add-book": "Ajouter un livre",
+    "Book-list": "Liste des livres",
+    "Genres-management": "Gestion des genres",
+    "Book-is-deleted": "Livre supprimé",
+    "Book-is-saved": "Livre enregistré",
+    "Book-is-updated": "Livre mis à jour"
+  },
+  "postsManagement": {
+    "Create-post": "Créer une publication"
+  },
+  "postPage": {
+    "Edit-post": "Modifier la publication"
+  },
+  "createPost": {
+    "Create-new-post": "Créer une nouvelle publication",
+    "Pick-a-book": "Choisir un livre"
+  },
+  "management": {
+    "Export": "Exporter"
+  },
+  "bookPage": {
+    "Book-information": "Informations sur le livre",
+    "Posts-about-this-book": "Publications sur ce livre",
+    "Borrow-this-book": "Emprunter ce livre",
+    "Book-is-not-available": "Livre non disponible",
+    "You-are-borrowing-this-book": "Vous empruntez ce livre",
+    "Your-borrow-for-this-book-dues-on": "Votre emprunt pour ce livre expire le"
   },
   "post": {
-    "Edit-post": "Modifier la publication"
+    "Edit-post": "Modifier la publication",
+    "Subject": "Sujet",
+    "Body": "Contenu"
+  },
+  "comment": {
+    "Comment-box": "Espace commentaires",
+    "Write-a-comment": "Écrire un commentaire"
   },
   "home": {
     "Top-5-posts-have-most-likes": "Top 5 des publications les plus aimées",
     "Number-of-books-by-genre": "Nombre de livres par genre",
     "Number-of-borrowed-books-by-genre": "Nombre de livres empruntés par genre",
-    "Books-that-you-borrowed": "Livres que vous avez empruntés"
+    "Books-that-you-borrowed": "Livres que vous avez empruntés",
+    "Number-of-borrows-by-genre": "Nombre d'emprunts par genre"
+  },
+  "dashboard": {
+    "Number-of-borrows-by-status": "Nombre d'emprunts par statut",
+    "Unavailable-books": "Livres indisponibles",
+    "Late-borrows": "Emprunts en retard"
   },
   "navBar": {
     "hello": "Bonjour",
-    "home-page": "Accueil",
-    "browse-books": "Parcourir les livres",
-    "browse-posts": "Parcourir les publications",
-    "my-borrows": "Mes emprunts",
-    "my-posts": "Mes publications",
     "language": "Langue",
-    "logout": "Se déconnecter",
-    "please-login-to-continue": "Veuillez vous connecter pour continuer"
+    "logout": "Déconnexion",
+    "please-login-to-continue": "Veuillez vous connecter pour continuer",
+    "user": {
+      "Home-page": "Accueil",
+      "Browse-books": "Parcourir les livres",
+      "Browse-posts": "Parcourir les publications",
+      "My-borrows": "Mes emprunts",
+      "My-posts": "Mes publications"
+    },
+    "admin": {
+      "Dashboard": "Tableau de bord",
+      "Books-management": "Gestion des livres",
+      "Users-management": "Gestion des utilisateurs",
+      "Borrows-management": "Gestion des emprunts",
+      "Posts-management": "Gestion des publications"
+    }
   },
   "login": {
-    "login": "Connexion",
-    "username": "Nom d'utilisateur",
-    "password": "Mot de passe",
-    "dont-have-an-account-yet": "Pas encore de compte ?",
-    "signup": "S'inscrire",
-    "forgot-password": "Mot de passe oublié",
-    "username-or-password-is-wrong": "Nom d'utilisateur ou mot de passe incorrect"
+    "Login": "Connexion",
+    "Dont-have-an-account-yet": "Vous n'avez pas encore de compte ?",
+    "Forgot-password": "Mot de passe oublié ?",
+    "Username-or-password-is-wrong": "Nom d'utilisateur ou mot de passe incorrect"
   },
   "signup": {
-    "sign-up": "S'inscrire",
-    "signup-completed": "Inscription terminée",
-    "email": "E-mail",
-    "optional": "Optionnel",
-    "account-information": "Informations du compte",
-    "personal-information": "Informations personnelles",
-    "full-name": "Nom complet",
-    "phone-number": "Numéro de téléphone",
-    "address": "Adresse",
-    "province": "Province",
-    "city": "Ville",
-    "address-line-1": "Adresse ligne 1",
-    "address-line-2": "Adresse ligne 2",
-    "already-had-an-account": "Vous avez déjà un compte ?",
-    "back-to-login": "Retour à la connexion"
+    "Sign/-up": "S'inscrire",
+    "Sign/-up-completed": "Inscription terminée",
+    "Sign-up": "S'inscrire",
+    "Optional": "Optionnel",
+    "Account-information": "Informations du compte",
+    "Personal-information": "Informations personnelles",
+    "Already-had-an-account": "Vous avez déjà un compte ?",
+    "Back-to-login": "Retour à la connexion",
+    "At-least-8-characters": "Au moins 8 caractères",
+    "1-special-character": "1 caractère spécial",
+    "Your-password-must-have": "Votre mot de passe doit contenir",
+    "Signing-up": "Inscription en cours"
   },
-  "forgotPassword": {
-    "forgot-password": "Mot de passe oublié",
-    "confirm": "Confirmer"
+  "settings": {
+    "Settings": "Paramètres",
+    "Change-password": "Changer le mot de passe"
   },
   "search": {
     "Filter-by": "Filtrer par",
-    "Sort-by": "Trier par"
+    "Sort-by": "Trier par",
+    "Result": "Résultat",
+    "Search": "Rechercher",
+    "Clear": "Effacer",
+    "Search-genre": "Rechercher un genre",
+    "Search-by-name": "Rechercher par nom"
   },
   "browseBooks": {
     "Loading": "Chargement...",
-    "Book-not-found": "Livre introuvable",
+    "Book-not-found": "Livre non trouvé",
     "Top-borrowed-books": "Livres les plus empruntés",
-    "People-are-writing-about-these-books": "Livres les plus commentés",
+    "People-are-writing-about-these-books": "Les gens écrivent sur ces livres",
     "Newly-arrived": "Nouveautés",
     "Result": "Résultat"
   },
@@ -83,9 +238,27 @@
     "Filter-by": "Filtrer par",
     "Sort-by": "Trier par",
     "Apply": "Appliquer",
-    "Clear": "Effacer"
+    "Clear": "Effacer",
+    "See-more": "Voir plus",
+    "See-less": "Voir moins"
   },
   "page": {
     "Page": "Page"
+  },
+  "list": {
+    "Empty": "Vide"
+  },
+  "error": {
+    "An-error-has-occurred": "Une erreur est survenue",
+    "Page-not-found": "Page non trouvée",
+    "Unauthorized-access": "Accès non autorisé",
+    "An-error-has-occurred,-please-login-again": "Une erreur est survenue, veuillez vous reconnecter",
+    "Please-enter-a-different-password": "Veuillez entrer un mot de passe différent"
+  },
+  "forgotPassword": {
+    "Forgot-password": "Mot de passe oublié",
+    "Reset-password": "Réinitialiser le mot de passe",
+    "Please-enter-your-email": "Veuillez entrer votre e-mail",
+    "Your-password-is-reset": "Votre mot de passe a été réinitialisé"
   }
 }

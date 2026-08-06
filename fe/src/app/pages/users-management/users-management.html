@@ -5,6 +5,7 @@
         <button class="p-[10px] bg-steel-blue text-soft-ice headline text-center rounded-[10px] w-full" (click)="isCreateNewUser = true;">{{'usersManagement.Create-user' | translate}}</button>
         <button class="p-[10px] bg-leaf-green text-soft-ice headline text-center rounded-[10px] w-full" (click)="isCreateNewRole = true">{{'usersManagement.Create-role' | translate}}</button>
         <button class="p-[10px] bg-sky-blue text-soft-ice headline text-center rounded-[10px] w-full" (click)="isRoleListOpen = true">{{'usersManagement.Role-list' | translate}}</button>
+        <button class="p-[10px] border border-primary text-primary-1 headline text-center rounded-[10px] w-full" (click)="isExportUser = true">{{'export.Export'|translate}}</button>
     </div>
     <div>
         @for (role of roles; track $index) {
@@ -62,6 +63,12 @@
     @if (isRoleListOpen) {
         <div class="fixed inset-0 flex items-center justify-center z-99">
             <app-role-list-component [roles]="roles" (onClose)="handleClose()" (onChoose)="handleChooseRole($event)"></app-role-list-component>
+        </div>
+    }
+
+    @if (isExportUser) {
+        <div class="fixed inset-0 flex items-center justify-center z-99">
+            <app-export-users-form (onClose)="handleCloseExportUser()"></app-export-users-form>
         </div>
     }
 

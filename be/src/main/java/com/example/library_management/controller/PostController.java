@@ -62,7 +62,7 @@ public class PostController {
     @PostMapping("/{postId}/like")
     public ResponseEntity<ApiResponse<String>> toggleLike(@PathVariable Long postId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsernameAndIsDeletedFalse(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         String result = updatePostService.toggleLike(postId, user.getId());

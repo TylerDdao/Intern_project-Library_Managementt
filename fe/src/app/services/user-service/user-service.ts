@@ -35,6 +35,10 @@ export class UserService {
     return this.userSubject.value;
   }
 
+  getAllUser(page: number=0, limit:number = 10){
+    return this.http.get(`${this.userBaseUrl}?page=${page}&limit=${limit}`, {headers: getAuthHeaders(this.platformId)})
+  }
+
   getUsersByRole(role: String, page: number = 0, limit:number = 10) {
     return this.http.get(`${this.userBaseUrl}?page=${page}&limit=${limit}&role=${role}`, {
       headers: getAuthHeaders(this.platformId)
@@ -70,5 +74,9 @@ export class UserService {
       "role": user.role?.id
     }
     return this.http.post(`${this.userBaseUrl}`, body, {headers:getAuthHeaders(this.platformId)})
+  }
+
+  deleteUser(user:User){
+    return this.http.delete(`${this.userBaseUrl}?id=${user.id}`, {headers:getAuthHeaders(this.platformId)})
   }
 }

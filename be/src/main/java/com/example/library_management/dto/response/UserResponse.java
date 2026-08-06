@@ -18,6 +18,7 @@ public class UserResponse {
     private String fullName;
     private String address = null;
     private String email = null;
+    private boolean isDeleted = false;
 
     public UserResponse(User user){
         this.id = user.getId();
@@ -27,5 +28,6 @@ public class UserResponse {
         this.fullName = user.getFullName();
         this.address = user.getAddress();
         this.email = user.getEmail();
+        this.isDeleted = user.getIsDeleted();
     }
 }

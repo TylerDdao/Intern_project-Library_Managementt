@@ -17,7 +17,7 @@ public class GetUserService {
     private UserRepository userRepository;
 
     public Boolean checkUsername(String username){
-        return userRepository.findByUsername(username).isEmpty();
+        return userRepository.findByUsernameAndIsDeletedFalse(username).isEmpty();
     }
 
     public Page<UserResponse> getUsers(int page, int limit, String sortBy, String sortDir, String username, String fullName, String role) {
@@ -28,11 +28,11 @@ public class GetUserService {
         Page<User> users;
 
         if (username != null) {
-            users = userRepository.findByUsernameContaining(username, pageable);
+            users = userRepository.findByUsernameContainingAndIsDeletedFalse(username, pageable);
         } else if (fullName != null) {
-            users = userRepository.findByFullNameContaining(fullName, pageable);
+            users = userRepository.findByFullNameContainingAndIsDeletedFalse(fullName, pageable);
         } else if (role != null) {
-            users = userRepository.findByRole_NameContaining(role, pageable);
+            users = userRepository.findByRole_NameContainingAndIsDeletedFalse(role, pageable);
         } else {
             users = userRepository.findAll(pageable);
         }

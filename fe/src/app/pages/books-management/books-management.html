@@ -12,7 +12,7 @@
             <button class="bg-primary-1 text-soft-ice p-[5px] rounded-[10px] headline" (click)="isCreateNewBook = true">{{'booksManagement.Add-book'|translate}}</button>
             <button class="text-soft-ice p-[5px] rounded-[10px] border bg-sky-blue headline" (click)="isOpenBookList = true">{{'booksManagement.Book-list'|translate}}</button>
             <button class="text-soft-ice p-[5px] rounded-[10px] border bg-leaf-green headline" (click)="isOpenGenreManagement = true">{{'booksManagement.Genres-management'|translate}}</button>
-            <button class="text-primary-1 p-[5px] rounded-[10px] border border-primary-1 headline">{{'management.Export'|translate}}</button>
+            <button class="text-primary-1 p-[5px] rounded-[10px] border border-primary-1 headline" (click)="isExportBook = true">{{'export.Export'|translate}}</button>
         </div>
     </div>
 
@@ -97,6 +97,12 @@
     @if (isOpenGenreManagement) {
         <div class="fixed inset-0 flex items-center justify-center z-99">
             <app-genres-management-form (onClose)="handleCloseGenreManagement()" (onChange)="handleChangeGenre($event)"></app-genres-management-form>
+        </div>
+    }
+
+    @if (isExportBook) {
+        <div class="fixed inset-0 flex items-center justify-center z-99">
+            <app-export-books-form (onClose)="handleCloseExportBook()"></app-export-books-form>
         </div>
     }
 

@@ -43,7 +43,11 @@
     "Role-list": "Role list",
     "User-is-saved":"User is saved",
     "Password-is-changed": "Password is changed",
-    "User-is-created": "User is created"
+    "User-is-created": "User is created",
+    "Delete-user": "Delete user",
+    "User-list":"User list",
+    "Selected-users": "Selected users",
+    "Total-users": "Total users"
   },
   "book": {
     "Title": "Title",
@@ -57,6 +61,7 @@
     "Please-return-by": "Please return by",
     "Due-in": "Due in",
     "days": "days",
+    "Days":"Days",
     "day": "day",
     "Late": "Late",
     "Due-today": "Due today",
@@ -124,7 +129,9 @@
     "Genres-management": "Genres management",
     "Book-is-deleted": "Book is deleted",
     "Book-is-saved": "Book is saved",
-    "Book-is-updated": "Book is updated"
+    "Book-is-updated": "Book is updated",
+    "Total-books": "Total books",
+    "Selected-books": "Selected books"
   },
   "postsManagement": {
     "Create-post": "Create post"
@@ -136,8 +143,9 @@
     "Create-new-post": "Create new post",
     "Pick-a-book": "Pick a book"
   },
-  "management":{
-    "Export": "Export"
+  "export":{
+    "Export": "Export",
+    "Confirm-export": "Confirm export"
   },
   "bookPage":{
     "Book-information":"Book information",
@@ -245,7 +253,11 @@
     "Page": "Page"
   },
   "list":{
-    "Empty":"Empty"
+    "Empty":"Empty",
+    "Unselect":"Unselect",
+    "Unselect-all": "Unselect all",
+    "Select": "Select",
+    "Select-all" : "Select all"
   },
   "error":{
     "An-error-has-occurred": "An error has occurred",

@@ -32,7 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsernameAndIsDeletedFalse(username)
                 .orElseThrow(() -> new UsernameNotFoundException(messageSource.getMessage("error.username.not.found", null, LocaleContextHolder.getLocale()) + username));
         List<GrantedAuthority>authorities = new ArrayList<>();
 

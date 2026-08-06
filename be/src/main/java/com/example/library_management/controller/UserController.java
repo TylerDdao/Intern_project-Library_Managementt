@@ -3,30 +3,37 @@ package com.example.library_management.controller;
 import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.dto.request.user.UserRequest;
 import com.example.library_management.dto.response.UserResponse;
-import com.example.library_management.service.user.CreateUserService;
-import com.example.library_management.service.user.DeleteUserService;
-import com.example.library_management.service.user.GetUserService;
-import com.example.library_management.service.user.UpdateUserService;
+import com.example.library_management.model.User;
+import com.example.library_management.service.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.ByteArrayInputStream;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
     @Autowired
-    GetUserService getUserService;
+    private GetUserService getUserService;
 
     @Autowired
-    UpdateUserService updateUserService;
+    private UpdateUserService updateUserService;
 
     @Autowired
-    DeleteUserService deleteUserService;
+    private DeleteUserService deleteUserService;
 
     @Autowired
-    CreateUserService createUserService;
+    private CreateUserService createUserService;
+
+    @Autowired
+    private ExportUserService exportUserService;
 
     @PreAuthorize("@securityService.hasAccess('CREATE_USER')")
     @PostMapping()
@@ -74,7 +81,7 @@ public class UserController {
 
     @PreAuthorize("@securityService.hasAccess('DELETE_BOOK')")
     @DeleteMapping()
-    public  ResponseEntity<ApiResponse<String>> deleteUserByUsername(@RequestBody UserRequest request){
-        return ResponseEntity.ok(ApiResponse.success(deleteUserService.deleteUser(request)));
+    public  ResponseEntity<ApiResponse<String>> deleteUserByUsername(@RequestParam Long id){
+        return ResponseEntity.ok(ApiResponse.success(deleteUserService.deleteUser(id)));
     }
 }

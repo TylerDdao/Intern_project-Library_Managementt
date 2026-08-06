@@ -51,6 +51,22 @@ export class EditUserForm implements OnChanges {
     verificationCode: new FormControl(''),
   });
 
+  handleDeleteUser(){
+    const message= this.translate.instant("usersManagement.Delete-user")
+    const option = confirm(message + "?")
+    if(!option) return
+    this.userService.deleteUser(this.user).subscribe({
+      next: (data:any)=>{
+        if(data.code == "200"){
+          this.save(true)
+        }
+      },
+      error:(err:HttpErrorResponse)=>{
+        errorNoti(err, this.translate)
+      }
+    })
+  }
+
   handleSendVerificationCode(){
     this.isSendingVerificationEmail = true;
     this.isEmailUsed = false;

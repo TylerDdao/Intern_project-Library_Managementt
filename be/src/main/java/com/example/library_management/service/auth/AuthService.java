@@ -75,7 +75,7 @@ public class AuthService {
 
     public Boolean resetPassword(UserRequest request){
         try{
-            User user = userRepository.findByEmail(request.getEmail()).orElseThrow(()->new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
+            User user = userRepository.findByEmailAndIsDeletedFalse(request.getEmail()).orElseThrow(()->new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
             user.setPassword(passwordEncoder.encode(request.getPassword()));
             userRepository.save(user);
             ResetPasswordCode resetCode = resetPasswordCodeRepository
@@ -94,7 +94,7 @@ public class AuthService {
 
     public Boolean verifyPassword(LoginRequest request) {
         try {
-            User user = userRepository.findByUsername(request.getUsername())
+            User user = userRepository.findByUsernameAndIsDeletedFalse(request.getUsername())
                     .orElseThrow(() -> new RuntimeException(
                             messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())
                     ));
@@ -117,7 +117,7 @@ public class AuthService {
                     )
             );
             String token = jwtUtil.generateToken(auth.getName());
-            User user = userRepository.findByUsername(auth.getName()).orElseThrow();
+            User user = userRepository.findByUsernameAndIsDeletedFalse(auth.getName()).orElseThrow();
             List<Feature> authorities = featureRepository.findByRoles_Id(user.getRole().getId());
             System.out.println(authorities);
             logger.log("SYSTEM","Authorized @{}, ID #{}", user.getUsername(), user.getId());
@@ -131,7 +131,7 @@ public class AuthService {
 
     public UserResponse updateAccount(UserRequest request){
         try {
-            User user = userRepository.findByUsername(request.getUsername())
+            User user = userRepository.findByUsernameAndIsDeletedFalse(request.getUsername())
                     .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
 
 //            Role newRole = roleRepository.findByName(request.getRoleId())
@@ -169,7 +169,7 @@ public class AuthService {
     }
 
     public UserResponse register(RegisterRequest request) {
-        if (userRepository.existsByUsername(request.getUsername())) {
+        if (userRepository.existsByUsernameAndIsDeletedFalse(request.getUsername())) {
             throw new RuntimeException(messageSource.getMessage("error.username.taken", null, LocaleContextHolder.getLocale()));
         }
 
@@ -207,7 +207,7 @@ public class AuthService {
 
         String username = auth.getName();
 
-        User user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsernameAndIsDeletedFalse(username)
                 .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
 
         return new UserResponse(user);

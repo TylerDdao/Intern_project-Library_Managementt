@@ -1,8 +1,57 @@
 {
+  "role": {
+    "Role": "Vai trò",
+    "Role-name": "Tên vai trò",
+    "Assigned-features": "Tính năng đã gán",
+    "Unassigned-features": "Tính năng chưa gán",
+    "Default-role": "Vai trò mặc định",
+    "Role-is-updated": "Vai trò đã được cập nhật",
+    "Role-is-created": "Vai trò đã được tạo",
+    "Set-default": "Đặt làm mặc định"
+  },
+  "features": {
+    "Features": "Tính năng"
+  },
+  "roleList": {
+    "Role-list": "Danh sách vai trò",
+    "members": "Thành viên",
+    "Edit-ROLE_ROOT-is-not-permitted": "Không được phép chỉnh sửa ROLE_ROOT"
+  },
+  "user": {
+    "User": "Người dùng",
+    "Username": "Tên đăng nhập",
+    "Full-name": "Họ và tên",
+    "Email": "Email",
+    "Phone-number": "Số điện thoại",
+    "Address": "Địa chỉ",
+    "Password": "Mật khẩu",
+    "Your-account-has-been-saved": "Tài khoản của bạn đã được lưu",
+    "New-user": "Người dùng mới",
+    "Old-password": "Mật khẩu cũ",
+    "New-password": "Mật khẩu mới",
+    "Confirm-password": "Xác nhận mật khẩu"
+  },
+  "email": {
+    "Verify": "Xác minh",
+    "Verification-code": "Mã xác minh",
+    "Sending": "Đang gửi",
+    "Email-has-been-sent": "Email đã được gửi"
+  },
+  "usersManagement": {
+    "Create-user": "Tạo người dùng",
+    "Create-role": "Tạo vai trò",
+    "Role-list": "Danh sách vai trò",
+    "User-is-saved": "Người dùng đã được lưu",
+    "Password-is-changed": "Mật khẩu đã được thay đổi",
+    "User-is-created": "Người dùng đã được tạo",
+    "Delete-user": "Xóa người dùng"
+  },
   "book": {
-    "Title": "Tiêu đề",
+    "Title": "Tên sách",
     "Author": "Tác giả",
-    "Genres": "Thể loại"
+    "Genres": "Thể loại",
+    "Available-copies": "Bản sao có sẵn",
+    "Copies": "Số bản sao"
   },
   "borrow": {
     "Borrow-on": "Mượn ngày",
@@ -11,81 +60,205 @@
     "days": "ngày",
     "day": "ngày",
     "Late": "Quá hạn",
-    "Due-today": "Hết hạn hôm nay"
+    "Due-today": "Hạn trả hôm nay",
+    "Borrows": "Lượt mượn",
+    "Return": "Trả sách",
+    "Returned": "Đã trả",
+    "Applied-late-fee": "Phí phạt quá hạn đã áp dụng",
+    "Borrow": "Mượn sách",
+    "Penalty": "Tiền phạt"
   },
-  "post": {
+  "borrowPolicy": {
+    "Late-penalty": "Phạt quá hạn",
+    "Borrow-duration": "Thời hạn mượn"
+  },
+  "form": {
+    "Save": "Lưu",
+    "Cancel": "Hủy",
+    "Reset": "Đặt lại",
+    "Send": "Gửi",
+    "Check-username": "Kiểm tra tên đăng nhập",
+    "Confirm": "Xác nhận",
+    "Delete": "Xóa",
+    "Confirm-delete": "Xác nhận xóa"
+  },
+  "newUserForm": {
+    "Create-new-user": "Tạo người dùng mới"
+  },
+  "editUserForm": {
+    "Edit-user": "Chỉnh sửa người dùng"
+  },
+  "verification": {
+    "Email-is-required": "Vui lòng nhập Email",
+    "Please-verify-your-email": "Vui lòng xác minh Email của bạn",
+    "Please-enter-a-valid-email": "Vui lòng nhập Email hợp lệ",
+    "Please-enter-a-valid-phone-number": "Vui lòng nhập số điện thoại hợp lệ",
+    "Phone-number-is-required": "Vui lòng nhập số điện thoại",
+    "Your-verification-code-has-been-sent-to-your-email": "Mã xác minh đã được gửi đến Email của bạn",
+    "There-is-an-error-while-sending-verification-code": "Đã xảy ra lỗi khi gửi mã xác minh",
+    "Your-email-has-been-verified": "Email của bạn đã được xác minh",
+    "Incorrect-verification-code": "Mã xác minh không chính xác",
+    "Please-verify-your-username": "Vui lòng xác minh tên đăng nhập của bạn",
+    "This-email-has-been-used": "Email này đã được sử dụng",
+    "Your-passswod-is-not-match": "Mật khẩu xác nhận không khớp",
+    "Your-passswod-is-incorrect": "Mật khẩu của bạn không chính xác"
+  },
+  "borrowPolicyForm": {
+    "Borrow-policy": "Quy định mượn sách"
+  },
+  "borrowsManagement": {
+    "Modify-borrow-policy": "Chỉnh sửa quy định mượn",
+    "All-returned-borrows": "Tất cả lượt mượn đã trả",
+    "All-active-borrows": "Tất cả lượt mượn đang hoạt động",
+    "On-going-borrows": "Lượt mượn đang diễn ra",
+    "Near-due-date-borrows": "Lượt mượn sắp đến hạn",
+    "Passed-due-date-borrows": "Lượt mượn đã quá hạn",
+    "Total-borrows-that-have-not-been-returned": "Tổng số lượt mượn chưa trả"
+  },
+  "myBorrow": {
+    "Books-that-you-are-borrowing": "Sách bạn đang mượn",
+    "Borrows-history": "Lịch sử mượn sách"
+  },
+  "booksManagement": {
+    "Add-book": "Thêm sách",
+    "Book-list": "Danh sách sách",
+    "Genres-management": "Quản lý thể loại",
+    "Book-is-deleted": "Sách đã được xóa",
+    "Book-is-saved": "Sách đã được lưu",
+    "Book-is-updated": "Sách đã được cập nhật"
+  },
+  "postsManagement": {
+    "Create-post": "Tạo bài viết"
+  },
+  "postPage": {
     "Edit-post": "Chỉnh sửa bài viết"
   },
+  "createPost": {
+    "Create-new-post": "Tạo bài viết mới",
+    "Pick-a-book": "Chọn một quyển sách"
+  },
+  "management": {
+    "Export": "Xuất dữ liệu"
+  },
+  "bookPage": {
+    "Book-information": "Thông tin sách",
+    "Posts-about-this-book": "Bài viết về sách này",
+    "Borrow-this-book": "Mượn cuốn sách này",
+    "Book-is-not-available": "Sách hiện không có sẵn",
+    "You-are-borrowing-this-book": "Bạn đang mượn cuốn sách này",
+    "Your-borrow-for-this-book-dues-on": "Hạn trả sách của bạn là ngày"
+  },
+  "post": {
+    "Edit-post": "Chỉnh sửa bài viết",
+    "Subject": "Chủ đề",
+    "Body": "Nội dung"
+  },
+  "comment": {
+    "Comment-box": "Khung bình luận",
+    "Write-a-comment": "Viết bình luận..."
+  },
   "home": {
-    "Top-5-posts-have-most-likes": "Top 5 bài viết được yêu thích nhất",
+    "Top-5-posts-have-most-likes": "Top 5 bài viết nhiều lượt thích nhất",
     "Number-of-books-by-genre": "Số lượng sách theo thể loại",
-    "Number-of-borrowed-books-by-genre": "Số lượng sách được mượn theo thể loại",
-    "Books-that-you-borrowed": "Sách bạn đã mượn"
+    "Number-of-borrowed-books-by-genre": "Số lượng sách đã mượn theo thể loại",
+    "Books-that-you-borrowed": "Sách bạn đã mượn",
+    "Number-of-borrows-by-genre": "Số lượt mượn theo thể loại"
+  },
+  "dashboard": {
+    "Number-of-borrows-by-status": "Số lượt mượn theo trạng thái",
+    "Unavailable-books": "Sách không có sẵn",
+    "Late-borrows": "Lượt mượn quá hạn"
   },
   "navBar": {
     "hello": "Xin chào",
-    "home-page": "Trang chủ",
-    "browse-books": "Duyệt tìm sách",
-    "browse-posts": "Duyệt bài viết",
-    "my-borrows": "Sách tôi mượn",
-    "my-posts": "Bài viết của tôi",
     "language": "Ngôn ngữ",
     "logout": "Đăng xuất",
-    "please-login-to-continue": "Vui lòng đăng nhập để tiếp tục"
+    "please-login-to-continue": "Vui lòng đăng nhập để tiếp tục",
+    "user": {
+      "Home-page": "Trang chủ",
+      "Browse-books": "Duyệt sách",
+      "Browse-posts": "Duyệt bài viết",
+      "My-borrows": "Mục mượn của tôi",
+      "My-posts": "Bài viết của tôi"
+    },
+    "admin": {
+      "Dashboard": "Bảng điều khiển",
+      "Books-management": "Quản lý sách",
+      "Users-management": "Quản lý người dùng",
+      "Borrows-management": "Quản lý mượn trả",
+      "Posts-management": "Quản lý bài viết"
+    }
   },
   "login": {
-    "login": "Đăng nhập",
-    "username": "Tên đăng nhập",
-    "password": "Mật khẩu",
-    "dont-have-an-account-yet": "Chưa có tài khoản?",
-    "signup": "Đăng ký",
-    "forgot-password": "Quên mật khẩu",
-    "username-or-password-is-wrong": "Tên đăng nhập hoặc mật khẩu không đúng"
+    "Login": "Đăng nhập",
+    "Dont-have-an-account-yet": "Chưa có tài khoản?",
+    "Forgot-password": "Quên mật khẩu?",
+    "Username-or-password-is-wrong": "Tên đăng nhập hoặc mật khẩu không đúng"
   },
   "signup": {
-    "sign-up": "Đăng ký",
-    "signup-completed": "Đăng ký hoàn tất",
-    "email": "Email",
-    "optional": "Tùy chọn",
-    "account-information": "Thông tin tài khoản",
-    "personal-information": "Thông tin cá nhân",
-    "full-name": "Họ và tên",
-    "phone-number": "Số điện thoại",
-    "address": "Địa chỉ",
-    "province": "Tỉnh",
-    "city": "Thành phố",
-    "address-line-1": "Địa chỉ dòng 1",
-    "address-line-2": "Địa chỉ dòng 2",
-    "already-had-an-account": "Đã có tài khoản?",
-    "back-to-login": "Quay lại đăng nhập"
+    "Sign/-up": "Đăng ký",
+    "Sign/-up-completed": "Đăng ký hoàn tất",
+    "Sign-up": "Đăng ký",
+    "Optional": "Không bắt buộc",
+    "Account-information": "Thông tin tài khoản",
+    "Personal-information": "Thông tin cá nhân",
+    "Already-had-an-account": "Đã có tài khoản?",
+    "Back-to-login": "Quay lại đăng nhập",
+    "At-least-8-characters": "Ít nhất 8 ký tự",
+    "1-special-character": "1 ký tự đặc biệt",
+    "Your-password-must-have": "Mật khẩu của bạn phải có",
+    "Signing-up": "Đang đăng ký"
   },
-  "forgotPassword": {
-    "forgot-password": "Quên mật khẩu",
-    "confirm": "Xác nhận"
+  "settings": {
+    "Settings": "Cài đặt",
+    "Change-password": "Đổi mật khẩu"
   },
   "search": {
     "Filter-by": "Lọc theo",
-    "Sort-by": "Sắp xếp theo"
+    "Sort-by": "Sắp xếp theo",
+    "Result": "Kết quả",
+    "Search": "Tìm kiếm",
+    "Clear": "Xóa tìm kiếm",
+    "Search-genre": "Tìm theo thể loại",
+    "Search-by-name": "Tìm theo tên"
   },
   "browseBooks": {
-    "Loading": "Đang tải",
+    "Loading": "Đang tải...",
     "Book-not-found": "Không tìm thấy sách",
     "Top-borrowed-books": "Sách được mượn nhiều nhất",
-    "People-are-writing-about-these-books": "Sách đang được thảo luận nhiều",
+    "People-are-writing-about-these-books": "Sách đang được bàn luận nhiều",
     "Newly-arrived": "Sách mới về",
     "Result": "Kết quả"
   },
   "browsePosts": {
-    "Loading": "Đang tải"
+    "Loading": "Đang tải..."
   },
   "sortBar": {
     "Search": "Tìm kiếm",
     "Filter-by": "Lọc theo",
     "Sort-by": "Sắp xếp theo",
     "Apply": "Áp dụng",
-    "Clear": "Xóa bộ lọc"
+    "Clear": "Xóa bộ lọc",
+    "See-more": "Xem thêm",
+    "See-less": "Thu gọn"
   },
   "page": {
     "Page": "Trang"
+  },
+  "list": {
+    "Empty": "Trống"
+  },
+  "error": {
+    "An-error-has-occurred": "Đã xảy ra lỗi",
+    "Page-not-found": "Không tìm thấy trang",
+    "Unauthorized-access": "Truy cập không được phép",
+    "An-error-has-occurred,-please-login-again": "Đã xảy ra lỗi, vui lòng đăng nhập lại",
+    "Please-enter-a-different-password": "Vui lòng nhập mật khẩu khác"
+  },
+  "forgotPassword": {
+    "Forgot-password": "Quên mật khẩu",
+    "Reset-password": "Đặt lại mật khẩu",
+    "Please-enter-your-email": "Vui lòng nhập email của bạn",
+    "Your-password-is-reset": "Mật khẩu của bạn đã được đặt lại"
   }
 }

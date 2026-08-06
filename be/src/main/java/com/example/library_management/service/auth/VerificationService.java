@@ -66,7 +66,7 @@ public class VerificationService {
     }
 
     public String sendResetPasswordEmail(String email){
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
+        User user = userRepository.findByEmailAndIsDeletedFalse(email).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
         if(resetPasswordCodeRepository.existsByUser_EmailAndIsResetFalseAndExpiresAtAfter(email, LocalDateTime.now())){
             return "error.Code.is.already.sent";
         }
@@ -99,7 +99,7 @@ public class VerificationService {
     }
 
     public String sendVerificationEmail(UserRequest request){
-        if (userRepository.existsByEmail(request.getEmail())){
+        if (userRepository.existsByEmailAndIsDeletedFalse(request.getEmail())){
             return "error.Email.has.been.used";
         }
         if(verificationRepository.existsByEmailAndVerifiedFalseAndExpiresAtAfter(request.getEmail(), LocalDateTime.now())){

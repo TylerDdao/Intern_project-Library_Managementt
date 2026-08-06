@@ -46,7 +46,7 @@ public class DeleteRoleService {
                     messageSource.getMessage("error.cannot.delete.default.role", null, LocaleContextHolder.getLocale())
             );
         }
-        List<User> users = userRepository.findByRole_Name(role.getName());
+        List<User> users = userRepository.findByRole_NameAndIsDeletedFalse(role.getName());
         if (!users.isEmpty()){
             Role defaultRole = roleRepository.findByIsDefaultIsTrue().orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
             users.forEach(user -> user.setRole(defaultRole));

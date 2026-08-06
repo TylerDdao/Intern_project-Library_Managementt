@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Repository
 public interface BorrowRepository extends JpaRepository<Borrow, Long> {
+    boolean existsByUser_IdAndIsActiveTrue(Long id);
     List<Borrow> findByBook_Id(Long bookId);
     boolean existsByBook_IdAndIsActiveTrue(Long id);
     public List<Borrow> findByUserId(int userId);

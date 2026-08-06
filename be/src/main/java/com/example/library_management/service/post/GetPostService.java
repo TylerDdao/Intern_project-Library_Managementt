@@ -57,7 +57,7 @@ public class GetPostService {
         }
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User currentUser = userRepository.findByUsername(username).orElseThrow();
+        User currentUser = userRepository.findByUsernameAndIsDeletedFalse(username).orElseThrow();
         List<Long> likedPostIds = postLikeRepository.findLikedPostIdsByUser(currentUser);
 
         return posts.map(post -> new PostResponse(post, likedPostIds.contains(post.getId()), post.getCreatedBy().equals(username)));
@@ -81,7 +81,7 @@ public class GetPostService {
                 : Sort.by(sortBy).ascending();
 
         Pageable pageable = PageRequest.of(page, limit, sort);
-        User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).orElseThrow(()->new RuntimeException(messageSource.getMessage("user.user.id.not.found", null, LocaleContextHolder.getLocale())));
+        User user = userRepository.findByUsernameAndIsDeletedFalse(SecurityContextHolder.getContext().getAuthentication().getName()).orElseThrow(()->new RuntimeException(messageSource.getMessage("user.user.id.not.found", null, LocaleContextHolder.getLocale())));
         Page<Post> posts = postRepository.findByCreatedBy(user.getUsername(), pageable);
         List<Long> likedPostIds = postLikeRepository.findLikedPostIdsByUser(user);
         return posts.map(post -> new PostResponse(post, likedPostIds.contains(post.getId()), post.getCreatedBy().equals(user.getUsername())));

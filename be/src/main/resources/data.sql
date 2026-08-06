@@ -2,11 +2,11 @@
 -- 1. ROLES & FEATURES SETUP
 -- =========================================================================
 
-INSERT IGNORE INTO roles (id, created_at, created_by, is_active, is_deleted, updated_at, updated_by, name, is_default) VALUES
-    (1, NOW(), 'SYSTEM', true, false, NOW(), 'SYSTEM', 'ROLE_ROOT', false),
-    (2, NOW(), 'SYSTEM', true, false, NOW(), 'SYSTEM', 'ROLE_ADMIN', false),
-    (3, NOW(), 'SYSTEM', true, false, NOW(), 'SYSTEM', 'ROLE_LIBRARIAN', false),
-    (4, NOW(), 'SYSTEM', true, false, NOW(), 'SYSTEM', 'ROLE_USER', true);
+INSERT IGNORE INTO roles (id, created_at, created_by, updated_at, updated_by, name, is_default) VALUES
+    (1, NOW(), 'SYSTEM', NOW(), 'SYSTEM', 'ROLE_ROOT', false),
+    (2, NOW(), 'SYSTEM', NOW(), 'SYSTEM', 'ROLE_ADMIN', false),
+    (3, NOW(), 'SYSTEM', NOW(), 'SYSTEM', 'ROLE_LIBRARIAN', false),
+    (4, NOW(), 'SYSTEM', NOW(), 'SYSTEM', 'ROLE_USER', true);
 
 INSERT IGNORE INTO features (id, name) VALUES
     (1, 'CREATE_BOOK'),
@@ -19,32 +19,30 @@ INSERT IGNORE INTO features (id, name) VALUES
     (8, 'GET_BOOK'),
     (9, 'GET_USER'),
     (10, 'GET_BORROW'),
-    (11, 'GET_ROLE'),
-    (12, 'GET_POST'),
-    (13, 'GET_COMMENT'),
-    (14, 'GET_GENRE'),
-    (15, 'UPDATE_BOOK'),
-    (16, 'UPDATE_USER'),
-    (17, 'UPDATE_BORROW'),
-    (18, 'UPDATE_ROLE'),
-    (19, 'UPDATE_POST'),
-    (20, 'UPDATE_COMMENT'),
-    (21, 'UPDATE_GENRE'),
-    (22, 'DELETE_BOOK'),
-    (23, 'DELETE_USER'),
-    (24, 'DELETE_BORROW'),
-    (25, 'DELETE_ROLE'),
-    (26, 'DELETE_POST'),
-    (27, 'DELETE_COMMENT'),
-    (28, 'DELETE_GENRE'),
-    (29, 'ASSIGN_FEATURE'),
-    (30, 'UNASSIGN_FEATURE'),
-    (31, 'DELETE_POST_MULTI'),
-    (32, 'DELETE_COMMENT_MULTI'),
-    (33, 'GET_BORROW_MULTI'),
-    (34, 'UPDATE_USER_ROLE'),
-    (35, 'GET_POLICY'),
-    (36, 'UPDATE_POLICY');
+    (11, 'GET_BORROW_MULTI'),
+    (12, 'GET_ROLE'),
+    (13, 'GET_POST'),
+    (14, 'GET_COMMENT'),
+    (15, 'GET_GENRE'),
+    (16, 'GET_POLICY'),
+    (17, 'UPDATE_BOOK'),
+    (18, 'UPDATE_USER'),
+    (19, 'UPDATE_USER_ROLE'),
+    (20, 'UPDATE_BORROW'),
+    (21, 'UPDATE_ROLE'),
+    (22, 'UPDATE_POST'),
+    (23, 'UPDATE_GENRE'),
+    (24, 'UPDATE_POLICY'),
+    (25, 'DELETE_BOOK'),
+    (26, 'DELETE_USER'),
+    (27, 'DELETE_BORROW'),
+    (28, 'DELETE_ROLE'),
+    (29, 'DELETE_POST'),
+    (30, 'DELETE_COMMENT'),
+    (31, 'DELETE_GENRE'),
+    (32, 'ASSIGN_FEATURE'),
+    (33, 'UNASSIGN_FEATURE'),
+    (34, 'EXPORT_USER');
 
 INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
     (4, 5),  (4, 6),  (4, 8),  (4, 9),  (4, 10),
@@ -61,12 +59,12 @@ INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
 -- 2. USERS (Tyler as ROOT, everyone else as USER)
 -- =========================================================================
 
-INSERT IGNORE INTO users (id, full_name, username, address, email, phone_number, password, role_id, created_at) VALUES
-    (1, 'Tyler Dao', 'tyler', '32 Noecker Street', 'baonamfpt@gmail.com', '5483843681', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '1', NOW()),
-    (2, 'Alex Mercer', 'alex_m', '123 University Ave', 'baonamfpt@gmail.com', '5195550143', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '4', NOW()),
-    (3, 'Chloe Laurent', 'chloe_l', '88 Columbia St W', 'baonamfpt@gmail.com', '5195550177', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '3', NOW()),
-    (4, 'Marcus Vance', 'marcus_v', '12 King St N', 'baonamfpt@gmail.com', '5195550198', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '2', NOW()),
-    (5, 'Sarah Jenkins', 'sarah_j', '45 Phillip St', 'baonamfpt@gmail.com', '5195550211', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '4', NOW());
+INSERT IGNORE INTO users (id, full_name, username, address, email, phone_number, password, role_id, created_at, is_deleted, is_active) VALUES
+    (1, 'Tyler Dao', 'tyler', '32 Noecker Street', 'baonamfpt@gmail.com', '5483843681', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '1', NOW(), false, true),
+    (2, 'Alex Mercer', 'alex_m', '123 University Ave', 'baonamfpt@gmail.com', '5195550143', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '4', NOW(), false, true),
+    (3, 'Chloe Laurent', 'chloe_l', '88 Columbia St W', 'baonamfpt@gmail.com', '5195550177', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '3', NOW(), false, true),
+    (4, 'Marcus Vance', 'marcus_v', '12 King St N', 'baonamfpt@gmail.com', '5195550198', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '2', NOW(), false, true),
+    (5, 'Sarah Jenkins', 'sarah_j', '45 Phillip St', 'baonamfpt@gmail.com', '5195550211', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '4', NOW(), false, true);
 
 -- =========================================================================
 -- 3. GENRES & BOOKS SETUP
@@ -276,12 +274,3 @@ INSERT IGNORE INTO borrows (id, created_at, created_by, is_active, is_deleted, u
 INSERT IGNORE INTO policies (policy_key, policy_value) VALUES
     ("borrow_duration", "14"),
     ("late_penalty_per_day", "10000");
-#     (11, NOW(), 'tyler', 1, 0, null, null, DATE_ADD(NOW(), INTERVAL 10 DAY), 1, 1),
-#     (12, NOW(), 'tyler', 1, 0, null, null, DATE_ADD(NOW(), INTERVAL 7 DAY), 2, 1),
-#     (13, '2026-04-25 10:00:00', 'tyler', 0, 0, null, null, '2026-05-10', 3, 1),
-#     (14, NOW(), 'tyler', 1, 0, null, null, '2026-06-10', 1, 1),
-#     (15, NOW(), 'tyler', 1, 0, null, null, '2026-06-01', 2, 1),
-#     (16, '2026-04-25 10:00:00', 'tyler', 0, 0, null, null, DATE_ADD(NOW(), INTERVAL 20 DAY), 3, 1),
-#     (17, NOW(), 'tyler', 1, 0, null, null, '2026-06-10', 1, 1),
-#     (18, NOW(), 'tyler', 1, 0, null, null, '2026-06-01', 2, 1),
-#     (19, '2026-04-25 10:00:00', 'tyler', 0, 0, null, null, '2026-05-10', 3, 1);

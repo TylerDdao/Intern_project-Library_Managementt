@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="flex justify-between items-center">
+        <div class="headline font-bold">{{'usersManagement.User-list'|translate}}</div>
+        <button class="flex items-center select-none" (click)="onClose.emit()"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    @if (isLoading) {
+        <div class="w-full h-full flex items-center justify-center">
+            <app-loading-component></app-loading-component>
+        </div>
+    }
+    @else {
+        @if (users.length>0) {
+            <div class="flex flex-col space-y-[10px]">
+                <div class="body font-bold">{{"usersManagement.Total-users"|translate}}: {{usersPage.totalElements}}</div>
+                <button class="border border-primary-1 text-primary-1 px-[10px] py-[5px] rounded-[10px]" (click)="handleSelectAll()">{{"list.Select-all"|translate}}</button>
+                <button class="border border-tomato-red text-tomato-red px-[10px] py-[5px] rounded-[10px]" (click)="handleUnselectAll()">{{"list.Unselect-all"|translate}}</button>
+                <div class="flex flex-col space-y-[5px] items-center">
+                    <div class="list">
+                        @for(user of users; track user.id){
+                            <div (click)="toggleSelectedUser(user)" class="select-none cursor-pointer body p-[10px] rounded-[10px] flex flex-col transition ease-in-out w-full" [class]="selectedUsers.some(u => u.id == user.id)? 'border border-primary-1 bg-primary-1 text-soft-ice':'border border-primary-1 text-primary-1 hover:bg-primary-1 hover:text-soft-ice'">
+                                <div class="font-bold">{{"user.Username"|translate}}: @{{user.username}}</div>
+                                <div>{{"user.Full-name"|translate}}: {{user.fullName}}</div>
+                                <div>{{"user.Email"|translate}}: {{user.email}}</div>
+                                <div>{{"user.Phone-number"|translate}}: {{user.phoneNumber}}</div>
+                            </div>
+                        }
+                    </div>
+                    <app-pages-component [pages]="usersPage" (onApply)="fetchAllUsers($event)"></app-pages-component>
+                </div>
+            </div>
+        }   
+        @else {
+            <div class="w-full h-full flex items-center justify-center">
+                <div>{{"list.Empty"|translate}}</div>
+            </div>
+        }
+    }
+    <div class="flex items-center space-x-[10px]">
+        <button class="bg-primary-1 text-soft-ice px-[10px] py-[5px] rounded-[10px]" (click)="handleExport()">{{"export.Export"|translate}}</button>
+        <div class="body font-bold">{{"usersManagement.Selected-users"|translate}}: {{selectedUsers.length}}</div>
+    </div>
+</div>

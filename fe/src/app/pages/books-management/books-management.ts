@@ -20,10 +20,11 @@ import { NewBookForm } from '../../forms/new-book-form/new-book-form';
 import { GenresManagementForm } from '../../forms/genres-management-form/genres-management-form';
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
+import { ExportBooksForm } from "../../forms/export/export-books-form/export-books-form";
 
 @Component({
   selector: 'app-books-management',
-  imports: [GenresManagementForm, NavbarComponent, SortSideBarComponent, BookCardComponent, TranslateModule, PagesComponent, BookListComponent, NewBookForm],
+  imports: [GenresManagementForm, NavbarComponent, SortSideBarComponent, BookCardComponent, TranslateModule, PagesComponent, BookListComponent, NewBookForm, ExportBooksForm],
   templateUrl: './books-management.html',
   styleUrl: './books-management.css',
 })
@@ -40,6 +41,7 @@ export class BooksManagement {
   {}
 
   isCreateNewBook:boolean = false;
+  isExportBook:boolean =false;
 
   bookList!: Book[]
   bookListPage:Page = {
@@ -69,6 +71,10 @@ export class BooksManagement {
   }
 
   isOpenGenreManagement: boolean = false;
+
+  handleCloseExportBook(){
+    this.isExportBook = false;
+  }
 
   handleChangeGenre(genres: Genre[]){
     this.isOpenGenreManagement = false;
