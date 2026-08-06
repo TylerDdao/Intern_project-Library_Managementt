@@ -61,6 +61,7 @@ export class BookListComponent{
   handleClear(){
     this.searchBooks = [];
     this.isSearch = null
+    this.query = ""
   }
 
   handleDeleteBook(book:Book){
@@ -72,7 +73,8 @@ export class BookListComponent{
           if (data.code == "200"){
             const message = this.translate.instant("booksManagement.Book-is-deleted")
             alert(message);
-            this.fetchBookList()
+            this.fetchBookList();
+            this.handleClear();
             this.cdr.markForCheck()
           }
         },
