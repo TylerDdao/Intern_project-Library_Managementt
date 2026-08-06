@@ -1,6 +1,5 @@
 package com.example.library_management.dto.request.user;
 
-import com.example.library_management.dto.request.RoleRequest;
 import com.example.library_management.model.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

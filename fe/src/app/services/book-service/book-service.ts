@@ -74,5 +74,11 @@ export class BookService {
       headers: getAuthHeaders(this.platformId)
     });
   }
+
+  searchBook(query:string, page: number = 0, limit:number = 10){
+    return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}&searchQuery=${query}`,{
+      headers: getAuthHeaders(this.platformId)
+    });
+  }
 }
 

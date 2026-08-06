@@ -2,11 +2,11 @@
 -- 1. ROLES & FEATURES SETUP
 -- =========================================================================
 
-INSERT IGNORE INTO roles (id, created_at, created_by, is_active, is_deleted, updated_at, updated_by, name) VALUES
-    (1, NOW(), 'SYSTEM', true, false, NOW(), 'SYSTEM', 'ROLE_ROOT'),
-    (2, NOW(), 'SYSTEM', true, false, NOW(), 'SYSTEM', 'ROLE_ADMIN'),
-    (3, NOW(), 'SYSTEM', true, false, NOW(), 'SYSTEM', 'ROLE_LIBRARIAN'),
-    (4, NOW(), 'SYSTEM', true, false, NOW(), 'SYSTEM', 'ROLE_USER');
+INSERT IGNORE INTO roles (id, created_at, created_by, is_active, is_deleted, updated_at, updated_by, name, is_default) VALUES
+    (1, NOW(), 'SYSTEM', true, false, NOW(), 'SYSTEM', 'ROLE_ROOT', false),
+    (2, NOW(), 'SYSTEM', true, false, NOW(), 'SYSTEM', 'ROLE_ADMIN', false),
+    (3, NOW(), 'SYSTEM', true, false, NOW(), 'SYSTEM', 'ROLE_LIBRARIAN', false),
+    (4, NOW(), 'SYSTEM', true, false, NOW(), 'SYSTEM', 'ROLE_USER', true);
 
 INSERT IGNORE INTO features (id, name) VALUES
     (1, 'CREATE_BOOK'),

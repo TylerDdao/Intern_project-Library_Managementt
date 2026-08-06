@@ -80,11 +80,6 @@
                 </div>
 
             <div class="flex flex-col">
-                <label for="password">{{'user.Password' |translate}}</label>
-                <input id="password" formControlName="password" placeholder="{{'user.Password' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]"/>
-            </div>
-
-            <div class="flex flex-col">
                 <label for="phoneNumber">{{'user.Phone-number' |translate}}</label>
                 <input id="phoneNumber" formControlName="phoneNumber" placeholder="{{'user.Phone-number' | translate}}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]"/>
                 @if (newUserForm.get('phoneNumber')?.touched && newUserForm.get('phoneNumber')?.invalid) {

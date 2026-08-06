@@ -4,7 +4,9 @@
     "Role-name": "Role name",
     "Assigned-features":"Assigned features",
     "Unassigned-features": "Unassigned features",
-    "Default-role":"Default role"
+    "Default-role":"Default role",
+    "Role-is-updated": "Role is updated",
+    "Role-is-created": "Role is created"
   },
   "features":{
     "Features":"Features"
@@ -39,7 +41,8 @@
     "Create-role": "Create role",
     "Role-list": "Role list",
     "User-is-saved":"User is saved",
-    "Password-is-changed": "Password is changed"
+    "Password-is-changed": "Password is changed",
+    "User-is-created": "User is created"
   },
   "book": {
     "Title": "Title",
@@ -72,7 +75,9 @@
     "Reset": "Reset",
     "Send": "Send",
     "Check-username": "Check username",
-    "Confirm": "Confirm"
+    "Confirm": "Confirm",
+    "Delete": "Delete",
+    "Confirm-delete": "Confirm delete"
   },
   "newUserForm":{
     "Create-new-user": "Create new user"
@@ -193,7 +198,8 @@
     "Back-to-login": "Back to login",
     "At-least-8-characters": "At least 8 characters",
     "1-special-character": "1 special character",
-    "Your-password-must-have":"Your password must have"
+    "Your-password-must-have":"Your password must have",
+    "Signing-up":"Signing up"
   },
   "settings":{
     "Settings": "Settings",

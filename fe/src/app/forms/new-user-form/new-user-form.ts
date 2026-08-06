@@ -7,6 +7,8 @@ import { AuthService } from '../../services/auth-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../services/user-service/user-service';
 import { isPlatformBrowser } from '@angular/common';
+import { User } from '../../models/user';
+import { errorNoti } from '../../util/error-notification';
 
 @Component({
   selector: 'app-new-user-form',
@@ -17,6 +19,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class NewUserForm {
   @Input() roles: Role[] = [];
   @Output() onClose = new EventEmitter<void>();
+  @Output() onChange = new EventEmitter<boolean>();
   constructor(
     private authService: AuthService,
     private translate: TranslateService,
@@ -143,6 +146,12 @@ export class NewUserForm {
 
   ngOnInit(){
     if (isPlatformBrowser(this.platformId)) {
+      const defaultRole = this.roles.find(role => role.default)?.id;
+
+      this.newUserForm.patchValue({
+        role: defaultRole
+      })
+
       this.newUserForm.get('username')?.valueChanges.subscribe(() => {
         this.isUsernameAvailable = null;
         this.isUsernameInvalid = false;
@@ -162,7 +171,7 @@ export class NewUserForm {
 
   onSubmit(){
     console.log("Submit")
-    const {username, fullName, phoneNumber, email, address, password, confirmPassword} = this.newUserForm.value;
+    const {username, fullName, phoneNumber, email, address, password, confirmPassword, role} = this.newUserForm.value;
     if(password!=confirmPassword){
       this.isPasswordMatch = false;
       this.cdr.markForCheck();
@@ -176,6 +185,35 @@ export class NewUserForm {
       this.isEmailInvalid = true;
       return;
     }
+    if(username && fullName && phoneNumber && email && password){
+      const roleId = role!== null ? role : this.roles.find(role => role.default)?.id;
+      let user:User={
+        username: username,
+        fullName: fullName,
+        email: email,
+        phoneNumber: phoneNumber,
+        password: password,
+        role: { id: Number(roleId) } as Role
+      }
+      if(address){
+        user.address = address
+      }
+      this.userService.createUser(user).subscribe({
+        next:(data:any)=>{
+          if(data.code == "200"){
+            this.save(true);
+          }
+        },
+        error:(err:HttpErrorResponse)=>{
+          errorNoti(err, this.translate)
+          this.save(false)
+        }
+      })
+    }
+  }
+
+  save(result:boolean){
+    this.onChange.emit(result)
   }
 
   close(): void {

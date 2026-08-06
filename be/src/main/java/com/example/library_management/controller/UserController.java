@@ -3,6 +3,7 @@ package com.example.library_management.controller;
 import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.dto.request.user.UserRequest;
 import com.example.library_management.dto.response.UserResponse;
+import com.example.library_management.service.user.CreateUserService;
 import com.example.library_management.service.user.DeleteUserService;
 import com.example.library_management.service.user.GetUserService;
 import com.example.library_management.service.user.UpdateUserService;
@@ -23,6 +24,17 @@ public class UserController {
 
     @Autowired
     DeleteUserService deleteUserService;
+
+    @Autowired
+    CreateUserService createUserService;
+
+    @PreAuthorize("@securityService.hasAccess('CREATE_USER')")
+    @PostMapping()
+    public ResponseEntity<ApiResponse<UserResponse>> createUser(
+            @RequestBody UserRequest request
+    ){
+        return ResponseEntity.ok(ApiResponse.success(createUserService.createUser(request)));
+    }
 
     @GetMapping("/check-username")
     public ResponseEntity<ApiResponse<Boolean>> checkUsername(

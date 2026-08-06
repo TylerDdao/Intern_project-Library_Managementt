@@ -27,4 +27,7 @@ public class Role extends BaseEntity{
         uniqueConstraints = @UniqueConstraint(columnNames = {"role_id", "feature_id"})
     )
     private List<Feature> features;
+
+    @Column(name = "is_default")
+    private boolean isDefault = false;
 }

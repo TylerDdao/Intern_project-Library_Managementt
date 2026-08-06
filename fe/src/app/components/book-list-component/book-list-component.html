@@ -9,28 +9,71 @@
         </div>
     }
     @else{
-        @if (bookList.length > 0) {
-            <div>{{"bookList.Total-number-of-book"|translate}}: {{totalBooks}}</div>
-            <div class="books-list">
-                @for (book of bookList; track book.id) {
-                    @if (selectable) {
-                        <div class="flex flex-col space-y-[5px]">
-                            <app-book-card-component [book]="book"></app-book-card-component>
-                            <button class="px-[10px] py-[5px] bg-primary-1 text-soft-ice rounded-[10px]" (click)="selectBook(book)">{{'bookList.Select-this-book' |translate}}</button>
+        <div class="flex items-center space-x-[10px]">
+            <input placeholder="{{'book.Title'|translate}}" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full" [(ngModel)]="query"/>
+            <button class="select-none items-center flex" (click)="fetchSearchBook()"><span class="material-symbols-outlined">search</span></button>
+            <button (click)="handleClear()" class="bg-cool-gray p-[5px] rounded-[10px]">{{"search.Clear"|translate}}</button>
+        </div>
+        @if (isSearch != null) {
+            @if (isSearch == true) {
+               <div class="flex justify-center w-full h-full items-center">
+                    <app-loading-component></app-loading-component>
+                </div>
+            }
+            @else {
+                @if (searchBooks.length > 0) {
+                    <div>{{"search.Result"|translate}}</div>
+                    @if (isBookFound) {
+                        <div class="books-list">
+                            @for (book of searchBooks; track book.id) {
+                                @if (selectable) {
+                                    <div class="flex flex-col space-y-[5px]">
+                                        <app-book-card-component [book]="book"></app-book-card-component>
+                                        <button class="px-[10px] py-[5px] bg-primary-1 text-soft-ice rounded-[10px]" (click)="selectBook(book)">{{'bookList.Select-this-book' |translate}}</button>
+                                    </div>
+                                }
+                                @else {
+                                    <app-book-card-component [book]="book"></app-book-card-component>
+                                }
+                            }   
                         </div>
+                        <div class="flex w-full justify-center"><app-pages-component [pages]="resultPage" (onApply)="fetchSearchBook($event)"></app-pages-component></div>
                     }
                     @else {
-                        <app-book-card-component [book]="book"></app-book-card-component>
+                        <div>{{"list.Empty"|translate}}</div>
                     }
-                }   
-            </div>
+                }
+                @else {
+                    <div class="flex justify-center w-full h-full items-center">
+                        <div>{{"list.Empty" |translate}}</div>
+                    </div>
+                }
+            }
         }
         @else {
-            <div class="flex justify-center w-full h-full items-center">
-                <div>{{"list.Empty" |translate}}</div>
-            </div>
+            @if (bookList.length > 0 && isSearch == null) {
+                <div>{{"bookList.Total-number-of-book"|translate}}: {{totalBooks}}</div>
+                
+                <div class="books-list">
+                    @for (book of bookList; track book.id) {
+                        @if (selectable) {
+                            <div class="flex flex-col space-y-[5px]">
+                                <app-book-card-component [book]="book"></app-book-card-component>
+                                <button class="px-[10px] py-[5px] bg-primary-1 text-soft-ice rounded-[10px]" (click)="selectBook(book)">{{'bookList.Select-this-book' |translate}}</button>
+                            </div>
+                        }
+                        @else {
+                            <app-book-card-component [book]="book"></app-book-card-component>
+                        }
+                    }   
+                </div>
+                <div class="flex w-full justify-center"><app-pages-component [pages]="bookListPage" (onApply)="fetchBookList($event)"></app-pages-component></div>
+            }
+            @else {
+                <div class="flex justify-center w-full h-full items-center">
+                    <div>{{"list.Empty" |translate}}</div>
+                </div>
+            }
         }
     }
-    
-    <div class="flex w-full justify-center"><app-pages-component [pages]="bookListPage" (onApply)="fetchBookList($event)"></app-pages-component></div>
 </div>

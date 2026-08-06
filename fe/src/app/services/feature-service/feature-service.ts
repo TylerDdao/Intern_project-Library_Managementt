@@ -3,6 +3,8 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../../../environments/environment';
 import { getAuthHeaders } from '../auth-service';
+import { Role } from '../../models/role';
+import { Feature } from '../../models/feature';
 
 @Injectable({
   providedIn: 'root'

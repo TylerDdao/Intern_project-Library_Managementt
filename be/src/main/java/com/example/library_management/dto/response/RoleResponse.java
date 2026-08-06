@@ -15,13 +15,15 @@ import java.util.stream.Collectors;
 public class RoleResponse {
     private long id;
     private String name;
+    private boolean isDefault = false;
     private List<FeatureResponse> features = new ArrayList<>();
 
     public RoleResponse(Role role){
         this.id = role.getId();
         this.name = role.getName();
-        role.getFeatures().forEach(feature -> {
-            this.features.add(new FeatureResponse(feature));
-        });
+        this.isDefault = role.isDefault();
+        if (role.getFeatures() != null) {
+            this.features = role.getFeatures().stream().map(FeatureResponse::new).collect(Collectors.toList());
+        }
     }
 }

@@ -7,17 +7,23 @@
     border-radius: 10px;
     gap: 10px;
     height: 80vh;
-    width: 50vw;
+    width: 80vw;
     /* align-items: center; */
 }
 
 .books-list {
-    /* display: flex;
-    flex-direction: column; */
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
     justify-items: center;
     overflow-y: auto;
+    width: calc(80vw - 20px);
+    padding-left: 10px;
+    padding-right: 10px;
     min-height: 0;
+}
+
+.side-bar{
+    grid-column: 1;
+    grid-row: 1 / span 2;
 }

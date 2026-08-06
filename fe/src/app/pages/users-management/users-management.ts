@@ -16,6 +16,7 @@ import { FeatureService } from '../../services/feature-service/feature-service';
 import { EditRoleForm } from '../../forms/edit-role-form/edit-role-form';
 import { first, last } from 'rxjs';
 import { Page } from '../../models/page';
+import { RoleService } from '../../services/role-service/role-service';
 
 @Component({
   selector: 'app-users-management',
@@ -53,7 +54,8 @@ export class UsersManagement {
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
     public langService: LanguageService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private roleService: RoleService
     
   ){}
 
@@ -77,12 +79,12 @@ export class UsersManagement {
 
   fetchRolesAndUser(){
     this.users = [];
-    this.userService.getAllRoles().subscribe({
+    this.roleService.getAllRoles().subscribe({
         next: (data: any) => {
           if (data.code == "200") {
-            this.roles = data.data.content;
+            const defaultRole = data.data.content.find((role: Role) => role.default);
             this.roles = data.data.content.sort((a: Role, b: Role) => {
-              const order = ['ROLE_ROOT', 'ROLE_USER'];
+              const order = ['ROLE_ROOT', defaultRole.name];
               const aIndex = order.indexOf(a.name);
               const bIndex = order.indexOf(b.name);
 
@@ -91,6 +93,7 @@ export class UsersManagement {
               if (bIndex !== -1) return 1;
               return a.name.localeCompare(b.name);
             });
+            this.roles.forEach(role => {role.name = role.name.replace("ROLE_", "");});
             this.roles.forEach(role => {
                 this.userService.getUsersByRole(role.name).subscribe({
                     next: (userData: any) => {
@@ -145,12 +148,47 @@ export class UsersManagement {
       this.cdr.markForCheck()
     }
     else{
-      const message = this.translate.instant("error.An-error-has-occurred")
-      alert(message)
       this.editUser = null;
       this.isEditUser = false;
     }
-    
+  }
+  handleSaveEditRole(isSave: boolean){
+    if(isSave){
+      const message = this.translate.instant("role.Role-is-updated")
+      alert(message)
+      this.fetchRolesAndUser();
+      this.isEditRole = false;
+      this.cdr.markForCheck()
+    }
+    else{
+      this.isEditRole = false;
+    }
+  }
+
+  handleSaveNewRole(isSave: boolean){
+    if(isSave){
+      const message = this.translate.instant("role.Role-is-created")
+      alert(message)
+      this.fetchRolesAndUser();
+      this.isCreateNewRole = false;
+      this.cdr.markForCheck()
+    }
+    else{
+      this.isCreateNewRole = false;
+    }
+  }
+
+  handleSaveNewUser(isSave: boolean){
+    if(isSave){
+      const message = this.translate.instant("role.Role-is-created")
+      alert(message)
+      this.fetchRolesAndUser();
+      this.isCreateNewUser = false;
+      this.cdr.markForCheck()
+    }
+    else{
+      this.isCreateNewUser = false;
+    }
   }
 
   handleChooseRole(role: Role){

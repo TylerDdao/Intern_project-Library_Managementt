@@ -1,7 +1,8 @@
 import { Feature } from "./feature";
 
 export interface Role {
-    id: number,
+    id?: number,
     name: string,
-    features: [Feature]
+    features: [Feature] | [],
+    default: boolean
 }

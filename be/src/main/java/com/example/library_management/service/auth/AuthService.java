@@ -173,7 +173,7 @@ public class AuthService {
             throw new RuntimeException(messageSource.getMessage("error.username.taken", null, LocaleContextHolder.getLocale()));
         }
 
-        Role defaultRole = roleRepository.findByName("ROLE_USER")
+        Role defaultRole = roleRepository.findByIsDefaultIsTrue()
                 .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.fount", null, LocaleContextHolder.getLocale())));
 
         User user = new User();

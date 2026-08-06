@@ -1,7 +1,7 @@
 package com.example.library_management.controller;
 
-import com.example.library_management.dto.request.AuthorityRequest;
-import com.example.library_management.dto.request.RoleRequest;
+import com.example.library_management.dto.request.role.AuthorityRequest;
+import com.example.library_management.dto.request.role.RoleRequest;
 import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.dto.response.AuthorityResponse;
 import com.example.library_management.dto.response.RoleResponse;
@@ -51,10 +51,9 @@ public class RoleController {
     @PreAuthorize("@securityService.hasAccess('UPDATE_ROLE')")
     @PatchMapping()
     public ResponseEntity<ApiResponse<RoleResponse>> updateRole(
-            @RequestParam String name,
             @RequestBody RoleRequest request
     ){
-        return ResponseEntity.ok(ApiResponse.success(updateRoleService.updateRole(name, request)));
+        return ResponseEntity.ok(ApiResponse.success(updateRoleService.updateRole(request)));
     }
 
     @PreAuthorize("@securityService.hasAccess('GET_ROLE')")
@@ -71,7 +70,7 @@ public class RoleController {
 
     @PreAuthorize("@securityService.hasAccess('DELETE_ROLE')")
     @DeleteMapping()
-    public ResponseEntity<ApiResponse<String>> deleteRole(RoleRequest request){
-        return ResponseEntity.ok(ApiResponse.success(deleteRoleService.deleteRole(request)));
+    public ResponseEntity<ApiResponse<String>> deleteRole(@RequestParam Long id){
+        return ResponseEntity.ok(ApiResponse.success(deleteRoleService.deleteRole(id)));
     }
 }

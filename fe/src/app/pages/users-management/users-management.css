@@ -18,8 +18,8 @@
         display: flex;
         flex-direction: row;
         gap: 10px;
-        width: 100%;
-        overflow-x: auto;
+        max-width: 80vw;
+        overflow-x: scroll;
         flex-wrap: nowrap;
     }
 

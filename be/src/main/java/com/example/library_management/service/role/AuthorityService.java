@@ -1,6 +1,6 @@
 package com.example.library_management.service.role;
 
-import com.example.library_management.dto.request.AuthorityRequest;
+import com.example.library_management.dto.request.role.AuthorityRequest;
 import com.example.library_management.dto.response.AuthorityResponse;
 import com.example.library_management.model.Feature;
 import com.example.library_management.model.Role;
@@ -32,7 +32,7 @@ public class AuthorityService {
     private AuditLogger logger;
 
     public AuthorityResponse assignAuthority(AuthorityRequest request){
-        Role role = roleRepository.findByName(request.getRole())
+        Role role = roleRepository.findById(request.getId())
                 .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
 
         List<String> featureNames = request.getFeatures();
@@ -57,7 +57,7 @@ public class AuthorityService {
     }
 
     public AuthorityResponse unassignAuthority(AuthorityRequest request){
-        Role role = roleRepository.findByName(request.getRole())
+        Role role = roleRepository.findById(request.getId())
                 .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
 
         List<String> featureNames = request.getFeatures();

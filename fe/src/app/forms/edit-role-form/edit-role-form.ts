@@ -2,8 +2,12 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, S
 import { Role } from '../../models/role';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LanguageService } from '../../services/language-service/language-service';
 import { Feature } from '../../models/feature';
+import { RoleService } from '../../services/role-service/role-service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { errorNoti } from '../../util/error-notification';
+import { forkJoin } from 'rxjs';
+
 
 @Component({
   selector: 'app-edit-role-form',
@@ -15,35 +19,60 @@ export class EditRoleForm implements OnChanges {
   @Input() role!: Role
   @Input() features!: Feature[]
   @Output() onClose = new EventEmitter<void>();
+  @Output() onChange = new EventEmitter<boolean>();
 
   assignedFeatures: Feature[] = []
   unassignedFeatures: Feature[] = []
+
   addedFeatures: Feature[] = [];
   removeFeatures: Feature[] =[];
 
+  isSaved: boolean = false;
+
   constructor(
-    private langService: LanguageService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private roleService:RoleService,
+    private translate: TranslateService
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
-  if ((changes['features'] || changes['role']) && this.features && this.role?.features) {
-    this.assignedFeatures = this.role.features
-    this.unassignedFeatures = this.features.filter(
-      feature => !this.role.features.some(f => f.id === feature.id)
-    );
-    this.cdr.markForCheck();
-  }
-  if(changes['roleName'] || changes["role"] && this.role){
-    this.newRoleForm.patchValue({
-      roleName: this.role.name
-    })
+    if ((changes['features'] || changes['role']) && this.features && this.role?.features) {
+      this.assignedFeatures = this.role.features
+      this.unassignedFeatures = this.features.filter(
+        feature => !this.role.features.some(f => f.id === feature.id)
+      );
+      this.cdr.markForCheck();
+    }
+    if(changes["role"] && this.role){
+      this.newRoleForm.patchValue({
+        roleName: this.role.name,
+        defaultRole: this.role.default
+      })
   }
 }
 
   newRoleForm = new FormGroup({
     roleName: new FormControl('', Validators.required),
+    defaultRole: new FormControl<boolean>(false)
   });
+
+  handleDeleteRole(){
+    const message = this.translate.instant("form.Confirm-delete")
+    const option = confirm(message + "?")
+    if(option){
+      this.roleService.deleteRole(this.role).subscribe({
+        next: (data: any)=>{
+          if(data.code == "200"){
+            this.save(true)
+          }
+        },
+        error:(err:HttpErrorResponse)=>{
+          errorNoti(err, this.translate)
+          this.save(false);
+        }
+      })
+    }
+  }
 
   handleToggleFeature(choosenFeature: Feature) {
     if(this.assignedFeatures.includes(choosenFeature)){
@@ -65,10 +94,55 @@ export class EditRoleForm implements OnChanges {
   }
 
   onSubmit(){
-    console.log("Submit")
+    if(!this.role) return;
+
+    const requests = [];
+
+    const { roleName, defaultRole } = this.newRoleForm.value;
+
+    if(roleName && this.role.name !== roleName || this.role.default !== defaultRole){
+      this.role.default = defaultRole ?? false;
+
+      requests.push(
+        this.roleService.updateRole(this.role)
+      );
+    }
+
+    if(this.addedFeatures.length > 0){
+      requests.push(
+        this.roleService.assignFeature(this.role, this.addedFeatures)
+      );
+    }
+
+    if(this.removeFeatures.length > 0){
+      requests.push(
+        this.roleService.unassignFeature(this.role, this.removeFeatures)
+      );
+    }
+
+    if(requests.length === 0){
+      this.save(false);
+      return;
+    }
+
+    forkJoin(requests).subscribe({
+      next: (responses:any[]) => {
+        const success = responses.every(res => res.code === "200");
+        this.save(success);
+      },
+      error:(err:HttpErrorResponse)=>{
+        errorNoti(err, this.translate);
+        this.save(false);
+      }
+    });
   }
+
 
   close(){
     this.onClose.emit();
+  }
+
+  save(result: boolean){
+    this.onChange.emit(result)
   }
 }

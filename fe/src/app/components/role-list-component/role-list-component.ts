@@ -4,11 +4,12 @@ import { UserService } from '../../services/user-service/user-service';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
+import { RoleService } from '../../services/role-service/role-service';
 
 
 @Component({
   selector: 'app-role-list-component',
-  imports: [TranslateModule, FormsModule, TranslateModule],
+  imports: [TranslateModule, FormsModule],
   templateUrl: './role-list-component.html',
   styleUrl: './role-list-component.css',
 })
@@ -27,10 +28,11 @@ export class RoleListComponent implements OnChanges {
     private userService: UserService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef,
+    private roleService: RoleService
   ) {}
 
   handleSearch(name: string){
-    this.userService.getRole(name).subscribe({
+    this.roleService.getRole(name).subscribe({
       next: (data:any) => {
         if(data.code == "200"){
           this.resultRoles = data.data.content

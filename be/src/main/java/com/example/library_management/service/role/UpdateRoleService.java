@@ -1,6 +1,6 @@
 package com.example.library_management.service.role;
 
-import com.example.library_management.dto.request.RoleRequest;
+import com.example.library_management.dto.request.role.RoleRequest;
 import com.example.library_management.dto.response.RoleResponse;
 import com.example.library_management.model.Role;
 import com.example.library_management.repository.RoleRepository;
@@ -23,11 +23,19 @@ public class UpdateRoleService {
     @Autowired
     private AuditLogger logger;
 
-    public RoleResponse updateRole(String name, RoleRequest request){
-        Role role = roleRepository.findByName(name).orElseThrow(()->new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
+    public RoleResponse updateRole(RoleRequest request){
+        Role role = roleRepository.findById(request.getId()).orElseThrow(()->new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
+        String originalName = role.getName();
         role.setName(request.getName());
+        if(request.isDefault()) {
+            Role defaultRole = roleRepository.findByIsDefaultIsTrue().orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
+            defaultRole.setDefault(false);
+            roleRepository.save(defaultRole);
+            role.setDefault(request.isDefault());
+            logger.log("Update {} default = {}", defaultRole.getName(), defaultRole.isDefault());
+        }
         Role savedRole = roleRepository.save(role);
-        logger.log("Updated {}, ID #{}", savedRole.getName(), savedRole.getId());
+        logger.log("Updated {} -> {}, ID #{}",originalName, savedRole.getName(), savedRole.getId());
         return new RoleResponse(savedRole);
     }
 }

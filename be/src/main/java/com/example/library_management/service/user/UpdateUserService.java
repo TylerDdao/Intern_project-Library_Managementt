@@ -34,9 +34,7 @@ public class UpdateUserService {
     private PasswordEncoder passwordEncoder;
 
     public UserResponse updateUserRole(UserRequest request){
-        System.out.println(request);
-
-        Role defaultRole = roleRepository.findByName("ROLE_USER")
+        Role defaultRole = roleRepository.findByIsDefaultIsTrue()
                 .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
 
         User user = userRepository.findById(request.getId())

@@ -1,4 +1,4 @@
-package com.example.library_management.dto.request;
+package com.example.library_management.dto.request.role;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RoleRequest {
     private String name;
-    private Long Id;
-
+    private Long id = null;
+    private boolean isDefault = false;
     public void setName(String name) {
         this.name = "ROLE_" + name.toUpperCase();
     }

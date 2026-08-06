@@ -35,18 +35,6 @@ export class UserService {
     return this.userSubject.value;
   }
 
-  getAllRoles(page:number = 0, limit:number=1000){
-    return this.http.get(`${this.roleBaseUrl}?page=${page}&limit=${limit}&sortBy=name&sortDir=asc`, {
-      headers: getAuthHeaders(this.platformId)
-    });
-  }
-
-  getRole(name:string, page: number = 0, limit:number=1000){
-    return this.http.get(`${this.roleBaseUrl}?name=${name}&page=${page}&limit=${limit}&sortBy=name&sortDir=asc`, {
-      headers: getAuthHeaders(this.platformId)
-    });
-  }
-
   getUsersByRole(role: String, page: number = 0, limit:number = 10) {
     return this.http.get(`${this.userBaseUrl}?page=${page}&limit=${limit}&role=${role}`, {
       headers: getAuthHeaders(this.platformId)
@@ -69,5 +57,18 @@ export class UserService {
     return this.http.patch(`${this.userBaseUrl}/update-role`,
       { id: user.id, role: user.role?.id },
       {headers: getAuthHeaders(this.platformId)})
+  }
+
+  createUser(user:User){
+    const body = {
+      "username": user.username,
+      "phoneNumber": user.phoneNumber,
+      "fullName": user.fullName,
+      "address": user.address,
+      "email": user.email,
+      "password": user.password,
+      "role": user.role?.id
+    }
+    return this.http.post(`${this.userBaseUrl}`, body, {headers:getAuthHeaders(this.platformId)})
   }
 }

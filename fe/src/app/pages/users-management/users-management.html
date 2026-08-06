@@ -10,11 +10,11 @@
         @for (role of roles; track $index) {
             <div class="flex items-center space-x-[5px] py-[5px]">
                 <div class="headline">{{role.name}}</div>
-                @if (role.name == "ROLE_ROOT") {
+                @if (role.name == "ROOT") {
                     <span class="material-symbols-outlined [font-variation-settings:'FILL'_1,'wght'_400,'GRAD'_0,'opsz'_24] text-primary-1">star</span>
                 }
-                @if (role.name == "ROLE_USER") {
-                    <div class="px-[10px]  rounded-3xl bg-cool-gray text-deep-charcoal">{{"role.Default-role" | translate}}</div>
+                @if (role.default) {
+                    <div class="px-[10px] rounded-3xl bg-cool-gray text-deep-charcoal">{{"role.Default-role" | translate}}</div>
                 }
             </div>
             
@@ -33,7 +33,7 @@
 
     @if (isCreateNewUser) {
         <div class="fixed inset-0 flex items-center justify-center z-99">
-            <app-new-user-form [roles]="roles" (onClose)="handleClose()"></app-new-user-form>
+            <app-new-user-form [roles]="roles" (onClose)="handleClose()" (onChange)="handleSaveNewUser($event)"></app-new-user-form>
         </div>
     }
     @if (isEditUser && editUser) {
@@ -49,13 +49,13 @@
 
     @if(isCreateNewRole){
         <div class="fixed inset-0 flex items-center justify-center z-99">
-            <app-new-role-form (onClose)="handleClose()" [features]="features"></app-new-role-form>
+            <app-new-role-form (onClose)="handleClose()" (onChange)="handleSaveNewRole($event)" [features]="features"></app-new-role-form>
         </div>
     }
 
     @if(isEditRole && editRole){
         <div class="fixed inset-0 flex items-center justify-center z-99">
-            <app-edit-role-form [role]="editRole" [features]="features" (onClose)="handleClose()"></app-edit-role-form>
+            <app-edit-role-form [role]="editRole" [features]="features" (onClose)="handleClose()" (onChange)="handleSaveEditRole($event)"></app-edit-role-form>
         </div>
     }
 
