@@ -84,7 +84,7 @@
     </div>
     @if(isOpenBookList){
         <div class="fixed inset-0 flex items-center justify-center z-99">
-            <app-book-list-component (onClose)="handleCloseBookList()"></app-book-list-component>
+            <app-book-list-component [deletable]="true" (onClose)="handleCloseBookList()"></app-book-list-component>
         </div>
     }
 
@@ -96,7 +96,7 @@
 
     @if (isOpenGenreManagement) {
         <div class="fixed inset-0 flex items-center justify-center z-99">
-            <app-genres-management-form (onClose)="handleCloseGenreManagement()"></app-genres-management-form>
+            <app-genres-management-form (onClose)="handleCloseGenreManagement()" (onChange)="handleChangeGenre($event)"></app-genres-management-form>
         </div>
     }
 

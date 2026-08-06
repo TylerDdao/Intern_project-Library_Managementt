@@ -5,6 +5,7 @@ import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.dto.response.GenreResponse;
 import com.example.library_management.model.Genre;
 import com.example.library_management.service.genre.CreateGenreService;
+import com.example.library_management.service.genre.DeleteGenreService;
 import com.example.library_management.service.genre.GetGenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,8 @@ public class GenreController {
     private GetGenreService getGenreService;
     @Autowired
     private CreateGenreService createGenreService;
+    @Autowired
+    private DeleteGenreService deleteGenreService;
 
     @PreAuthorize("@securityService.hasAccess('GET_GENRE')")
     @GetMapping()
@@ -26,10 +29,11 @@ public class GenreController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "name") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir
+            @RequestParam(defaultValue = "asc") String sortDir,
+            @RequestParam(required = false) String name
     ){
         return ResponseEntity.ok(
-                ApiResponse.success(getGenreService.getGenres(page, limit, sortBy, sortDir))
+                ApiResponse.success(getGenreService.getGenres(page, limit, sortBy, sortDir, name))
         );
     }
 
@@ -39,5 +43,13 @@ public class GenreController {
             @RequestBody GenreRequest request
             ){
         return ResponseEntity.ok(ApiResponse.success(createGenreService.createGenre(request)));
+    }
+
+    @PreAuthorize("@securityService.hasAccess('DELETE_GENRE')")
+    @DeleteMapping()
+    public ResponseEntity<ApiResponse<String>> deleteGenre(
+            @RequestParam Long id
+    ){
+        return ResponseEntity.ok(ApiResponse.success(deleteGenreService.deleteGenre(id)));
     }
 }

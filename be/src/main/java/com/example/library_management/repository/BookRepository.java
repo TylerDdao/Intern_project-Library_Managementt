@@ -1,6 +1,7 @@
 package com.example.library_management.repository;
 
 import com.example.library_management.model.Book;
+import com.example.library_management.model.Genre;
 import com.example.library_management.model.User;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.domain.Page;
@@ -88,5 +89,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     JOIN b.genres g
     GROUP BY g.name""")
     List<Object[]> countBooksByGenre();
+
+    List<Book> findByGenresContaining(Genre genre);
 }
 

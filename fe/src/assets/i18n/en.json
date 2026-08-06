@@ -6,7 +6,8 @@
     "Unassigned-features": "Unassigned features",
     "Default-role":"Default role",
     "Role-is-updated": "Role is updated",
-    "Role-is-created": "Role is created"
+    "Role-is-created": "Role is created",
+    "Set-default": "Set default"
   },
   "features":{
     "Features":"Features"
@@ -48,7 +49,8 @@
     "Title": "Title",
     "Author": "Author",
     "Genres": "Genres",
-    "Available-copies": "Available copies"
+    "Available-copies": "Available copies",
+    "Copies": "Copies"
   },
   "borrow": {
     "Borrow-on": "Borrow on",
@@ -119,7 +121,10 @@
   "booksManagement": {
     "Add-book": "Add book",
     "Book-list": "Book list",
-    "Genres-management": "Genres management"
+    "Genres-management": "Genres management",
+    "Book-is-deleted": "Book is deleted",
+    "Book-is-saved": "Book is saved",
+    "Book-is-updated": "Book is updated"
   },
   "postsManagement": {
     "Create-post": "Create post"
@@ -138,7 +143,9 @@
     "Book-information":"Book information",
     "Posts-about-this-book": "Posts about this book",
     "Borrow-this-book":"Borrow this book",
-    "Book-is-not-available":"Book is not available"
+    "Book-is-not-available":"Book is not available",
+    "You-are-borrowing-this-book": "You are borrowing this book",
+    "Your-borrow-for-this-book-dues-on":"Your borrow for this book dues on"
   },
   "post": {
     "Edit-post": "Edit post",
@@ -210,7 +217,9 @@
     "Sort-by": "Sort by",
     "Result": "Result",
     "Search":"Search",
-    "Clear":"Clear"
+    "Clear":"Clear",
+    "Search-genre": "Search genre",
+    "Search-by-name":"Search by name"
   },
   "browseBooks": {
     "Loading": "Loading",

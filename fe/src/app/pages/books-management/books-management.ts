@@ -6,7 +6,7 @@ import { NavbarComponent } from '../../components/navbar/navbar';
 import { SideBarQuery, SortSideBarComponent } from '../../components/sort-side-bar-component/sort-side-bar-component';
 import { BookCardComponent } from '../../components/book-card-component/book-card-component';
 import { Book } from '../../models/book';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BookService } from '../../services/book-service/book-service';
 import { isPlatformBrowser } from '@angular/common';
 import { Genre } from '../../models/genre';
@@ -18,6 +18,8 @@ import { PagesComponent } from '../../components/pages-component/pages-component
 import { BookListComponent } from '../../components/book-list-component/book-list-component';
 import { NewBookForm } from '../../forms/new-book-form/new-book-form';
 import { GenresManagementForm } from '../../forms/genres-management-form/genres-management-form';
+import { HttpErrorResponse } from '@angular/common/http';
+import { errorNoti } from '../../util/error-notification';
 
 @Component({
   selector: 'app-books-management',
@@ -32,7 +34,8 @@ export class BooksManagement {
     private genreService: GenreService,
     protected router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) 
   {}
 
@@ -66,6 +69,23 @@ export class BooksManagement {
   }
 
   isOpenGenreManagement: boolean = false;
+
+  handleChangeGenre(genres: Genre[]){
+    this.isOpenGenreManagement = false;
+    genres.forEach(genre=>{
+      this.genreService.deleteGenre(genre).subscribe({
+        next: (data:any)=>{
+          if(data.code == "200"){
+            this.fetchBooks();
+            this.cdr.markForCheck()
+          }
+        },
+        error:(err:HttpErrorResponse)=>{
+          errorNoti(err, this.translate)
+        }
+      })
+    })
+  }
 
   handleCloseGenreManagement(){
     this.isOpenGenreManagement = false

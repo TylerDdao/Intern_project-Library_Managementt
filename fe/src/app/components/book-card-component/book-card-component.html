@@ -2,19 +2,43 @@
     <a href='/books/{{book.id}}'>
         <div class="container">
             <img src="{{backendUrl}}/book-covers/{{book.coverUrl}}" class="book-cover" (error)="onImageError($event)"/>
-            <h1 class="subheadline font-bold book-info">{{book.title}}</h1>
-            <h1 class="caption-1 font-bold book-info">{{'book.Author'|translate}}: {{book.author}}</h1>
-            <h1 class="caption-1 book-info">{{'book.Genres'|translate}}: {{book.genres}}</h1>
-            <h1 class="caption-2">{{'book.Available-copies'|translate}}: {{book.copies}}</h1>
+            <h1 class="subheadline font-bold book-info line-clamp-1">{{book.title}}</h1>
+            <h1 class="caption-1 font-bold book-info line-clamp-1">{{'book.Author'|translate}}: {{book.author}}</h1>
+            @if (book.genres) {
+                <div class="line-clamp-1">
+                    @for (genre of book.genres; track $index) {
+                        @if ($index + 1 == book.genres.length) {
+                            <span class="">{{ genre.name }}</span>
+                        }
+                        @else {
+                            <span class="">{{ genre.name }} | </span>
+                        }
+                    }
+
+                </div>
+            }
+            <h1 class="caption-2 line-clamp-1">{{'book.Available-copies'|translate}}: {{book.copies}}</h1>
         </div>
     </a>
 }
 @else {
     <div class="container">
         <img src="{{backendUrl}}/book-covers/{{book.coverUrl}}.jpg" class="book-cover" (error)="onImageError($event)"/>
-        <h1 class="subheadline font-bold book-info">{{book.title}}</h1>
-        <h1 class="caption-1 font-bold book-info">{{'book.Author'|translate}}: {{book.author}}</h1>
-        <h1 class="caption-1 book-info">{{'book.Genres'|translate}}: {{book.genres}}</h1>
-        <h1 class="caption-2">{{'book.Available-copies'|translate}}: {{book.copies}}</h1>
+        <h1 class="subheadline font-bold book-info line-clamp-1">{{book.title}}</h1>
+        <h1 class="caption-1 font-bold book-info line-clamp-1">{{'book.Author'|translate}}: {{book.author}}</h1>
+        @if (book.genres) {
+            <div class="line-clamp-1">
+                @for (genre of book.genres; track $index) {
+                    @if ($index + 1 == book.genres.length) {
+                        <span class="">{{ genre.name }}</span>
+                    }
+                    @else {
+                        <span class="">{{ genre.name }} | </span>
+                    }
+                }
+
+            </div>
+        }
+        <h1 class="caption-2 line-clamp-1">{{'book.Available-copies'|translate}}: {{book.copies}}</h1>
     </div>
 }

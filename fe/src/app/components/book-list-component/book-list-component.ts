@@ -63,9 +63,29 @@ export class BookListComponent{
     this.isSearch = null
   }
 
+  handleDeleteBook(book:Book){
+    const message = this.translate.instant("form.Confirm-delete")
+    const option = confirm(message+"?")
+    if(option){
+      this.bookService.deleteBook(book).subscribe({
+        next:(data:any)=>{
+          if (data.code == "200"){
+            const message = this.translate.instant("booksManagement.Book-is-deleted")
+            alert(message);
+            this.fetchBookList()
+            this.cdr.markForCheck()
+          }
+        },
+        error:(err:HttpErrorResponse)=>{
+          errorNoti(err, this.translate)
+        }
+      })
+    }
+  }
+
   fetchSearchBook(page: Page = this.resultPage){
     this.isSearch = true;
-    this.bookService.searchBook(this.query).subscribe({
+    this.bookService.searchBook(this.query, page.number).subscribe({
       next: (data:any)=>{
         if(data.code == "200"){
           this.searchBooks = data.data.content
@@ -88,7 +108,7 @@ export class BookListComponent{
 
   fetchBookList(page:Page = this.bookListPage){
     this.isLoadingBookList = true;
-    this.bookService.getAllBooks(page.number, 10).subscribe({
+    this.bookService.getAllBooks(page.number, 15).subscribe({
       next:(data: any) => {
         if(data.code == "200"){
           this.bookList= data.data.content;

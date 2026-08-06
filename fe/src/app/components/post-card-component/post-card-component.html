@@ -15,7 +15,19 @@
                     <div>
                         <h1 class="header font-bold">{{post.book.title}}</h1>
                         <h1 class="subheader font-bold">{{'book.Author'|translate}}: {{post.book.author}}</h1>
-                        <h1 class="subheader">{{'book.Genres'|translate}}: {{post.book.genres}}</h1>
+                        @if (post.book.genres) {
+                            <div class="line-clamp-5">
+                                @for (genre of post.book.genres; track $index) {
+                                    @if ($index + 1 == post.book.genres.length) {
+                                        <span class="">{{ genre.name }}</span>
+                                    }
+                                    @else {
+                                        <span class="">{{ genre.name }} | </span>
+                                    }
+                                }
+
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

@@ -9,5 +9,4 @@ export interface User{
     role?: Role,
     username: string,
     password?: string 
-    authorities?: string[];
 }

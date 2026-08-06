@@ -27,11 +27,11 @@ public class UpdateRoleService {
         Role role = roleRepository.findById(request.getId()).orElseThrow(()->new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
         String originalName = role.getName();
         role.setName(request.getName());
-        if(request.getIsDefault()) {
+        if(request.isDefault()) {
             Role defaultRole = roleRepository.findByIsDefaultIsTrue().orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
             defaultRole.setIsDefault(false);
             roleRepository.save(defaultRole);
-            role.setIsDefault(request.getIsDefault());
+            role.setIsDefault(request.isDefault());
             logger.log("Update {} default = {}", defaultRole.getName(), defaultRole.getIsDefault());
         }
         Role savedRole = roleRepository.save(role);

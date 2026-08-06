@@ -17,6 +17,10 @@ export class BookService {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
+  deleteBook(book:Book){
+    return this.http.delete(`${this.baseUrl}?id=${book.id}`, {headers:getAuthHeaders(this.platformId)})
+  }
+
   createBook(bookData: any, file: File | null) {
     const formData = new FormData();
     formData.append('data', new Blob([JSON.stringify(bookData)], { type: 'application/json' }));
@@ -79,6 +83,17 @@ export class BookService {
     return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}&searchQuery=${query}`,{
       headers: getAuthHeaders(this.platformId)
     });
+  }
+
+  updateBook(book:Book){
+    const body={
+      id: book.id,
+      title: book.title,
+      copies: book.copies,
+      genres: book.genres?.map(g=>g.name),
+      author: book.author
+    }
+    return this.http.patch(`${this.baseUrl}`, body, {headers:getAuthHeaders(this.platformId)})
   }
 }
 

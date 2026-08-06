@@ -1,26 +1,128 @@
 <div class="container">
-    <div class="flex justify-between items-center">
-        <p class="headline font-bold">{{'newBookForm.Create-new-book'|translate}}</p>
-        <span (click)="close()" class="material-symbols-outlined cursor-pointer">close</span>
-    </div>
+    <div class="flex flex-col space-y-[30px]">
+        <div class="flex flex-col space-y-[10px]">
+            <div class="flex justify-between items-center">
+                <p class="headline font-bold">{{'genresManagement.Add-new-genre'|translate}}</p>
+                <span (click)="close()" class="material-symbols-outlined cursor-pointer">close</span>
+            </div>
 
-    <div class="body font-bold">{{'newBookForm.Available-genres'|translate}}</div>
-    @if (genres) {
-        <div class="flex flex-col space-y-[5px] overflow-y-auto max-h-[500px]">
-            @for (genre of genres; track $index) {
-                <div class="flex items-center space-x-[5px]">
-                    <div class="w-full px-[10px] py-[5px] rounded-[10px] select-none bg-primary-1 text-soft-ice" >{{genre.name}}</div>
-                </div>                
+            <form [formGroup]="newGenreForm" id="newGenreForm" (ngSubmit)="onSubmit()">
+                <div class="flex space-x-[10px] items-center">
+                    <input type="text" formControlName="genreName" placeholder="{{'genre.Name'|translate}}" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full"/>
+                    <button type="submit" form="newGenreForm" class="px-[10px] text-soft-ice bg-primary-1 rounded-[10px] py-[5px]">{{"list.Add"|translate}}</button>
+                    <button type="button" class="bg-cool-gray p-[5px] rounded-[10px]" (click)="handleClear()">{{"search.Clear"|translate}}</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="flex flex-col space-y-[10px]">
+            <div class="body font-bold">{{'genresManagement.Available-genres'|translate}}</div>
+            <div class="flex space-x-[10px] items-center">
+                <input type="text" placeholder="{{'search.Search'|translate}}" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full" [(ngModel)]="query"/>
+                <button class="flex items-center" (click)="handleSearch()"><span class="material-symbols-outlined">search</span></button>
+                <button class="bg-cool-gray p-[5px] rounded-[10px]" (click)="handleClearSearch()">{{"search.Clear"|translate}}</button>
+            </div>
+            @if (isLoading) {
+                <div class="flex justify-center"><div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div></div>
+            }
+            @else {
+                    @if (isSearch) {
+                        @if (isLoading) {
+                            <div class="flex justify-center"><div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div></div>
+                        }
+                        @else {
+                            @if (searchGenres.length>0) {
+                                <div class="flex flex-col w-full items-center">
+                                    <div class="genre-list">
+                                        @for (genre of searchGenres; track $index) {
+                                            <div class="flex items-center space-x-[5px]">
+                                                @if (!removedGenres.some(g => g.id === genre.id)) {
+                                                    <div class="w-full px-[10px] py-[5px] rounded-[10px] select-none bg-primary-1 text-soft-ice" >{{genre.name}}</div>
+                                                    <button
+                                                        class="items-center flex text-tomato-red select-none"
+                                                        (click)="toggleDelete(genre)">
+                                                        <span class="material-symbols-outlined">delete</span>
+                                                    </button>
+                                                }
+                                                @else {
+                                                    <div class="w-full px-[10px] py-[5px] rounded-[10px] select-none bg-tomato-red text-soft-ice" >{{genre.name}}</div>
+                                                    <button class="items-center flex text-primary-1 select-none" (click)="toggleDelete(genre)"><span class="material-symbols-outlined">close</span></button>
+                                                }
+                                            </div>                
+                                        }
+                                        @if (!searchGenresPage.last) {
+                                            <button
+                                                class="py-[5px] px-[10px] border border-primary-1 text-primary-1 rounded-[10px]"
+                                                (click)="handleSearchMoreGenre()">
+                                                {{ "list.Load-more" | translate }}
+                                            </button>
+                                        }
+                                    </div>
+                                    
+                                </div>
+                            }
+                            @else {
+                                @if (removedGenres.length == genresPage.totalElements) {
+                                    <div class="text-center">{{"list.Empty"|translate}}</div>
+                                }
+                                @else {
+                                    <button class="py-[5px] px-[10px] border border-primary-1 text-primary-1 rounded-[10px] h-fit" (click)="handleMoreGenre()">{{"list.Load-more"|translate}}</button>
+                                }
+                            }
+                        }
+                    }
+                    @else {
+                        <div class="list">
+                        @if (genres.length>0) {
+                            <div class="flex flex-col w-full items-center">
+                                <div class="genre-list">
+                                    @for (genre of genres; track $index) {
+                                        <div class="flex items-center space-x-[5px]">
+                                            <div class="w-full px-[10px] py-[5px] rounded-[10px] select-none bg-primary-1 text-soft-ice" >{{genre.name}}</div>
+                                            <button class="items-center flex text-tomato-red select-none" (click)="toggleDelete(genre)"><span class="material-symbols-outlined">delete</span></button>
+                                        </div>                
+                                    }
+                                    @if (genres.length + removedGenres.length < (genresPage.totalElements ?? 0)) {
+                                        @if (!genresPage.last){
+                                            <button class="py-[5px] px-[10px] border border-primary-1 text-primary-1 rounded-[10px]" (click)="handleMoreGenre()">{{"list.Load-more"|translate}}</button>
+                                        }
+                                    }
+                                </div>
+                                
+                            </div>
+                        }
+                        @else {
+                            @if (removedGenres.length == genresPage.totalElements) {
+                                <div class="text-center">{{"list.Empty"|translate}}</div>
+                            }
+                            @else {
+                                <button class="py-[5px] px-[10px] border border-primary-1 text-primary-1 rounded-[10px] h-fit" (click)="handleMoreGenre()">{{"list.Load-more"|translate}}</button>
+                            }
+                        }
+                        @if (removedGenres.length>0) {
+                            <div class="flex flex-col w-full items-center">
+                                <div class="genre-list">
+                                    @for (genre of removedGenres; track $index) {
+                                        <div class="flex items-center space-x-[5px]">
+                                            <div class="w-full px-[10px] py-[5px] rounded-[10px] select-none bg-tomato-red text-soft-ice" >{{genre.name}}</div>
+                                            <button class="items-center flex text-primary-1 select-none" (click)="toggleDelete(genre)"><span class="material-symbols-outlined">close</span></button>
+                                        </div>                
+                                    }
+                                </div>
+                            </div>
+                        }
+                        @else {
+                            <div class="text-center">{{"list.Empty"|translate}}</div>
+                        }   
+                        </div> 
+                    }
+                                       
             }
         </div>
-        <app-pages-component [pages]="genresPage"></app-pages-component>
-    }
-    @else {
-        <div class="flex justify-center"><div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div></div>
-    }
+    </div>
     
     <div class="flex space-x-[10px]">
-        <button type="submit" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice body rounded-[10px]">{{'form.Save'|translate}}</button>
+        <button (click)="save()" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice body rounded-[10px]">{{'form.Save'|translate}}</button>
         <button class="border border-tomato-red px-[10px] py-[5px] text-tomato-red body rounded-[10px]" (click)="close()">{{'form.Cancel'|translate}}</button>
     </div>
 </div>

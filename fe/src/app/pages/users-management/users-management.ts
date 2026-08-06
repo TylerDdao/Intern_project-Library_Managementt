@@ -93,6 +93,7 @@ export class UsersManagement {
               if (bIndex !== -1) return 1;
               return a.name.localeCompare(b.name);
             });
+            console.log(this.roles)
             this.roles.forEach(role => {role.name = role.name.replace("ROLE_", "");});
             this.roles.forEach(role => {
                 this.userService.getUsersByRole(role.name).subscribe({

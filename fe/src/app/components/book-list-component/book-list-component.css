@@ -1,4 +1,5 @@
-.container {
+@media (min-width: 1024px) {
+    .container {
     padding: 30px;
     display: flex;
     flex-direction: column;
@@ -11,19 +12,15 @@
     /* align-items: center; */
 }
 
-.books-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    justify-items: center;
-    overflow-y: auto;
-    width: calc(80vw - 20px);
-    padding-left: 10px;
-    padding-right: 10px;
-    min-height: 0;
-}
-
-.side-bar{
-    grid-column: 1;
-    grid-row: 1 / span 2;
+    .books-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+        justify-items: center;
+        overflow-y: auto;
+        width: calc(80vw - 20px);
+        padding-left: 10px;
+        padding-right: 10px;
+        min-height: 0;
+    }
 }

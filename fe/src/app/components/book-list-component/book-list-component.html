@@ -26,15 +26,15 @@
                     @if (isBookFound) {
                         <div class="books-list">
                             @for (book of searchBooks; track book.id) {
-                                @if (selectable) {
-                                    <div class="flex flex-col space-y-[5px]">
-                                        <app-book-card-component [book]="book"></app-book-card-component>
-                                        <button class="px-[10px] py-[5px] bg-primary-1 text-soft-ice rounded-[10px]" (click)="selectBook(book)">{{'bookList.Select-this-book' |translate}}</button>
-                                    </div>
-                                }
-                                @else {
+                                <div class="flex flex-col space-y-[5px]">
                                     <app-book-card-component [book]="book"></app-book-card-component>
-                                }
+                                    @if(selectable){
+                                        <button class="px-[10px] py-[5px] bg-primary-1 text-soft-ice rounded-[10px]" (click)="selectBook(book)">{{'bookList.Select-this-book' |translate}}</button>
+                                    }
+                                    @if (deletable) {
+                                        <button class="px-[10px] py-[5px] bg-tomato-red text-soft-ice rounded-[10px]" (click)="handleDeleteBook(book)">{{'bookList.Delete-this-book' |translate}}</button>
+                                    }
+                                </div>
                             }   
                         </div>
                         <div class="flex w-full justify-center"><app-pages-component [pages]="resultPage" (onApply)="fetchSearchBook($event)"></app-pages-component></div>
@@ -56,15 +56,15 @@
                 
                 <div class="books-list">
                     @for (book of bookList; track book.id) {
-                        @if (selectable) {
-                            <div class="flex flex-col space-y-[5px]">
-                                <app-book-card-component [book]="book"></app-book-card-component>
-                                <button class="px-[10px] py-[5px] bg-primary-1 text-soft-ice rounded-[10px]" (click)="selectBook(book)">{{'bookList.Select-this-book' |translate}}</button>
-                            </div>
-                        }
-                        @else {
+                        <div class="flex flex-col space-y-[5px]">
                             <app-book-card-component [book]="book"></app-book-card-component>
-                        }
+                            @if(selectable){
+                                <button class="px-[10px] py-[5px] bg-primary-1 text-soft-ice rounded-[10px]" (click)="selectBook(book)">{{'bookList.Select-this-book' |translate}}</button>
+                            }
+                            @if (deletable) {
+                                <button class="px-[10px] py-[5px] bg-tomato-red text-soft-ice rounded-[10px]" (click)="handleDeleteBook(book)">{{'bookList.Delete-this-book' |translate}}</button>
+                            }
+                        </div>
                     }   
                 </div>
                 <div class="flex w-full justify-center"><app-pages-component [pages]="bookListPage" (onApply)="fetchBookList($event)"></app-pages-component></div>

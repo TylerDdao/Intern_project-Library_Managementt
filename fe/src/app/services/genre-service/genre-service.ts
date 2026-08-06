@@ -9,7 +9,7 @@ import { Genre } from '../../models/genre';
   providedIn: 'root',
 })
 export class GenreService {
-  private baseUrl = `${environment.apiUrl}`;
+  private baseUrl = `${environment.apiUrl}/genres`;
 
   constructor(
     private http: HttpClient,
@@ -17,15 +17,25 @@ export class GenreService {
   ) {}
 
   createGenre(genre:Genre){
-    return this.http.post(`${this.baseUrl}/genres`, 
+    return this.http.post(`${this.baseUrl}`, 
       {name: genre.name},
       {headers: getAuthHeaders(this.platformId)}
     )
   }
 
   getAllGenres( page: number = 0, limit: number = 10) {
-    return this.http.get(`${this.baseUrl}/genres?page=${page}&limit=${limit}`, {
+    return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}`, {
       headers: getAuthHeaders(this.platformId)
     });
+  }
+
+  getGenresByName(name: string, page: number = 0, limit:number = 10){
+    return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}&name=${name}`, {
+      headers: getAuthHeaders(this.platformId)
+    });
+  }
+
+  deleteGenre(genre:Genre){
+    return this.http.delete(`${this.baseUrl}?id=${genre.id}`, {headers: getAuthHeaders(this.platformId)})
   }
 }

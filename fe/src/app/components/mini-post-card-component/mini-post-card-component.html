@@ -11,7 +11,19 @@
                     <div>
                         <h1 class="caption-1 font-bold line-clamp-2">{{post.book.title}}</h1>
                         <h1 class="caption-2 line-clamp-1">{{'book.Author'|translate}}: {{post.book.author}}</h1>
-                        <h1 class="caption-2 line-clamp-1">{{'book.Genres'|translate}}: {{post.book.genres}}</h1>
+                        @if (post.book.genres) {
+                            <div class="line-clamp-5">
+                                @for (genre of post.book.genres; track $index) {
+                                    @if ($index + 1 == post.book.genres.length) {
+                                        <span class="caption-1">{{ genre.name }}</span>
+                                    }
+                                    @else {
+                                        <span class="caption-1">{{ genre.name }} | </span>
+                                    }
+                                }
+
+                            </div>
+                        }
                     </div>
                 </div>
                 <div class="w-full border my-[10px] border-sky-blue"></div>

@@ -135,7 +135,7 @@ public class BookController {
 
     @PreAuthorize("@securityService.hasAccess('DELETE_BOOK')")
     @DeleteMapping("")
-    public ResponseEntity<ApiResponse<String>> deleteBook(@RequestBody BookRequest request){
-        return  ResponseEntity.ok(ApiResponse.success(deleteBookService.deleteBook(request)));
+    public ResponseEntity<ApiResponse<String>> deleteBook(@RequestParam Long id){
+        return  ResponseEntity.ok(ApiResponse.success(deleteBookService.deleteBook(id)));
     }
 }

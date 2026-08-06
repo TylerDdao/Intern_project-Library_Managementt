@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class RoleResponse {
     private long id;
     private String name;
-    private Boolean isDefault = false;
+    private boolean isDefault = false;
     private List<FeatureResponse> features = new ArrayList<>();
 
     public RoleResponse(Role role){

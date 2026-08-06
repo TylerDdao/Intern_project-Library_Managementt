@@ -17,7 +17,7 @@ public class GetGenreService {
     @Autowired
     private GenreRepository genreRepository;
 
-    public Page<GenreResponse> getGenres(int page, int limit, String sortBy, String sortDir){
+    public Page<GenreResponse> getGenres(int page, int limit, String sortBy, String sortDir, String name){
         Sort sort = sortDir.equalsIgnoreCase("desc")
                 ? Sort.by(sortBy).descending()
                 : Sort.by(sortBy).ascending();
@@ -26,7 +26,12 @@ public class GetGenreService {
 
         Page<Genre> genres;
 
-        genres = genreRepository.findAll(pageable);
+        if (name != null){
+            genres = genreRepository.findByNameContaining(name, pageable);
+        }
+        else {
+            genres = genreRepository.findAll(pageable);
+        }
 
         return genres.map(GenreResponse::new);
     }

@@ -34,10 +34,10 @@ public class UpdateBookService {
 
 //    @CacheEvict(value = "books", key = "#request.id")
     public BookResponse updateBook(BookRequest request){
-        Book book = bookRepository.findByTitle(request.getTitle())
+        Book book = bookRepository.findById(request.getId())
                 .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
         if(request.getTitle() != null) book.setTitle(request.getTitle());
-        if(request.getAuthor() != null) book.setTitle(request.getAuthor());
+        if(request.getAuthor() != null) book.setAuthor(request.getAuthor());
         if(request.getGenres() != null){
             List<String> genresName = request.getGenres();
             List<Genre> genres = new ArrayList<>();
