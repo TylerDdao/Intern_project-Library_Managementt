@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class RoleRequest {
     private String name;
     private Long id = null;
-    private boolean isDefault = false;
+    private Boolean isDefault = false;
     public void setName(String name) {
         this.name = "ROLE_" + name.toUpperCase();
     }

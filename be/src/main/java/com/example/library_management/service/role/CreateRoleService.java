@@ -32,12 +32,12 @@ public class CreateRoleService {
         else{
             Role role = new Role();
             role.setName(request.getName());
-            if(role.isDefault()){
+            if(role.getIsDefault()){
                 Role defaultRole = roleRepository.findByIsDefaultIsTrue().orElseThrow(()-> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
-                defaultRole.setDefault(false);
+                defaultRole.setIsDefault(false);
                 roleRepository.save(defaultRole);
-                role.setDefault(role.isDefault());
-                logger.log("Update {} default = {}", defaultRole.getName(), defaultRole.isDefault());
+                role.setIsDefault(role.getIsDefault());
+                logger.log("Update {} default = {}", defaultRole.getName(), defaultRole.getIsDefault());
             }
             Role savedRole = roleRepository.save(role);
             logger.log("Created {}, ID #{}", savedRole.getName(), savedRole.getId());

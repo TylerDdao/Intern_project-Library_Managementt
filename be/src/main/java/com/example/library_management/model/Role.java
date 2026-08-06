@@ -29,5 +29,5 @@ public class Role extends BaseEntity{
     private List<Feature> features;
 
     @Column(name = "is_default")
-    private boolean isDefault = false;
+    private Boolean isDefault = false;
 }

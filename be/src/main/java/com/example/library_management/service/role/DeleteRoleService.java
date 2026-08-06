@@ -39,7 +39,7 @@ public class DeleteRoleService {
         if (role.getName().equals("ROLE_ROOT")) {
             throw new RuntimeException(messageSource.getMessage("error.cannot.delete.root.role", null, LocaleContextHolder.getLocale()));
         }
-        if (role.isDefault()) {
+        if (role.getIsDefault()) {
             throw new ApiException(
                     HttpStatus.BAD_REQUEST,
                     "CANNOT-DELETE-DEFAULT-ROLE",
