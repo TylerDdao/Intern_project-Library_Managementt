@@ -39,6 +39,10 @@ export class UserService {
     return this.http.get(`${this.userBaseUrl}?page=${page}&limit=${limit}`, {headers: getAuthHeaders(this.platformId)})
   }
 
+  searchUser(query: string, page: number = 0, limit:number = 10){
+    return this.http.get(`${this.userBaseUrl}?query=${query}&page=${page}&limit=${limit}`, {headers: getAuthHeaders(this.platformId)})
+  }
+
   getUsersByRole(role: String, page: number = 0, limit:number = 10) {
     return this.http.get(`${this.userBaseUrl}?page=${page}&limit=${limit}&role=${role}`, {
       headers: getAuthHeaders(this.platformId)

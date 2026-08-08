@@ -32,9 +32,6 @@ public class UserController {
     @Autowired
     private CreateUserService createUserService;
 
-    @Autowired
-    private ExportUserService exportUserService;
-
     @PreAuthorize("@securityService.hasAccess('CREATE_USER')")
     @PostMapping()
     public ResponseEntity<ApiResponse<UserResponse>> createUser(
@@ -53,15 +50,14 @@ public class UserController {
     @PreAuthorize("@securityService.hasAccess('GET_USER')")
     @GetMapping()
     public ResponseEntity<ApiResponse<Page<UserResponse>>> getUsers(
-            @RequestParam(required = false) String username,
-            @RequestParam(required = false) String fullName,
             @RequestParam(required = false) String role,
+            @RequestParam(required = false) String query,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "username") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir) {
         return ResponseEntity.ok(
-                ApiResponse.success(getUserService.getUsers(page, limit, sortBy, sortDir, username, fullName, role))
+                ApiResponse.success(getUserService.getUsers(page, limit, sortBy, sortDir, role, query))
         );
     }
 

@@ -10,15 +10,17 @@ import { PagesComponent } from '../../components/pages-component/pages-component
 import { Page } from '../../models/page';
 import { BorrowListComponent } from '../../components/borrow-list-component/borrow-list-component';
 import { BorrowPolicyForm } from '../../forms/borrow-policy-form/borrow-policy-form';
+import { ExportBorrowsForm } from '../../forms/export/export-borrows-form/export-borrows-form';
 
 @Component({
   selector: 'app-borrows-management',
-  imports: [TranslateModule, NavbarComponent, SortSideBarComponent, BorrowCardComponent, PagesComponent, BorrowListComponent, BorrowPolicyForm],
+  imports: [TranslateModule, NavbarComponent, SortSideBarComponent, BorrowCardComponent, PagesComponent, BorrowListComponent, BorrowPolicyForm, ExportBorrowsForm],
   templateUrl: './borrows-management.html',
   styleUrl: './borrows-management.css',
 })
 export class BorrowsManagement {
   isBorrowPolicyOpen: boolean = false;
+  isExportBorrow: boolean = false
 
   isSearch: boolean = false;
 
@@ -84,6 +86,10 @@ export class BorrowsManagement {
     protected cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
   ){}
+
+  handleCloseExportBorrow(){
+    this.isExportBorrow = false;
+  }
 
   handleCloseBorrowPolicy(){
     this.isBorrowPolicyOpen = false;

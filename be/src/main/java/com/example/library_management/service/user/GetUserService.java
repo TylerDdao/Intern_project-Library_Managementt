@@ -20,23 +20,21 @@ public class GetUserService {
         return userRepository.findByUsernameAndIsDeletedFalse(username).isEmpty();
     }
 
-    public Page<UserResponse> getUsers(int page, int limit, String sortBy, String sortDir, String username, String fullName, String role) {
+    public Page<UserResponse> getUsers(int page, int limit, String sortBy, String sortDir, String role, String query) {
         Sort sort = sortDir.equalsIgnoreCase("desc")
                 ? Sort.by(sortBy).descending()
                 : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, limit, sort);
         Page<User> users;
 
-        if (username != null) {
-            users = userRepository.findByUsernameContainingAndIsDeletedFalse(username, pageable);
-        } else if (fullName != null) {
-            users = userRepository.findByFullNameContainingAndIsDeletedFalse(fullName, pageable);
-        } else if (role != null) {
+
+        if (role != null) {
             users = userRepository.findByRole_NameContainingAndIsDeletedFalse(role, pageable);
+        } else if (query != null) {
+            users = userRepository.findBySearchQuery(query, pageable);
         } else {
             users = userRepository.findAll(pageable);
         }
-
         return users.map(UserResponse::new);
     }
 }

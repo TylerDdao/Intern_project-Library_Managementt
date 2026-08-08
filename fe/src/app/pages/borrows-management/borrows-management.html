@@ -6,13 +6,13 @@
             <app-sort-side-bar-component (onApply)="handleSearch($event)" [isSearch]="isSearch"></app-sort-side-bar-component>
             <button class="bg-primary-1 text-soft-ice p-[5px] rounded-[10px] headline" (click)="fetchActiveBorrows()">{{'borrowsManagement.All-active-borrows'|translate}}</button>
             <button class="bg-leaf-green text-soft-ice p-[5px] rounded-[10px] headline" (click)="fetchReturnedBorrows()">{{'borrowsManagement.All-returned-borrows'|translate}}</button>
-            <button class="text-primary-1 p-[5px] rounded-[10px] border border-primary-1 headline">{{'export.Export'|translate}}</button>
+            <button class="text-primary-1 p-[5px] rounded-[10px] border border-primary-1 headline" (click)="isExportBorrow = true">{{'export.Export'|translate}}</button>
             <button class="text-leaf-green p-[5px] rounded-[10px] border border-leaf-green headline" (click)="isBorrowPolicyOpen = true">{{'borrowsManagement.Modify-borrow-policy'|translate}}</button>
         </div>
     </div>
 
     @if (isSearch) {
-        <div class="flex flex-col w-full ">
+        <div class="flex flex-col w-full space-y-[10px]">
             <div class="title-3 borrows-count font-bold">{{'search.Result'|translate}}</div>
             @if (isLoadingResult) {
                 <div class="flex items-center justify-center w-full p-50">
@@ -20,14 +20,19 @@
                 </div>
             }
             @else {
-                <div class="borrows-scrolling-area">
-                    @if (result.length > 0) {
-                    @for (borrow of result; track borrow.id) {
-                            <app-borrow-card-component [borrow]="borrow" [editable]="true"></app-borrow-card-component>
+                <div class="flex flex-col space-y-[10px]">
+                    <div class="borrows-scrolling-area">
+                        @if (result.length > 0) {
+                        @for (borrow of result; track borrow.id) {
+                                <app-borrow-card-component [borrow]="borrow" [editable]="true"></app-borrow-card-component>
+                            }
+                        } @else {
+                            <p>{{"list.Empty"|translate}}</p>
                         }
-                    } @else {
-                        <p>{{"list.Empty"|translate}}</p>
-                    }
+                    </div>
+                    <div class="flex justify-center">
+                        <app-pages-component [pages]="resultPages" (onApply)="fetchResult($event)"></app-pages-component>
+                    </div>
                 </div>
             }
         </div>
@@ -126,6 +131,12 @@
     @if (isBorrowPolicyOpen) {
         <div class="fixed inset-0 flex items-center justify-center z-99">
             <app-borrow-policy-form (onClose)="handleCloseBorrowPolicy()"></app-borrow-policy-form>
+        </div>
+    }
+
+    @if (isExportBorrow) {
+        <div class="fixed inset-0 flex items-center justify-center z-99">
+            <app-export-borrows-form (onClose)="handleCloseExportBorrow()"></app-export-borrows-form>
         </div>
     }
 </div>

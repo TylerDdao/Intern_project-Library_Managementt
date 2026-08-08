@@ -19,10 +19,15 @@ import { Page } from '../../models/page';
 import { RoleService } from '../../services/role-service/role-service';
 import { ExportService } from '../../services/export-service/export-service';
 import { ExportUsersForm } from '../../forms/export/export-users-form/export-users-form';
+import { SideBarQuery, SortSideBarComponent } from '../../components/sort-side-bar-component/sort-side-bar-component';
+import { LoadingComponent } from "../../components/loading-component/loading-component";
+import { HttpErrorResponse } from '@angular/common/http';
+import { errorNoti } from '../../util/error-notification';
+import { PagesComponent } from "../../components/pages-component/pages-component";
 
 @Component({
   selector: 'app-users-management',
-  imports: [NavbarComponent, UserCard, TranslateModule, NewUserForm, EditUserForm, NewRoleForm, RoleListComponent, EditRoleForm, ExportUsersForm],
+  imports: [NavbarComponent, UserCard, TranslateModule, NewUserForm, EditUserForm, NewRoleForm, RoleListComponent, EditRoleForm, ExportUsersForm, SortSideBarComponent, LoadingComponent, PagesComponent],
   templateUrl: './users-management.html',
   styleUrl: './users-management.css',
 })
@@ -50,6 +55,20 @@ export class UsersManagement {
   }
 
   isExportUser:boolean = false;
+
+  isSearch: boolean = false;
+  result: User[] = []
+  query:  SideBarQuery | null = null;
+  lastQuery: SideBarQuery | null = null;
+  isLoading:boolean = true;
+  resultPages: Page = {
+    last: true, 
+    first: true,
+    number: 0,
+    totalPages: 1
+  }
+
+  private pendingRequests = 0;
   
   constructor(
     private userService: UserService,
@@ -62,6 +81,52 @@ export class UsersManagement {
     private exportService: ExportService
   ){}
 
+  private startLoading() {
+    this.pendingRequests++;
+    this.isLoading = true;
+  }
+
+  private finishLoading() {
+    this.pendingRequests--;
+    if (this.pendingRequests <= 0) {
+      this.pendingRequests = 0;
+      this.isLoading = false;
+      this.cdr.markForCheck();
+    }
+  }
+
+  handleSearch(query: SideBarQuery){
+    this.isSearch = true;
+    if(query.isClear){
+      this.isSearch = false;
+      this.query = null;
+      return
+    }
+    this.isSearch = true;
+    this.query = query;
+    this.fetchResult(this.resultPages);
+  }
+
+  fetchResult(page: Page = this.resultPages): void{
+    if(this.query){
+      this.userService.searchUser(this.query.searchQuery, page.number).subscribe({
+        next: (data: any) => {
+          if(data.code == "200"){
+            this.result = data.data.content;
+            this.resultPages = data.data;
+            
+            this.cdr.markForCheck();
+          }
+          this.isLoading = false;
+        },
+        error: (err:HttpErrorResponse) => {
+          errorNoti(err, this.translate)
+          this.isLoading = false;
+        }
+      })
+    }
+  }
+
   handleCloseExportUser(){
     this.isExportUser = false
   }
@@ -73,18 +138,24 @@ export class UsersManagement {
   }
 
   fetchFeatures(){
+  this.startLoading()
   this.featureService.getAllFeatures().subscribe({
     next: (data: any) => {
       if(data.code == "200"){
         this.features = data.data.content
+        this.finishLoading()
         this.cdr.markForCheck()
       }
+      this.finishLoading();
     },
-    error: (err) => console.error('features error:', err)
+    error: (err:HttpErrorResponse) => {
+      errorNoti(err, this.translate)
+    }
   })
 }
 
   fetchRolesAndUser(){
+    this.startLoading()
     this.users = [];
     this.roleService.getAllRoles().subscribe({
         next: (data: any) => {
@@ -102,19 +173,28 @@ export class UsersManagement {
             });
             this.roles.forEach(role => {role.name = role.name.replace("ROLE_", "");});
             this.roles.forEach(role => {
-                this.userService.getUsersByRole(role.name).subscribe({
-                    next: (userData: any) => {
-                        if (userData.code == "200") {
-                            this.users.push({ role: role, users: userData.data.content });
-                            this.cdr.markForCheck();
-                        }
-                    },
-                    error: (err) => console.error(err)
-                });
+              this.startLoading();
+              this.userService.getUsersByRole(role.name).subscribe({
+                  next: (userData: any) => {
+                      if (userData.code == "200") {
+                        this.users.push({ role: role, users: userData.data.content });
+                        this.cdr.markForCheck();
+                      }
+                      this.finishLoading()
+                  },
+                  error: (err:HttpErrorResponse) =>{
+                    errorNoti(err, this.translate)
+                    this.finishLoading();
+                  }
+              });
             });
           }
+          this.finishLoading();
         },
-        error: (err) => console.error(err)
+        error: (err:HttpErrorResponse) => {
+          errorNoti(err, this.translate)
+          this.finishLoading();
+        }
     });
   }
 

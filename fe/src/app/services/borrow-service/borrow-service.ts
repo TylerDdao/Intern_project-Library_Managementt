@@ -20,6 +20,14 @@ export class BorrowService {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
+  searchBorrows(query: string, page: number = 0, limit: number = 10){
+    return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}&query=${query}`, {headers: getAuthHeaders(this.platformId)})
+  }
+
+  getAllBorrow(page: number =0, limit: number =10){
+    return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}`, {headers: getAuthHeaders(this.platformId)})
+  }
+
   getBorrowsByUserId(userId: number | null = null, page: number = 0, limit: number = 10) {
     return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}&userId=${userId}`, {
       headers: getAuthHeaders(this.platformId)

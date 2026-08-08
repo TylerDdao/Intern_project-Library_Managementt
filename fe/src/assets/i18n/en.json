@@ -1,67 +1,72 @@
 {
-  "role":{
+  "role": {
     "Role": "Role",
     "Role-name": "Role name",
-    "Assigned-features":"Assigned features",
+    "Assigned-features": "Assigned features",
     "Unassigned-features": "Unassigned features",
-    "Default-role":"Default role",
+    "Default-role": "Default role",
     "Role-is-updated": "Role is updated",
     "Role-is-created": "Role is created",
     "Set-default": "Set default"
   },
-  "features":{
-    "Features":"Features"
+  "features": {
+    "Features": "Features"
   },
-  "roleList":{
-    "Role-list":"Role list",
-    "members":"members",
-    "Edit-ROLE_ROOT-is-not-permitted":"Edit ROLE_ROOT is not permitted"
+  "roleList": {
+    "Role-list": "Role list",
+    "members": "members",
+    "Edit-ROLE_ROOT-is-not-permitted": "Edit ROLE_ROOT is not permitted"
   },
-  "user":{
+  "user": {
     "User": "User",
     "Username": "Username",
     "Full-name": "Full name",
     "Email": "Email",
     "Phone-number": "Phone number",
     "Address": "Address",
-    "Password":"Password",
-    "Your-account-has-been-saved":"Your account has been saved",
-    "New-user":"New user",
+    "Password": "Password",
+    "Your-account-has-been-saved": "Your account has been saved",
+    "New-user": "New user",
     "Old-password": "Old password",
     "New-password": "New password",
     "Confirm-password": "Confirm password"
   },
-  "email":{
+  "email": {
     "Verify": "Verify",
     "Verification-code": "Verification code",
     "Sending": "Sending",
     "Email-has-been-sent": "Email has been sent"
   },
-  "usersManagement":{
+  "usersManagement": {
     "Create-user": "Create user",
     "Create-role": "Create role",
     "Role-list": "Role list",
-    "User-is-saved":"User is saved",
+    "User-is-saved": "User is saved",
     "Password-is-changed": "Password is changed",
     "User-is-created": "User is created",
     "Delete-user": "Delete user",
-    "User-list":"User list",
+    "User-list": "User list",
     "Selected-users": "Selected users",
     "Total-users": "Total users"
   },
   "book": {
+    "Book": "Book",
     "Title": "Title",
     "Author": "Author",
     "Genres": "Genres",
     "Available-copies": "Available copies",
-    "Copies": "Copies"
+    "Copies": "Copies",
+    "By": "By",
+    "by": "by"
   },
   "borrow": {
     "Borrow-on": "Borrow on",
+    "Borrowed-on": "Borrowed on",
     "Please-return-by": "Please return by",
     "Due-in": "Due in",
+    "Due-on": "Due on",
     "days": "days",
-    "Days":"Days",
+    "Days": "Days",
     "day": "day",
     "Late": "Late",
     "Due-today": "Due today",
@@ -69,14 +74,14 @@
     "Return": "Return",
     "Returned": "Returned",
     "Applied-late-fee": "Applied late fee",
-    "Borrow":"Borrow",
+    "Borrow": "Borrow",
     "Penalty": "Penalty"
   },
-  "borrowPolicy":{
+  "borrowPolicy": {
     "Late-penalty": "Late penalty",
     "Borrow-duration": "Borrow duration"
   },
-  "form":{
+  "form": {
     "Save": "Save",
     "Cancel": "Cancel",
     "Reset": "Reset",
@@ -84,42 +89,50 @@
     "Check-username": "Check username",
     "Confirm": "Confirm",
     "Delete": "Delete",
-    "Confirm-delete": "Confirm delete"
+    "Confirm-delete": "Confirm delete",
+    "Edit-role": "TODO",
+    "New-role": "TODO"
   },
-  "newUserForm":{
+  "newUserForm": {
     "Create-new-user": "Create new user"
   },
-  "editUserForm":{
+  "editUserForm": {
     "Edit-user": "Edit user"
   },
-  "verification":{
+  "verification": {
     "Email-is-required": "Email is required",
-    "Please-verify-your-email":"Please verify your email",
+    "Please-verify-your-email": "Please verify your email",
     "Please-enter-a-valid-email": "Please enter a valid email",
-    "Please-enter-a-valid-phone-number":"Please enter a valid phone number",
+    "Please-enter-a-valid-phone-number": "Please enter a valid phone number",
     "Phone-number-is-required": "Phone number is required",
     "Your-verification-code-has-been-sent-to-your-email": "Your verification code has been sent to your email",
-    "There-is-an-error-while-sending-verification-code":"There is an error while sending sending verification code",
-    "Your-email-has-been-verified":"Your email has been verified",
-    "Incorrect-verification-code":"Incorrect verification code",
-    "Please-verify-your-username":"Please verify your username",
-    "This-email-has-been-used":"This email has been used",
-    "Your-passswod-is-not-match":"Your password is not match",
-    "Your-passswod-is-incorrect": "Your password is incorrect"
+    "There-is-an-error-while-sending-verification-code": "There is an error while sending sending verification code",
+    "Your-email-has-been-verified": "Your email has been verified",
+    "Incorrect-verification-code": "Incorrect verification code",
+    "Please-verify-your-username": "Please verify your username",
+    "This-email-has-been-used": "This email has been used",
+    "Your-passswod-is-not-match": "Your password is not match",
+    "Your-passswod-is-incorrect": "Your password is incorrect",
+    "There-is-an-error-while-verifying-your-email": "TODO",
+    "Your-verification-code-has-already-been-sent-to-your-email": "TODO",
+    "Email-has-been-used": "TODO"
   },
-  "borrowPolicyForm":{
+  "borrowPolicyForm": {
     "Borrow-policy": "Borrow policy"
   },
-  "borrowsManagement":{
+  "borrowsManagement": {
     "Modify-borrow-policy": "Modify borrow policy",
     "All-returned-borrows": "All returned borrows",
     "All-active-borrows": "All active borrows",
     "On-going-borrows": "On going borrow",
-    "Near-due-date-borrows":"Near due date borrows",
+    "Near-due-date-borrows": "Near due date borrows",
     "Passed-due-date-borrows": "Passed due date borrows",
-    "Total-borrows-that-have-not-been-returned": "Total borrows that have not been returned"
+    "Total-borrows-that-have-not-been-returned": "Total borrows that have not been returned",
+    "Total-borrows": "Total borrows",
+    "Borrow-list": "Borrow list",
+    "Selected-borrows": "Selected borrows"
   },
-  "myBorrow":{
+  "myBorrow": {
     "Books-that-you-are-borrowing": "Books that you are borrowing",
     "Borrows-history": "Borrows history"
   },
@@ -136,33 +149,35 @@
   "postsManagement": {
     "Create-post": "Create post"
   },
-  "postPage":{
-    "Edit-post": "Edit post"
+  "postPage": {
+    "Edit-post": "Edit post",
+    "Book-selection": "TODO"
   },
-  "createPost":{
+  "createPost": {
     "Create-new-post": "Create new post",
     "Pick-a-book": "Pick a book"
   },
-  "export":{
+  "export": {
     "Export": "Export",
     "Confirm-export": "Confirm export"
   },
-  "bookPage":{
-    "Book-information":"Book information",
+  "bookPage": {
+    "Book-information": "Book information",
     "Posts-about-this-book": "Posts about this book",
-    "Borrow-this-book":"Borrow this book",
-    "Book-is-not-available":"Book is not available",
+    "Borrow-this-book": "Borrow this book",
+    "Book-is-not-available": "Book is not available",
     "You-are-borrowing-this-book": "You are borrowing this book",
-    "Your-borrow-for-this-book-dues-on":"Your borrow for this book dues on"
+    "Your-borrow-for-this-book-dues-on": "Your borrow for this book dues on",
+    "Confirm-borrow": "TODO"
   },
   "post": {
     "Edit-post": "Edit post",
-    "Subject":"Subject",
+    "Subject": "Subject",
     "Body": "Body"
   },
-  "comment":{
-    "Comment-box":"Comment box",
-    "Write-a-comment":"Write a comment"
+  "comment": {
+    "Comment-box": "Comment box",
+    "Write-a-comment": "Write a comment"
   },
   "home": {
     "Top-5-posts-have-most-likes": "Top 5 posts have most likes",
@@ -171,9 +186,9 @@
     "Books-that-you-borrowed": "Books that you borrowed",
     "Number-of-borrows-by-genre": "Number of borrows by genre"
   },
-  "dashboard":{
+  "dashboard": {
     "Number-of-borrows-by-status": "Number of borrows by status",
-    "Unavailable-books":"Unavailable books",
+    "Unavailable-books": "Unavailable books",
     "Late-borrows": "Late borrows"
   },
   "navBar": {
@@ -181,7 +196,7 @@
     "language": "Language",
     "logout": "Logout",
     "please-login-to-continue": "Please login to continue",
-    "user":{
+    "user": {
       "Home-page": "Home page",
       "Browse-books": "Browse books",
       "Browse-posts": "Browse posts",
@@ -213,10 +228,11 @@
     "Back-to-login": "Back to login",
     "At-least-8-characters": "At least 8 characters",
     "1-special-character": "1 special character",
-    "Your-password-must-have":"Your password must have",
-    "Signing-up":"Signing up"
+    "Your-password-must-have": "Your password must have",
+    "Signing-up": "Signing up",
+    "Signing up": "TODO"
   },
-  "settings":{
+  "settings": {
     "Settings": "Settings",
     "Change-password": "Change password"
   },
@@ -224,10 +240,11 @@
     "Filter-by": "Filter by",
     "Sort-by": "Sort by",
     "Result": "Result",
-    "Search":"Search",
-    "Clear":"Clear",
+    "Search": "Search",
+    "Clear": "Clear",
     "Search-genre": "Search genre",
-    "Search-by-name":"Search by name"
+    "Search-by-name": "Search by name",
+    "Search-book": "TODO"
   },
   "browseBooks": {
     "Loading": "Loading",
@@ -238,7 +255,10 @@
     "Result": "Result"
   },
   "browsePosts": {
-    "Loading": "Loading"
+    "Loading": "Loading",
+    "Load-more": "TODO",
+    "See-less": "TODO",
+    "Post-not-found": "TODO"
   },
   "sortBar": {
     "Search": "Search",
@@ -252,24 +272,67 @@
   "page": {
     "Page": "Page"
   },
-  "list":{
-    "Empty":"Empty",
-    "Unselect":"Unselect",
+  "list": {
+    "Empty": "Empty",
+    "Unselect": "Unselect",
     "Unselect-all": "Unselect all",
     "Select": "Select",
-    "Select-all" : "Select all"
+    "Select-all": "Select all",
+    "Add": "TODO",
+    "Load-more": "TODO"
   },
-  "error":{
+  "error": {
     "An-error-has-occurred": "An error has occurred",
     "Page-not-found": "Page not found",
     "Unauthorized-access": "Unauthorized access",
     "An-error-has-occurred,-please-login-again": "An error has occurred, please login again",
-    "Please-enter-a-different-password":"Please enter a different password"
+    "Please-enter-a-different-password": "Please enter a different password",
+    "An-error-has-occured": "TODO"
   },
-  "forgotPassword":{
+  "forgotPassword": {
     "Forgot-password": "Forgot password",
     "Reset-password": "Reset password",
     "Please-enter-your-email": "Please enter your email",
-    "Your-password-is-reset": "Your password is reset"
+    "Your-password-is-reset": "Your password is reset",
+    "resetPassword": "TODO"
+  },
+  "bookList": {
+    "List": "TODO",
+    "Select-this-book": "TODO",
+    "Delete-this-book": "TODO",
+    "Total-number-of-book": "TODO"
+  },
+  "borrowManagement": {
+    "Confirm-return": "TODO"
+  },
+  "borrowList": {
+    "List": "TODO"
+  },
+  "Borrow": {
+    "Borrow-duation": "TODO",
+    "Late-penalty-per-day": "TODO"
+  },
+  "BorrowPolicyForm": {
+    "Policy-updated": "TODO"
+  },
+  "genresManagement": {
+    "Add-new-genre": "TODO",
+    "Available-genres": "TODO",
+    "Genre-is-added": "TODO"
+  },
+  "genre": {
+    "Name": "TODO"
+  },
+  "newBookForm": {
+    "Create-new-book": "TODO",
+    "Upload": "TODO",
+    "Available-genres": "TODO"
+  },
+  "browseBook": {
+    "Result": "TODO"
+  },
+  "Loading": {
+    "loading": "TODO",
+    "empty": "TODO"
   }
 }

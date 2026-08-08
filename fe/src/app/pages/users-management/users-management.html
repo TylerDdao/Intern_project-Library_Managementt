@@ -2,35 +2,61 @@
 
 <div class="min-h-screen container">
     <div class="buttons-container">
+        <app-sort-side-bar-component (onApply)="handleSearch($event)" [isSearch]="isSearch"></app-sort-side-bar-component>
         <button class="p-[10px] bg-steel-blue text-soft-ice headline text-center rounded-[10px] w-full" (click)="isCreateNewUser = true;">{{'usersManagement.Create-user' | translate}}</button>
         <button class="p-[10px] bg-leaf-green text-soft-ice headline text-center rounded-[10px] w-full" (click)="isCreateNewRole = true">{{'usersManagement.Create-role' | translate}}</button>
         <button class="p-[10px] bg-sky-blue text-soft-ice headline text-center rounded-[10px] w-full" (click)="isRoleListOpen = true">{{'usersManagement.Role-list' | translate}}</button>
         <button class="p-[10px] border border-primary text-primary-1 headline text-center rounded-[10px] w-full" (click)="isExportUser = true">{{'export.Export'|translate}}</button>
     </div>
-    <div>
-        @for (role of roles; track $index) {
-            <div class="flex items-center space-x-[5px] py-[5px]">
-                <div class="headline">{{role.name}}</div>
-                @if (role.name == "ROOT") {
-                    <span class="material-symbols-outlined [font-variation-settings:'FILL'_1,'wght'_400,'GRAD'_0,'opsz'_24] text-primary-1">star</span>
-                }
-                @if (role.default) {
-                    <div class="px-[10px] rounded-3xl bg-cool-gray text-deep-charcoal">{{"role.Default-role" | translate}}</div>
-                }
-            </div>
-            
-            <div class="users-container">
-                @if (getUsers(role).length > 0) {
-                    @for (user of getUsers(role); track $index) {                    
-                        <div (click)="handleEditUser(user)"><app-user-card [user]="user"></app-user-card></div>
-                    }
+    @if (isLoading) {
+        <div class="w-full flex items-center justify-center"><app-loading-component></app-loading-component></div>
+    }
+    @else {
+        @if (isSearch) {
+            <div class="search-area">
+                <div class="headline">{{"search.Result"|translate}}</div>
+                @if (result.length>0) {
+                    <div class="search-list">
+                        @for (user of result; track $index) {                    
+                            <div (click)="handleEditUser(user)"><app-user-card [user]="user"></app-user-card></div>
+                        }
+                    </div>
+                    <div class="flex justify-center">
+                        <app-pages-component [pages]="resultPages" (onApply)="fetchResult($event)"></app-pages-component>
+                    </div>
                 }
                 @else {
-                    <div>{{'list.Empty'|translate}}</div>
+                    <div>{{"list.Empty"|translate}}</div>
                 }
             </div>
         }
-    </div>
+        @else {
+            <div class="role-list">
+                @for (role of roles; track $index) {
+                    <div class="flex items-center space-x-[5px] py-[5px]">
+                        <div class="headline">{{role.name}}</div>
+                        @if (role.name == "ROOT") {
+                            <span class="material-symbols-outlined [font-variation-settings:'FILL'_1,'wght'_400,'GRAD'_0,'opsz'_24] text-primary-1">star</span>
+                        }
+                        @if (role.default) {
+                            <div class="px-[10px] rounded-3xl bg-cool-gray text-deep-charcoal">{{"role.Default-role" | translate}}</div>
+                        }
+                    </div>
+                    
+                    <div class="users-container">
+                        @if (getUsers(role).length > 0) {
+                            @for (user of getUsers(role); track $index) {                    
+                                <div (click)="handleEditUser(user)"><app-user-card [user]="user"></app-user-card></div>
+                            }
+                        }
+                        @else {
+                            <div>{{'list.Empty'|translate}}</div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    }
 
     @if (isCreateNewUser) {
         <div class="fixed inset-0 flex items-center justify-center z-99">

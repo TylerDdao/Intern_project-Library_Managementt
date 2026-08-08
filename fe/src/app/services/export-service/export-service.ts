@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { getAuthHeaders } from '../auth-service';
 import { User } from '../../models/user';
 import { Book } from '../../models/book';
+import { Borrow } from '../../models/borrow';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,32 @@ export class ExportService {
     const now = new Date();
     const timestamp = now.toISOString().slice(0, 19).replace('T', '_').replace(/:/g, '-');
     return timestamp
+  }
+
+  exportBorrow(borrows: Borrow[]) {
+    if (borrows.length > 0) {
+      const payload = borrows.map(b => ({ id:b.id }));
+      this.http
+        .post(`${this.baseUrl}/borrows`, payload, {
+          responseType: 'blob',
+          observe: 'response',
+          headers: getAuthHeaders(this.platformId),
+        })
+        .subscribe({
+          next: (response) => {
+            const blob = response.body as Blob;
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `borrows-export-${this.getTimeStamp()}.xlsx`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+          },
+          error: (err: HttpErrorResponse) => {
+            errorNoti(err, this.translate);
+          },
+        });
+    }
   }
 
   exportBook(books: Book[]) {

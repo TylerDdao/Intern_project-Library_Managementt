@@ -1,8 +1,10 @@
 package com.example.library_management.controller;
 
 import com.example.library_management.dto.request.BookRequest;
+import com.example.library_management.dto.request.BorrowRequest;
 import com.example.library_management.dto.request.user.UserRequest;
 import com.example.library_management.dto.response.ApiResponse;
+import com.example.library_management.service.borrow.ExportBorrowService;
 import com.example.library_management.service.user.ExportBookService;
 import com.example.library_management.service.user.ExportUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,22 @@ public class ExportController {
     private ExportUserService exportUserService;
     @Autowired
     private ExportBookService exportBookService;
+    @Autowired
+    private ExportBorrowService exportBorrowService;
+
+    @PreAuthorize("@securityService.hasAccess('EXPORT_BORROW')")
+    @PostMapping("/borrows")
+    public ResponseEntity<InputStreamResource> exportBorrow(@RequestBody List<BorrowRequest> requests) {
+        ByteArrayInputStream in = exportBorrowService.borrowsToExcel(requests);
+        String filename = "borrows-export-" + LocalDate.now() + ".xlsx";
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=" + filename);
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+                .body(new InputStreamResource(in));
+    }
 
     @PreAuthorize("@securityService.hasAccess('EXPORT_USER')")
     @PostMapping("/users")

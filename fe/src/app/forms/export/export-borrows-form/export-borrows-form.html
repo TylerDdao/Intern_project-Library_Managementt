@@ -1,6 +1,6 @@
 <div class="container">
     <div class="flex justify-between items-center">
-        <div class="headline font-bold">{{'usersManagement.User-list'|translate}}</div>
+        <div class="headline font-bold">{{'borrowsManagement.Borrow-list'|translate}}</div>
         <button class="flex items-center select-none" (click)="onClose.emit()"><span class="material-symbols-outlined">close</span></button>
     </div>
     @if (isLoading) {
@@ -14,9 +14,9 @@
             <button class="flex items-center" (click)="handleSearch()"><span class="material-symbols-outlined">search</span></button>
             <button class="px-[10px] py-[5px] bg-cool-gray rounded-[10px]" (click)="handleClearSearch()">{{'search.Clear'|translate}}</button>
         </div>
-        @if (users.length>0) {
+        @if (borrows.length>0) {
             <div class="flex flex-col space-y-[10px]">
-                <div class="body font-bold">{{"usersManagement.Total-users"|translate}}: {{usersPage.totalElements}}</div>
+                <div class="body font-bold">{{"borrowsManagement.Total-borrows"|translate}}: {{borrowsPage.totalElements}}</div>    
                 @if (isAllSelected()) {
                     <button class="border border-tomato-red text-tomato-red px-[10px] py-[5px] rounded-[10px]" (click)="handleUnselectAll()">{{"list.Unselect-all"|translate}}</button>
                 }
@@ -25,16 +25,21 @@
                 }
                 <div class="flex flex-col space-y-[5px] items-center">
                     <div class="list">
-                        @for(user of users; track user.id){
-                            <div (click)="toggleSelectedUser(user)" class="select-none cursor-pointer body p-[10px] rounded-[10px] flex flex-col transition ease-in-out w-full" [class]="selectedUsers.some(u => u.id == user.id)? 'border border-primary-1 bg-primary-1 text-soft-ice':'border border-primary-1 text-primary-1 hover:bg-primary-1 hover:text-soft-ice'">
-                                <div class="font-bold">{{"user.Username"|translate}}: @{{user.username}}</div>
-                                <div>{{"user.Full-name"|translate}}: {{user.fullName}}</div>
-                                <div>{{"user.Email"|translate}}: {{user.email}}</div>
-                                <div>{{"user.Phone-number"|translate}}: {{user.phoneNumber}}</div>
+                        @for(borrow of borrows; track borrow.id){
+                            <div (click)="toggleSelectedBorrow(borrow)" class="select-none cursor-pointer body p-[10px] rounded-[10px] flex flex-col transition ease-in-out w-full" [class]="selectedBorrows.some(b => b.id == borrow.id)? 'border border-primary-1 bg-primary-1 text-soft-ice':'border border-primary-1 text-primary-1 hover:bg-primary-1 hover:text-soft-ice'">
+                                <div class="font-bold">{{"book.Book"|translate}}: {{borrow.book.title}} {{"book.by"|translate}} {{borrow.book.author}}</div>
+                                <div class="font-bold">{{"user.User"|translate}}: @{{borrow.user.username}} - {{borrow.user.fullName}}</div>
+                                <div>{{"user.Email"|translate}}: {{borrow.user.email}}</div>
+                                <!-- <div>{{"user.Phone-number"|translate}}: {{borrow.user.phoneNumber}}</div> -->
+                                <div>{{"borrow.Borrowed-on"|translate}}: {{getCreatedAt (borrow)}}</div>
+                                <div>{{"borrow.Due-on"|translate}}: {{getDueDate(borrow)}}</div>
+                                @if (borrow.penalty) {
+                                    <div>{{"borrow.Penalty"|translate}}: {{getPenaltyFee(borrow)}}</div>
+                                }
                             </div>
                         }
                     </div>
-                    <app-pages-component [pages]="usersPage" (onApply)="fetchAllUsers($event)"></app-pages-component>
+                    <app-pages-component [pages]="borrowsPage" (onApply)="fetchAllborrows($event)"></app-pages-component>
                 </div>
             </div>
         }   
@@ -46,6 +51,6 @@
     }
     <div class="flex items-center space-x-[10px]">
         <button class="bg-primary-1 text-soft-ice px-[10px] py-[5px] rounded-[10px]" (click)="handleExport()">{{"export.Export"|translate}}</button>
-        <div class="body font-bold">{{"usersManagement.Selected-users"|translate}}: {{selectedUsers.length}}</div>
+        <div class="body font-bold">{{"borrowsManagement.Selected-borrows"|translate}}: {{selectedBorrows.length}}</div>
     </div>
 </div>

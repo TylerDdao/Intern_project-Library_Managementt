@@ -1,6 +1,7 @@
 .container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  width: 200px;
+  grid-template-columns: auto auto auto;
   justify-items: center;
   /* outline: 1px solid red; */
 }

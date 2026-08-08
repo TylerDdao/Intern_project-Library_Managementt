@@ -151,7 +151,7 @@ public class AuthService {
             return new UserResponse(savedUser);
         }
         catch (org.springframework.security.access.AccessDeniedException e) {
-            throw new RuntimeException(messageSource.getMessage("auth.access.denied", null, LocaleContextHolder.getLocale()));
+            throw new RuntimeException(messageSource.getMessage("error.access.denied", null, LocaleContextHolder.getLocale()));
         }
         catch (jakarta.persistence.EntityNotFoundException e) {
             throw new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale()));
@@ -174,7 +174,7 @@ public class AuthService {
         }
 
         Role defaultRole = roleRepository.findByIsDefaultIsTrue()
-                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.fount", null, LocaleContextHolder.getLocale())));
+                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
 
         User user = new User();
         user.setUsername(request.getUsername());

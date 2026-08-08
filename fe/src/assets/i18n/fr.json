@@ -44,14 +44,19 @@
     "User-is-saved": "Utilisateur enregistré",
     "Password-is-changed": "Mot de passe modifié",
     "User-is-created": "Utilisateur créé",
-    "Delete-user": "Supprimer l'utilisateur"
+    "Delete-user": "Supprimer l'utilisateur",
+    "User-list": "TODO",
+    "Total-users": "TODO",
+    "Selected-users": "TODO"
   },
   "book": {
     "Title": "Titre",
     "Author": "Auteur",
     "Genres": "Genres",
     "Available-copies": "Exemplaires disponibles",
-    "Copies": "Exemplaires"
+    "Copies": "Exemplaires",
+    "Book": "TODO",
+    "by": "TODO"
   },
   "borrow": {
     "Borrow-on": "Emprunté le",
@@ -66,7 +71,10 @@
     "Returned": "Retourné",
     "Applied-late-fee": "Frais de retard appliqués",
     "Borrow": "Emprunter",
-    "Penalty": "Pénalité"
+    "Penalty": "Pénalité",
+    "Days": "TODO",
+    "Borrowed-on": "TODO",
+    "Due-on": "TODO"
   },
   "borrowPolicy": {
     "Late-penalty": "Pénalité de retard",
@@ -80,7 +88,9 @@
     "Check-username": "Vérifier le nom d'utilisateur",
     "Confirm": "Confirmer",
     "Delete": "Supprimer",
-    "Confirm-delete": "Confirmer la suppression"
+    "Confirm-delete": "Confirmer la suppression",
+    "Edit-role": "TODO",
+    "New-role": "TODO"
   },
   "newUserForm": {
     "Create-new-user": "Créer un nouvel utilisateur"
@@ -101,7 +111,10 @@
     "Please-verify-your-username": "Veuillez vérifier votre nom d'utilisateur",
     "This-email-has-been-used": "Cet e-mail est déjà utilisé",
     "Your-passswod-is-not-match": "Les mots de passe ne correspondent pas",
-    "Your-passswod-is-incorrect": "Votre mot de passe est incorrect"
+    "Your-passswod-is-incorrect": "Votre mot de passe est incorrect",
+    "There-is-an-error-while-verifying-your-email": "TODO",
+    "Your-verification-code-has-already-been-sent-to-your-email": "TODO",
+    "Email-has-been-used": "TODO"
   },
   "borrowPolicyForm": {
     "Borrow-policy": "Règlement d'emprunt"
@@ -113,7 +126,10 @@
     "On-going-borrows": "Emprunts en cours",
     "Near-due-date-borrows": "Emprunts proches de l'échéance",
     "Passed-due-date-borrows": "Emprunts en retard",
-    "Total-borrows-that-have-not-been-returned": "Total des emprunts non retournés"
+    "Total-borrows-that-have-not-been-returned": "Total des emprunts non retournés",
+    "Borrow-list": "TODO",
+    "Total-borrows": "TODO",
+    "Selected-borrows": "TODO"
   },
   "myBorrow": {
     "Books-that-you-are-borrowing": "Livres que vous empruntez",
@@ -125,13 +141,16 @@
     "Genres-management": "Gestion des genres",
     "Book-is-deleted": "Livre supprimé",
     "Book-is-saved": "Livre enregistré",
-    "Book-is-updated": "Livre mis à jour"
+    "Book-is-updated": "Livre mis à jour",
+    "Total-books": "TODO",
+    "Selected-books": "TODO"
   },
   "postsManagement": {
     "Create-post": "Créer une publication"
   },
   "postPage": {
-    "Edit-post": "Modifier la publication"
+    "Edit-post": "Modifier la publication",
+    "Book-selection": "TODO"
   },
   "createPost": {
     "Create-new-post": "Créer une nouvelle publication",
@@ -146,7 +165,8 @@
     "Borrow-this-book": "Emprunter ce livre",
     "Book-is-not-available": "Livre non disponible",
     "You-are-borrowing-this-book": "Vous empruntez ce livre",
-    "Your-borrow-for-this-book-dues-on": "Votre emprunt pour ce livre expire le"
+    "Your-borrow-for-this-book-dues-on": "Votre emprunt pour ce livre expire le",
+    "Confirm-borrow": "TODO"
   },
   "post": {
     "Edit-post": "Modifier la publication",
@@ -207,7 +227,8 @@
     "At-least-8-characters": "Au moins 8 caractères",
     "1-special-character": "1 caractère spécial",
     "Your-password-must-have": "Votre mot de passe doit contenir",
-    "Signing-up": "Inscription en cours"
+    "Signing-up": "Inscription en cours",
+    "Signing up": "TODO"
   },
   "settings": {
     "Settings": "Paramètres",
@@ -220,7 +241,8 @@
     "Search": "Rechercher",
     "Clear": "Effacer",
     "Search-genre": "Rechercher un genre",
-    "Search-by-name": "Rechercher par nom"
+    "Search-by-name": "Rechercher par nom",
+    "Search-book": "TODO"
   },
   "browseBooks": {
     "Loading": "Chargement...",
@@ -231,7 +253,10 @@
     "Result": "Résultat"
   },
   "browsePosts": {
-    "Loading": "Chargement..."
+    "Loading": "Chargement...",
+    "Load-more": "TODO",
+    "See-less": "TODO",
+    "Post-not-found": "TODO"
   },
   "sortBar": {
     "Search": "Rechercher",
@@ -246,19 +271,68 @@
     "Page": "Page"
   },
   "list": {
-    "Empty": "Vide"
+    "Empty": "Vide",
+    "Select-all": "TODO",
+    "Unselect-all": "TODO",
+    "Add": "TODO",
+    "Load-more": "TODO"
   },
   "error": {
     "An-error-has-occurred": "Une erreur est survenue",
     "Page-not-found": "Page non trouvée",
     "Unauthorized-access": "Accès non autorisé",
     "An-error-has-occurred,-please-login-again": "Une erreur est survenue, veuillez vous reconnecter",
-    "Please-enter-a-different-password": "Veuillez entrer un mot de passe différent"
+    "Please-enter-a-different-password": "Veuillez entrer un mot de passe différent",
+    "An-error-has-occured": "TODO"
   },
   "forgotPassword": {
     "Forgot-password": "Mot de passe oublié",
     "Reset-password": "Réinitialiser le mot de passe",
     "Please-enter-your-email": "Veuillez entrer votre e-mail",
-    "Your-password-is-reset": "Votre mot de passe a été réinitialisé"
+    "Your-password-is-reset": "Votre mot de passe a été réinitialisé",
+    "resetPassword": "TODO"
+  },
+  "bookList": {
+    "List": "TODO",
+    "Select-this-book": "TODO",
+    "Delete-this-book": "TODO",
+    "Total-number-of-book": "TODO"
+  },
+  "borrowManagement": {
+    "Confirm-return": "TODO"
+  },
+  "borrowList": {
+    "List": "TODO"
+  },
+  "Borrow": {
+    "Borrow-duation": "TODO",
+    "Late-penalty-per-day": "TODO"
+  },
+  "BorrowPolicyForm": {
+    "Policy-updated": "TODO"
+  },
+  "export": {
+    "Export": "TODO",
+    "Confirm-export": "TODO"
+  },
+  "genresManagement": {
+    "Add-new-genre": "TODO",
+    "Available-genres": "TODO",
+    "Genre-is-added": "TODO"
+  },
+  "genre": {
+    "Name": "TODO"
+  },
+  "newBookForm": {
+    "Create-new-book": "TODO",
+    "Upload": "TODO",
+    "Available-genres": "TODO"
+  },
+  "browseBook": {
+    "Result": "TODO"
+  },
+  "Loading": {
+    "loading": "TODO",
+    "empty": "TODO"
   }
 }

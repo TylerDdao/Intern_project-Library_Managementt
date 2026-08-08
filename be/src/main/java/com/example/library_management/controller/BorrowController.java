@@ -86,7 +86,7 @@ public class BorrowController {
         );
     }
 
-    @PreAuthorize("@securityService.hasAccess('GET_BORROW')")
+    @PreAuthorize("@securityService.hasAccess('GET_BORROW_MULTI')")
     @GetMapping()
     public ResponseEntity<ApiResponse<Page<BorrowResponse>>> getBorrowsBySearchQuery(
             @RequestParam(defaultValue = "0") int page,

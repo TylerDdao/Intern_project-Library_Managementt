@@ -1,0 +1,22 @@
+# Node artifacts (e.g. src/api-spec tooling) — never needed for the Spring Boot build
+**/node_modules
+**/dist
+**/.pnpm-store
+
+# Java build artifacts
+target/
+*.class
+
+# IDE / OS
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+# Git
+.git/
+.gitignore
+
+# Local env files
+.env
+*.log

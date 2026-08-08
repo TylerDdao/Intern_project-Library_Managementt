@@ -12,8 +12,12 @@
         @if (books.length>0) {
             <div class="flex flex-col space-y-[10px]">
                 <div class="body font-bold">{{"booksManagement.Total-books"|translate}}: {{booksPage.totalElements}}</div>
-                <button class="border border-primary-1 text-primary-1 px-[10px] py-[5px] rounded-[10px]" (click)="handleSelectAll()">{{"list.Select-all"|translate}}</button>
-                <button class="border border-tomato-red text-tomato-red px-[10px] py-[5px] rounded-[10px]" (click)="handleUnselectAll()">{{"list.Unselect-all"|translate}}</button>
+                @if (isAllSelected()) {
+                    <button class="border border-tomato-red text-tomato-red px-[10px] py-[5px] rounded-[10px]" (click)="handleUnselectAll()">{{"list.Unselect-all"|translate}}</button>
+                }
+                @else {
+                    <button class="border border-primary-1 text-primary-1 px-[10px] py-[5px] rounded-[10px]" (click)="handleSelectAll()">{{"list.Select-all"|translate}}</button>
+                }
                 <div class="flex flex-col space-y-[5px] items-center">
                     <div class="list">
                         @for(book of books; track book.id){

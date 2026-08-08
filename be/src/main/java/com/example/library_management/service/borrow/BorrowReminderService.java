@@ -75,25 +75,4 @@ public class BorrowReminderService {
             }
         }
     }
-
-//    public String test() {
-//        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
-//        LocalDateTime endOfDay = LocalDate.now().atTime(23, 59, 59);
-//
-//        List<Borrow> borrows = borrowRepository.findByUserId(1);
-//
-//        for (Borrow borrow : borrows) {
-//            String email = "baonamdao05@gmail.com";
-//            String subject = messageSource.getMessage("borrow.due.email.subject", null, LocaleContextHolder.getLocale());
-//            String body = messageSource.getMessage(
-//                    "borrow.due.email.body",
-//                    new Object[]{borrow.getUser().getUsername(), borrow.getBook().getTitle()},
-//                    LocaleContextHolder.getLocale()
-//            );
-//
-//            mailService.sendEmail(email, subject, body);
-//            break;
-//        }
-//        return "Emails sent";
-//    }
 }

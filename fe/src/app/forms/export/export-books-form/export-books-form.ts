@@ -44,6 +44,10 @@ export class ExportBooksForm {
     private bookService: BookService
   ){}
 
+  isAllSelected(): boolean {
+    return this.selectedBooks.length === this.booksPage.totalElements;
+  }
+
   handleExport(){
     if(this.books){
       const message = this.translate.instant("export.Confirm-export")

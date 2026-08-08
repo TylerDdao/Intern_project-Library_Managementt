@@ -7,7 +7,7 @@
     <div class="flex justify-between items-center space-x-[5px]">
         <input placeholder="{{'search.Search' | translate}}" type="text" class="w-full bg-cool-gray rounded-[10px]" [(ngModel)]="query"/>
         <span (click)="handleSearch(query)" class="material-symbols-outlined cursor-pointer bg-steel-blue p-[5px] text-soft-ice rounded-[10px]">search</span>
-        <button (click)="handleClear()" class="bg-cool-gray p-[5px] rounded-[10px] text-nowrap">{{"search.Clear"|translate}}</button>
+        <button (click)="handleClear()" class="bg-cool-gray py-[5px] px-[10px] rounded-[10px] text-nowrap">{{"search.Clear"|translate}}</button>
     </div>
     
     @if (resultRoles.length == 0) {
