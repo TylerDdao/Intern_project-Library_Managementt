@@ -12,7 +12,6 @@ RUN npm run build -- --configuration production
 FROM nginx:alpine
 
 # Angular build output goes to dist/<project-name>/browser (Angular 17+ application builder)
-# Adjust the project name below to match your angular.json "outputPath"
 COPY --from=build /app/dist/library-management-fe/browser /usr/share/nginx/html
 
 # Custom nginx config for Angular routing (handles refresh on client-side routes)

@@ -17,7 +17,9 @@ WORKDIR /app
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring
 
-COPY --from=build /app/target/*.jar app.jar
+# Copy application jar and seed default book cover image
+COPY --from=build --chown=spring:spring /app/target/*.jar app.jar
+COPY --chown=spring:spring uploads/book-covers/default.jpg /app/uploads/book-covers/default.jpg
 
 EXPOSE 8080
 

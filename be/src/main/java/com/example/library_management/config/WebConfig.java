@@ -1,6 +1,5 @@
 package com.example.library_management.config;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -16,9 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        File dir = new File(System.getProperty("user.dir"), uploadDir);
-        String absolutePath = dir.getAbsolutePath() + "/";
-//        System.out.println("Serving from: " + absolutePath);
+        String absolutePath = new File(uploadDir).getAbsolutePath() + File.separator;
         registry.addResourceHandler("/book-covers/**")
                 .addResourceLocations("file:" + absolutePath);
     }
