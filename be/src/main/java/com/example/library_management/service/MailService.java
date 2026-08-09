@@ -271,13 +271,9 @@ public class MailService {
         String footer = messageSource.getMessage("email.footer", null, locale);
 
         String title = borrow.getBook().getTitle();
-        String bookCover;
-        if (borrow.getBook().getCoverUrl() != null){
-             bookCover = borrow.getBook().getCoverUrl();
-        }
-        else {
-             bookCover = backEndUrl + "/default.jpg";
-        }
+        String bookCoverFile = borrow.getBook().getCoverUrl() != null
+                ? borrow.getBook().getCoverUrl()
+                : "default.jpg";
         String author = borrow.getBook().getAuthor();
         String borrowOn = formatter.formatDateTime(borrow.getCreatedAt());
         String returnRemind = messageSource.getMessage("email.borrow.created.return.remind", null, LocaleContextHolder.getLocale());
@@ -304,7 +300,7 @@ public class MailService {
                     <p>%s</p>
                     <div style="display: flex; gap: 10px;">
                         <div style="width: 100px;">
-                            <img src="http://localhost:8080/api/book-covers/%s"/>
+                            <img src="%s/book-covers/%s"/>
                         </div>
                         <div>
                             <div style="font-weight: bold;">%s</div>
@@ -319,7 +315,7 @@ public class MailService {
                     <p style="text-align:right;margin:0;"><small>Library Management Team</small></p>
                 </div>
             </div>
-            """.formatted(greeting, body, bookCover, title, author, borrowOn, returnRemind, dueOn, penaltyFee, penaltyFeeAnnounce, footer);
+            """.formatted(greeting, body, backEndUrl, bookCoverFile, title, author, borrowOn, returnRemind, dueOn, penaltyFee, penaltyFeeAnnounce, footer);
 
         try{
             MimeMessage message = mailSender.createMimeMessage();

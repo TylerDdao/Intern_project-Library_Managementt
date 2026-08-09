@@ -49,6 +49,11 @@ public class DeleteUserService {
             throw new ApiException(HttpStatus.BAD_REQUEST, "USER-WITH-BORROWS" ,message);
         }
 
+        if(user.getUsername().equals("root")){
+            String message = messageSource.getMessage("error.cannot.delete.root.user", null, LocaleContextHolder.getLocale());
+            throw new ApiException(HttpStatus.BAD_REQUEST, "ROOT-USER" ,message);
+        }
+
         user.setIsDeleted(true);
         userRepository.save(user);
         String message = messageSource.getMessage("user.delete", null, LocaleContextHolder.getLocale());
@@ -69,6 +74,11 @@ public class DeleteUserService {
         if (borrowRepository.existsByUser_IdAndIsActiveTrue(id)){
             String message = messageSource.getMessage("error.cannot.delete.user.with.on.going.borrows", null, LocaleContextHolder.getLocale());
             throw new ApiException(HttpStatus.BAD_REQUEST, "USER-WITH-BORROWS" ,message);
+        }
+
+        if(user.getUsername().equals("root")){
+            String message = messageSource.getMessage("error.cannot.delete.root.user", null, LocaleContextHolder.getLocale());
+            throw new ApiException(HttpStatus.BAD_REQUEST, "ROOT-USER" ,message);
         }
 
         user.setIsDeleted(true);
