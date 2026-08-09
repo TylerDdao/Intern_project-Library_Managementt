@@ -42,9 +42,28 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
   ) {}
   backendUrl = environment.apiUrl;
 
+  handleChange(commentCount:number){
+    this.post.commentCount += commentCount;
+    this.cdr.markForCheck
+    console.log(this.post.commentCount)
+  }
+
   handleEditPost(){
     if(this.post){
       this.router.navigate([`/my-posts/${this.post.id}`])
+    }
+  }
+
+  fetchPost(){
+    if(this.post){
+      this.postService.getPostById(this.post.id).subscribe({
+        next:(data:any)=>{
+          if(data.code == "200"){
+            this.post = data.data.content
+            this.cdr.markForCheck()
+          }
+        }
+      })
     }
   }
 

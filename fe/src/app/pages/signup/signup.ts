@@ -162,12 +162,13 @@ export class Signup {
       this.authService.signup(this.user).subscribe({
         next:(data:any)=>{
           if(data.code == "200"){
-            this.isRegister = false;
             this.router.navigate(['/signup/success'])
           }
+          this.isRegister = false;
         },
         error:(err:HttpErrorResponse)=>{
           errorNoti(err, this.translate);
+          this.isRegister = false;
         }
       })
 

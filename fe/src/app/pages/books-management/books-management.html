@@ -21,13 +21,16 @@
             <div>
                 <h1 class="title font-bold">{{'browseBooks.Top-borrowed-books'|translate}}</h1>
                 <div class="book-scrolling-area">
-                    @if(mostBorrowedBooks.length > 0){
+                    @if (isLoading && mostBorrowedBooks.length == 0) {
+                        <app-loading-component></app-loading-component>
+                    }
+                    @else if (mostBorrowedBooks.length>0) {
                         @for (book of mostBorrowedBooks; track $index) {
                             <app-book-card-component [book]="book"></app-book-card-component>
                         }
                     }
                     @else {
-                        <h1 class="body">Loading...</h1>
+                        <div>{{"list.Empty"|translate}}</div>
                     }
                 </div>
             </div>
@@ -35,13 +38,16 @@
             <div>
                 <h1 class="title font-bold">{{'browseBooks.People-are-writing-about-these-books'|translate}}</h1>
                 <div class="book-scrolling-area">
-                    @if(mostPostsBooks.length > 0){
+                    @if (isLoading && mostPostsBooks.length == 0) {
+                        <app-loading-component></app-loading-component>
+                    }
+                    @else if (mostPostsBooks.length>0) {
                         @for (book of mostPostsBooks; track $index) {
                             <app-book-card-component [book]="book"></app-book-card-component>
                         }
                     }
                     @else {
-                        <h1 class="body">{{'browseBooks.Loading'|translate}}...</h1>
+                        <div>{{"list.Empty"|translate}}</div>
                     }
                 </div>
             </div>
@@ -49,13 +55,16 @@
             <div>
                 <h1 class="title font-bold">{{'browseBooks.Newly-arrived'|translate}}</h1>
                 <div class="book-scrolling-area">
-                    @if(newlyArrivedBooks.length > 0){
+                    @if (isLoading && newlyArrivedBooks.length == 0) {
+                        <app-loading-component></app-loading-component>
+                    }
+                    @else if (newlyArrivedBooks.length>0) {
                         @for (book of newlyArrivedBooks; track $index) {
                             <app-book-card-component [book]="book"></app-book-card-component>
                         }
                     }
                     @else {
-                        <h1 class="body">{{'browseBooks.Loading'|translate}}...</h1>
+                        <div>{{"list.Empty"|translate}}</div>
                     }
                 </div>
             </div>
@@ -64,21 +73,20 @@
             <div>
                 <h1 class="title font-bold">{{'browseBook.Result'|translate}}</h1>
                 <div class="books-result-area">
-                    @if(searchBooks.length > 0){
-                        @for (book of searchBooks; track $index) {
-                            <app-book-card-component [book]="book"></app-book-card-component>
-                        }
+                @if (isLoading && searchBooks.length == 0) {
+                    <app-loading-component></app-loading-component>
+                }
+                @else if (searchBooks.length > 0) {
+                    @for (book of searchBooks; track $index) {
+                        <app-book-card-component [book]="book"></app-book-card-component>
                     }
-                    @else {
-                        @if (isBookFound) {
-                            <h1 class="body">{{'browseBooks.Loading'|translate}}...</h1>
-                        }
-                        @else {
-                            <h1 class="body">{{'browseBooks.Book-not-found'|translate}}</h1>
-                        }
+                    <app-pages-component [pages]="bookPages" (onApply)="fetchLastQuery($event)"></app-pages-component>
+                }
+                @else {
+                        <div>{{'browseBooks.Book-not-found'|translate}}</div>
                     }
                 </div>
-                <app-pages-component [pages]="bookPages" (onApply)="fetchLastQuery($event)"></app-pages-component>
+                
             </div>
         }
     </div>

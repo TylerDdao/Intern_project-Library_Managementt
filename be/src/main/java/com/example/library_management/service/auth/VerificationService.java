@@ -131,7 +131,6 @@ public class VerificationService {
         Optional<ResetPasswordCode> latest = resetPasswordCodeRepository.findTopByUser_EmailOrderByCreatedAtDesc(email);
 
         if (latest.isEmpty()) {
-            System.out.println("No reset code found for email: " + email);
             return false;
         }
 

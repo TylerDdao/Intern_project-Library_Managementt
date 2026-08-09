@@ -20,7 +20,7 @@ public class FeatureController {
     @Autowired
     GetFeatureService getFeatureService;
 
-    @PreAuthorize("@securityService.hasAccess('GET_FEATURE')")
+    @PreAuthorize("@securityService.hasAccess('GET_ROLE')")
     @GetMapping()
     public ResponseEntity<ApiResponse<Page<FeatureResponse>>> getFeatures(
             @RequestParam(required = false) String role,

@@ -23,11 +23,12 @@ import { GenreService } from '../../services/genre-service/genre-service';
 import { Page } from '../../models/page';
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
+import { LoadingComponent } from "../../components/loading-component/loading-component";
 
 
 @Component({
   selector: 'app-book-page',
-  imports: [NavbarComponent, PostCardComponent, TranslateModule, ReactiveFormsModule, FormsModule],
+  imports: [NavbarComponent, PostCardComponent, TranslateModule, ReactiveFormsModule, FormsModule, LoadingComponent],
   templateUrl: './book-page.html',
   styleUrl: './book-page.css',
   changeDetection: ChangeDetectionStrategy.Default
@@ -37,6 +38,8 @@ export class BookPage{
   bookId!: number;
   book!: Book;
   bookCover = '';
+
+  isLoading:boolean = false;
 
   baseUrl = environment.apiUrl
 
@@ -107,6 +110,7 @@ export class BookPage{
   onSubmit(){
     const {id, title, author, genres, copies} = this.editBookForm.value
     if(id && title && author &&  copies){
+      this.isLoading = true;
       
       let newBook:Book = {
         id: id,
@@ -127,9 +131,11 @@ export class BookPage{
             this.searchGenres = []
             this.cdr.markForCheck()
           }
+          this.isLoading = false;
         },
         error:(err:HttpErrorResponse)=>{
           errorNoti(err, this.translate)
+          this.isLoading = false;
         }
       })
     }
@@ -137,20 +143,23 @@ export class BookPage{
 
   handleBorrow(){
     const message = this.translate.instant('bookPage.Confirm-borrow');
-    const confirmed = confirm(message);
+    const confirmed = confirm(message+"?");
     if(this.book && confirmed){
+      this.isLoading = true
       this.borrowService.createBorrow(this.book).subscribe({
         next: (data:any)=>{
           if(data.code == "200"){
-            alert("Borrow created")
-            alert("Borrow dues on: " + new Date(data.data.dueDate).toDateString())
+            const message = this.translate.instant("bookPage.Borrow-created")
+            alert(message)
             this.book.borrowed = true; 
             this.borrow = data.data;
             this.cdr.markForCheck();
           }
+          this.isLoading = false;
         },
-        error: (err) => {
-          alert(err.message)
+        error: (err:HttpErrorResponse) => {
+          errorNoti(err, this.translate)
+          this.isLoading = false
         }
       })
     }

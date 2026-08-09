@@ -6,10 +6,11 @@ import { LanguageService } from '../../services/language-service/language-servic
 import { PostService } from '../../services/post-service/post-service';
 import { errorImage } from '../../../assets/constants';
 import { environment } from '../../../environments/environment';
+import { CommentBoxComponent } from "../comment-box-component/comment-box-component";
 
 @Component({
   selector: 'app-mini-post-card-component',
-  imports: [TranslateModule],
+  imports: [TranslateModule, CommentBoxComponent],
   templateUrl: './mini-post-card-component.html',
   styleUrl: './mini-post-card-component.css',
 })
@@ -26,6 +27,8 @@ export class MiniPostCardComponent {
   ) {}
 
   backendUrl = environment.apiUrl;
+  isOpenComment:boolean = false;
+  comments!: Comment[]
 
   toggleLike() {
     this.postService.toggleLike(this.post.id).subscribe({
@@ -49,6 +52,11 @@ export class MiniPostCardComponent {
         this.bookCover = this.post.book.title.replaceAll(' ', '-').toLowerCase();
         console.log(this.post)
     }
+  }
+
+  handleCloseComment(){
+    this.isOpenComment = false
+    this.cdr.markForCheck();
   }
 
   get formattedLikeCount(): string {

@@ -10,10 +10,12 @@ import { AuthService } from '../../services/auth-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
 import { getUser } from '../../util/session-storage';
+import { LoadingComponent } from "../../components/loading-component/loading-component";
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-edit-user-form',
-  imports: [TranslateModule, ReactiveFormsModule],
+  imports: [TranslateModule, ReactiveFormsModule, LoadingComponent],
   templateUrl: './edit-user-form.html',
   styleUrl: './edit-user-form.css',
 })
@@ -21,6 +23,7 @@ import { getUser } from '../../util/session-storage';
 export class EditUserForm implements OnChanges {
   @Input() roles: Role[] = [];
   @Input() user!: User;
+  @Input() deletable:boolean = false;
   @Output() onClose = new EventEmitter<void>();
   @Output() onChange = new EventEmitter<boolean>();
 
@@ -31,7 +34,8 @@ export class EditUserForm implements OnChanges {
   isSendingVerificationEmail:boolean = false;
   isVerifyingEmail:boolean = false;
 
-
+  isLoading:boolean = false
+  
   isEmailUsed: boolean = false;
 
   constructor(
@@ -55,16 +59,24 @@ export class EditUserForm implements OnChanges {
     const message= this.translate.instant("usersManagement.Delete-user")
     const option = confirm(message + "?")
     if(!option) return
-    this.userService.deleteUser(this.user).subscribe({
-      next: (data:any)=>{
-        if(data.code == "200"){
-          this.save(true)
+    this.isLoading=true
+    this.userService.deleteUser(this.user)
+    .pipe(
+      finalize(() => {
+        this.isLoading = false;
+        this.cdr.markForCheck();
+      })
+    )
+    .subscribe({
+      next: (data: any) => {
+        if (data.code === "200") {
+          this.save(true);
         }
       },
-      error:(err:HttpErrorResponse)=>{
-        errorNoti(err, this.translate)
+      error: (err: HttpErrorResponse) => {
+        errorNoti(err, this.translate);
       }
-    })
+    });
   }
 
   handleSendVerificationCode(){
@@ -123,10 +135,8 @@ export class EditUserForm implements OnChanges {
           this.cdr.markForCheck();
         }
       },
-      error: (err)=>{
-        const message = this.translate.instant("verification.There-is-an-error-while-verifying-your-email");
-        alert(message)
-        console.error(err)
+      error: (err:HttpErrorResponse)=>{
+        errorNoti(err, this.translate)
       }
     })
   }

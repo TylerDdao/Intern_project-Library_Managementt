@@ -21,10 +21,11 @@ import { GenresManagementForm } from '../../forms/genres-management-form/genres-
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
 import { ExportBooksForm } from "../../forms/export/export-books-form/export-books-form";
+import { LoadingComponent } from '../../components/loading-component/loading-component';
 
 @Component({
   selector: 'app-books-management',
-  imports: [GenresManagementForm, NavbarComponent, SortSideBarComponent, BookCardComponent, TranslateModule, PagesComponent, BookListComponent, NewBookForm, ExportBooksForm],
+  imports: [GenresManagementForm, NavbarComponent, SortSideBarComponent, BookCardComponent, TranslateModule, PagesComponent, BookListComponent, NewBookForm, ExportBooksForm, LoadingComponent],
   templateUrl: './books-management.html',
   styleUrl: './books-management.css',
 })
@@ -61,7 +62,6 @@ export class BooksManagement {
 
   searchBooks: Book[] = []
   isSearch:boolean = false;
-  isBookFound:boolean = true;
 
   bookPages:Page = {
     totalPages: 1,
@@ -71,6 +71,23 @@ export class BooksManagement {
   }
 
   isOpenGenreManagement: boolean = false;
+
+  isLoading:boolean = true
+  pendingRequests:number =0;
+
+  private startLoading() {
+    this.pendingRequests++;
+    this.isLoading = true;
+  }
+
+  private finishLoading() {
+    this.pendingRequests--;
+    if (this.pendingRequests <= 0) {
+      this.pendingRequests = 0;
+      this.isLoading = false;
+      this.cdr.markForCheck();
+    }
+  }
 
   handleCloseExportBook(){
     this.isExportBook = false;
@@ -107,13 +124,12 @@ export class BooksManagement {
     if(query.isClear){
       this.isSearch = false;
       this.searchBooks = [];
-      this.isBookFound = false;
       this.lastQuery = null ;
       return;
     }
+    this.startLoading()
     this.isSearch = true;
     this.searchBooks = [];
-    this.isBookFound = true;
     this.lastQuery = query;
     this.bookService.getBooksByQuery(query).subscribe({
       next: (data: any) => {
@@ -124,18 +140,20 @@ export class BooksManagement {
             this.cdr.markForCheck();
           }
           else{
-            this.isBookFound = false;
             this.cdr.markForCheck();
           }
+          this.finishLoading()
         }
       },
-      error: (err) => {
-        console.error(err);
+      error: (err:HttpErrorResponse) => {
+        errorNoti(err, this.translate)
+        this.finishLoading()
       }
     })
   }
 
   fetchLastQuery(page: Page){
+    this.startLoading()
     if(this.lastQuery){
       this.bookService.getBooksByQuery(this.lastQuery, page.number).subscribe({
         next: (data: any) => {
@@ -146,19 +164,21 @@ export class BooksManagement {
               this.cdr.markForCheck();
             }
             else{
-              this.isBookFound = false;
               this.cdr.markForCheck();
             }
+            this.finishLoading()
           }
         },
         error: (err)=>{
-          console.error(err)
+          errorNoti(err, this.translate)
+          this.finishLoading()
         }
       })
     }
   }
 
   async fetchAllGenres(): Promise<void> {
+    this.startLoading()
     let isLast = false;
     let page = 0;
     const collectedGenres: Genre[] = [];
@@ -179,9 +199,11 @@ export class BooksManagement {
       }
       
       this.genres = collectedGenres.map(genre => genre.name);
+      this.finishLoading()
       this.cdr.markForCheck();
     } catch (err) {
       console.error("Failed to load genres", err);
+      this.finishLoading()
     }
   }
   
@@ -193,8 +215,8 @@ export class BooksManagement {
           this.cdr.markForCheck();
         }
       },
-      error: (err) => {
-        console.error(err)
+      error: (err:HttpErrorResponse) => {
+        errorNoti(err, this.translate)
       }
     })
 
@@ -205,8 +227,8 @@ export class BooksManagement {
           this.cdr.markForCheck();
         }
       },
-      error: (err) => {
-        console.error(err)
+      error: (err:HttpErrorResponse) => {
+        errorNoti(err,this.translate)
       }
     })
 
@@ -217,23 +239,11 @@ export class BooksManagement {
           this.cdr.markForCheck();
         }
       },
-      error: (err) => {
-        console.error(err)
+      error: (err:HttpErrorResponse) => {
+        errorNoti(err,this.translate)
       }
     })
   }
-
-  // fetchBookList(page:Page = this.bookListPage){
-  //   this.bookService.getAllBooks(page.number).subscribe({
-  //     next:(data: any) => {
-  //       if(data.code == "200"){
-  //         this.bookList= data.data.content;
-  //         this.isOpenBookList = true;
-  //         this.cdr.markForCheck();
-  //       }
-  //     }
-  //   })
-  // }
 
   handleCloseBookList(){
     this.isOpenBookList = false;

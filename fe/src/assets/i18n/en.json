@@ -90,8 +90,8 @@
     "Confirm": "Confirm",
     "Delete": "Delete",
     "Confirm-delete": "Confirm delete",
-    "Edit-role": "TODO",
-    "New-role": "TODO"
+    "Edit-role": "Edit role",
+    "New-role": "New role"
   },
   "newUserForm": {
     "Create-new-user": "Create new user"
@@ -106,16 +106,16 @@
     "Please-enter-a-valid-phone-number": "Please enter a valid phone number",
     "Phone-number-is-required": "Phone number is required",
     "Your-verification-code-has-been-sent-to-your-email": "Your verification code has been sent to your email",
-    "There-is-an-error-while-sending-verification-code": "There is an error while sending sending verification code",
+    "There-is-an-error-while-sending-verification-code": "There is an error while sending verification code",
     "Your-email-has-been-verified": "Your email has been verified",
     "Incorrect-verification-code": "Incorrect verification code",
     "Please-verify-your-username": "Please verify your username",
     "This-email-has-been-used": "This email has been used",
-    "Your-passswod-is-not-match": "Your password is not match",
+    "Your-passswod-is-not-match": "Your password does not match",
     "Your-passswod-is-incorrect": "Your password is incorrect",
-    "There-is-an-error-while-verifying-your-email": "TODO",
-    "Your-verification-code-has-already-been-sent-to-your-email": "TODO",
-    "Email-has-been-used": "TODO"
+    "There-is-an-error-while-verifying-your-email": "There is an error while verifying your email",
+    "Your-verification-code-has-already-been-sent-to-your-email": "Your verification code has already been sent to your email",
+    "Email-has-been-used": "Email has been used"
   },
   "borrowPolicyForm": {
     "Borrow-policy": "Borrow policy"
@@ -124,7 +124,7 @@
     "Modify-borrow-policy": "Modify borrow policy",
     "All-returned-borrows": "All returned borrows",
     "All-active-borrows": "All active borrows",
-    "On-going-borrows": "On going borrow",
+    "On-going-borrows": "Ongoing borrow",
     "Near-due-date-borrows": "Near due date borrows",
     "Passed-due-date-borrows": "Passed due date borrows",
     "Total-borrows-that-have-not-been-returned": "Total borrows that have not been returned",
@@ -151,7 +151,7 @@
   },
   "postPage": {
     "Edit-post": "Edit post",
-    "Book-selection": "TODO"
+    "Book-selection": "Book selection"
   },
   "createPost": {
     "Create-new-post": "Create new post",
@@ -168,7 +168,8 @@
     "Book-is-not-available": "Book is not available",
     "You-are-borrowing-this-book": "You are borrowing this book",
     "Your-borrow-for-this-book-dues-on": "Your borrow for this book dues on",
-    "Confirm-borrow": "TODO"
+    "Confirm-borrow": "Confirm borrow",
+    "Borrow-created":"Borrow created"
   },
   "post": {
     "Edit-post": "Edit post",
@@ -230,7 +231,7 @@
     "1-special-character": "1 special character",
     "Your-password-must-have": "Your password must have",
     "Signing-up": "Signing up",
-    "Signing up": "TODO"
+    "Signing up": "Signing up"
   },
   "settings": {
     "Settings": "Settings",
@@ -244,7 +245,7 @@
     "Clear": "Clear",
     "Search-genre": "Search genre",
     "Search-by-name": "Search by name",
-    "Search-book": "TODO"
+    "Search-book": "Search book"
   },
   "browseBooks": {
     "Loading": "Loading",
@@ -256,9 +257,9 @@
   },
   "browsePosts": {
     "Loading": "Loading",
-    "Load-more": "TODO",
-    "See-less": "TODO",
-    "Post-not-found": "TODO"
+    "Load-more": "Load more",
+    "See-less": "See less",
+    "Post-not-found": "Post not found"
   },
   "sortBar": {
     "Search": "Search",
@@ -278,8 +279,9 @@
     "Unselect-all": "Unselect all",
     "Select": "Select",
     "Select-all": "Select all",
-    "Add": "TODO",
-    "Load-more": "TODO"
+    "Add": "Add",
+    "Load-more": "Load more",
+    "No-data": "No data"
   },
   "error": {
     "An-error-has-occurred": "An error has occurred",
@@ -287,52 +289,52 @@
     "Unauthorized-access": "Unauthorized access",
     "An-error-has-occurred,-please-login-again": "An error has occurred, please login again",
     "Please-enter-a-different-password": "Please enter a different password",
-    "An-error-has-occured": "TODO"
+    "An-error-has-occured": "An error has occurred"
   },
   "forgotPassword": {
     "Forgot-password": "Forgot password",
     "Reset-password": "Reset password",
     "Please-enter-your-email": "Please enter your email",
     "Your-password-is-reset": "Your password is reset",
-    "resetPassword": "TODO"
+    "resetPassword": "Reset password"
   },
   "bookList": {
-    "List": "TODO",
-    "Select-this-book": "TODO",
-    "Delete-this-book": "TODO",
-    "Total-number-of-book": "TODO"
+    "List": "Book list",
+    "Select-this-book": "Select this book",
+    "Delete-this-book": "Delete this book",
+    "Total-number-of-book": "Total number of books"
   },
   "borrowManagement": {
-    "Confirm-return": "TODO"
+    "Confirm-return": "Confirm return"
   },
   "borrowList": {
-    "List": "TODO"
+    "List": "Borrow list"
   },
   "Borrow": {
-    "Borrow-duation": "TODO",
-    "Late-penalty-per-day": "TODO"
+    "Borrow-duation": "Borrow duration",
+    "Late-penalty-per-day": "Late penalty per day"
   },
   "BorrowPolicyForm": {
-    "Policy-updated": "TODO"
+    "Policy-updated": "Policy updated"
   },
   "genresManagement": {
-    "Add-new-genre": "TODO",
-    "Available-genres": "TODO",
-    "Genre-is-added": "TODO"
+    "Add-new-genre": "Add new genre",
+    "Available-genres": "Available genres",
+    "Genre-is-added": "Genre is added"
   },
   "genre": {
-    "Name": "TODO"
+    "Name": "Genre name"
   },
   "newBookForm": {
-    "Create-new-book": "TODO",
-    "Upload": "TODO",
-    "Available-genres": "TODO"
+    "Create-new-book": "Create new book",
+    "Upload": "Upload",
+    "Available-genres": "Available genres"
   },
   "browseBook": {
-    "Result": "TODO"
+    "Result": "Result"
   },
   "Loading": {
-    "loading": "TODO",
-    "empty": "TODO"
+    "loading": "Loading...",
+    "empty": "Empty"
   }
 }

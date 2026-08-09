@@ -118,7 +118,7 @@ public class GetBorrowService {
     }
 
     public Map<String, Long> getBorrowCountsByGenre() {
-        List<Object[]> results = borrowRepository.countBorrowsByGenre();
+        List<Object[]> results = borrowRepository.countBorrowsByGenreAndIsActiveTrue();
         Map<String, Long> map = new LinkedHashMap<>();
         for (Object[] row : results) {
             map.put((String) row[0], (Long) row[1]);

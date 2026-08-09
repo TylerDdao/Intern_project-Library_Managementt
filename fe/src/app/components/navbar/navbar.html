@@ -20,9 +20,12 @@
 
             <!-- <span class="material-symbols-outlined icon-size">notifications</span> -->
 
-            <div class="flex items-center space-x-[5px]">
-                <span routerLink='/settings' class="material-symbols-outlined icon-size cursor-pointer">account_circle</span>
-                <h1 class="headline">{{('navBar.hello'|translate)}}: {{user?.fullName}}</h1>
+            <div class="flex items-center space-x-[5px] select-none cursor-pointer" routerLink='/settings'>
+                <span class="material-symbols-outlined icon-size ">account_circle</span>
+                <div>
+                    <h1 class="headline">{{('navBar.hello'|translate)}}: {{user?.fullName}}</h1>
+                    <div class="bg-cool-gray w-fit px-[10px] py-[3px] rounded-3xl">{{user?.role?.name?.replace("ROLE_","")}}</div>
+                </div>
             </div>
 
             <div class="border border-white mx-[10px]"></div> 
@@ -32,11 +35,22 @@
 
         <div class="mobile-setting-icon lg:hidden">
             <span class="material-symbols-outlined cursor-default" (click)="toggleMobileMenu()">menu</span>
-            <!-- <span class="material-symbols-outlined icon-size cursor-default">notifications</span> -->
+            <select [value]="langService.currentLang" (change)="langService.switchLanguage($any($event.target).value)" class="text-deep-charcoal bg-soft-ice rounded p-1">
+                <option value="en">English</option>
+                <option value="vi">Tiếng Việt</option>
+                <option value="fr">Français</option>
+            </select>
         </div>
         }
         @else {
-            <h1 class="subheadline font-bold">Library Management System</h1>
+            <div class="flex items-center justify-between w-full">
+                <h1 class="subheadline font-bold">Library Management System</h1>
+                <select [value]="langService.currentLang" (change)="langService.switchLanguage($any($event.target).value)" class="text-deep-charcoal bg-soft-ice rounded p-1">
+                    <option value="en">English</option>
+                    <option value="vi">Tiếng Việt</option>
+                    <option value="fr">Français</option>
+                </select>
+            </div>
         }
     </div>
 
@@ -53,15 +67,12 @@
         </div>
 
         <div class="mobile-setting-container">
-            <select [value]="langService.currentLang" (change)="langService.switchLanguage($any($event.target).value)" class="text-deep-charcoal bg-soft-ice rounded p-1">
-                <option value="en">English</option>
-                <option value="vi">Tiếng Việt</option>
-                <option value="fr">Français</option>
-            </select>
-
-            <div class="flex items-center space-x-[5px]">
-                <span class="material-symbols-outlined icon-size cursor-pointer" routerLink="/settings">account_circle</span>
-                <h1 class="headline">{{('navBar.hello'|translate)}}: {{user?.fullName}}</h1>
+            <div class="flex items-center space-x-[5px] select-none cursor-pointer" routerLink='/settings'>
+                <span class="material-symbols-outlined icon-size">account_circle</span>
+                <div>
+                    <h1 class="headline">{{('navBar.hello'|translate)}}: {{user?.fullName}}</h1>
+                    <div class="bg-cool-gray w-fit px-[10px] py-[3px] rounded-3xl">{{user?.role?.name?.replace("ROLE_","")}}</div>
+                </div>
             </div>
             <button class="border border-soft-ice p-[10px] rounded-[10px] caption-1 font-bold" (click)="handleLogout()">Logout</button>
         </div>

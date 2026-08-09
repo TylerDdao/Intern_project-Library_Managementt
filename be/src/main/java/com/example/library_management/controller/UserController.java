@@ -75,9 +75,15 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success(updateUserService.updateUserRole(request)));
     }
 
-    @PreAuthorize("@securityService.hasAccess('DELETE_BOOK')")
+    @PreAuthorize("@securityService.hasAccess('DELETE_USER_MULTI')")
     @DeleteMapping()
     public  ResponseEntity<ApiResponse<String>> deleteUserByUsername(@RequestParam Long id){
         return ResponseEntity.ok(ApiResponse.success(deleteUserService.deleteUser(id)));
+    }
+
+    @PreAuthorize("@securityService.hasAccess('DELETE_USER')")
+    @DeleteMapping("/delete-me")
+    public  ResponseEntity<ApiResponse<String>> deleteMyUser(){
+        return ResponseEntity.ok(ApiResponse.success(deleteUserService.deleteUser()));
     }
 }

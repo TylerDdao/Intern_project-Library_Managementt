@@ -10,7 +10,7 @@ import { Feature } from '../../models/feature';
   providedIn: 'root'
 })
 export class FeatureService {
-  private baseUrl = `${environment.apiUrl}`;
+  private baseUrl = `${environment.apiUrl}/features`;
 
   constructor(
     private http: HttpClient,
@@ -18,7 +18,7 @@ export class FeatureService {
   ) {}
 
   getAllFeatures(page: number = 0, limit:number = 100){
-    return this.http.get(`${this.baseUrl}/features?page=${page}&limit=${limit}`, {
+    return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}`, {
       headers: getAuthHeaders(this.platformId)
     });
   }

@@ -19,7 +19,7 @@ USER spring
 
 # Copy application jar and seed default book cover image
 COPY --from=build --chown=spring:spring /app/target/*.jar app.jar
-COPY --chown=spring:spring uploads/book-covers/default.jpg /app/uploads/book-covers/default.jpg
+COPY --chown=spring:spring uploads/book-covers/*.jpg /app/uploads/book-covers/
 
 EXPOSE 8080
 

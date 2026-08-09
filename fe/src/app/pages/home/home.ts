@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Inject, PLATFORM_ID } from '@angular/core';
 import { NavbarComponent } from "../../components/navbar/navbar";
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language-service/language-service';
 import { Router } from '@angular/router';
 import { ChartComponent } from '../../components/chart-component/chart-component';
@@ -17,10 +17,13 @@ import { BookService } from '../../services/book-service/book-service';
 import { Genre } from '../../models/genre';
 import { PagesComponent } from "../../components/pages-component/pages-component";
 import { Page } from '../../models/page';
+import { LoadingComponent } from '../../components/loading-component/loading-component';
+import { HttpErrorResponse } from '@angular/common/http';
+import { errorNoti } from '../../util/error-notification';
 
 @Component({
   selector: 'app-home',
-  imports: [TranslateModule, NavbarComponent, ChartComponent, MiniPostCardComponent, BorrowCardComponent, PagesComponent],
+  imports: [TranslateModule, NavbarComponent, ChartComponent, MiniPostCardComponent, BorrowCardComponent, PagesComponent, LoadingComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -39,30 +42,46 @@ export class Home {
       totalPages: 1
     }
 
-  isLoading: {[key:string]:boolean} = {
-    "borrows": true,
-    "topPosts": true
-  };
+
+  isLoading:boolean = true
+  pendingRequests:number =0;
 
   constructor(
     public langService: LanguageService,
     private postService: PostService,
     private borrowService: BorrowService,
-    private genreService: GenreService,
     private bookService: BookService,
     protected router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) 
   {}
 
+  private startLoading() {
+    this.pendingRequests++;
+    this.isLoading = true;
+  }
+
+  private finishLoading() {
+    this.pendingRequests--;
+    if (this.pendingRequests <= 0) {
+      this.pendingRequests = 0;
+      this.isLoading = false;
+      this.cdr.markForCheck();
+    }
+  }
+
+
   private fetchBooksCountByGenre(): void {
+    this.startLoading()
     this.bookService.getBooksCountByGenre().subscribe({
         next: (data: any) => {
             if (data.code == "200") {
                 this.bookCountByGenre = data.data;
                 this.cdr.markForCheck();
             }
+            this.finishLoading()
         },
         error: (err) => console.error(err)
     });
@@ -77,14 +96,19 @@ export class Home {
   }
 
   private fetchBorrowsCountByGenre(): void {
+    this.startLoading()
     this.borrowService.getBorrowsCountByGenre().subscribe({
         next: (data: any) => {
             if (data.code == "200") {
                 this.borrowsCountByGenre = data.data;
                 this.cdr.markForCheck();
             }
+            this.finishLoading()
         },
-        error: (err) => console.error(err)
+        error: (err:HttpErrorResponse)=>{
+          errorNoti(err, this.translate)
+          this.finishLoading()
+        }
     });
   }
 
@@ -97,6 +121,7 @@ export class Home {
   }
 
   fetchBorrowsByUserId(page: Page = this.borrowsPage):void{
+    this.startLoading()
     const userId = JSON.parse(sessionStorage.getItem("user") ?? "{}").id
     if (!userId) return;
     this.borrowService.getMyBorrows(true, null, page.number, 10).subscribe({
@@ -104,28 +129,31 @@ export class Home {
         if(data.code == "200"){
           this.borrows = data.data.content;
           this.borrows = this.borrows.filter(borrow => borrow.active)
-          this.isLoading["borrows"] = false;
           this.cdr.markForCheck();
         }
+        this.finishLoading()
       },
-      error: (err) => {
-        console.error(err)
+      error: (err:HttpErrorResponse) => {
+        errorNoti(err, this.translate)
+        this.finishLoading()
       }
     })
   }
 
   fetchMostLikesPosts():void{
+    this.startLoading()
     this.postService.getMostLikesPosts(0, 5).subscribe({
       next: (data:any) => {
         console.log(data)
         if(data.code == "200"){
           this.posts = data.data.content;
-          this.isLoading["topPosts"] = false;
           this.cdr.markForCheck();
         }
+        this.finishLoading()
       },
-      error: (err) => {
-        console.error(err);
+      error: (err:HttpErrorResponse) => {
+        errorNoti(err, this.translate)
+        this.finishLoading()
       }
 
     })

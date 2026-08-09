@@ -2,13 +2,7 @@
     font-weight: bold !important;
 }
 
-.icon-size {
-  font-size: 20px; /* mobile */
-}
 
-.icon-size {
-    font-size: 24px; /* tablet */
-  }
 
 @media (min-width: 1024px) {
   .pages-container {
@@ -26,6 +20,9 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
+  }
+  .icon-size {
+    font-size: 30px; /* tablet */
   }
 }
 
@@ -69,5 +66,8 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+  .icon-size {
+    font-size: 20px; /* mobile */
   }
 }

@@ -66,10 +66,7 @@
     @if (isEditUser && editUser) {
         <div class="fixed inset-0 flex items-center justify-center z-99">
             <app-edit-user-form 
-            [roles]="roles" 
-            (onClose)="handleCloseEditUser()" 
-            (onChange)="handleSaveEditUser($event)"
-            [user]="editUser">
+            [roles]="roles" (onClose)="handleCloseEditUser()" (onChange)="handleSaveEditUser($event)" [user]="editUser" [deletable]="canDeleteUser">
             </app-edit-user-form>
         </div>
     }

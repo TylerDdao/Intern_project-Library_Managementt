@@ -10,16 +10,19 @@ import { Policy } from '../../models/policy';
 import { PolicyService } from '../../services/policy-service/policy-service';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../../../environments/environment';
+import { LoadingComponent } from "../loading-component/loading-component";
 
 @Component({
 selector: 'app-borrow-card-component',
-imports: [TranslateModule],
+imports: [TranslateModule, LoadingComponent],
 templateUrl: './borrow-card-component.html',
 styleUrl: './borrow-card-component.css',
 })
 export class BorrowCardComponent implements OnChanges {
     @Input({ required: true }) borrow!: Borrow;
     @Input() editable: boolean = false;
+
+    isLoading:boolean = false
 
     backendUrl = environment.apiUrl;
 
@@ -117,8 +120,9 @@ export class BorrowCardComponent implements OnChanges {
 
     handleReturn(){
         const message = this.translate.instant('borrowManagement.Confirm-return');
-        const confirmed = confirm(message);
+        const confirmed = confirm(message+"?");
         if(confirmed){
+            this.isLoading=true
             this.borrow.active = false
             this.borrowService.returnBorrow(this.borrow).subscribe({
                 next: (data: any)=>{
@@ -126,10 +130,11 @@ export class BorrowCardComponent implements OnChanges {
                         this.isReturned = true;
                         this.cdr.markForCheck()
                     }
+                    this.isLoading=false
                 },
                 error: (err) =>{
-                    console.error(err)
                     errorNoti(err, this.translate);
+                    this.isLoading=false
                 }
             })
         }

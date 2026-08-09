@@ -11,14 +11,16 @@ import { Page } from '../../models/page';
 import { BorrowListComponent } from '../../components/borrow-list-component/borrow-list-component';
 import { BorrowPolicyForm } from '../../forms/borrow-policy-form/borrow-policy-form';
 import { ExportBorrowsForm } from '../../forms/export/export-borrows-form/export-borrows-form';
+import { LoadingComponent } from '../../components/loading-component/loading-component';
 
 @Component({
   selector: 'app-borrows-management',
-  imports: [TranslateModule, NavbarComponent, SortSideBarComponent, BorrowCardComponent, PagesComponent, BorrowListComponent, BorrowPolicyForm, ExportBorrowsForm],
+  imports: [TranslateModule, NavbarComponent, SortSideBarComponent, BorrowCardComponent, PagesComponent, BorrowListComponent, BorrowPolicyForm, ExportBorrowsForm, LoadingComponent],
   templateUrl: './borrows-management.html',
   styleUrl: './borrows-management.css',
 })
 export class BorrowsManagement {
+  isLoading:boolean = false;
   isBorrowPolicyOpen: boolean = false;
   isExportBorrow: boolean = false
 

@@ -15,6 +15,7 @@ import java.util.Optional;
 @Repository
 public interface BorrowRepository extends JpaRepository<Borrow, Long> {
     boolean existsByUser_IdAndIsActiveTrue(Long id);
+    boolean existsByUser_UsernameAndIsActiveTrue(String username);
     List<Borrow> findByBook_Id(Long bookId);
     boolean existsByBook_IdAndIsActiveTrue(Long id);
     public List<Borrow> findByUserId(int userId);
@@ -44,6 +45,15 @@ public interface BorrowRepository extends JpaRepository<Borrow, Long> {
         GROUP BY g.name
         """)
     List<Object[]> countBorrowsByGenre();
+
+    @Query("""
+        SELECT g.name, COUNT(br) FROM Borrow br
+        JOIN br.book b
+        JOIN b.genres g
+        WHERE br.isActive = true
+        GROUP BY g.name
+        """)
+    List<Object[]> countBorrowsByGenreAndIsActiveTrue();
 
     @Query(value = """
     SELECT b FROM Borrow b

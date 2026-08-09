@@ -35,14 +35,17 @@ INSERT IGNORE INTO features (id, name) VALUES
     (24, 'UPDATE_POLICY'),
     (25, 'DELETE_BOOK'),
     (26, 'DELETE_USER'),
-    (27, 'DELETE_BORROW'),
-    (28, 'DELETE_ROLE'),
-    (29, 'DELETE_POST'),
-    (30, 'DELETE_COMMENT'),
-    (31, 'DELETE_GENRE'),
-    (32, 'ASSIGN_FEATURE'),
-    (33, 'UNASSIGN_FEATURE'),
-    (34, 'EXPORT_USER');
+    (27, 'DELETE_USER_MULTI'),
+    (28, 'DELETE_BORROW'),
+    (29, 'DELETE_ROLE'),
+    (30, 'DELETE_POST'),
+    (31, 'DELETE_COMMENT'),
+    (32, 'DELETE_GENRE'),
+    (33, 'ASSIGN_FEATURE'),
+    (34, 'UNASSIGN_FEATURE'),
+    (35, 'EXPORT_USER'),
+    (36, 'EXPORT_BOOK'),
+    (37, 'EXPORT_BORROW');
 
 INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
     (4, 5),  (4, 6),  (4, 8),  (4, 9),  (4, 10),

@@ -24,6 +24,7 @@ import { LoadingComponent } from "../../components/loading-component/loading-com
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
 import { PagesComponent } from "../../components/pages-component/pages-component";
+import { getUser } from '../../util/session-storage';
 
 @Component({
   selector: 'app-users-management',
@@ -32,6 +33,7 @@ import { PagesComponent } from "../../components/pages-component/pages-component
   styleUrl: './users-management.css',
 })
 export class UsersManagement {
+  canDeleteUser: boolean = false
   roles: Role[] = [];
   features: Feature[] = [];
 
@@ -200,6 +202,14 @@ export class UsersManagement {
 
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
+      const sessionUser = getUser();
+      if(sessionUser){
+        this.canDeleteUser =
+          sessionUser.role?.name === 'ROLE_ROOT' ||
+          (sessionUser.role?.features?.some(
+            feature => feature.name === 'DELETE_USER_MULTI'
+          ) ?? false);
+      }
       this.fetchRolesAndUser();
       this.fetchFeatures();
     }

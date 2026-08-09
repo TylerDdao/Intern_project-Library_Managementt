@@ -55,10 +55,10 @@ public class AuthController {
     ){
         String message = verificationService.sendResetPasswordEmail(email);
         return switch (message) {
-            case "reset.password.Link.is.sent" -> ResponseEntity.ok(ApiResponse.success(messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
-            case "error.Code.is.already.sent" -> ResponseEntity.badRequest().body(ApiResponse.error("CODE-ALREADY-SENT", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
-            case "error.Email.has.been.used" -> ResponseEntity.badRequest().body(ApiResponse.error("EMAIL-IN-USE", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
-            default -> ResponseEntity.internalServerError().body(ApiResponse.error("SERVER-ERROR", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
+            case "reset.password.Link.is.sent" -> ResponseEntity.ok(ApiResponse.success(messageSource.getMessage("reset.password.Link.is.sent", null, LocaleContextHolder.getLocale())));
+            case "error.Code.is.already.sent" -> ResponseEntity.badRequest().body(ApiResponse.error("CODE-ALREADY-SENT", messageSource.getMessage("error.Code.is.already.sent", null, LocaleContextHolder.getLocale())));
+            case "error.Email.has.been.used" -> ResponseEntity.badRequest().body(ApiResponse.error("EMAIL-IN-USE", messageSource.getMessage("error.Email.has.been.used", null, LocaleContextHolder.getLocale())));
+            default -> ResponseEntity.internalServerError().body(ApiResponse.error("SERVER-ERROR", message));
         };
     }
 
@@ -67,10 +67,10 @@ public class AuthController {
             @RequestBody UserRequest request) {
         String message = verificationService.sendVerificationEmail(request);
         return switch (message) {
-            case "verification.Code.is.sent" -> ResponseEntity.ok(ApiResponse.success(messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
-            case "error.Code.is.already.sent" -> ResponseEntity.badRequest().body(ApiResponse.error("CODE-ALREADY-SENT", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
-            case "error.Email.has.been.used" -> ResponseEntity.badRequest().body(ApiResponse.error("EMAIL-IN-USE", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
-            default -> ResponseEntity.internalServerError().body(ApiResponse.error("SERVER-ERROR", messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));
+            case "verification.Code.is.sent" -> ResponseEntity.ok(ApiResponse.success(messageSource.getMessage("verification.Code.is.sent", null, LocaleContextHolder.getLocale())));
+            case "error.Code.is.already.sent" -> ResponseEntity.badRequest().body(ApiResponse.error("CODE-ALREADY-SENT", messageSource.getMessage("error.Code.is.already.sent", null, LocaleContextHolder.getLocale())));
+            case "error.Email.has.been.used" -> ResponseEntity.badRequest().body(ApiResponse.error("EMAIL-IN-USE", messageSource.getMessage("error.Email.has.been.used", null, LocaleContextHolder.getLocale())));
+            default -> ResponseEntity.internalServerError().body(ApiResponse.error("SERVER-ERROR", message));
         };
     }
 

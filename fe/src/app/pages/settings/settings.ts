@@ -46,6 +46,25 @@ export class Settings{
     verificationCode: new FormControl('')
   });
 
+  handleDeleteUser(){
+    const message = this.translate.instant("form.Confirm-delete")
+    const option = confirm(message + "?")
+    if(!option) return
+    this.userService.deleteMe().subscribe({
+      next:(data:any)=>{
+        if(data.code == "200"){
+          sessionStorage.removeItem('token')
+          sessionStorage.removeItem('user')
+          sessionStorage.removeItem('authorities')
+          this.router.navigate(['/login'])
+        }
+      },
+      error:(err:HttpErrorResponse)=>{
+        errorNoti(err,this.translate)
+      }
+    })
+  }
+
   handleChangePassword(){
     this.router.navigate(['/settings/change-password'])
   }

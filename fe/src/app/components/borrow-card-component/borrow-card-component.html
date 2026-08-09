@@ -58,4 +58,9 @@
         <button class="p-[10px] bg-leaf-green text-soft-ice rounded-[10px] h-fit w-full" (click)="handleReturn()">{{'borrow.Return'|translate}}</button>
     }
 }
+@if (isLoading) {
+    <div class="fixed inset-0 flex items-center justify-center z-99 bg-soft-ice/50">
+        <app-loading-component></app-loading-component>
+    </div>  
+}
 </div>

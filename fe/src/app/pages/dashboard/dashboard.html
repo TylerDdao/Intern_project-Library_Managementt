@@ -2,6 +2,9 @@
 <div class="home-container">
     <div class="chart-1">
         <h1 class="text-deep-charcoal header headline">{{'dashboard.Number-of-borrows-by-status' |translate}}</h1>
+        @if (isLoading && borrowStatusValues[0] == 0 && borrowStatusValues[1] == 0 && borrowStatusValues[2] == 0) {
+            <app-loading-component></app-loading-component>
+        }
         @if (borrowStatusValues[0] > 0 || borrowStatusValues[1] > 0 || borrowStatusValues[2] > 0) {
             <app-chart-component
                 [labels]="borrowStatusLabels"
@@ -10,63 +13,60 @@
                 label="Borrows"
                 type="pie"/>
         } @else {
-            <p class="body">Loading...</p>
+            <div>{{"list.No-data"|translate}}</div>
         }
     </div>
 
     <div class="chart-2">
         <h1 class="text-deep-charcoal header headline">{{'home.Number-of-borrows-by-genre' |translate}}</h1>
+        @if (isLoading && borrowsCountByGenreValues.length == 0 && borrowsCountByGenreLabels.length == 0) {
+            <app-loading-component></app-loading-component>
+        }
         @if (borrowsCountByGenreValues.length > 0 && borrowsCountByGenreLabels.length >0) {
             <app-chart-component
-                [labels]="borrowsCountByGenreLabels"
-                [data]="borrowsCountByGenreValues"
+                [labels]="borrowStatusLabels"
+                [data]="borrowStatusValues"
+                [colors]="['#E50046', '#F9D923', '#2C5EAD']"
                 label="Borrows"
-                type="bar"/>
+                type="pie"/>
         } @else {
-            <p class="body">Loading...</p>
+            <div>{{"list.No-data"|translate}}</div>
         }
     </div>
 
     <div class="books-area">
         <h1 class="text-deep-charcoal header headline">{{'dashboard.Unavailable-books' |translate}}</h1>
         <div class="books-scrolling-area">
-            @if (unavailableBooks.length > 0) {
+            @if (isLoading && unavailableBooks.length == 0) {
+                <app-loading-component></app-loading-component>
+            }
+            @else if(unavailableBooks.length > 0){
                 @for (book of unavailableBooks; track $index) {
                     <app-book-card-component [book]="book"></app-book-card-component>
                 }
-            } @else {
-                @if (isLoading["unavailableBooks"]) {
-                    <p class="callout">{{'Loading.loading'|translate}}...</p>
-                }
-                @else {
-                    <p class="callout">{{'Loading.empty'|translate}}</p>
-                }
+                <app-pages-component [pages]="unavailableBooksPage" (onApply)="fetchUnavailableBooks($event)"></app-pages-component>
+            }
+            @else {
+                <div>{{'list.Empty'|translate}}</div>
             }
         </div>
-        @if (unavailableBooks.length > 0 && !isLoading["unavailableBooks"]) {
-            <app-pages-component [pages]="unavailableBooksPage" (onApply)="fetchUnavailableBooks($event)"></app-pages-component>
-        }
     </div>
 
     <div class="borrowed-books-area">
         <h1 class="headline">{{'dashboard.Late-borrows'|translate}}</h1>
         <div class="borrows-scrolling-area">
-            @if (lateBorrows.length > 0) {
+            @if (isLoading && lateBorrows.length == 0) {
+                <app-loading-component></app-loading-component>
+            }
+            @else if(lateBorrows.length > 0){
                 @for (borrow of lateBorrows; track borrow.id) {
                     <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
                 }
-            } @else {
-                @if (isLoading["lateBorrows"]) {
-                    <p class="callout">{{'Loading.loading'|translate}}...</p>
-                }
-                @else {
-                    <p class="callout">{{'Loading.empty'|translate}}</p>
-                }
+                <app-pages-component [pages]="lateBorrowsPage" (onApply)="fetchLateBorrow($event)"></app-pages-component>
             }
-        </div>
-        @if (lateBorrows.length > 0 && !isLoading["lateBorrows"]) {
-            <app-pages-component [pages]="lateBorrowsPage" (onApply)="fetchLateBorrow($event)"></app-pages-component>
-        }
-        
+            @else {
+                <div>{{'list.Empty'|translate}}</div>
+            }
+        </div>  
     </div>
 </div>

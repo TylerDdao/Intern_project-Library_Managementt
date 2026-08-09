@@ -83,4 +83,8 @@ export class UserService {
   deleteUser(user:User){
     return this.http.delete(`${this.userBaseUrl}?id=${user.id}`, {headers:getAuthHeaders(this.platformId)})
   }
+
+  deleteMe(){
+    return this.http.delete(`${this.userBaseUrl}/delete-me`, {headers:getAuthHeaders(this.platformId)})
+  }
 }

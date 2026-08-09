@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, Inject, Input, Output, PLATFORM_ID } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Comment } from '../../models/comment';
 import { formatTime } from '../../util/format-number';
 import { Post } from '../../models/post';
@@ -9,6 +9,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { LoadingComponent } from '../loading-component/loading-component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LanguageService } from '../../services/language-service/language-service';
+import { errorNoti } from '../../util/error-notification';
 
 @Component({
   selector: 'app-comment-box-component',
@@ -19,12 +20,14 @@ import { LanguageService } from '../../services/language-service/language-servic
 export class CommentBoxComponent {
   @Input({required: true}) post!:Post
   @Output() onClose = new EventEmitter<void>();
+  @Output() onChange = new EventEmitter<number>();
 
   constructor(
     private commentService: CommentService,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private langService: LanguageService
+    private langService: LanguageService,
+    private translate: TranslateService
   ){
 
   }
@@ -53,12 +56,19 @@ export class CommentBoxComponent {
   });
 
   handleDeleteComment(comment:Comment){
+    const message = this.translate.instant("form.Confirm-delete")
+    const option = confirm(message+"?")
+    if(!option) return
     this.commentService.deleteComment(comment.id).subscribe({
       next: (data:any)=>{
         if(data.code == "200"){
           this.fetchComments();
           this.cdr.markForCheck();
+          this.change(-1);
         }
+      },
+      error:(err:HttpErrorResponse)=>{
+        errorNoti(err,this.translate)
       }
     })
   }
@@ -75,6 +85,7 @@ export class CommentBoxComponent {
                 content: ""
               })
               this.cdr.markForCheck()
+              this.change(1)
             }
           },
           error: (err:HttpErrorResponse)=>{
@@ -93,6 +104,10 @@ export class CommentBoxComponent {
 
   close(): void {
     this.onClose.emit();
+  }
+
+  change(commentCount:number):void{
+    this.onChange.emit(commentCount);
   }
 
   getFormattedCreatedAt(time: string): string {
