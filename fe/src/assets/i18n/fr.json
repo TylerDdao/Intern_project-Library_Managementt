@@ -342,6 +342,10 @@
   "1": {
     "subject": "Votre avis compte!",
     "content": "Nous avons hâte de connaître votre avis. Veuillez nous le transmettre via le lien ci-dessous !"
+  },
+  "2": {
+    "subject": "Site en cours de développement — Optimisé pour ordinateur",
+    "content": "Ce site web est encore en cours de développement. L'expérience mobile n'a pas encore été optimisée, certaines parties de l'interface peuvent donc ne pas s'afficher correctement sur les écrans plus petits. Pour une expérience optimale, veuillez accéder au site depuis un navigateur sur ordinateur portable ou de bureau. Merci de votre patience pendant que nous continuons d'améliorer la plateforme."
   }
 }
 }

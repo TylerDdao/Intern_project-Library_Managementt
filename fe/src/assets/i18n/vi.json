@@ -342,6 +342,10 @@
   "1": {
     "subject": "Ý kiến của bạn rất quan trọng!",
     "content": "Chúng tôi rất mong nhận được phản hồi từ bạn. Vui lòng gửi ý kiến cho chúng tôi qua liên kết bên dưới!"
+  },
+  "2": {
+    "subject": "Website đang phát triển — Trải nghiệm tốt nhất trên máy tính",
+    "content": "Website này vẫn đang trong quá trình phát triển. Giao diện trên thiết bị di động chưa được tối ưu hóa, do đó một số phần có thể hiển thị không chuẩn xác trên màn hình nhỏ. Để có trải nghiệm tốt nhất, vui lòng truy cập bằng trình duyệt trên máy tính bàn hoặc laptop. Cảm ơn bạn đã kiên nhẫn trong khi chúng tôi tiếp tục hoàn thiện nền tảng."
   }
 }
 }

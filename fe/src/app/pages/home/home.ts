@@ -22,6 +22,15 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
 import { AnnouncementComponent } from "../../components/announcement-component/announcement-component";
 
+interface Announcement {
+  id: number;
+  type: 'info' | 'warning' | 'error';
+  subjectKey: string;
+  contentKey: string;
+  link?: string;
+  isOpen: boolean;
+}
+
 @Component({
   selector: 'app-home',
   imports: [TranslateModule, NavbarComponent, ChartComponent, MiniPostCardComponent, BorrowCardComponent, PagesComponent, LoadingComponent, AnnouncementComponent],
@@ -47,7 +56,7 @@ export class Home {
   isLoading:boolean = true
   pendingRequests:number =0;
 
-  isOpenAnnouncement:boolean = true
+  announcements:Announcement[] = []
 
   constructor(
     public langService: LanguageService,
@@ -61,17 +70,11 @@ export class Home {
   ) 
   {}
 
-  get announcementSubject(): string {
-    return this.translate.instant("announcement.1.subject");
-  }
-
-  get announcementContent(): string {
-    return this.translate.instant("announcement.1.content");
-  }
-
-  handleCloseAnnouncement(){
-    this.isOpenAnnouncement = false;
-    this.cdr.markForCheck()
+  handleCloseAnnouncement(id: number) {
+    const announcement = this.announcements.find(a => a.id === id);
+    if (announcement) {
+      announcement.isOpen = false;
+    }
   }
 
   private startLoading() {
@@ -177,6 +180,24 @@ export class Home {
 
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
+      this.announcements = [
+        {
+          id: 1,
+          type: 'info',
+          subjectKey: 'announcement.1.subject',
+          contentKey: 'announcement.1.content',
+          link: 'https://forms.gle/8agsuPwmFonKSzPb6',
+          isOpen: true,
+        },
+        {
+          id: 2,
+          type: 'warning',
+          subjectKey: 'announcement.2.subject',
+          contentKey: 'announcement.2.content',
+          isOpen: true,
+        },
+      ];
+
       this.fetchMostLikesPosts()
       this.fetchBorrowsByUserId()
       this.fetchBooksCountByGenre()

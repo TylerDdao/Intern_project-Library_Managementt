@@ -342,7 +342,11 @@
   "announcement": {
     "1":{
       "subject": "Your feedback matters!",
-      "content": "We are excited to hear your feedback. Please send it to use via the link below!"
+      "content": "We are excited to hear your feedback. Please send it to us via the link below!"
+    },
+    "2":{
+      "subject":"Site Under Development — Best Viewed on Desktop",
+      "content":"This website is still under active development. The mobile experience hasn't been optimized yet, so some parts of the interface may not display correctly on smaller screens. For the best experience, please access the site on a desktop or laptop browser. Thank you for your patience as we continue improving the platform."
     }
   }
 }

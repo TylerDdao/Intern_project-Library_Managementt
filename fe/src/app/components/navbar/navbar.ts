@@ -34,7 +34,7 @@ export class NavbarComponent {
     { name: 'navBar.admin.Dashboard', path: '/dashboard', authorities: ['UPDATE_BOOK', 'UPDATE_BORROW'] },
     { name: 'navBar.admin.Books-management', path: '/books-management', authorities: ['UPDATE_BOOK', 'DELETE_BOOK'] },
     { name: 'navBar.admin.Borrows-management', path: '/borrows-management', authorities: ['GET_BORROW_MULTI', 'UPDATE_BORROW', 'DELETE_BORROW'] },
-    { name: 'navBar.admin.Users-management', path: '/users-management', authorities: ['UPDATE_USER', 'DELETE_USER'] },
+    { name: 'navBar.admin.Users-management', path: '/users-management', authorities: ['UPDATE_USER_ROLE', 'UPDATE_USER_MULTI', 'DELETE_USER_MULTI'] },
   ];
   
   constructor(

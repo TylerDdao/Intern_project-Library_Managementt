@@ -68,6 +68,8 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success(updateUserService.updateUser(request)));
     }
 
+    // TODO: Seperate update user multi
+
     @PreAuthorize("@securityService.hasAccess('UPDATE_USER_ROLE')")
     @PatchMapping("/update-role")
     public ResponseEntity<ApiResponse<UserResponse>> updateUserRoleByUsername(

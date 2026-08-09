@@ -275,7 +275,7 @@ public class MailService {
                 ? borrow.getBook().getCoverUrl()
                 : "default.jpg";
         String author = borrow.getBook().getAuthor();
-        String borrowOn = formatter.formatDateTime(borrow.getCreatedAt());
+        String borrowOn = messageSource.getMessage("email.borrow.at", new Object[]{formatter.formatDateTime(borrow.getCreatedAt())}, LocaleContextHolder.getLocale());
         String returnRemind = messageSource.getMessage("email.borrow.created.return.remind", null, LocaleContextHolder.getLocale());
         String dueOn = formatter.formatDateTime(borrow.getDueDate());
         Policy penalty;
@@ -298,14 +298,14 @@ public class MailService {
                 <div style="padding:20px;color:#25343F;">
                     <h2>%s</h2>
                     <p>%s</p>
-                    <div style="display: flex; gap: 10px;">
-                        <div style="width: 100px;">
-                            <img src="%s/book-covers/%s"/>
-                        </div>
+                    <div style="display: flex;">
+                        <div style="width: 100px; margin-right: 10px;">
+                          <img src="%s/book-covers/%s" style="width: 100%%; display: block;"/>
+                      </div>
                         <div>
                             <div style="font-weight: bold;">%s</div>
                             <div>%s</div>
-                            <div>Borrow on: %s</div>
+                            <div>%s</div>
                             <div style="text-decoration: underline;">%s: <strong>%s</strong></div>
                         </div>
                     </div>
@@ -331,12 +331,38 @@ public class MailService {
     }
 
     public void sendBorrowReturned(Borrow borrow) {
+//        Locale locale = LocaleContextHolder.getLocale();
+//        String subject = messageSource.getMessage("email.borrow.returned.subject", null, locale);
+//        String greeting = messageSource.getMessage("email.greeting.name", new Object[]{borrow.getUser().getFullName()}, locale);
+//        String body = messageSource.getMessage("email.borrow.returned.body", new Object[]{borrow.getBook().getTitle(), formatter.formatDateTime(LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")))}, locale);
+//        String footer = messageSource.getMessage("email.footer", null, locale);
+//
+//
+//        String html = """
+//            <div style="max-width:600px;margin:40px auto;font-family:Arial,sans-serif;">
+//                <div style="background-color:#2C5EAD;padding:20px;border-radius:10px 10px 0 0;text-align:center;">
+//                    <h1 style="color:#EAEFEF;margin:0;">Library Management System</h1>
+//                </div>
+//                <div style="padding:20px;color:#25343F;">
+//                    <h2>%s</h2>
+//                    <p>%s</p>
+//                    <div>%s</div>
+//                    <p style="text-align:right;margin:0;"><small>Library Management Team</small></p>
+//                </div>
+//            </div>
+//            """.formatted(greeting, body, footer);
+
         Locale locale = LocaleContextHolder.getLocale();
         String subject = messageSource.getMessage("email.borrow.returned.subject", null, locale);
         String greeting = messageSource.getMessage("email.greeting.name", new Object[]{borrow.getUser().getFullName()}, locale);
-        String body = messageSource.getMessage("email.borrow.returned.body", new Object[]{borrow.getBook().getTitle(), formatter.formatDateTime(LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")))}, locale);
+        String body = messageSource.getMessage("email.borrow.returned.body", new Object[]{formatter.formatDateTime(LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")))}, locale);
         String footer = messageSource.getMessage("email.footer", null, locale);
 
+        String title = borrow.getBook().getTitle();
+        String bookCoverFile = borrow.getBook().getCoverUrl() != null
+                ? borrow.getBook().getCoverUrl()
+                : "default.jpg";
+        String author = borrow.getBook().getAuthor();
 
 
         String html = """
@@ -347,11 +373,20 @@ public class MailService {
                 <div style="padding:20px;color:#25343F;">
                     <h2>%s</h2>
                     <p>%s</p>
+                    <div style="display: flex;">
+                        <div style="width: 100px; margin-right: 10px;">
+                          <img src="%s/book-covers/%s" style="width: 100%%; display: block;"/>
+                      </div>
+                        <div>
+                            <div style="font-weight: bold;">%s</div>
+                            <div>%s</div>
+                        </div>
+                    </div>
                     <div>%s</div>
                     <p style="text-align:right;margin:0;"><small>Library Management Team</small></p>
                 </div>
             </div>
-            """.formatted(greeting, body, footer);
+            """.formatted(greeting, body, backEndUrl, bookCoverFile, title, author, footer);
 
         try{
             MimeMessage message = mailSender.createMimeMessage();

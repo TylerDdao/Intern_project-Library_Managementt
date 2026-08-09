@@ -1,6 +1,14 @@
 <app-navbar></app-navbar>
-@if (isOpenAnnouncement) {
-    <app-announcement-component (onClose)="handleCloseAnnouncement()" [type]="'info'" [subject]="announcementSubject" [content]="announcementContent" [link]="'https://forms.gle/8agsuPwmFonKSzPb6'"></app-announcement-component>
+@for (announcement of announcements; track announcement.id) {
+    @if (announcement.isOpen) {
+        <app-announcement-component
+            (onClose)="handleCloseAnnouncement(announcement.id)"
+            [type]="announcement.type"
+            [subject]="announcement.subjectKey |translate"
+            [content]="announcement.contentKey |translate"
+            [link]="announcement.link ?? ''">
+        </app-announcement-component>
+    }
 }
 
 <div class="home-container">
