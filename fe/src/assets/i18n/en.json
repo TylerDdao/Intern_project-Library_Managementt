@@ -336,5 +336,13 @@
   "Loading": {
     "loading": "Loading...",
     "empty": "Empty"
+  },
+
+
+  "announcement": {
+    "1":{
+      "subject": "Your feedback matters!",
+      "content": "We are excited to hear your feedback. Please send it to use via the link below!"
+    }
   }
 }

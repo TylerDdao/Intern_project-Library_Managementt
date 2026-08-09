@@ -1,0 +1,20 @@
+<div class="p-[10px] flex items-center justify-between" [class]="type == 'info' ? 'bg-pastel-blue text-primary-1' : type == 'warning' ? 'bg-[#FEF3C7] text-[#92400E]' : 'bg-pastel-red text-tomato-red'">
+    <div class="flex items-center space-x-[10px]">
+        <div><span class="material-symbols-outlined">{{type}}</span></div>
+        <div>
+            <div class="headline font-bold">{{subject}}</div>
+            <div class="body">{{content}}</div>
+            @if (link) {
+                <a
+                    [href]="link"
+                    class="caption-1 font-bold underline"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    {{ link }}
+                </a>
+            }
+        </div>
+    </div>
+
+    <button class="flex items-center" (click)="close()"><span class="material-symbols-outlined">close</span></button>
+</div>

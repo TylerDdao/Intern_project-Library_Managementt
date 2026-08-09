@@ -20,10 +20,11 @@ import { Page } from '../../models/page';
 import { LoadingComponent } from '../../components/loading-component/loading-component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
+import { AnnouncementComponent } from "../../components/announcement-component/announcement-component";
 
 @Component({
   selector: 'app-home',
-  imports: [TranslateModule, NavbarComponent, ChartComponent, MiniPostCardComponent, BorrowCardComponent, PagesComponent, LoadingComponent],
+  imports: [TranslateModule, NavbarComponent, ChartComponent, MiniPostCardComponent, BorrowCardComponent, PagesComponent, LoadingComponent, AnnouncementComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -46,6 +47,8 @@ export class Home {
   isLoading:boolean = true
   pendingRequests:number =0;
 
+  isOpenAnnouncement:boolean = true
+
   constructor(
     public langService: LanguageService,
     private postService: PostService,
@@ -57,6 +60,19 @@ export class Home {
     private translate: TranslateService
   ) 
   {}
+
+  get announcementSubject(): string {
+    return this.translate.instant("announcement.1.subject");
+  }
+
+  get announcementContent(): string {
+    return this.translate.instant("announcement.1.content");
+  }
+
+  handleCloseAnnouncement(){
+    this.isOpenAnnouncement = false;
+    this.cdr.markForCheck()
+  }
 
   private startLoading() {
     this.pendingRequests++;

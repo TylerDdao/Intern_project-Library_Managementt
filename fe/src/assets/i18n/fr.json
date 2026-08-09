@@ -336,5 +336,12 @@
   "Loading": {
     "loading": "Chargement...",
     "empty": "Vide"
+  },
+
+  "announcement": {
+  "1": {
+    "subject": "Votre avis compte!",
+    "content": "Nous avons hâte de connaître votre avis. Veuillez nous le transmettre via le lien ci-dessous !"
   }
+}
 }

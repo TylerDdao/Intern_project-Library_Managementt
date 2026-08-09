@@ -1,4 +1,8 @@
 <app-navbar></app-navbar>
+@if (isOpenAnnouncement) {
+    <app-announcement-component (onClose)="handleCloseAnnouncement()" [type]="'info'" [subject]="announcementSubject" [content]="announcementContent" [link]="'https://forms.gle/8agsuPwmFonKSzPb6'"></app-announcement-component>
+}
+
 <div class="home-container">
     <div class="chart-1">
         <h1 class="text-deep-charcoal header headline">{{'home.Number-of-books-by-genre' |translate}}</h1>
