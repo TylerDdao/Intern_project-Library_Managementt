@@ -147,7 +147,9 @@
     "Selected-books": "Selected books"
   },
   "postsManagement": {
-    "Create-post": "Create post"
+    "Create-post": "Create post",
+    "Post-is-created": "TODO",
+    "Post-is-deleted": "TODO"
   },
   "postPage": {
     "Edit-post": "Edit post",
@@ -169,7 +171,7 @@
     "You-are-borrowing-this-book": "You are borrowing this book",
     "Your-borrow-for-this-book-dues-on": "Your borrow for this book dues on",
     "Confirm-borrow": "Confirm borrow",
-    "Borrow-created":"Borrow created"
+    "Borrow-created": "Borrow created"
   },
   "post": {
     "Edit-post": "Edit post",
@@ -259,7 +261,8 @@
     "Loading": "Loading",
     "Load-more": "Load more",
     "See-less": "See less",
-    "Post-not-found": "Post not found"
+    "Post-not-found": "Post not found",
+    "No-more-post": "No more post"
   },
   "sortBar": {
     "Search": "Search",
@@ -337,17 +340,15 @@
     "loading": "Loading...",
     "empty": "Empty"
   },
-
-
   "announcement": {
-    "1":{
+    "1": {
       "subject": "Your feedback matters!",
       "content": "We are excited to hear your feedback. Please send it to us via the link below!",
       "linkText": "Feedback Form"
     },
-    "2":{
-      "subject":"Site Under Development — Best Viewed on Desktop",
-      "content":"This website is still under active development. The mobile experience hasn't been optimized yet, so some parts of the interface may not display correctly on smaller screens. For the best experience, please access the site on a desktop or laptop browser. Thank you for your patience as we continue improving the platform."
+    "2": {
+      "subject": "Site Under Development — Best Viewed on Desktop",
+      "content": "This website is still under active development. The mobile experience hasn't been optimized yet, so some parts of the interface may not display correctly on smaller screens. For the best experience, please access the site on a desktop or laptop browser. Thank you for your patience as we continue improving the platform."
     }
   }
 }

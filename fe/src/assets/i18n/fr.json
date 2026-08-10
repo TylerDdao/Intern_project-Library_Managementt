@@ -147,7 +147,9 @@
     "Selected-books": "Livres sélectionnés"
   },
   "postsManagement": {
-    "Create-post": "Créer une publication"
+    "Create-post": "Créer une publication",
+    "Post-is-created": "La publication a été créée",
+    "Post-is-deleted": "La publication a été supprimée"
   },
   "postPage": {
     "Edit-post": "Modifier la publication",
@@ -259,7 +261,8 @@
     "Loading": "Chargement...",
     "Load-more": "Charger plus",
     "See-less": "Voir moins",
-    "Post-not-found": "Publication non trouvée"
+    "Post-not-found": "Publication non trouvée",
+    "No-more-post": "Plus aucune publication"
   },
   "sortBar": {
     "Search": "Rechercher",
@@ -337,16 +340,15 @@
     "loading": "Chargement...",
     "empty": "Vide"
   },
-
   "announcement": {
-  "1": {
-    "subject": "Votre avis compte!",
-    "content": "Nous avons hâte de connaître votre avis. Veuillez nous le transmettre via le lien ci-dessous !",
-    "linkText": "Formulaire de commentaires"
-  },
-  "2": {
-    "subject": "Site en cours de développement — Optimisé pour ordinateur",
-    "content": "Ce site web est encore en cours de développement. L'expérience mobile n'a pas encore été optimisée, certaines parties de l'interface peuvent donc ne pas s'afficher correctement sur les écrans plus petits. Pour une expérience optimale, veuillez accéder au site depuis un navigateur sur ordinateur portable ou de bureau. Merci de votre patience pendant que nous continuons d'améliorer la plateforme."
+    "1": {
+      "subject": "Votre avis compte !",
+      "content": "Nous avons hâte de connaître votre avis. Veuillez nous le transmettre via le lien ci-dessous !",
+      "linkText": "Formulaire de commentaires"
+    },
+    "2": {
+      "subject": "Site en cours de développement — Optimisé pour ordinateur",
+      "content": "Ce site web est encore en cours de développement. L'expérience mobile n'a pas encore été optimisée, certaines parties de l'interface peuvent donc ne pas s'afficher correctement sur les écrans plus petits. Pour une expérience optimale, veuillez accéder au site depuis un navigateur sur ordinateur portable ou de bureau. Merci de votre patience pendant que nous continuons d'améliorer la plateforme."
+    }
   }
-}
 }

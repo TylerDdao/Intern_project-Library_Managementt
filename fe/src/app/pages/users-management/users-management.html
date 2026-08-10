@@ -1,12 +1,14 @@
 <app-navbar></app-navbar>
 
 <div class="container">
-    <div class="flex flex-col space-y-[10px] w-full">
-        <app-sort-side-bar-component (onApply)="handleSearch($event)" [isSearch]="isSearch"></app-sort-side-bar-component>
-        <button class="p-[10px] bg-steel-blue text-soft-ice caption-1 font-bold text-center rounded-[10px] w-full" (click)="isCreateNewUser = true;">{{'usersManagement.Create-user' | translate}}</button>
-        <button class="p-[10px] bg-leaf-green text-soft-ice caption-1 font-bold text-center rounded-[10px] w-full" (click)="isCreateNewRole = true">{{'usersManagement.Create-role' | translate}}</button>
-        <button class="p-[10px] bg-sky-blue text-soft-ice caption-1 font-bold text-center rounded-[10px] w-full" (click)="isRoleListOpen = true">{{'usersManagement.Role-list' | translate}}</button>
-        <button class="p-[10px] border border-primary text-primary-1 caption-1 font-bold text-center rounded-[10px] w-full" (click)="isExportUser = true">{{'export.Export'|translate}}</button>
+    <div class="side-menu">
+        <div class="flex flex-col space-y-[10px]">
+            <app-sort-side-bar-component (onApply)="handleSearch($event)" [isSearch]="isSearch"></app-sort-side-bar-component>
+            <button class="p-[5px] bg-steel-blue text-soft-ice caption-1 font-bold text-center rounded-[10px] w-full" (click)="isCreateNewUser = true;">{{'usersManagement.Create-user' | translate}}</button>
+            <button class="p-[5px] bg-leaf-green text-soft-ice caption-1 font-bold text-center rounded-[10px] w-full" (click)="isCreateNewRole = true">{{'usersManagement.Create-role' | translate}}</button>
+            <button class="p-[5px] bg-sky-blue text-soft-ice caption-1 font-bold text-center rounded-[10px] w-full" (click)="isRoleListOpen = true">{{'usersManagement.Role-list' | translate}}</button>
+            <button class="p-[5px] border border-primary text-primary-1 caption-1 font-bold text-center rounded-[10px] w-full" (click)="isExportUser = true">{{'export.Export'|translate}}</button>
+        </div>
     </div>
     @if (isLoading) {
         <div class="w-full flex items-center justify-center"><app-loading-component></app-loading-component></div>

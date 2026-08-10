@@ -206,6 +206,34 @@ public class MailService {
         }
     }
 
+    public void sendPasswordChangedEmail(User user) throws MessagingException {
+        Locale locale = LocaleContextHolder.getLocale();
+        String subject = messageSource.getMessage("email.password.changed.subject", null, locale);
+        String greeting = messageSource.getMessage("email.greeting.name", new Object[]{user.getFullName()}, locale);
+        String bodyLabel = messageSource.getMessage("email.password.changed.body", null, locale);
+        String footer = messageSource.getMessage("email.footer", null, locale);
+        String html = """
+            <div style="max-width:600px;margin:40px auto;font-family:Arial,sans-serif;">
+                <div style="background-color:#2C5EAD;padding:20px;border-radius:10px 10px 0 0;text-align:center;">
+                    <h1 style="color:#EAEFEF;margin:0;">Library Management System</h1>
+                </div>
+                <div style="padding:20px;color:#25343F;">
+                    <h2>%s</h2>
+                    <p>%s</p>
+                    <p>%s</p>
+                    <p style="text-align:right;margin:0;"><small>Library Management Team</small></p>
+                </div>
+            </div>
+            """.formatted(greeting, bodyLabel, footer);
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+        helper.setTo(user.getEmail());
+        helper.setSubject(subject);
+        helper.setText(html, true);
+        mailSender.send(message);
+    }
+
     public void sendResetPasswordEmail(String to, String resetLink, Integer activeDuration) throws MessagingException {
         Locale locale = LocaleContextHolder.getLocale();
         String subject = messageSource.getMessage("email.reset.password.subject", null, locale);
