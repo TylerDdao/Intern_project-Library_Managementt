@@ -9,6 +9,13 @@
         </div>
     }
     @else {
+        <div class="search-container">
+            <div class="flex items-center space-x-[5px] w-full">
+                <input type="text" [(ngModel)]="query" placeholder="{{'search.Search'|translate}}" class="bg-pastel-blue text-dodger w-full rounded-[10px]"/>
+                <button class="flex items-center" (click)="handleSearch()"><span class="material-symbols-outlined">search</span></button>
+            </div>
+            <button class="px-[10px] py-[5px] bg-cool-gray rounded-[10px]" (click)="handleClearSearch()">{{'search.Clear'|translate}}</button>
+        </div>
         @if (books.length>0) {
             <div class="flex flex-col space-y-[10px]">
                 <div class="body font-bold">{{"booksManagement.Total-books"|translate}}: {{booksPage.totalElements}}</div>
@@ -22,9 +29,9 @@
                     <div class="list">
                         @for(book of books; track book.id){
                             <div (click)="toggleSelectedUser(book)" class="select-none cursor-pointer body p-[10px] rounded-[10px] flex flex-col transition ease-in-out w-full" [class]="selectedBooks.some(b => b.id == book.id)? 'border border-primary-1 bg-primary-1 text-soft-ice':'border border-primary-1 text-primary-1 hover:bg-primary-1 hover:text-soft-ice'">
-                                <div class="font-bold">{{"book.Title"|translate}}: {{book.title}}</div>
-                                <div>{{"book.Author"|translate}}: {{book.author}}</div>
-                                <div>
+                                <div class="font-bold caption-1">{{"book.Title"|translate}}: {{book.title}}</div>
+                                <div class="caption-1">{{"book.Author"|translate}}: {{book.author}}</div>
+                                <div class="caption-2">
                                     <span>{{"book.Genres"|translate}}: </span>
                                     @if (book.genres) {
                                         @for (genre of book.genres; track $index) {
@@ -37,7 +44,7 @@
                                         }
                                     }
                                 </div>
-                                <div>{{"book.Copies"|translate}}: {{book.copies}}</div>
+                                <div class="caption-1">{{"book.Copies"|translate}}: {{book.copies}}</div>
                             </div>
                         }
                     </div>
@@ -53,6 +60,6 @@
     }
     <div class="flex items-center space-x-[10px]">
         <button class="bg-primary-1 text-soft-ice px-[10px] py-[5px] rounded-[10px]" (click)="handleExport()">{{"export.Export"|translate}}</button>
-        <div class="body font-bold">{{"booksManagement.Selected-books"|translate}}: {{selectedBooks.length}}</div>
+        <div class="caption-1 font-bold">{{"booksManagement.Selected-books"|translate}}: {{selectedBooks.length}}</div>
     </div>
 </div>

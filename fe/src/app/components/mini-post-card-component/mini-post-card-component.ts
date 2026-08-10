@@ -31,20 +31,22 @@ export class MiniPostCardComponent {
   comments!: Comment[]
 
   toggleLike() {
-    this.postService.toggleLike(this.post.id).subscribe({
+    if(this.post && this.post.id){
+      this.postService.toggleLike(this.post.id).subscribe({
         next: (data: any) => {
-            if (data.code == "200") {
-                this.post = {
-                    ...this.post,
-                    liked: !this.post.liked,
-                    likeCount: this.post.liked ? this.post.likeCount - 1 : this.post.likeCount + 1
-                };
-                this.onLikeToggled.emit(this.post);
-                this.cdr.markForCheck();
-            }
+          if (data.code == "200") {
+              this.post = {
+                  ...this.post,
+                  liked: !this.post.liked,
+                  likeCount: this.post.liked ? this.post.likeCount - 1 : this.post.likeCount + 1
+              };
+              this.onLikeToggled.emit(this.post);
+              this.cdr.markForCheck();
+          }
         },
         error: (err) => console.error(err)
-    });
+      });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {

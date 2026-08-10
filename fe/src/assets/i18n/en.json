@@ -342,7 +342,8 @@
   "announcement": {
     "1":{
       "subject": "Your feedback matters!",
-      "content": "We are excited to hear your feedback. Please send it to us via the link below!"
+      "content": "We are excited to hear your feedback. Please send it to us via the link below!",
+      "linkText": "Feedback Form"
     },
     "2":{
       "subject":"Site Under Development — Best Viewed on Desktop",

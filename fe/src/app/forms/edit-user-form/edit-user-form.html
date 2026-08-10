@@ -128,11 +128,11 @@
     </div>
 
     <div class="flex space-x-[10px]">
-        <button type="submit" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice body rounded-[10px]">{{'form.Save'|translate}}</button>
+        <button type="submit" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice caption-1 rounded-[10px]">{{'form.Save'|translate}}</button>
         @if (deletable) {
-            <button type="button" class="bg-tomato-red px-[10px] py-[5px] text-soft-ice body rounded-[10px]" (click)="handleDeleteUser()">{{'usersManagement.Delete-user'|translate}}</button>
+            <button type="button" class="bg-tomato-red px-[10px] py-[5px] text-soft-ice caption-1 rounded-[10px]" (click)="handleDeleteUser()">{{'usersManagement.Delete-user'|translate}}</button>
         }
-        <button type="button" class="border border-tomato-red px-[10px] py-[5px] text-tomato-red body rounded-[10px]" (click)="close()">{{'form.Cancel'|translate}}</button>
+        <button type="button" class="border border-tomato-red px-[10px] py-[5px] text-tomato-red caption-1 rounded-[10px]" (click)="close()">{{'form.Cancel'|translate}}</button>
     </div>
 
     <!-- <div class="fixed inset-0 flex items-center justify-center z-99">

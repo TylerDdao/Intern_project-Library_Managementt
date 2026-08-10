@@ -53,6 +53,17 @@
 }
 
 @media (min-width: 1024px) {
+.body-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 80px;
+    right: 0;
+    bottom: 10px;
+    left: 0;
+        
+}
 .large-title{
     font-size: 26pt;
 }
@@ -92,6 +103,17 @@
 
 
 @media (max-width: 1023px) {
+.body-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 80px;
+    bottom: 10px;
+    left: 0px;
+    right: 0px;
+    padding: 10px;
+}
 .large-title{
     font-size: 34pt;
 }

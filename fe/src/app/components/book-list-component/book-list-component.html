@@ -9,10 +9,12 @@
         </div>
     }
     @else{
-        <div class="flex items-center space-x-[10px]">
-            <input placeholder="{{'book.Title'|translate}}" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full" [(ngModel)]="query"/>
-            <button class="select-none items-center flex" (click)="fetchSearchBook()"><span class="material-symbols-outlined">search</span></button>
-            <button (click)="handleClear()" class="bg-cool-gray p-[5px] rounded-[10px]">{{"search.Clear"|translate}}</button>
+        <div class="search-container">
+            <div class="flex items-center space-x-[10px] w-full">
+                <input placeholder="{{'book.Title'|translate}}" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full" [(ngModel)]="query"/>
+                <button class="select-none items-center flex" (click)="fetchSearchBook()"><span class="material-symbols-outlined">search</span></button>
+            </div>
+            <button (click)="handleClear()" class="bg-cool-gray p-[5px] rounded-[10px] caption-1">{{"search.Clear"|translate}}</button>
         </div>
         @if (isSearch != null) {
             @if (isSearch == true) {
@@ -22,7 +24,7 @@
             }
             @else {
                 @if (searchBooks.length > 0) {
-                    <div>{{"search.Result"|translate}}</div>
+                    <div class="headline">{{"search.Result"|translate}}</div>
                     @if (isBookFound) {
                         <div class="books-list">
                             @for (book of searchBooks; track book.id) {
@@ -56,13 +58,13 @@
                 
                 <div class="books-list">
                     @for (book of bookList; track book.id) {
-                        <div class="flex flex-col space-y-[5px]">
+                        <div class="flex flex-col space-y-[5px] items-center">
                             <app-book-card-component [book]="book"></app-book-card-component>
                             @if(selectable){
-                                <button class="px-[10px] py-[5px] bg-primary-1 text-soft-ice rounded-[10px]" (click)="selectBook(book)">{{'bookList.Select-this-book' |translate}}</button>
+                                <button class="px-[10px] py-[5px] bg-primary-1 text-soft-ice rounded-[10px] caption-1 w-full" (click)="selectBook(book)">{{'bookList.Select-this-book' |translate}}</button>
                             }
                             @if (deletable) {
-                                <button class="px-[10px] py-[5px] bg-tomato-red text-soft-ice rounded-[10px]" (click)="handleDeleteBook(book)">{{'bookList.Delete-this-book' |translate}}</button>
+                                <button class="px-[10px] py-[5px] bg-tomato-red text-soft-ice rounded-[10px] caption-1 w-full" (click)="handleDeleteBook(book)">{{'bookList.Delete-this-book' |translate}}</button>
                             }
                         </div>
                     }   

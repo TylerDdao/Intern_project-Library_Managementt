@@ -28,11 +28,53 @@
         max-width: 250px;
     }
 
-    .posts-container{
+    .posts-scrolling-area{
+        height: 65vh;
+        overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .container{
+        padding: 20px;
+        /* display: grid;
+        grid-template-rows: 1fr 1fr; */
         display: flex;
         flex-direction: column;
         gap: 30px;
-        overflow-y: auto;
-        height: 75vh;
     }
+
+    .book-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: start;
+        padding: 5px;
+        gap: 10px;
+    }
+
+    .book-cover-container{
+        height: 100px;
+        overflow-y: hidden;
+        
+    }
+
+    .book-cover{
+        /* width: 200px; */
+        border-radius: 8px;
+        height: 200px;
+        max-width: 250px;
+    }
+
+    .posts-scrolling-area{
+        height: 80dvh;
+        overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
 }

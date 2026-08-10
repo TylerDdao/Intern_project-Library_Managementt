@@ -72,9 +72,22 @@
                     <div>
                         <h1 class="title-3 font-bold book-info">{{book.title}}</h1>
                         <h1 class="body font-bold book-info">{{'book.Author'|translate}}: {{book.author}}</h1>
-                        <h1 class="body book-info">{{'book.Genres'|translate}}: {{book.genres}}</h1>
                         <h1 class="caption-1">{{'book.Available-copies'|translate}}: {{book.copies}}</h1>
-                        <h1 class="caption-1">{{'book.Genres'|translate}}: {{book.genres}}</h1>
+                        @if (book.genres) {
+                           <div>{{'book.Genres'|translate}}:
+                                <span>
+                                    @for (genre of book.genres; track $index) {
+                                        @if ($index + 1 == book.genres.length) {
+                                            <span class="">{{ genre.name }}</span>
+                                        }
+                                        @else {
+                                            <span class="">{{ genre.name }} | </span>
+                                        }
+                                    }
+
+                                </span> 
+                            </div>
+                        }
                         @if(borrow && book.borrowed){
                             <div class="caption-1 font-bold">{{"bookPage.Your-borrow-for-this-book-dues-on"|translate}}: {{formattedDueDate}}</div>
                         }
@@ -110,7 +123,7 @@
         }
         @else {
             @if(posts.length > 0){
-                <div class="posts-container">
+                <div class="posts-scrolling-area">
                     @for (post of posts; track post.id) {
                         <app-post-card-component [post]="post"></app-post-card-component>
                     }

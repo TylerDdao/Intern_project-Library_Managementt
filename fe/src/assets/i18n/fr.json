@@ -341,7 +341,8 @@
   "announcement": {
   "1": {
     "subject": "Votre avis compte!",
-    "content": "Nous avons hâte de connaître votre avis. Veuillez nous le transmettre via le lien ci-dessous !"
+    "content": "Nous avons hâte de connaître votre avis. Veuillez nous le transmettre via le lien ci-dessous !",
+    "linkText": "Formulaire de commentaires"
   },
   "2": {
     "subject": "Site en cours de développement — Optimisé pour ordinateur",

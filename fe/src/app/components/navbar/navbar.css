@@ -2,8 +2,6 @@
     font-weight: bold !important;
 }
 
-
-
 @media (min-width: 1024px) {
   .pages-container {
     display: grid;

@@ -6,7 +6,8 @@
             [type]="announcement.type"
             [subject]="announcement.subjectKey |translate"
             [content]="announcement.contentKey |translate"
-            [link]="announcement.link ?? ''">
+            [link]="announcement.link ?? ''"
+            [linkText]="announcement.linkText |translate : ''">
         </app-announcement-component>
     }
 }

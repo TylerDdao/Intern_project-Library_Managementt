@@ -11,6 +11,7 @@ import { LoadingComponent } from '../../../components/loading-component/loading-
 import { PagesComponent } from "../../../components/pages-component/pages-component";
 import { BookService } from '../../../services/book-service/book-service';
 import { Book } from '../../../models/book';
+import { FormsModule } from '@angular/forms';
 
 const defaultPage: Page = {
   first: true,
@@ -23,7 +24,7 @@ const defaultPage: Page = {
 
 @Component({
   selector: 'app-export-books-form',
-  imports: [LoadingComponent, TranslateModule, PagesComponent],
+  imports: [LoadingComponent, TranslateModule, PagesComponent, FormsModule],
   templateUrl: './export-books-form.html',
   styleUrl: './export-books-form.css',
 })
@@ -36,6 +37,8 @@ export class ExportBooksForm {
 
   selectedBooks:Book[] = []
 
+  query:string = ""
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private translate: TranslateService,
@@ -43,6 +46,34 @@ export class ExportBooksForm {
     private exportService: ExportService,
     private bookService: BookService
   ){}
+
+  handleSearch(){
+    console.log("SEARCH")
+    if(this.query){
+      this.isLoading = true;
+      this.bookService.searchBook(this.query, this.booksPage.number).subscribe({
+        next: (data:any)=>{
+          if(data.code == "200"){
+            this.books = data.data.content;
+            this.booksPage = data.data;
+            this.isLoading = false;
+            this.cdr.markForCheck();
+          }
+        },
+        error:(err:HttpErrorResponse)=>{
+          errorNoti(err, this.translate);
+          this.isLoading = false
+          this.cdr.markForCheck()
+        }
+      })
+    }
+  }
+
+  handleClearSearch(){
+    this.query = ""
+    this.fetchAllBooks();
+    this.cdr.markForCheck()
+  }
 
   isAllSelected(): boolean {
     return this.selectedBooks.length === this.booksPage.totalElements;

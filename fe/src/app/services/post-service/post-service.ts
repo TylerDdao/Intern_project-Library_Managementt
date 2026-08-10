@@ -4,6 +4,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../../../environments/environment';
 import { SideBarQuery } from '../../components/sort-side-bar-component/sort-side-bar-component';
 import { getAuthHeaders } from '../auth-service';
+import { Post } from '../../models/post';
 
 @Injectable({
   providedIn: 'root',
@@ -56,5 +57,18 @@ export class PostService {
     return this.http.get(`${this.baseUrl}?page=${page}&limit=${limit}&bookId=${bookId}`, {
       headers: getAuthHeaders(this.platformId)
     })
+  }
+
+  deletePost(post:Post){
+    return this.http.delete(`${this.baseUrl}?id=${post.id}`, {headers: getAuthHeaders(this.platformId)})
+  }
+
+  createPost(post: Post){
+    const body = {
+      "subject": post.subject,
+      "content": post.content,
+      "book": post.book.id
+    }
+    return this.http.post(`${this.baseUrl}`, body, {headers: getAuthHeaders(this.platformId)})
   }
 }

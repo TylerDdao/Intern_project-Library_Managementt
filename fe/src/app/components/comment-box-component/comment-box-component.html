@@ -17,14 +17,14 @@
                     <div class="comment">
                         <div>
                             <div class="flex justify-between items-center">
-                                <h1 class="headline">{{comment.createdBy}}</h1>
+                                <h1 class="headline">@{{comment.createdBy}}</h1>
                                 @if (comment.owner) {
                                     <button class="flex items-center" (click)="handleDeleteComment(comment)"><span class="material-symbols-outlined text-tomato-red select-none">delete</span></button>
                                 }
                             </div>
-                            <h1 class="caption-1">{{getFormattedCreatedAt(comment.createdAt)}}</h1>
+                            <h1 class="caption-2">{{getFormattedCreatedAt(comment.createdAt)}}</h1>
                         </div>
-                        <p class="body">{{comment.content}}</p>
+                        <p class="footnote">{{comment.content}}</p>
                     </div>
                 }
             }

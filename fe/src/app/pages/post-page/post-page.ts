@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, inject, Inject, PLATFORM_ID, SimpleChanges } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NavbarComponent } from '../../components/navbar/navbar';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { formatTime } from '../../util/format-number';
@@ -12,6 +12,9 @@ import { Book } from '../../models/book';
 import { BookService } from '../../services/book-service/book-service';
 import { BookListComponent } from '../../components/book-list-component/book-list-component';
 import { Page } from '../../models/page';
+import { environment } from '../../../environments/environment';
+import { HttpErrorResponse } from '@angular/common/http';
+import { errorNoti } from '../../util/error-notification';
 
 @Component({
   selector: 'app-post-page',
@@ -20,9 +23,9 @@ import { Page } from '../../models/page';
   styleUrl: './post-page.css',
 })
 export class PostPage {
+  backendUrl = environment.apiUrl;
   post!:Post
   postId!:number;
-  bookCover: string = ""
 
   books!: Book[];
   booksPage: Page = {
@@ -43,6 +46,7 @@ export class PostPage {
     private bookService: BookService,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
+    private translate: TranslateService
   ){}
 
   postForm = new FormGroup({
@@ -62,6 +66,26 @@ export class PostPage {
   handleCloseBookList(){
     this.isOpenBookList = false;
     this.cdr.markForCheck();
+  }
+
+  handleDeletePost(){
+    const message = this.translate.instant("form.Confirm-delete")
+    const option = confirm(message+"?")
+    if(!option ) return
+    if(this.post){
+      this.postService.deletePost(this.post).subscribe({
+        next: (data:any)=>{
+          if(data.code == "200"){
+            const message = this.translate.instant("postsManagement.Post-is-deleted")
+            alert(message)
+            this.router.navigate(["/my-posts"])
+          }
+        },
+        error:(err:HttpErrorResponse)=>{
+          errorNoti(err, this.translate);
+        }
+      })
+    }
   }
 
   fetchBooks(page:Page = this.booksPage){
@@ -85,7 +109,6 @@ export class PostPage {
       next: (data: any)=>{
         if(data.code == "200"){
           this.post = data.data
-          this.bookCover = this.post.book.title.replaceAll(' ', '-').toLowerCase();
           this.postForm.patchValue({
             subject: this.post.subject,
             content: this.post.content,

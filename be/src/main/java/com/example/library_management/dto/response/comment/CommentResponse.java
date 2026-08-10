@@ -1,7 +1,7 @@
 package com.example.library_management.dto.response.comment;
 
 import com.example.library_management.dto.response.BaseResponse;
-import com.example.library_management.dto.response.PostResponse;
+import com.example.library_management.dto.response.post.PostResponse;
 import com.example.library_management.model.Comment;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

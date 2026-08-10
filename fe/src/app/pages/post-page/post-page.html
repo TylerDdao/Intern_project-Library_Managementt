@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <div class="container">
-    <h1 class="title-1 font-bold">{{'postPage.Edit-post'|translate}}</h1>
+    <h1 class="headline">{{'postPage.Edit-post'|translate}}</h1>
     <div class="post-container">
     @if(post){        
         <div class="flex justify-between items-start">
@@ -10,11 +10,27 @@
             </div>
             <div class="book-info-container select-none cursor-pointer" (click)="fetchBooks()">
                 <div class="flex space-x-[5px] items-start">
-                    <img src="http://127.0.0.1:8080/book-covers/{{bookCover}}.jpg" class="book-cover" (error)="onImageError($event)"/>
+                    <img src="{{backendUrl}}/book-covers/{{chosenBook.id}}.jpg" class="book-cover" (error)="onImageError($event)"/>
                     <div>
                         <h1 class="header font-bold">{{chosenBook.title}}</h1>
                         <h1 class="subheader font-bold">{{'book.Author'|translate}}: {{chosenBook.author}}</h1>
-                        <h1 class="subheader">{{'book.Genres'|translate}}: {{chosenBook.genres}}</h1>
+                        <div class="line-clamp-1">
+                            @if (chosenBook.genres) {
+                                <div>{{'book.Genres'|translate}}:
+                                    <span>
+                                        @for (genre of chosenBook.genres; track $index) {
+                                            @if ($index + 1 == chosenBook.genres.length) {
+                                                <span class="">{{ genre.name }}</span>
+                                            }
+                                            @else {
+                                                <span class="">{{ genre.name }} | </span>
+                                            }
+                                        }
+
+                                    </span> 
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -27,14 +43,15 @@
             </div>
             <div class="post-content-container">
                 <textarea formControlName="content" placeholder='{{"post.Body"|translate}}' 
-                    class="bg-cool-gray text-deep-charcoal rounded-[10px] w-full p-[10px] h-full resize-none"></textarea>
+                    class="bg-cool-gray text-deep-charcoal rounded-[10px] w-full p-[10px] max-h-full resize-none"></textarea>
             </div>
         </form>
 
         <div class="flex space-x-[10px]">
             @if (post) {
-                <button class="bg-leaf-green p-[5px] text-soft-ice rounded-[10px]">{{'form.Save'|translate}}</button>
-                <button class="border border-tomato-red p-[5px] text-tomato-red rounded-[10px]" (click)="handleCancel()">{{'form.Cancel'|translate}}</button>
+                <button class="bg-leaf-green p-[5px] text-soft-ice rounded-[10px] caption-1">{{'form.Save'|translate}}</button>
+                <button class="bg-tomato-red p-[5px] text-soft-ice rounded-[10px] caption-1" (click)="handleDeletePost()">{{'form.Delete'|translate}}</button>
+                <button class="border border-tomato-red p-[5px] text-tomato-red rounded-[10px] caption-1" (click)="handleCancel()">{{'form.Cancel'|translate}}</button>
             }
         </div>
     }

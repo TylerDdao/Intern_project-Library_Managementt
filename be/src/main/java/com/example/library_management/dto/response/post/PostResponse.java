@@ -1,4 +1,4 @@
-package com.example.library_management.dto.response;
+package com.example.library_management.dto.response.post;
 
 import com.example.library_management.dto.response.book.BookResponse;
 import com.example.library_management.model.Post;

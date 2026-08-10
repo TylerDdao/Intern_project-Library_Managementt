@@ -4,11 +4,13 @@ import com.example.library_management.dto.response.book.BookResponse;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PostRequest {
     private Long id = null ;
@@ -16,11 +18,7 @@ public class PostRequest {
     private String content;
     private Long likeCount = null;
     private Long commentCount = null;
-    private boolean isLiked;
-    private String createdBy;
-    private LocalDateTime createdAt;
-    private String updatedBy;
-    private LocalDateTime updatedAt;
-    private BookResponse book;
-    private boolean isEditable;
+    private Boolean isLiked = false;
+    private Long book;
+    private Boolean isEditable = false;
 }

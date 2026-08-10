@@ -24,6 +24,21 @@
             </div>
         </div>
 
+        <div>
+            <div class="headline">{{"role.Assigned-features" | translate}}</div>
+            <div class="features-container">
+                @for (feature of addedFeatures; track $index) {
+                    <div 
+                        [class]="addedFeatures.includes(feature) 
+                            ? 'p-[5px] bg-primary-1 text-soft-ice text-center rounded-[10px] select-none transition-colors ease-in-out cursor-pointer' 
+                            : 'p-[5px] bg-tomato-red text-soft-ice text-center rounded-[10px] select-none transition-colors ease-in-out cursor-pointer'"
+                        (click)="handleToggleFeature(feature)">
+                        {{feature.name}}
+                    </div>
+                }
+            </div>
+        </div>
+
         <div class="flex space-x-[5px] items-center w-full">
             <input id="defaultRole" formControlName="defaultRole" type="checkbox" class="bg-pastel-blue text-dodger-blue rounded-[10px]"/>
             <label for="defaultRole" class="text-nowrap font-bold">{{"role.Set-default"|translate}}</label>

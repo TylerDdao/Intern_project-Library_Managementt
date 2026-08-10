@@ -9,9 +9,11 @@
         </div>
     }
     @else {
-        <div class="flex items-center space-x-[5px]">
-            <input type="text" [(ngModel)]="query" placeholder="{{'search.Search'|translate}}" class="bg-pastel-blue text-dodger w-full rounded-[10px]"/>
-            <button class="flex items-center" (click)="handleSearch()"><span class="material-symbols-outlined">search</span></button>
+        <div class="search-container">
+            <div class="flex items-center space-x-[5px] w-full">
+                <input type="text" [(ngModel)]="query" placeholder="{{'search.Search'|translate}}" class="bg-pastel-blue text-dodger w-full rounded-[10px]"/>
+                <button class="flex items-center" (click)="handleSearch()"><span class="material-symbols-outlined">search</span></button>
+            </div>
             <button class="px-[10px] py-[5px] bg-cool-gray rounded-[10px]" (click)="handleClearSearch()">{{'search.Clear'|translate}}</button>
         </div>
         @if (borrows.length>0) {
@@ -27,14 +29,14 @@
                     <div class="list">
                         @for(borrow of borrows; track borrow.id){
                             <div (click)="toggleSelectedBorrow(borrow)" class="select-none cursor-pointer body p-[10px] rounded-[10px] flex flex-col transition ease-in-out w-full" [class]="selectedBorrows.some(b => b.id == borrow.id)? 'border border-primary-1 bg-primary-1 text-soft-ice':'border border-primary-1 text-primary-1 hover:bg-primary-1 hover:text-soft-ice'">
-                                <div class="font-bold">{{"book.Book"|translate}}: {{borrow.book.title}} {{"book.by"|translate}} {{borrow.book.author}}</div>
-                                <div class="font-bold">{{"user.User"|translate}}: @{{borrow.user.username}} - {{borrow.user.fullName}}</div>
-                                <div>{{"user.Email"|translate}}: {{borrow.user.email}}</div>
+                                <div class="caption-1 font-bold">{{"book.Book"|translate}}: {{borrow.book.title}} {{"book.by"|translate}} {{borrow.book.author}}</div>
+                                <div class="caption-1  font-bold">{{"user.User"|translate}}: @{{borrow.user.username}} - {{borrow.user.fullName}}</div>
+                                <div class="caption-1 break-all">{{"user.Email"|translate}}: {{borrow.user.email}}</div>
                                 <!-- <div>{{"user.Phone-number"|translate}}: {{borrow.user.phoneNumber}}</div> -->
-                                <div>{{"borrow.Borrowed-on"|translate}}: {{getCreatedAt (borrow)}}</div>
-                                <div>{{"borrow.Due-on"|translate}}: {{getDueDate(borrow)}}</div>
+                                <div class="caption-1 ">{{"borrow.Borrowed-on"|translate}}: {{getCreatedAt (borrow)}}</div>
+                                <div class="caption-1 ">{{"borrow.Due-on"|translate}}: {{getDueDate(borrow)}}</div>
                                 @if (borrow.penalty) {
-                                    <div>{{"borrow.Penalty"|translate}}: {{getPenaltyFee(borrow)}}</div>
+                                    <div class="caption-1 ">{{"borrow.Penalty"|translate}}: <strong>{{getPenaltyFee(borrow)}}</strong></div>
                                 }
                             </div>
                         }
@@ -51,6 +53,6 @@
     }
     <div class="flex items-center space-x-[10px]">
         <button class="bg-primary-1 text-soft-ice px-[10px] py-[5px] rounded-[10px]" (click)="handleExport()">{{"export.Export"|translate}}</button>
-        <div class="body font-bold">{{"borrowsManagement.Selected-borrows"|translate}}: {{selectedBorrows.length}}</div>
+        <div class="caption-1 font-bold">{{"borrowsManagement.Selected-borrows"|translate}}: {{selectedBorrows.length}}</div>
     </div>
 </div>

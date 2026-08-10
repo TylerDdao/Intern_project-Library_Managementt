@@ -11,6 +11,7 @@ export class AnnouncementComponent {
   @Input({ required: true }) subject: string = "Subject";
   @Input({ required: true }) content: string = "Content";
   @Input({ required: false}) link!: string;
+  @Input({ required: false }) linkText !: string;
   @Input({ required: false }) type: "info" | "warning" | "error" = "info"
   @Output() onClose = new EventEmitter<void>();
 

@@ -1,53 +1,62 @@
 <app-navbar></app-navbar>
 <div class="container">
-    <h1 class="title-1 font-bold">{{'createPost.Create-new-post'|translate}}</h1>
+    <h1 class="headline">{{'createPost.Create-new-post'|translate}}</h1>
     <div class="post-container">
-    @if(!post){        
-        <div class="flex justify-between items-start">
-            <div class="user-info-container">
-                <div class="headline font-bold">@{{username}}</div>
-            </div>
-            @if (chosenBook) {
-                <div class="flex space-x-[5px] items-center">
-                    <div class="book-info-container select-none cursor-pointer" (click)="fetchBooks()">
-                        <div class="flex space-x-[5px] items-start">
-                            <img src="{{backendUrl}}/book-covers/{{chosenBook.coverUrl}}" class="book-cover" (error)="onImageError($event)"/>
-                            <div>
-                                <h1 class="header font-bold">{{chosenBook.title}}</h1>
-                                <h1 class="subheader font-bold">{{'book.Author'|translate}}: {{chosenBook.author}}</h1>
-                                <h1 class="subheader">{{'book.Genres'|translate}}: {{chosenBook.genres}}</h1>
+   <div class="flex justify-between items-start">
+        <div class="user-info-container">
+            <div class="body">@{{username}}</div>
+        </div>
+        @if (chosenBook) {
+            <div class="flex space-x-[5px] items-center">
+                <div class="book-info-container select-none cursor-pointer" (click)="fetchBooks()">
+                    <div class="flex space-x-[5px] items-start">
+                        <img src="{{backendUrl}}/book-covers/{{chosenBook.coverUrl}}" class="book-cover" (error)="onImageError($event)"/>
+                        <div>
+                            <h1 class="header font-bold">{{chosenBook.title}}</h1>
+                            <h1 class="subheader font-bold">{{'book.Author'|translate}}: {{chosenBook.author}}</h1>
+                            <div class="line-clamp-1">
+                                @if (chosenBook.genres) {
+                                    <div>{{'book.Genres'|translate}}:
+                                        <span>
+                                            @for (genre of chosenBook.genres; track $index) {
+                                                @if ($index + 1 == chosenBook.genres.length) {
+                                                    <span class="">{{ genre.name }}</span>
+                                                }
+                                                @else {
+                                                    <span class="">{{ genre.name }} | </span>
+                                                }
+                                            }
+
+                                        </span> 
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
-                    <div class="select-none cursor-pointer" (click)="handleUnselectBook()"><span class="material-symbols-outlined text-tomato-red">close</span></div>
                 </div>
-            }
-            @else {
-                <button class="bg-primary-1 text-soft-ice headline rounded-[10px] px-[10px] py-[5px]" (click)="fetchBooks()">{{'createPost.Pick-a-book'|translate}}</button>
-            }
-        </div>
-
-        <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="form-container">
-            <div class="post-subject-container">
-                <input formControlName="subject" type="text" placeholder='{{"post.Subject"|translate}}' 
-                    class="bg-cool-gray text-deep-charcoal rounded-[10px] w-full p-[10px]"/>
+                <div class="select-none cursor-pointer" (click)="handleUnselectBook()"><span class="material-symbols-outlined text-tomato-red">close</span></div>
             </div>
-            <div class="post-content-container">
-                <textarea formControlName="content" placeholder='{{"post.Body"|translate}}' 
-                    class="bg-cool-gray text-deep-charcoal rounded-[10px] w-full p-[10px] h-full resize-none"></textarea>
-            </div>
-        </form>
+        }
+        @else {
+            <button class="bg-primary-1 text-soft-ice headline rounded-[10px] px-[10px] py-[5px]" (click)="fetchBooks()">{{'createPost.Pick-a-book'|translate}}</button>
+        }
+    </div>
 
-        <div class="flex space-x-[10px]">
-            <button class="bg-leaf-green p-[5px] text-soft-ice rounded-[10px]">{{'form.Save'|translate}}</button>
-            <button class="border border-tomato-red p-[5px] text-tomato-red rounded-[10px]" (click)="handleCancel()">{{'form.Cancel'|translate}}</button>
+    <form [formGroup]="postForm" id="postForm" (ngSubmit)="onSubmit()" class="form-container">
+        <div class="post-subject-container">
+            <input formControlName="subject" type="text" placeholder='{{"post.Subject"|translate}}' 
+                class="bg-cool-gray text-deep-charcoal rounded-[10px] w-full p-[10px]"/>
         </div>
-    }
-    @else {
-        <div class="flex items-center justify-center">
-            <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+        <div class="post-content-container">
+            <textarea formControlName="content" placeholder='{{"post.Body"|translate}}' 
+                class="bg-cool-gray text-deep-charcoal rounded-[10px] w-full p-[10px] max-h-full min-h-full resize-none"></textarea>
         </div>
-    }
+    </form>
+
+    <div class="flex space-x-[10px]">
+        <button type="submit" form="postForm" class="bg-leaf-green p-[5px] text-soft-ice rounded-[10px]">{{'form.Save'|translate}}</button>
+        <button class="border border-tomato-red p-[5px] text-tomato-red rounded-[10px]" (click)="handleCancel()">{{'form.Cancel'|translate}}</button>
+    </div>
     </div>
 
     @if(isOpenBookList){
@@ -60,21 +69,9 @@
             }
         </div>
     }
-
-
-    <!-- <div class="w-full bg-soft-ice p-[10px] rounded-[10px]">
-        @if (post) {
-            <div class="headline">{{"postPage.Book-selection"|translate}}</div>
-            <div class="flex space-x-[5px] items-center">
-                <input type="text" placeholder='{{"search.Search-book"|translate}}' class="bg-cool-gray text-deep-charcoal rounded-[10px] p-[10px] w-full"/>
-                <span class="material-symbols-outlined cursor-pointer select-none">search</span>
-            </div>
-            
-        }
-        @else {
-            <div class="flex items-center justify-center h-full">
-                <div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
-            </div>
-        }
-    </div> -->
+    @if (isLoading) {
+        <div class="fixed inset-0 flex items-center justify-center z-99 bg-soft-ice/50">
+            <app-loading-component></app-loading-component>
+        </div>
+    }
 </div>

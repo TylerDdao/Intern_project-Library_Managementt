@@ -11,4 +11,5 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     public Page<Comment>findByPostId(Long postId, Pageable pageable);
     public void deleteAllByPostIn(List<Post> posts);
+    public void deleteAllByPost(Post post);
 }

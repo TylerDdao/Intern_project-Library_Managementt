@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Inject, inject, PLATFORM_ID } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NavbarComponent } from '../../components/navbar/navbar';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BookListComponent } from '../../components/book-list-component/book-list-component';
@@ -13,15 +13,17 @@ import { LanguageService } from '../../services/language-service/language-servic
 import { PostService } from '../../services/post-service/post-service';
 import { BookService } from '../../services/book-service/book-service';
 import { environment } from '../../../environments/environment';
+import { HttpErrorResponse } from '@angular/common/http';
+import { errorNoti } from '../../util/error-notification';
+import { LoadingComponent } from "../../components/loading-component/loading-component";
 
 @Component({
   selector: 'app-create-post',
-  imports: [TranslateModule, NavbarComponent, ReactiveFormsModule, BookListComponent],
+  imports: [TranslateModule, NavbarComponent, ReactiveFormsModule, BookListComponent, LoadingComponent],
   templateUrl: './create-post.html',
   styleUrl: './create-post.css',
 })
 export class CreatePost {
-  post!:Post
   postId!:number;
   bookCover: string = ""
 
@@ -40,6 +42,8 @@ export class CreatePost {
 
   username!:String
 
+  isLoading: boolean = false
+
   constructor(
     private route: ActivatedRoute,
     private langService: LanguageService,
@@ -48,12 +52,12 @@ export class CreatePost {
     private cdr: ChangeDetectorRef,
     protected router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
+    private translate: TranslateService
   ){}
 
   postForm = new FormGroup({
     subject: new FormControl('', Validators.required),
     content: new FormControl('', Validators.required),
-    book: new FormControl<number | null>(null, Validators.required),
   });
   
   handleUnselectBook(){
@@ -64,7 +68,6 @@ export class CreatePost {
   handleSelectBook(book:Book){
     console.log('handleSelectBook called', book);
     this.chosenBook = book;
-    this.postForm.patchValue({ book: book.id });
     this.bookCover = this.chosenBook.title.replaceAll(' ', '-').toLowerCase();
     this.isOpenBookList = false;
     this.cdr.markForCheck();
@@ -75,7 +78,36 @@ export class CreatePost {
   }
 
   onSubmit(){
-    console.log("Submit")
+    console.log("SUbmit")
+    const { subject, content } = this.postForm.value;
+    if (subject && content && this.chosenBook) {
+      this.isLoading = true;
+      const request: Post = {
+        subject,
+        content,
+        book: this.chosenBook,
+        likeCount: 0,
+        createdAt: '',
+        commentCount: 0,
+        createdBy: '',
+        liked: false,
+        editable: true
+      };
+      this.postService.createPost(request).subscribe({
+        next: (data: any) => {
+          if (data.code == "200") {
+            const message = this.translate.instant("postsManagement.Post-is-created");
+            alert(message);
+            this.router.navigate(['/my-posts']); // or wherever makes sense after creating
+          }
+          this.isLoading = false;
+        },
+        error: (err: HttpErrorResponse) => {
+          errorNoti(err, this.translate);
+          this.isLoading = false;
+        }
+      });
+    }
   }
 
   handleCloseBookList(){

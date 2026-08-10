@@ -15,19 +15,23 @@
                     <div>
                         <h1 class="header font-bold">{{post.book.title}}</h1>
                         <h1 class="subheader font-bold">{{'book.Author'|translate}}: {{post.book.author}}</h1>
-                        @if (post.book.genres) {
-                            <div class="line-clamp-5">
-                                @for (genre of post.book.genres; track $index) {
-                                    @if ($index + 1 == post.book.genres.length) {
-                                        <span class="">{{ genre.name }}</span>
-                                    }
-                                    @else {
-                                        <span class="">{{ genre.name }} | </span>
-                                    }
-                                }
+                        <div class="line-clamp-3">
+                            @if (post.book.genres) {
+                                <div>{{'book.Genres'|translate}}:
+                                    <span>
+                                        @for (genre of post.book.genres; track $index) {
+                                            @if ($index + 1 == post.book.genres.length) {
+                                                <span class="">{{ genre.name }}</span>
+                                            }
+                                            @else {
+                                                <span class="">{{ genre.name }} | </span>
+                                            }
+                                        }
 
-                            </div>
-                        }
+                                    </span> 
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -38,7 +42,7 @@
                 <h1 class="body">{{post.content}}</h1>
             </div>
 
-            <div class="post-react-container">
+            <div class="post-react-container select-none">
                 <div class="flex items-center space-x-[5px] cursor-pointer" (click)="toggleLike()">
                     <span class="material-symbols-outlined text-sky-blue icon" [class.active]="post.liked">thumb_up</span>
                     <h1 class="body">{{formattedLikeCount}}</h1>
@@ -52,7 +56,7 @@
 
             @if (post.editable) {
             
-                <button class="edit-button cursor-pointer" (click)="handleEditPost()">
+                <button class="edit-button cursor-pointer select-none" (click)="handleEditPost()">
                     <span class="material-symbols-outlined">edit</span>
                     <h1 class="headline">{{'post.Edit-post'|translate}}</h1>
                 </button>

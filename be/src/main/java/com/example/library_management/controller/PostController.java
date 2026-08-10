@@ -1,9 +1,12 @@
 package com.example.library_management.controller;
 
+import com.example.library_management.dto.request.post.PostRequest;
 import com.example.library_management.dto.response.ApiResponse;
-import com.example.library_management.dto.response.PostResponse;
+import com.example.library_management.dto.response.post.PostResponse;
 import com.example.library_management.model.User;
 import com.example.library_management.repository.UserRepository;
+import com.example.library_management.service.post.CreatePostService;
+import com.example.library_management.service.post.DeletePostService;
 import com.example.library_management.service.post.GetPostService;
 import com.example.library_management.service.post.UpdatePostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +23,16 @@ public class PostController {
     private GetPostService getPostService;
 
     @Autowired
+    private DeletePostService deletePostService;
+
+    @Autowired
     private UpdatePostService updatePostService;
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CreatePostService createPostService;
 
 //    @PreAuthorize("@securityService.hasAccess('GET_POST')")
 //    @GetMapping()
@@ -38,7 +47,7 @@ public class PostController {
 //        );
 //    }
 
-    @PreAuthorize("@securityService.hasAccess('UPDATE_POST')")
+    @PreAuthorize("@securityService.hasAccess('GET_POST')")
     @GetMapping("/{postId}")
     public ResponseEntity<ApiResponse<PostResponse>> getPost(@PathVariable Long postId){
         return ResponseEntity.ok(ApiResponse.success((getPostService.getPostById(postId))));
@@ -78,6 +87,24 @@ public class PostController {
             @RequestParam(defaultValue = "desc") String sortDir) {
         return ResponseEntity.ok(
                 ApiResponse.success(getPostService.getMyPosts(page, limit, sortBy, sortDir))
+        );
+    }
+
+    @PreAuthorize("@securityService.hasAccess('DELETE_POST')")
+    @DeleteMapping("")
+    public ResponseEntity<ApiResponse<String>> deletePost(
+            @RequestParam() Long id) {
+        return ResponseEntity.ok(
+                ApiResponse.success(deletePostService.deletePost(id))
+        );
+    }
+
+    @PreAuthorize("@securityService.hasAccess('CREATE_POST')")
+    @PostMapping("")
+    public ResponseEntity<ApiResponse<PostResponse>> createPost(
+            @RequestBody PostRequest request) {
+        return ResponseEntity.ok(
+                ApiResponse.success(createPostService.createPost(request))
         );
     }
 }

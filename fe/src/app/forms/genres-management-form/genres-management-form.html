@@ -7,9 +7,11 @@
             </div>
 
             <form [formGroup]="newGenreForm" id="newGenreForm" (ngSubmit)="onSubmit()">
-                <div class="flex space-x-[10px] items-center">
-                    <input type="text" formControlName="genreName" placeholder="{{'genre.Name'|translate}}" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full"/>
-                    <button type="submit" form="newGenreForm" class="px-[10px] text-soft-ice bg-primary-1 rounded-[10px] py-[5px]">{{"list.Add"|translate}}</button>
+                <div class="search-container">
+                    <div class="flex space-x-[10px] items-center w-full">
+                        <input type="text" formControlName="genreName" placeholder="{{'genre.Name'|translate}}" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full"/>
+                        <button type="submit" form="newGenreForm" class="px-[10px] text-soft-ice bg-primary-1 rounded-[10px] py-[5px]">{{"list.Add"|translate}}</button>
+                    </div>
                     <button type="button" class="bg-cool-gray p-[5px] rounded-[10px]" (click)="handleClear()">{{"search.Clear"|translate}}</button>
                 </div>
             </form>

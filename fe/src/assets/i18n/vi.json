@@ -341,7 +341,8 @@
   "announcement": {
   "1": {
     "subject": "Ý kiến của bạn rất quan trọng!",
-    "content": "Chúng tôi rất mong nhận được phản hồi từ bạn. Vui lòng gửi ý kiến cho chúng tôi qua liên kết bên dưới!"
+    "content": "Chúng tôi rất mong nhận được phản hồi từ bạn. Vui lòng gửi ý kiến cho chúng tôi qua liên kết bên dưới!",
+    "linkText": "Biểu mẫu góp ý"
   },
   "2": {
     "subject": "Website đang phát triển — Trải nghiệm tốt nhất trên máy tính",

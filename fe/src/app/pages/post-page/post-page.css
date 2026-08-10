@@ -1,9 +1,9 @@
 @media (min-width: 1024px) {
     .container {
-        padding: 50px;
+        padding: 30px;
         display: flex;
         flex-direction: column;
-        gap: 30px;
+        gap: 10px;
         min-width: calc(100dvw - 25px);
     }
 
@@ -26,7 +26,7 @@
 
     .book-info-container {
         display: flex;
-        justify-content: flex-end;  /* push to right */
+        justify-content: flex-end;
     }
 
     .book-cover {
@@ -44,8 +44,10 @@
 
     .post-content-container {
         flex: 1;
-        max-height: 50vh;
-        min-height: 50vh;
+        max-height: 50dvh;
+        min-height: 50dvh;
+        display: flex;
+        box-sizing: border-box;
     }
 
     .user-pfp {
@@ -56,6 +58,77 @@
     }
 }
 
-@media(max-width: 1023px){
+@media (max-width: 1023px) {
+    .container {
+        box-sizing: border-box;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        min-width: unset;
+    }
 
+    .post-container {
+        box-sizing: border-box;
+        padding: 15px;
+        background-color: var(--color-soft-ice);
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+
+    /* Stack "Pick a book" / chosen-book row vertically on narrow screens
+       so long titles don't get squeezed against the username */
+    .container .flex.justify-between.items-start {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+
+    .user-info-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .book-info-container {
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .book-cover {
+        height: 70px;
+        width: 50px;
+        object-fit: cover;
+        border-radius: 5px;
+        flex-shrink: 0;
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        flex: 1;
+    }
+
+    .post-content-container {
+        flex: 1;
+        max-height: 50dvh;
+        min-height: 50dvh;
+        display: flex;
+        box-sizing: border-box;
+    }
+
+    .user-pfp {
+        width: 40px;
+        height: 40px;
+        overflow: hidden;
+        border-radius: 100%;
+    }
 }

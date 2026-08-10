@@ -7,7 +7,7 @@
         background: white;
         border-radius: 10px;
         gap: 30px;
-        max-height: 80vh;
-        min-width: 50vw;
+        max-height: 80dvh;
+        min-width: 50dvw;
     }
 }

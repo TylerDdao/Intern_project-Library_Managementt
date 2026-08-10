@@ -36,19 +36,21 @@ export class CommentBoxComponent {
   isLoadingComments:boolean = true;
 
   fetchComments(){
-    this.isLoadingComments = true;
-    this.commentService.getComments(this.post.id).subscribe({
-      next: (data:any)=>{
-        if(data.code == "200"){
-          this.comments = data.data.content;
-          this.isLoadingComments = false;
-          this.cdr.markForCheck();
+    if(this.post && this.post.id){
+      this.isLoadingComments = true;
+      this.commentService.getComments(this.post.id).subscribe({
+        next: (data:any)=>{
+          if(data.code == "200"){
+            this.comments = data.data.content;
+            this.isLoadingComments = false;
+            this.cdr.markForCheck();
+          }
+        },
+        error:(err:HttpErrorResponse)=>{
+          console.error(err.error.code + ": " + err.error.message)
         }
-      },
-      error:(err:HttpErrorResponse)=>{
-        console.error(err.error.code + ": " + err.error.message)
-      }
-    })
+      })
+    }
   }
 
   newCommentForm = new FormGroup({
@@ -76,7 +78,7 @@ export class CommentBoxComponent {
   onSubmit(){
     if(this.newCommentForm.valid){
       const {content} = this.newCommentForm.value;
-      if(content){
+      if(content && this.post.id){
         this.commentService.createComment(content,this.post.id).subscribe({
           next: (data:any)=>{
             if(data.code == "200"){

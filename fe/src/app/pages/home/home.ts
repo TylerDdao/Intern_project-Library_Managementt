@@ -28,6 +28,7 @@ interface Announcement {
   subjectKey: string;
   contentKey: string;
   link?: string;
+  linkText?: string;
   isOpen: boolean;
 }
 
@@ -187,6 +188,7 @@ export class Home {
           subjectKey: 'announcement.1.subject',
           contentKey: 'announcement.1.content',
           link: 'https://forms.gle/8agsuPwmFonKSzPb6',
+          linkText: 'announcement.1.linkText',
           isOpen: true,
         },
         {

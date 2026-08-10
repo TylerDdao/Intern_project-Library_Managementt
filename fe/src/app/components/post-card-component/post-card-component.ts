@@ -43,7 +43,9 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
   backendUrl = environment.apiUrl;
 
   handleChange(commentCount:number){
-    this.post.commentCount += commentCount;
+    if(this.post.commentCount){
+      this.post.commentCount += commentCount;
+    }
     this.cdr.markForCheck
     console.log(this.post.commentCount)
   }
@@ -55,7 +57,7 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   fetchPost(){
-    if(this.post){
+    if(this.post && this.post.id){
       this.postService.getPostById(this.post.id).subscribe({
         next:(data:any)=>{
           if(data.code == "200"){
@@ -68,31 +70,35 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   fetchComments(){
-    this.commentService.getComments(this.post.id, 0, 10).subscribe({
-      next: (data: any) => {
-        if(data.code == "200") {
-          this.comments = data.data.content
-          this.cdr.markForCheck();
+    if(this.post && this.post.id){
+      this.commentService.getComments(this.post.id, 0, 10).subscribe({
+        next: (data: any) => {
+          if(data.code == "200") {
+            this.comments = data.data.content
+            this.cdr.markForCheck();
+          }
         }
-      }
-    })
+      })
+    }
   }
 
   toggleLike() {
-    this.postService.toggleLike(this.post.id).subscribe({
+    if(this.post && this.post.id){
+      this.postService.toggleLike(this.post.id).subscribe({
         next: (data: any) => {
-            if (data.code == "200") {
-                this.post = {
-                    ...this.post,
-                    liked: !this.post.liked,
-                    likeCount: this.post.liked ? this.post.likeCount - 1 : this.post.likeCount + 1
-                };
-                this.onLikeToggled.emit(this.post);
-                this.cdr.markForCheck();
+          if (data.code == "200") {
+              this.post = {
+                  ...this.post,
+                  liked: !this.post.liked,
+                  likeCount: this.post.liked ? this.post.likeCount - 1 : this.post.likeCount + 1
+              };
+              this.onLikeToggled.emit(this.post);
+              this.cdr.markForCheck();
             }
-        },
-        error: (err) => console.error(err)
-    });
+          },
+          error: (err) => console.error(err)
+      });
+    }
   }
 
   toggleCommentBox(){
@@ -113,10 +119,11 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // // 1. Subscribe ONLY ONCE during component creation
-    this.langSubscription = this.translate.onLangChange.subscribe(() => {
-      formatTime(this.post.createdAt, this.langService.currentLang)
-    });
+    if(this.post && this.post.createdAt){
+      this.langSubscription = this.translate.onLangChange.subscribe(() => {
+        formatTime(this.post.createdAt, this.langService.currentLang)
+      });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {

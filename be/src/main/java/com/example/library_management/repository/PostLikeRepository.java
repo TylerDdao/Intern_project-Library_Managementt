@@ -15,12 +15,16 @@ import java.util.Optional;
 @Repository
 public interface PostLikeRepository extends JpaRepository<PostLike, Long> {
     @Query("SELECT pl.post.id FROM PostLike pl WHERE pl.user = :user")
-    List<Long> findLikedPostIdsByUser(@Param("user") User user);
+    public List<Long> findLikedPostIdsByUser(@Param("user") User user);
 
     @Query("SELECT pl.post.id FROM PostLike pl WHERE pl.user.username = :username")
-    List<Long> findLikedPostIdsByUserUsername(@Param("username") String username);
+    public List<Long> findLikedPostIdsByUserUsername(@Param("username") String username);
 
-    Optional<PostLike> findByPostAndUser(Post post, User user);
+    public Optional<PostLike> findByPostAndUser(Post post, User user);
 
-    Optional<PostLike> findByPostIdAndUserUsername(Long postId, String username);
+    public Optional<PostLike> findByPostIdAndUserUsername(Long postId, String username);
+
+    public void deleteAllByPost_IdIn(List<Long> postIds);
+
+    public void deleteAllByPost(Post post);
 }

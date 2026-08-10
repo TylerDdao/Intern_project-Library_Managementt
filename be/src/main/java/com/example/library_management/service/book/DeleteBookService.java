@@ -5,10 +5,7 @@ import com.example.library_management.exception.ApiException;
 import com.example.library_management.model.Book;
 import com.example.library_management.model.Borrow;
 import com.example.library_management.model.Post;
-import com.example.library_management.repository.BookRepository;
-import com.example.library_management.repository.BorrowRepository;
-import com.example.library_management.repository.CommentRepository;
-import com.example.library_management.repository.PostRepository;
+import com.example.library_management.repository.*;
 import com.example.library_management.util.AuditLogger;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +44,9 @@ public class DeleteBookService {
     @Autowired
     private AuditLogger logger;
 
+    @Autowired
+    private PostLikeRepository postLikeRepository;
+
     @Value("${app.upload.dir}")
     private String uploadDir;
 
@@ -75,7 +75,9 @@ public class DeleteBookService {
         }
 
         List<Post> posts = postRepository.findByBook_Id(id);
+        List<Long> postIds = posts.stream().map(Post::getId).toList();
         commentRepository.deleteAllByPostIn(posts);
+        postLikeRepository.deleteAllByPost_IdIn(postIds);
         postRepository.deleteAll(posts);
         logger.log("Deleted {} posts that are associated with book {}, ID #{}", posts.size(), book.getTitle(), book.getId());
 

@@ -1,7 +1,6 @@
 package com.example.library_management.service.post;
 
-import com.example.library_management.dto.response.PostResponse;
-import com.example.library_management.model.Book;
+import com.example.library_management.dto.response.post.PostResponse;
 import com.example.library_management.model.Post;
 import com.example.library_management.model.User;
 import com.example.library_management.repository.PostLikeRepository;

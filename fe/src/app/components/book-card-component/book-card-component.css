@@ -1,15 +1,24 @@
 
 @media (min-width: 1024px) {
-    .container{
+    .container {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         border: 1px solid var(--color-steel-blue);
         padding: 5px;
-        border-radius: 8px;
-        width: 250px;
-        /* height: 30px; */
+        border-radius: 10px;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .book-info {
+        text-align: center;
+        width: 100%;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .book-cover-container{
@@ -20,45 +29,38 @@
 
     .book-cover{
         /* width: 200px; */
-        border-radius: 8px;
+        border-radius: 10px;
         height: 250px;
         max-width: 250px;
-    }
-
-    .book-info{
-        text-align: center;
-        width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
 }
 
 @media (max-width: 1023px) {
-    .container{
+    .container {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         border: 1px solid var(--color-steel-blue);
-        padding: 5px;
-        border-radius: 8px;
-        width: 40vw;
+        padding: 10px;
+        border-radius: 10px;
+        width: 100%;
+        min-width: 0;
     }
 
-    .book-cover{
-        border-radius: 810x;
+    .book-cover {
+        border-radius: 10px;
         height: 200px;
         max-width: 200px;
     }
 
-    .book-info{
+    .book-info {
         text-align: center;
         width: 100%;
+        min-width: 0;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 }
-
 
