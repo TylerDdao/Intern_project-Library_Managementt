@@ -91,7 +91,8 @@
     "Delete": "Xóa",
     "Confirm-delete": "Xác nhận xóa",
     "Edit-role": "Chỉnh sửa vai trò",
-    "New-role": "Vai trò mới"
+    "New-role": "Vai trò mới",
+    "Processing": "Đang xử lý"
   },
   "newUserForm": {
     "Create-new-user": "Tạo người dùng mới"

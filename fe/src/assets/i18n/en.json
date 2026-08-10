@@ -91,7 +91,8 @@
     "Delete": "Delete",
     "Confirm-delete": "Confirm delete",
     "Edit-role": "Edit role",
-    "New-role": "New role"
+    "New-role": "New role",
+    "Processing": "TODO"
   },
   "newUserForm": {
     "Create-new-user": "Create new user"

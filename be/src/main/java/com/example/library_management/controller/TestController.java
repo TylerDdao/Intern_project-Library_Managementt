@@ -2,7 +2,9 @@ package com.example.library_management.controller;
 
 import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.exception.ApiException;
+import com.example.library_management.model.Borrow;
 import com.example.library_management.model.User;
+import com.example.library_management.repository.BorrowRepository;
 import com.example.library_management.service.MailService;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +21,17 @@ public class TestController {
     @Autowired
     MailService mailService;
 
+    @Autowired
+    BorrowRepository borrowRepository;
+
     @GetMapping("test")
     public ResponseEntity<ApiResponse<String>> Test(){
-        User user = new User();
-        user.setFullName("Tyler");
-        user.setEmail("baonam6a3@gmail.com");
-        mailService.sendWelcomeEmail(user);
+//        User user = new User();
+//        user.setFullName("Tyler");
+//        user.setEmail("baonam6a3@gmail.com");
+        Long borrowId = new Long(3);
+        Borrow borrow = borrowRepository.findById(borrowId).orElseThrow(()->new RuntimeException("ERROR"));
+        mailService.sendLateBorrowReminder(borrow);
         return ResponseEntity.ok(ApiResponse.success("OK"));
     }
 }

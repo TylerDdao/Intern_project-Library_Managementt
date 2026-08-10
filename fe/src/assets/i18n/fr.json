@@ -91,7 +91,8 @@
     "Delete": "Supprimer",
     "Confirm-delete": "Confirmer la suppression",
     "Edit-role": "Modifier le rôle",
-    "New-role": "Nouveau rôle"
+    "New-role": "Nouveau rôle",
+    "Processing": "Traitement en cours"
   },
   "newUserForm": {
     "Create-new-user": "Créer un nouvel utilisateur"

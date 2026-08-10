@@ -44,7 +44,7 @@ public class BorrowReminderService {
 
         for (Borrow borrow : dueBorrows) {
             try{
-                mailService.sendBorrowDueReminder(borrow.getUser(), borrow.getBook().getTitle());
+                mailService.sendBorrowDueReminder(borrow);
             }
             catch (Exception e){
                 log.error("Failed to send reminder for borrow id {}", borrow.getId(), e);
@@ -60,16 +60,7 @@ public class BorrowReminderService {
 
         for (Borrow borrow : lateBorrows) {
             try {
-                long lateDays = ChronoUnit.DAYS.between(
-                        borrow.getDueDate().toLocalDate(),
-                        LocalDate.now()
-                );
-
-                mailService.sendLateBorrowReminder(
-                        borrow.getUser(),
-                        borrow.getBook().getTitle(),
-                        lateDays
-                );
+                mailService.sendLateBorrowReminder(borrow);
             } catch (Exception e) {
                 log.error("Failed to send reminder for borrow id {}", borrow.getId(), e);
             }

@@ -128,13 +128,14 @@ export class BorrowCardComponent implements OnChanges {
                 next: (data: any)=>{
                     if(data.code == "200"){
                         this.isReturned = true;
-                        this.cdr.markForCheck()
                     }
-                    this.isLoading=false
+                    this.isLoading=false;
+                    this.cdr.markForCheck()
                 },
                 error: (err) =>{
                     errorNoti(err, this.translate);
-                    this.isLoading=false
+                    this.isLoading=false;
+                    this.cdr.markForCheck()
                 }
             })
         }
