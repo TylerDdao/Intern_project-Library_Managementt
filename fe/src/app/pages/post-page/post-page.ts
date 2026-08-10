@@ -39,6 +39,9 @@ export class PostPage {
 
   chosenBook!: Book;
 
+  isSubjectValid: boolean = false;
+  isContentValid: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private langService: LanguageService,
@@ -130,6 +133,13 @@ export class PostPage {
 
     if(isPlatformBrowser(this.platformId)){
       this.fetchPost(this.postId);
+
+      this.postForm.get('subject')?.valueChanges.subscribe(() => {
+        this.isSubjectValid = this.postForm.get('subject')?.valid ?? false;
+      });
+      this.postForm.get('content')?.valueChanges.subscribe(() => {
+        this.isContentValid = this.postForm.get('content')?.valid ?? false;
+      });
     }
   }
 

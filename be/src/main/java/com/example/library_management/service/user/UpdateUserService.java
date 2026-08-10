@@ -16,9 +16,12 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -58,6 +61,36 @@ public class UpdateUserService {
         User savedUser = userRepository.save(user);
         System.out.println(request);
         logger.log("Updated role for @{}, ID #{} to {}", savedUser.getUsername(),savedUser.getId(), savedUser.getRole().getName());
+        return new UserResponse(savedUser);
+    }
+
+    @Transactional
+    public UserResponse updateUserSelf(UserRequest request) throws MessagingException {
+        String username = Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication()).getName();
+        User user = userRepository.findByUsernameAndIsDeletedFalse(username)
+                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.username.not.found", null, LocaleContextHolder.getLocale())));
+
+        // update only the fields that should change
+        if(request.getUsername() != null) user.setUsername(request.getUsername());
+        if (request.getPhoneNumber() != null) user.setPhoneNumber(request.getPhoneNumber());
+        if (request.getAddress() != null) user.setAddress(request.getAddress());
+        if (request.getEmail() != null) user.setEmail(request.getEmail());
+        if (request.getUsername() != null) user.setUsername(request.getUsername());
+        if (request.getFullName() != null) user.setFullName(request.getFullName());
+        if (request.getPassword() != null){
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
+
+        User savedUser = userRepository.save(user);
+        if(request.getPassword()!=null){
+            try {
+                mailService.sendPasswordChangedEmail(savedUser);
+            }
+            catch (Exception e){
+                throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "EMAIL-ERROR", e.getMessage());
+            }
+        }
+        logger.log("Updated @{}, ID #{}", savedUser.getUsername(),savedUser.getId());
         return new UserResponse(savedUser);
     }
 

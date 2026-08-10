@@ -153,11 +153,15 @@
   },
   "postPage": {
     "Edit-post": "Chỉnh sửa bài viết",
-    "Book-selection": "Chọn sách"
+    "Book-selection": "Chọn sách",
+    "You-cannot-change-book": "Bạn không thể thay đổi sách"
   },
   "createPost": {
     "Create-new-post": "Tạo bài viết mới",
-    "Pick-a-book": "Chọn một quyển sách"
+    "Pick-a-book": "Chọn một quyển sách",
+    "Please-select-a-book": "Vui lòng chọn một cuốn sách",
+    "Please-enter-subject": "Vui lòng nhập chủ đề",
+    "Please-enter-content": "Vui lòng nhập nội dung"
   },
   "export": {
     "Export": "Xuất dữ liệu",

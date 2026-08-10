@@ -15,7 +15,7 @@ import { LoadingComponent } from '../../components/loading-component/loading-com
 
 @Component({
   selector: 'app-borrows-management',
-  imports: [TranslateModule, NavbarComponent, SortSideBarComponent, BorrowCardComponent, PagesComponent, BorrowListComponent, BorrowPolicyForm, ExportBorrowsForm, LoadingComponent],
+  imports: [TranslateModule, NavbarComponent, SortSideBarComponent, BorrowCardComponent, PagesComponent, BorrowListComponent, BorrowPolicyForm, ExportBorrowsForm],
   templateUrl: './borrows-management.html',
   styleUrl: './borrows-management.css',
 })

@@ -61,6 +61,12 @@ export class UserService {
       {headers: getAuthHeaders(this.platformId)})
   }
 
+  updateMe(user:User){
+    return this.http.patch(`${this.userBaseUrl}/update-me`,
+      {id: user.id, username: user.username, fullName: user.fullName, email: user.email, phoneNumber: user.phoneNumber, address: user.address, password: user.password},
+      {headers: getAuthHeaders(this.platformId)})
+  }
+
   updateUserRole(user:User){
     return this.http.patch(`${this.userBaseUrl}/update-role`,
       { id: user.id, role: user.role?.id },

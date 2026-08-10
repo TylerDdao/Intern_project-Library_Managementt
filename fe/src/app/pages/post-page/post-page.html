@@ -8,48 +8,60 @@
                 <div class="headline font-bold">@{{post.createdBy}}</div>
                 <div class="caption-2">{{formattedPostedAt}}</div>
             </div>
-            <div class="book-info-container select-none cursor-pointer" (click)="fetchBooks()">
-                <div class="flex space-x-[5px] items-start">
-                    <img src="{{backendUrl}}/book-covers/{{chosenBook.id}}.jpg" class="book-cover" (error)="onImageError($event)"/>
-                    <div>
-                        <h1 class="header font-bold">{{chosenBook.title}}</h1>
-                        <h1 class="subheader font-bold">{{'book.Author'|translate}}: {{chosenBook.author}}</h1>
-                        <div class="line-clamp-1">
-                            @if (chosenBook.genres) {
-                                <div>{{'book.Genres'|translate}}:
-                                    <span>
-                                        @for (genre of chosenBook.genres; track $index) {
-                                            @if ($index + 1 == chosenBook.genres.length) {
-                                                <span class="">{{ genre.name }}</span>
+            
+            <div>
+                <div class="book-info-container select-none cursor-not-allowed">
+                    <div class="flex space-x-[5px] items-start">
+                        <img src="{{backendUrl}}/book-covers/{{chosenBook.id}}.jpg" class="book-cover" (error)="onImageError($event)"/>
+                        <div>
+                            <h1 class="header font-bold">{{chosenBook.title}}</h1>
+                            <h1 class="subheader font-bold">{{'book.Author'|translate}}: {{chosenBook.author}}</h1>
+                            <div class="line-clamp-1">
+                                @if (chosenBook.genres) {
+                                    <div>{{'book.Genres'|translate}}:
+                                        <span>
+                                            @for (genre of chosenBook.genres; track $index) {
+                                                @if ($index + 1 == chosenBook.genres.length) {
+                                                    <span class="">{{ genre.name }}</span>
+                                                }
+                                                @else {
+                                                    <span class="">{{ genre.name }} | </span>
+                                                }
                                             }
-                                            @else {
-                                                <span class="">{{ genre.name }} | </span>
-                                            }
-                                        }
 
-                                    </span> 
-                                </div>
-                            }
+                                        </span> 
+                                    </div>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
+                <small>{{'postPage.You-cannot-change-book'|translate}}</small>
             </div>
         </div>
 
         <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="form-container">
-            <div class="post-subject-container">
-                <input formControlName="subject" type="text" placeholder='{{"post.Subject"|translate}}' 
+            <div class="flex flex-col">
+                <input formControlName="subject" type="text" placeholder='{{"post.Subject"|translate}}*' 
                     class="bg-cool-gray text-deep-charcoal rounded-[10px] w-full p-[10px]"/>
+                    @if (!isSubjectValid) {
+                        <small class="text-tomato-red">{{"createPost.Please-enter-subject"|translate}}</small>
+                    }
             </div>
-            <div class="post-content-container">
-                <textarea formControlName="content" placeholder='{{"post.Body"|translate}}' 
-                    class="bg-cool-gray text-deep-charcoal rounded-[10px] w-full p-[10px] max-h-full resize-none"></textarea>
+            <div>
+                <div class="post-content-container">
+                    <textarea formControlName="content" placeholder='{{"post.Body"|translate}}*' 
+                        class="bg-cool-gray text-deep-charcoal rounded-[10px] w-full p-[10px] max-h-full min-h-full resize-none"></textarea>
+                </div>
+                @if (!isContentValid) {
+                    <small class="text-tomato-red">{{"createPost.Please-enter-content"|translate}}</small>
+                }
             </div>
         </form>
 
         <div class="flex space-x-[10px]">
             @if (post) {
-                <button class="bg-leaf-green p-[5px] text-soft-ice rounded-[10px] caption-1">{{'form.Save'|translate}}</button>
+                <button type="submit" form="postForm" class="p-[5px] text-soft-ice rounded-[10px]" [class]="(!isSubjectValid ||!isContentValid) ? '!cursor-not-allowed bg-cool-gray': 'cursor-pointer bg-leaf-green'">{{'form.Save'|translate}}</button>
                 <button class="bg-tomato-red p-[5px] text-soft-ice rounded-[10px] caption-1" (click)="handleDeletePost()">{{'form.Delete'|translate}}</button>
                 <button class="border border-tomato-red p-[5px] text-tomato-red rounded-[10px] caption-1" (click)="handleCancel()">{{'form.Cancel'|translate}}</button>
             }

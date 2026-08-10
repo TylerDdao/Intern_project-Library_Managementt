@@ -1,13 +1,13 @@
 <app-navbar></app-navbar>
 <div class="container">
-    <div class="flex flex-col space-y-[10px] w-fit">
+    <div class="flex flex-col space-y-[10px] w-full items-center">
         <div class="title-1 font-bold">{{"bookPage.Book-information"|translate}}</div>
         @if (book) {
             @if (editable) {
-                <form [formGroup]="editBookForm" id="editBookForm" (ngSubmit)="onSubmit()" class="form-container">
-                    <div class="book-container">
+                <form [formGroup]="editBookForm" id="editBookForm" (ngSubmit)="onSubmit()" class="w-full">
+                    <div class="book-container w-full">
                         <img src="{{baseUrl}}/book-covers/{{book.coverUrl}}" class="book-cover" (error)="onImageError($event)"/>
-                        <div>
+                        <div class="w-full">
                             <div>
                                 <label for="title">{{"book.Title"|translate}}</label>
                                 <input id="title" formControlName="title" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full" [placeholder]="book.title"/>
@@ -31,7 +31,7 @@
                     </div>
                     </form>
 
-                    <div class="flex flex-col space-y-[10px]">
+                    <div class="flex flex-col space-y-[10px] w-full">
                         <div class="headline">{{"book.Genres"|translate}}</div>
                        @if (book.genres) {
                             <div class="flex flex-col space-y-[5px]">
@@ -48,7 +48,7 @@
                        }
                     </div>
 
-                    <div class="flex flex-col space-y-[10px]">
+                    <div class="flex flex-col space-y-[10px] w-full">
                         <div class="headline">{{"search.Search-genre"|translate}}</div>
                         <div class="flex space-x-[5px] items-center">
                             <input type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full" placeholder="{{'search.Search-by-name'|translate}}" [(ngModel)]="query" />
@@ -96,18 +96,18 @@
             }
 
             @if (editable) {
-                <button  type="submit" form="editBookForm" class="bg-primary-1 p-[5px] rounded-[10px] text-soft-ice body font-bold">{{'form.Save'|translate}}</button>
+                <button  type="submit" form="editBookForm" class="bg-primary-1 p-[5px] rounded-[10px] text-soft-ice body font-bold w-full">{{'form.Save'|translate}}</button>
             }
 
             @if (book.borrowed) {
-                <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice body font-bold !cursor-not-allowed">{{'bookPage.You-are-borrowing-this-book'|translate}}</button>
+                <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice body font-bold !cursor-not-allowed w-full">{{'bookPage.You-are-borrowing-this-book'|translate}}</button>
             }
             @else {
                 @if (book.copies > 0) {
-                    <button class="bg-leaf-green p-[5px] rounded-[10px] text-soft-ice body font-bold" (click)="handleBorrow()">{{'bookPage.Borrow-this-book'|translate}}</button>
+                    <button class="bg-leaf-green p-[5px] rounded-[10px] text-soft-ice body font-bold w-full" (click)="handleBorrow()">{{'bookPage.Borrow-this-book'|translate}}</button>
                 }
                 @else {
-                    <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice body font-bold !cursor-not-allowed">{{'bookPage.Book-is-not-available'|translate}}</button>
+                    <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice body font-bold !cursor-not-allowed w-full">{{'bookPage.Book-is-not-available'|translate}}</button>
                 }
             }
         }

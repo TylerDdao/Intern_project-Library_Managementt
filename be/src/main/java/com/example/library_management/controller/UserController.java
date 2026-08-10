@@ -63,8 +63,15 @@ public class UserController {
     }
 
     @PreAuthorize("@securityService.hasAccess('UPDATE_USER')")
-    @PatchMapping()
+    @PatchMapping("update-me")
     public ResponseEntity<ApiResponse<UserResponse>> updateUserByUsername(
+            @RequestBody UserRequest request) throws MessagingException {
+        return ResponseEntity.ok(ApiResponse.success(updateUserService.updateUserSelf(request)));
+    }
+
+    @PreAuthorize("@securityService.hasAccess('UPDATE_USER_MULTI')")
+    @PatchMapping()
+    public ResponseEntity<ApiResponse<UserResponse>> updateUser(
             @RequestBody UserRequest request) throws MessagingException {
         return ResponseEntity.ok(ApiResponse.success(updateUserService.updateUser(request)));
     }
