@@ -3,6 +3,7 @@
         padding: 50px;
         display: grid;
         grid-template-columns: 1fr 1fr;
+        gap:30px;
         min-width: calc(100dvw - 25px);
     }
 

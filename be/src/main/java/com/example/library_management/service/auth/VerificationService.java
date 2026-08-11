@@ -8,6 +8,7 @@ import com.example.library_management.repository.ResetPasswordCodeRepository;
 import com.example.library_management.repository.UserRepository;
 import com.example.library_management.repository.VerificationRepository;
 import com.example.library_management.service.MailService;
+import com.example.library_management.service.mail.VerificationMailService;
 import com.example.library_management.util.AuditLogger;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
@@ -28,7 +29,7 @@ import java.util.Optional;
 @Service
 public class VerificationService {
     @Autowired
-    private MailService mailService;
+    private VerificationMailService verificationMailService;
 
     @Autowired
     private VerificationRepository verificationRepository;
@@ -89,7 +90,7 @@ public class VerificationService {
         resetPasswordCode.setExpiresAt(now.plusMinutes(EXPIRY_MINUTES));
 
         try {
-            mailService.sendResetPasswordEmail(email, resetLink, EXPIRY_MINUTES);
+            verificationMailService.sendResetPasswordEmail(email, resetLink, EXPIRY_MINUTES);
             resetPasswordCodeRepository.save(resetPasswordCode);
             return "reset.password.Link.is.sent";
         }
@@ -118,7 +119,7 @@ public class VerificationService {
         verification.setExpiresAt(now.plusMinutes(EXPIRY_MINUTES));
 
         try {
-            mailService.sentVerificationEmail(request.getEmail(), request.getFullName(), code, EXPIRY_MINUTES);
+            verificationMailService.sentVerificationEmail(request.getEmail(), code, EXPIRY_MINUTES);
             verificationRepository.save(verification);
             return "verification.Code.is.sent";
         }
