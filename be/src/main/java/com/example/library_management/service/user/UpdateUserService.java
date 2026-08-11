@@ -8,6 +8,7 @@ import com.example.library_management.model.User;
 import com.example.library_management.repository.RoleRepository;
 import com.example.library_management.repository.UserRepository;
 import com.example.library_management.service.MailService;
+import com.example.library_management.service.mail.UserMailService;
 import com.example.library_management.util.AuditLogger;
 import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +43,7 @@ public class UpdateUserService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private MailService mailService;
+    private UserMailService userMailService;
 
     public UserResponse updateUserRole(UserRequest request){
         Role defaultRole = roleRepository.findByIsDefaultIsTrue()
@@ -84,7 +85,7 @@ public class UpdateUserService {
         User savedUser = userRepository.save(user);
         if(request.getPassword()!=null){
             try {
-                mailService.sendPasswordChangedEmail(savedUser);
+                userMailService.sendPasswordChangedEmail(savedUser);
             }
             catch (Exception e){
                 throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "EMAIL-ERROR", e.getMessage());
@@ -113,7 +114,7 @@ public class UpdateUserService {
         User savedUser = userRepository.save(user);
         if(request.getPassword()!=null){
             try {
-                mailService.sendPasswordChangedEmail(savedUser);
+                userMailService.sendPasswordChangedEmail(savedUser);
             }
             catch (Exception e){
                 throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "EMAIL-ERROR", e.getMessage());

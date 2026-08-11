@@ -18,12 +18,27 @@ public class Formatter {
         String pattern;
 
         if (locale.equals(Locale.US)) {
-            pattern = "MM/dd/yyyy h:mm a";
+            pattern = "MM/dd/yyyy @ h:mm a";
         } else {
-            pattern = "dd/MM/yyyy HH:mm";
+            pattern = "dd/MM/yyyy @ HH:mm";
         }
 
         return dateTime.format(
+                DateTimeFormatter.ofPattern(pattern, locale)
+        );
+    }
+
+    public String formatDate(LocalDate date, Locale locale) {
+
+        String pattern;
+
+        if (locale.equals(Locale.US)) {
+            pattern = "MM/dd/yyyy";
+        } else {
+            pattern = "dd/MM/yyyy";
+        }
+
+        return date.format(
                 DateTimeFormatter.ofPattern(pattern, locale)
         );
     }

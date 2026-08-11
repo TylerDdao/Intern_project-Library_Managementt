@@ -6,6 +6,7 @@ import com.example.library_management.model.User;
 import com.example.library_management.repository.BorrowRepository;
 import com.example.library_management.repository.UserRepository;
 import com.example.library_management.service.MailService;
+import com.example.library_management.service.mail.UserMailService;
 import com.example.library_management.util.AuditLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class DeleteUserService {
     private AuditLogger logger;
 
     @Autowired
-    MailService mailService;
+    private UserMailService userMailService;
 
     @Transactional
     public String deleteUser(){
@@ -58,7 +59,7 @@ public class DeleteUserService {
         userRepository.save(user);
         String message = messageSource.getMessage("user.delete", null, LocaleContextHolder.getLocale());
         logger.log("Deleted @{}", user.getUsername());
-        mailService.sendAccountDeletedEmail(user);
+        userMailService.sendAccountDeletedEmail(user);
         return message + "@"+ user.getUsername();
     }
 
@@ -85,7 +86,7 @@ public class DeleteUserService {
         userRepository.save(user);
         String message = messageSource.getMessage("user.delete", null, LocaleContextHolder.getLocale());
         logger.log("Deleted @{}", user.getUsername());
-        mailService.sendAccountDeletedEmail(user);
+        userMailService.sendAccountDeletedEmail(user);
         return message + "@"+ user.getUsername();
     }
 }

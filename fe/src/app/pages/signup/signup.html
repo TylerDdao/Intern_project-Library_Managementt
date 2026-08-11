@@ -8,7 +8,7 @@
                 <div class="flex flex-col">
                     <label for="username">{{'user.Username' |translate}}<sup class="text-tomato-red">*</sup></label>
                     <div class="flex space-x-[5px] items-center">
-                        <input id="username" formControlName="username" placeholder="{{'user.Username' | translate}}" type="text" class="rounded-[10px] w-full" [class]="isUsernameInvalid ? 'bg-pastel-red text-tomato-red' : 'bg-pastel-blue text-dodger-blue '"/>
+                        <input id="username" formControlName="username" placeholder="{{'user.Username' | translate}}" type="text" class="rounded-[10px] w-full" [class]="isUsernameInvalid ? 'bg-pastel-red text-tomato-red' : 'bg-pastel-blue text-dodger-blue'"/>
                         @if(isUsernameAvailable == null){
                             <button type="button" class="bg-steel-blue text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px]" (click)="checkUsername()">
                                 {{'form.Check-username'|translate}}
@@ -69,8 +69,9 @@
                 <div class="flex flex-col">
                         <label for="verification">{{'email.Verification-code' |translate}}<sup class="text-tomato-red">*</sup></label>
                         <div class="flex space-x-[5px] items-center">
-                            <input id="verification" formControlName="verificationCode" placeholder="{{'email.Verification-code' | translate}}" type="text"
-                            [class]="isEmailVerified ? 'bg-pastel-blue/50 text-dodger-blue/50 rounded-[10px] w-full cursor-not-allowed' : 'bg-pastel-blue text-dodger-blue rounded-[10px] w-full'"/>
+                            <input id="verification" formControlName="verificationCode" placeholder="{{'email.Verification-code' | translate}}" type="text" class="rounded-[10px] w-full"
+                            [class]="isEmailVerified ? 'bg-pastel-blue/50 text-dodger-blue/50 cursor-not-allowed' : 'bg-pastel-blue text-dodger-blue'"
+                            [class]="isEmailInvalid ? 'bg-pastel-red text-tomato-red' : isEmailVerified ? 'bg-pastel-blue/50 text-dodger-blue/50 cursor-not-allowed': 'bg-pastel-blue text-dodger-blue  w-full'"/>
                             
                             @if (!isEmailVerified) {
                                 <button type="button" class="bg-steel-blue text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px]" (click)="handleVerify()">

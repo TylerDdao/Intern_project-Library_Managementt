@@ -8,6 +8,7 @@ import com.example.library_management.repository.BookRepository;
 import com.example.library_management.repository.BorrowRepository;
 import com.example.library_management.repository.PolicyRepository;
 import com.example.library_management.service.MailService;
+import com.example.library_management.service.mail.BorrowMailService;
 import com.example.library_management.util.AuditLogger;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
@@ -49,7 +50,7 @@ public class UpdateBorrowService {
     private AuditLogger logger;
 
     @Autowired
-    private MailService mailService;
+    private BorrowMailService borrowMailService;
 
     @EventListener(ApplicationReadyEvent.class)
     @Scheduled(cron = "0 0 0 * * *")
@@ -80,7 +81,7 @@ public class UpdateBorrowService {
         bookRepository.save(book);
 
         logger.log("Returned borrow ID #{}", borrow.getId());
-        mailService.sendBorrowReturned(borrow);
+        borrowMailService.sendBorrowReturned(borrow);
         return new BorrowResponse(borrow);
     }
 

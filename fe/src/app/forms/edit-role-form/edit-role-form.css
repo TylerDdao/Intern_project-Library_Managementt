@@ -9,6 +9,7 @@
         gap: 30px;
         height: 80dvh;
         min-width: 50dvw;
+        overflow-y: auto;
     }
 
     .form-container{
@@ -35,7 +36,7 @@
         gap: 30px;
         max-width: calc(100dvw - 20px);
         height: 80dvh;
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 
     .form-container{

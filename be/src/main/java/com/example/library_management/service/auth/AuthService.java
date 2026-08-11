@@ -6,6 +6,7 @@ import com.example.library_management.repository.FeatureRepository;
 import com.example.library_management.repository.ResetPasswordCodeRepository;
 import com.example.library_management.service.MailService;
 import com.example.library_management.service.TokenBlacklistService;
+import com.example.library_management.service.mail.UserMailService;
 import com.example.library_management.util.AuditLogger;
 import com.example.library_management.util.JwtUtil;
 import com.example.library_management.dto.request.LoginRequest;
@@ -65,13 +66,16 @@ public class AuthService {
     private VerificationService verificationService;
 
     @Autowired
-    AuditLogger logger;
+    private AuditLogger logger;
 
     @Autowired
-    MailService mailService;
+    private MailService mailService;
 
     @Autowired
-    ResetPasswordCodeRepository resetPasswordCodeRepository;
+    private UserMailService userMailService;
+
+    @Autowired
+    private ResetPasswordCodeRepository resetPasswordCodeRepository;
 
     public Boolean resetPassword(UserRequest request){
         try{
@@ -189,7 +193,7 @@ public class AuthService {
         logger.log("SYSTEM", "Registered @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
 
         try {
-            mailService.sendWelcomeEmail(savedUser);
+            userMailService.sendWelcomeEmail(savedUser);
         } catch (Exception e) {
             logger.error("Failed to send welcome email to @{}: {}", savedUser.getUsername(), e.getMessage());
         }
