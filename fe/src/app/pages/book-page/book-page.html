@@ -5,9 +5,13 @@
         @if (book) {
             @if (editable) {
                 <form [formGroup]="editBookForm" id="editBookForm" (ngSubmit)="onSubmit()" class="w-full">
-                    <div>
+                    <div class="flex flex-col space-y-[30px]">
                         <div class="book-container w-full">
-                            <img src="{{baseUrl}}/book-covers/{{book.coverUrl}}" class="book-cover" (error)="onImageError($event)"/>
+                            <img
+                                [src]="backendUrl + '/book-covers/' + getWebpCover(book.coverUrl)"
+                                class="book-cover"
+                                (error)="onImageError($event)"
+                            />
                             <div class="w-full">
                                 <div>
                                     <label for="title">{{"book.Title"|translate}}</label>
@@ -31,56 +35,73 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-col space-y-[10px] w-full">
-                            <div class="headline">{{"book.Genres"|translate}}</div>
-                            @if (book.genres) {
-                                    <div class="flex flex-col space-y-[5px]">
-                                        @for (genre of editBookForm.get("genres")?.value; track $index) {
-                                            <div class="flex space-x-[5px] items-center">
-                                                <div class="w-full border border-primary-1 text-primary-1 px-[10px] py-[10px] rounded-[10px] hover:bg-primary-1 hover:text-soft-ice transition ease-in-out">{{genre.name}}</div>
-                                                <button class="flex items-center text-tomato-red select-none" (click)="handleRemoveGenre(genre)"><span class="material-symbols-outlined">delete</span></button>
-                                            </div>
-                                        }
-                                    </div>
-                            }
-                            @else {
-                                <div>{{'list.Empty'|translate}}</div>
-                            }
-                        </div>
-
-                        <div class="flex flex-col space-y-[10px] w-full">
-                            <div class="headline">{{"search.Search-genre"|translate}}</div>
-                            <div class="flex space-x-[5px] items-center">
-                                <input [ngModelOptions]="{standalone: true}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full" placeholder="{{'search.Search-by-name'|translate}}" [(ngModel)]="query" />
-                                <button class="flex items-center" (click)="fetchGenres()"><span class="material-symbols-outlined">search</span></button>
-                            </div>
-                        @if (searchGenres.length>0) {
-                                <div class="flex flex-col space-y-[5px]">
-                                    @for (genre of searchGenres; track genre.id) {
-                                        <div class="border border-primary-1 text-primary-1 px-[10px] py-[10px] rounded-[10px] hover:bg-primary-1 hover:text-soft-ice transition ease-in-out" (click)="handleAddGenre(genre)">{{genre.name}}</div>
-                                    }
-                                </div>
-                        }
-                        @else {
-                            <div>{{'list.Empty'|translate}}</div>
-                        }
-                        </div>
-
-                        <div class="flex flex-col space-y-[10px]">
-                            @if (editable) {
-                                <button  type="submit" form="editBookForm" class="bg-primary-1 p-[5px] rounded-[10px] text-soft-ice body font-bold w-full">{{'form.Save'|translate}}</button>
-                            }
-                            @if (book.borrowed) {
-                                <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice body font-bold !cursor-not-allowed w-full">{{'bookPage.You-are-borrowing-this-book'|translate}}</button>
-                            }
-                            @else {
-                                @if (book.copies > 0) {
-                                    <button class="bg-leaf-green p-[5px] rounded-[10px] text-soft-ice body font-bold w-full" (click)="handleBorrow()">{{'bookPage.Borrow-this-book'|translate}}</button>
+                        <div class="p-[10px] border border-primary-1 rounded-[10px]">
+                            <div class="flex flex-col space-y-[10px] w-full">
+                                <div class="headline">{{"book.Genres"|translate}}</div>
+                                @if (book.genres) {
+                                        <div class="flex flex-col space-y-[5px]">
+                                            @for (genre of editBookForm.get("genres")?.value; track $index) {
+                                                <div class="flex space-x-[5px] items-center">
+                                                    <div class="w-full border border-primary-1 text-primary-1 px-[10px] py-[10px] rounded-[10px] hover:bg-primary-1 hover:text-soft-ice transition ease-in-out">{{genre.name}}</div>
+                                                    <button class="flex items-center text-tomato-red select-none" (click)="handleRemoveGenre(genre)"><span class="material-symbols-outlined">delete</span></button>
+                                                </div>
+                                            }
+                                        </div>
                                 }
                                 @else {
-                                    <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice body font-bold !cursor-not-allowed w-full">{{'bookPage.Book-is-not-available'|translate}}</button>
+                                    <div>{{'list.Empty'|translate}}</div>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="p-[10px] border border-primary-1 rounded-[10px]">
+                            <div class="flex flex-col space-y-[10px] w-full">
+                                <div class="headline">{{"search.Search-genre"|translate}}</div>
+                                <div class="flex space-x-[5px] items-center">
+                                    <input [ngModelOptions]="{standalone: true}" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full" placeholder="{{'search.Search-by-name'|translate}}" [(ngModel)]="query" />
+                                    <button type="button" class="flex items-center" (click)="fetchGenres()"><span class="material-symbols-outlined">search</span></button>
+                                </div>
+                            @if (isSearch != null) {
+                                @if (isSearch == true){
+                                    <div class="w-full flex justify-center"><app-loading-component></app-loading-component></div>
+                                }
+                                @else {
+                                    @if (searchGenres.length>0) {
+                                        <div class="flex flex-col space-y-[5px]">
+                                            @for (genre of searchGenres; track genre.id) {
+                                                <div class="border border-primary-1 text-primary-1 px-[10px] py-[10px] rounded-[10px] hover:bg-primary-1 hover:text-soft-ice transition ease-in-out" (click)="handleAddGenre(genre)">{{genre.name}}</div>
+                                            }
+                                        </div>
+                                    }
+                                    @else {
+                                        <div>{{'search.Not-found'|translate}}</div>
+                                    }
                                 }
                             }
+                            
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col space-y-[30px]">
+                            <div class="flex flex-col space-y-[10px]">
+                                @if (editable) {
+                                    <button  type="submit" form="editBookForm" class="bg-primary-1 p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold w-full">{{'booksManagement.Save-new-book-info'|translate}}</button>
+                                    <button  type="button" class="bg-tomato-red p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold w-full" (click)="handleDeleteBook(book)">{{'booksManagement.Delete-book'|translate}}</button>
+                                }
+                            </div>
+                            <div>
+                                @if (book.borrowed) {
+                                    <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold !cursor-not-allowed w-full">{{'bookPage.You-are-borrowing-this-book'|translate}}</button>
+                                }
+                                @else {
+                                    @if (book.copies > 0) {
+                                        <button class="bg-leaf-green p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold w-full" (click)="handleBorrow()">{{'bookPage.Borrow-this-book'|translate}}</button>
+                                    }
+                                    @else {
+                                        <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold !cursor-not-allowed w-full">{{'bookPage.Book-is-not-available'|translate}}</button>
+                                    }
+                                }
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -90,7 +111,7 @@
             @else {
                 <div>
                     <div class="book-container">
-                        <img src="{{baseUrl}}/book-covers/{{book.coverUrl}}" class="book-cover" (error)="onImageError($event)"/>
+                        <img [src]="backendUrl + '/book-covers/' + getWebpCover(book.coverUrl)" class="book-cover" (error)="onImageError($event)"/>
                         <div>
                             <h1 class="title-3 font-bold book-info">{{book.title}}</h1>
                             <h1 class="body font-bold book-info">{{'book.Author'|translate}}: {{book.author}}</h1>
@@ -116,14 +137,14 @@
                         </div>
                     </div>
                     @if (book.borrowed) {
-                        <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice body font-bold !cursor-not-allowed w-full">{{'bookPage.You-are-borrowing-this-book'|translate}}</button>
+                        <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold !cursor-not-allowed w-full">{{'bookPage.You-are-borrowing-this-book'|translate}}</button>
                     }
                     @else {
                         @if (book.copies > 0) {
-                            <button class="bg-leaf-green p-[5px] rounded-[10px] text-soft-ice body font-bold w-full" (click)="handleBorrow()">{{'bookPage.Borrow-this-book'|translate}}</button>
+                            <button class="bg-leaf-green p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold w-full" (click)="handleBorrow()">{{'bookPage.Borrow-this-book'|translate}}</button>
                         }
                         @else {
-                            <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice body font-bold !cursor-not-allowed w-full">{{'bookPage.Book-is-not-available'|translate}}</button>
+                            <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold !cursor-not-allowed w-full">{{'bookPage.Book-is-not-available'|translate}}</button>
                         }
                     }
                 </div>

@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Book } from '../../models/book';
 import { TranslateModule } from '@ngx-translate/core';
 import { errorImage } from '../../../assets/constants';
@@ -11,16 +11,27 @@ import { environment } from '../../../environments/environment';
   styleUrl: './book-card-component.css',
 })
 export class BookCardComponent {
-  @Input({ required: true }) book!: Book;
-  @Input() accessible: boolean = true
+
+  @Input({ required: true })
+  book!: Book;
+
+  @Input()
+  accessible: boolean = true;
 
   backendUrl = environment.apiUrl;
 
-  ngOnChanges(changes: SimpleChanges): void {
+  getWebpCover(coverUrl: string | null | undefined): string {
+    if (!coverUrl) {
+      return 'default.webp';
+    }
 
+    return coverUrl.replace(/\.(jpg|jpeg|png)$/i, '.webp');
   }
 
   onImageError(event: Event): void {
-    (event.target as HTMLImageElement).src = errorImage;
+    const image = event.target as HTMLImageElement;
+
+    image.onerror = null;
+    image.src = errorImage;
   }
 }

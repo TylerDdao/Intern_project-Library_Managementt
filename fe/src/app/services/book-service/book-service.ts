@@ -21,14 +21,32 @@ export class BookService {
     return this.http.delete(`${this.baseUrl}?id=${book.id}`, {headers:getAuthHeaders(this.platformId)})
   }
 
-  createBook(bookData: any, file: File | null) {
+  createBook(book: Book) {
+    const body = {
+      "title": book.title,
+      "author": book.author,
+      "copies": book.copies,
+      "genres": book.genres?.map(g=>g.name)
+    }
+    return this.http.post(`${this.baseUrl}`, body, { headers: getAuthHeaders(this.platformId) });
+  }
+
+  uploadBookCover(id: number, file: File | null) {
     const formData = new FormData();
-    formData.append('data', new Blob([JSON.stringify(bookData)], { type: 'application/json' }));
+
+    formData.append('id', id.toString());
+
     if (file) {
       formData.append('file', file);
     }
 
-    return this.http.post(`${this.baseUrl}`, formData, { headers: getAuthHeaders(this.platformId) });
+    return this.http.post(
+      `${this.baseUrl}/upload-book-cover`,
+      formData,
+      {
+        headers: getAuthHeaders(this.platformId)
+      }
+    );
   }
 
   getAllBooks(page: number = 0, limit: number = 10) {

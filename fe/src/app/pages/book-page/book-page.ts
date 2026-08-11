@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Inject, NgZone, OnChanges, PLATFORM_ID, SimpleChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar';
 import { Book } from '../../models/book';
 import { BookService } from '../../services/book-service/book-service';
@@ -24,6 +24,7 @@ import { Page } from '../../models/page';
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
 import { LoadingComponent } from "../../components/loading-component/loading-component";
+import { errorImage } from '../../../assets/constants';
 
 
 @Component({
@@ -37,11 +38,10 @@ export class BookPage{
   editable: boolean = false;
   bookId!: number;
   book!: Book;
-  bookCover = '';
 
   isLoading:boolean = false;
 
-  baseUrl = environment.apiUrl
+  backendUrl = environment.apiUrl
 
   isLoadingPosts: boolean = true;
   posts: Post[] = [];
@@ -58,10 +58,12 @@ export class BookPage{
     totalElements: 0,
     numberOfElements: 0
   }
+  isSearch: boolean | null = null;
 
   borrow!: Borrow
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private bookService: BookService,
     private postService: PostService,
     private borrowService: BorrowService,
@@ -167,6 +169,7 @@ export class BookPage{
   }
 
   fetchGenres(){
+    this.isSearch = true;
     this.genreService.getGenresByName(this.query ,this.searchGenresPage.number, 10).subscribe({
       next: (data:any)=>{
         if(data.code == "200"){
@@ -174,11 +177,32 @@ export class BookPage{
           this.searchGenres = data.data.content
           this.cdr.markForCheck()
         }
+        this.isSearch = false
       },
       error:(err:HttpErrorResponse)=>{
         errorNoti(err, this.translate);
+        this.isSearch = null
       }
     })
+  }
+
+  handleDeleteBook(book:Book){
+    const message = this.translate.instant("form.Confirm-delete")
+    const option = confirm(message+"?")
+    if(option){
+      this.bookService.deleteBook(book).subscribe({
+        next:(data:any)=>{
+          if (data.code == "200"){
+            const message = this.translate.instant("booksManagement.Book-is-deleted")
+            alert(message);
+            this.router.navigate(['/books-management'])
+          }
+        },
+        error:(err:HttpErrorResponse)=>{
+          errorNoti(err, this.translate)
+        }
+      })
+    }
   }
 
   handleLoadMoreGenre(){
@@ -229,8 +253,6 @@ export class BookPage{
         if (data.code == "200") {
           this.ngZone.run(() => {
             this.book = data.data;
-            this.bookCover = this.book.title.replaceAll(' ', '-').toLowerCase();
-            console.log(this.book);
             if(this.book.borrowed){
               this.fetchBorrow(this.book.id);
             }
@@ -267,8 +289,26 @@ export class BookPage{
     }
   }
 
+  getWebpCover(coverUrl: string | null | undefined): string {
+    console.log('coverUrl:', coverUrl);
+
+    if (!coverUrl) {
+      console.log('Using default.webp');
+      return 'default.webp';
+    }
+
+    const webp = coverUrl.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+    console.log('Using:', webp);
+
+    return webp;
+  }
+
   onImageError(event: Event): void {
-    (event.target as HTMLImageElement).src = '/book-covers/default.jpg';
+    const image = event.target as HTMLImageElement;
+
+    image.onerror = null;
+
+    image.src = `${this.backendUrl}/book-covers/default.jpg`;
   }
 
   get formattedDueDate(): string{

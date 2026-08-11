@@ -250,6 +250,11 @@ export class BooksManagement {
     this.cdr.markForCheck();
   }
 
+  handleAddBook(){
+    this.fetchBooks()
+    this.cdr.markForCheck()
+  }
+
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
       this.fetchAllGenres();

@@ -47,6 +47,14 @@ public class PostController {
 //        );
 //    }
 
+    @PreAuthorize("@securityService.hasAccess('UPDATE_POST')")
+    @PatchMapping()
+    public ResponseEntity<ApiResponse<PostResponse>> updatePost(
+            @RequestBody PostRequest request
+    ){
+        return ResponseEntity.ok(ApiResponse.success(updatePostService.updatePost(request)));
+    }
+
     @PreAuthorize("@securityService.hasAccess('GET_POST')")
     @GetMapping("/{postId}")
     public ResponseEntity<ApiResponse<PostResponse>> getPost(@PathVariable Long postId){
