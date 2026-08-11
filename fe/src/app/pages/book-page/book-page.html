@@ -7,11 +7,7 @@
                 <form [formGroup]="editBookForm" id="editBookForm" (ngSubmit)="onSubmit()" class="w-full">
                     <div class="flex flex-col space-y-[30px]">
                         <div class="book-container w-full">
-                            <img
-                                [src]="backendUrl + '/book-covers/' + getWebpCover(book.coverUrl)"
-                                class="book-cover"
-                                (error)="onImageError($event)"
-                            />
+                            <img [src]="backendUrl + '/book-covers/' + getWebpCover(book.coverUrl)" class="book-cover" (error)="onImageError($event)"/>
                             <div class="w-full">
                                 <div>
                                     <label for="title">{{"book.Title"|translate}}</label>
