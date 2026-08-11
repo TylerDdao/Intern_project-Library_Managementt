@@ -3,6 +3,7 @@ package com.example.library_management.service.borrow;
 import com.example.library_management.model.Borrow;
 import com.example.library_management.repository.BorrowRepository;
 import com.example.library_management.service.MailService;
+import com.example.library_management.service.mail.BorrowMail;
 import com.example.library_management.util.AuditLogger;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class BorrowReminderService {
     private BorrowRepository borrowRepository;
 
     @Autowired
-    private MailService mailService;
+    private BorrowMail borrowMail;
 
     @Autowired
     private MessageSource messageSource;
@@ -44,7 +45,7 @@ public class BorrowReminderService {
 
         for (Borrow borrow : dueBorrows) {
             try{
-                mailService.sendBorrowDueReminder(borrow.getUser(), borrow.getBook().getTitle());
+                borrowMail.sendBorrowDueReminder(borrow.getUser(), borrow.getBook().getTitle());
             }
             catch (Exception e){
                 log.error("Failed to send reminder for borrow id {}", borrow.getId(), e);
@@ -65,7 +66,7 @@ public class BorrowReminderService {
                         LocalDate.now()
                 );
 
-                mailService.sendLateBorrowReminder(
+                borrowMail.sendLateBorrowReminder(
                         borrow.getUser(),
                         borrow.getBook().getTitle(),
                         lateDays

@@ -12,6 +12,7 @@ import com.example.library_management.repository.BorrowRepository;
 import com.example.library_management.repository.PolicyRepository;
 import com.example.library_management.repository.UserRepository;
 import com.example.library_management.service.MailService;
+import com.example.library_management.service.mail.BorrowMail;
 import com.example.library_management.util.AuditLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -49,7 +50,7 @@ public class CreateBorrowService {
     private PolicyRepository policyRepository;
 
     @Autowired
-    private MailService mailService;
+    private BorrowMail borrowMail;
 
     @Transactional
 //    @CacheEvict(value = "books", key = "#request.id")
@@ -78,7 +79,7 @@ public class CreateBorrowService {
 
         borrowRepository.save(newBorrow);
         bookRepository.save(book);
-        mailService.sendBorrowCreatedEmail(newBorrow);
+        borrowMail.sendBorrowCreatedEmail(newBorrow);
         return new BorrowResponse(newBorrow);
     }
 }
