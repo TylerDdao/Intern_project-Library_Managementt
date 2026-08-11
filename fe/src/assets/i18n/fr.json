@@ -91,7 +91,8 @@
     "Delete": "Supprimer",
     "Confirm-delete": "Confirmer la suppression",
     "Edit-role": "Modifier le rôle",
-    "New-role": "Nouveau rôle"
+    "New-role": "Nouveau rôle",
+    "Processing": "Traitement en cours"
   },
   "newUserForm": {
     "Create-new-user": "Créer un nouvel utilisateur"
@@ -153,11 +154,15 @@
   },
   "postPage": {
     "Edit-post": "Modifier la publication",
-    "Book-selection": "Sélection du livre"
+    "Book-selection": "Sélection du livre",
+    "You-cannot-change-book": "Vous ne pouvez pas changer de livre"
   },
   "createPost": {
     "Create-new-post": "Créer une nouvelle publication",
-    "Pick-a-book": "Choisir un livre"
+    "Pick-a-book": "Choisir un livre",
+    "Please-select-a-book": "Veuillez sélectionner un livre",
+    "Please-enter-subject": "Veuillez entrer un sujet",
+    "Please-enter-content": "Veuillez entrer du contenu"
   },
   "export": {
     "Export": "Exporter",

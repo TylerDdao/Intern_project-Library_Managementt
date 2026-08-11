@@ -8,6 +8,7 @@ import com.example.library_management.model.User;
 import com.example.library_management.repository.RoleRepository;
 import com.example.library_management.repository.UserRepository;
 import com.example.library_management.service.MailService;
+import com.example.library_management.service.mail.UserMailService;
 import com.example.library_management.util.AuditLogger;
 import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +17,12 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -39,7 +43,7 @@ public class UpdateUserService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private MailService mailService;
+    private UserMailService userMailService;
 
     public UserResponse updateUserRole(UserRequest request){
         Role defaultRole = roleRepository.findByIsDefaultIsTrue()
@@ -62,6 +66,36 @@ public class UpdateUserService {
     }
 
     @Transactional
+    public UserResponse updateUserSelf(UserRequest request) throws MessagingException {
+        String username = Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication()).getName();
+        User user = userRepository.findByUsernameAndIsDeletedFalse(username)
+                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.username.not.found", null, LocaleContextHolder.getLocale())));
+
+        // update only the fields that should change
+        if(request.getUsername() != null) user.setUsername(request.getUsername());
+        if (request.getPhoneNumber() != null) user.setPhoneNumber(request.getPhoneNumber());
+        if (request.getAddress() != null) user.setAddress(request.getAddress());
+        if (request.getEmail() != null) user.setEmail(request.getEmail());
+        if (request.getUsername() != null) user.setUsername(request.getUsername());
+        if (request.getFullName() != null) user.setFullName(request.getFullName());
+        if (request.getPassword() != null){
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
+
+        User savedUser = userRepository.save(user);
+        if(request.getPassword()!=null){
+            try {
+                userMailService.sendPasswordChangedEmail(savedUser);
+            }
+            catch (Exception e){
+                throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "EMAIL-ERROR", e.getMessage());
+            }
+        }
+        logger.log("Updated @{}, ID #{}", savedUser.getUsername(),savedUser.getId());
+        return new UserResponse(savedUser);
+    }
+
+    @Transactional
     public UserResponse updateUser(UserRequest request) throws MessagingException {
         User user = userRepository.findById(request.getId())
                 .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.username.not.found", null, LocaleContextHolder.getLocale())));
@@ -80,7 +114,7 @@ public class UpdateUserService {
         User savedUser = userRepository.save(user);
         if(request.getPassword()!=null){
             try {
-                mailService.sendPasswordChangedEmail(savedUser);
+                userMailService.sendPasswordChangedEmail(savedUser);
             }
             catch (Exception e){
                 throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "EMAIL-ERROR", e.getMessage());

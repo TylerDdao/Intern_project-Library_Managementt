@@ -8,10 +8,12 @@ import { getUser } from '../../util/session-storage';
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
 import { UserService } from '../../services/user-service/user-service';
+import { LoadingComponent } from "../../components/loading-component/loading-component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-change-password',
-  imports: [NavbarComponent, TranslateModule, ReactiveFormsModule],
+  imports: [NavbarComponent, TranslateModule, ReactiveFormsModule, LoadingComponent],
   templateUrl: './change-password.html',
   styleUrl: './change-password.css',
 })
@@ -21,12 +23,15 @@ export class ChangePassword {
   isPasswordValid: boolean = true;
   isPasswordMatch: boolean = true;
 
+  isSendingRequest:boolean = false;
+
   constructor(
     @Inject(PLATFORM_ID) private platformId:Object,
     private authService:AuthService,
     private userService: UserService,
     private translate: TranslateService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ){}
 
   passwordForm = new FormGroup({
@@ -70,7 +75,9 @@ export class ChangePassword {
       if(oldPassword == newPassword){
         const message = this.translate.instant("error.Please-enter-a-different-password");
         alert(message);
+        return
       }
+      this.isSendingRequest = true;
       this.authService.verifyPassword(user?.username, oldPassword).subscribe({
         next:(data:any)=>{
           if(data.data == true){
@@ -82,24 +89,30 @@ export class ChangePassword {
                   const message = this.translate.instant("usersManagement.Password-is-changed")
                   alert(message)
                   this.clearForm();
-                  this.cdr.markForCheck();
-                  return;
                 }
+                this.isSendingRequest = false;
+                this.cdr.markForCheck();
+                return;
               },
               error:(err:HttpErrorResponse)=>{
                 errorNoti(err, this.translate)
+                this.isSendingRequest = false;
+                this.cdr.markForCheck();
                 return
               }
             })
           }
           else{
             this.isOldPasswordCorrect = false;
+            this.isSendingRequest = false;
             this.cdr.markForCheck()
             return;
           }
         },
         error: (err:HttpErrorResponse)=>{
           errorNoti(err, this.translate);
+          this.isSendingRequest = false;
+                this.cdr.markForCheck();
           return;
         }
       })
@@ -116,5 +129,9 @@ export class ChangePassword {
     this.isPasswordMatch = true;
     this.isPasswordValid = true;
     this.cdr.markForCheck();
+  }
+
+  handleCancel(){
+    this.router.navigate(['/settings'])
   }
 }

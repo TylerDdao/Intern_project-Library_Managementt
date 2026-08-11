@@ -14,11 +14,6 @@ public class AuditLogger {
         return auth != null ? auth.getName() : "SYSTEM";
     }
 
-    public void log(String actor, String message, Object... args) {
-        String formatted = MessageFormatter.arrayFormat(message, args).getMessage();
-        log.info("[{}] {}", actor, formatted);
-    }
-
     public void log(String message, Object... args) {
         String user = getCurrentUser();
         String formatted = MessageFormatter.arrayFormat(message, args).getMessage();

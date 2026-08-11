@@ -10,7 +10,7 @@ import { CommentBoxComponent } from "../comment-box-component/comment-box-compon
 
 @Component({
   selector: 'app-mini-post-card-component',
-  imports: [TranslateModule, CommentBoxComponent],
+  imports: [TranslateModule],
   templateUrl: './mini-post-card-component.html',
   styleUrl: './mini-post-card-component.css',
 })

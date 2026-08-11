@@ -91,7 +91,8 @@
     "Delete": "Delete",
     "Confirm-delete": "Confirm delete",
     "Edit-role": "Edit role",
-    "New-role": "New role"
+    "New-role": "New role",
+    "Processing": "Processing"
   },
   "newUserForm": {
     "Create-new-user": "Create new user"
@@ -148,16 +149,20 @@
   },
   "postsManagement": {
     "Create-post": "Create post",
-    "Post-is-created": "TODO",
-    "Post-is-deleted": "TODO"
+    "Post-is-created": "Post is created",
+    "Post-is-deleted": "Post is deleted"
   },
   "postPage": {
     "Edit-post": "Edit post",
-    "Book-selection": "Book selection"
+    "Book-selection": "Book selection",
+    "You-cannot-change-book": "You cannot change book"
   },
   "createPost": {
     "Create-new-post": "Create new post",
-    "Pick-a-book": "Pick a book"
+    "Pick-a-book": "Pick a book",
+    "Please-select-a-book": "Please select a book",
+    "Please-enter-subject": "Please enter subject",
+    "Please-enter-content": "Please enter content"
   },
   "export": {
     "Export": "Export",

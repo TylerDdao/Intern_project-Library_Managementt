@@ -4,20 +4,43 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import java.text.NumberFormat;
 
 @Component
 public class Formatter {
-    public String formatDateTime(LocalDateTime dateTime) {
-        Locale locale = LocaleContextHolder.getLocale();
+    public String formatDateTime(LocalDateTime dateTime, Locale locale) {
 
-        DateTimeFormatter formatter =
-                DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", locale);
+        String pattern;
 
-        return dateTime.format(formatter);
+        if (locale.equals(Locale.US)) {
+            pattern = "MM/dd/yyyy @ h:mm a";
+        } else {
+            pattern = "dd/MM/yyyy @ HH:mm";
+        }
+
+        return dateTime.format(
+                DateTimeFormatter.ofPattern(pattern, locale)
+        );
+    }
+
+    public String formatDate(LocalDate date, Locale locale) {
+
+        String pattern;
+
+        if (locale.equals(Locale.US)) {
+            pattern = "MM/dd/yyyy";
+        } else {
+            pattern = "dd/MM/yyyy";
+        }
+
+        return date.format(
+                DateTimeFormatter.ofPattern(pattern, locale)
+        );
     }
 
     public String formatVND(Number amount) {
@@ -30,5 +53,9 @@ public class Formatter {
         );
 
         return formatter.format(amount);
+    }
+
+    public long calculateDaysBetween(LocalDate start, LocalDate end) {
+        return ChronoUnit.DAYS.between(start, end);
     }
 }
