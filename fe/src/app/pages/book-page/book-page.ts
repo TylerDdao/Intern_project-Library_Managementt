@@ -153,15 +153,14 @@ export class BookPage{
             alert(message)
             this.book.borrowed = true; 
             this.borrow = data.data;
-            
+            this.fetchBook(this.bookId);
+            this.cdr.markForCheck();
           }
           this.isLoading = false;
-          this.cdr.markForCheck();
         },
         error: (err:HttpErrorResponse) => {
           errorNoti(err, this.translate)
-          this.isLoading = false;
-          this.cdr.markForCheck();
+          this.isLoading = false
         }
       })
     }

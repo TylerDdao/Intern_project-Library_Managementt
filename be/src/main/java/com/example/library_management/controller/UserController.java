@@ -5,6 +5,7 @@ import com.example.library_management.dto.request.user.UserRequest;
 import com.example.library_management.dto.response.UserResponse;
 import com.example.library_management.model.User;
 import com.example.library_management.service.user.*;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
@@ -62,9 +63,16 @@ public class UserController {
     }
 
     @PreAuthorize("@securityService.hasAccess('UPDATE_USER')")
-    @PatchMapping()
+    @PatchMapping("update-me")
     public ResponseEntity<ApiResponse<UserResponse>> updateUserByUsername(
-            @RequestBody UserRequest request){
+            @RequestBody UserRequest request) throws MessagingException {
+        return ResponseEntity.ok(ApiResponse.success(updateUserService.updateUserSelf(request)));
+    }
+
+    @PreAuthorize("@securityService.hasAccess('UPDATE_USER_MULTI')")
+    @PatchMapping()
+    public ResponseEntity<ApiResponse<UserResponse>> updateUser(
+            @RequestBody UserRequest request) throws MessagingException {
         return ResponseEntity.ok(ApiResponse.success(updateUserService.updateUser(request)));
     }
 

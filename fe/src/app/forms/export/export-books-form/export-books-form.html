@@ -35,7 +35,7 @@
                                     <span>{{"book.Genres"|translate}}: </span>
                                     @if (book.genres) {
                                         @for (genre of book.genres; track $index) {
-                                            @if ($index + 1 == book.genres?.length) {
+                                            @if ($index + 1 == book.genres.length) {
                                                 <span>{{genre.name}}</span>
                                             }
                                             @else {

@@ -200,7 +200,7 @@ export class Settings{
     newUser.phoneNumber = this.newUserForm.get('phoneNumber')?.value?.trim() ?? this.user.phoneNumber;
     newUser.address = this.newUserForm.get('address')?.value?.trim() ?? this.user.address;
 
-    this.userService.updateUser(newUser).subscribe({
+    this.userService.updateMe(newUser).subscribe({
       next: (data:any)=>{
         if(data.code == "200"){
           this.userService.setCurrentUser(newUser);

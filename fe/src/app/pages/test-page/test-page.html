@@ -1,24 +1,78 @@
-<div style="max-width:600px;margin:40px auto;font-family:Arial,sans-serif;">
-    <div style="background-color:#2C5EAD;padding:20px;border-radius:10px 10px 0 0;text-align:center;">
-        <h1 style="color:#EAEFEF;margin:0;">Library Management System</h1>
+<h2 style="margin:0 0 20px;color:#25343F;font-size:22px;">
+    %s
+</h2>
+
+<p style="font-size:15px;line-height:1.7;margin:0 0 20px;">
+    <strong>%s</strong> %s
+</p>
+
+<div style="background:#FEF2F2;border-left:4px solid #DC2626;padding:18px 20px;margin:20px 0;border-radius:6px;">
+
+    <!-- Label -->
+    <div style="font-size:12px;color:#B91C1C;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;font-weight:bold;">
+        Sách quá hạn
     </div>
-    <div style="padding:20px;color:#25343F;">
-        <h2>Hello</h2>
-        <p>You have a new borrow</p>
-        <div style="display: flex; gap: 10px;">
-            <div style="width: 100px;">
-                <img src="http://localhost:8080/api/book-covers/1.jpg"/>
+
+    <!-- Book information -->
+    <div style="display:flex;align-items:flex-start;">
+
+        <img src="http://localhost:8080/api/book-covers/1.jpg"
+             style="width:100px;height:145px;object-fit:cover;border-radius:5px;display:block;"/>
+
+        <div style="margin-left:15px;flex:1;">
+
+            <!-- Title -->
+            <div style="font-size:18px;font-weight:bold;color:#991B1B;margin-bottom:4px;">
+                %s
             </div>
-            <div>
-                <div style="font-weight: bold;">Project hail Mary</div>
-                <div>Andy Weid</div>
-                <div>Borrow on: 09/08/2026</div>
-                <div style="text-decoration: underline;">Please return by: <strong>19/08/2026</strong></div>
+
+            <!-- Author -->
+            <div style="font-size:14px;color:#7F1D1D;margin-bottom:14px;">
+                %s
+            </div>
+
+            <!-- Borrow details -->
+            <div style="font-size:13px;line-height:1.8;color:#4B5563;">
+
+                <div>
+                    <strong style="color:#374151;">Borrowed on:</strong>
+                    %s
+                </div>
+
+                <div>
+                    <strong style="color:#B91C1C;">Late:</strong>
+                    <span style="color:#B91C1C;font-weight:bold;">
+                        %s days
+                    </span>
+                </div>
+
+                <div>
+                    <strong style="color:#374151;">Penalty:</strong>
+                    %s
+                </div>
+
+                <div>
+                    <strong style="color:#374151;">Penalty rate:</strong>
+                    %s / day
+                </div>
+
             </div>
         </div>
-        <div>Applied penalty fee if you cannot return your borrow on time: 10000/day</div>
-        <div>Penalty fee can be changed and will be announce via email</div>
-        <div>Thank you</div>
-        <p style="text-align:right;margin:0;"><small>Library Management Team</small></p>
     </div>
+
+    <!-- Warning -->
+    <div style="margin-top:18px;padding-top:14px;border-top:1px solid #FECACA;font-size:13px;color:#991B1B;">
+        Please return this book as soon as possible to avoid additional penalties.
+    </div>
+
+</div>
+
+<p style="font-size:14px;line-height:1.7;color:#59636E;margin:20px 0 0;">
+    %s
+</p>
+
+<div style="border-top:1px solid #E5E7EB;margin-top:28px;padding-top:18px;text-align:right;">
+    <small style="color:#6B7280;">
+        Library Management Team
+    </small>
 </div>

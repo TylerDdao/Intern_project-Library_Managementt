@@ -91,7 +91,8 @@
     "Delete": "Xóa",
     "Confirm-delete": "Xác nhận xóa",
     "Edit-role": "Chỉnh sửa vai trò",
-    "New-role": "Vai trò mới"
+    "New-role": "Vai trò mới",
+    "Processing": "Đang xử lý"
   },
   "newUserForm": {
     "Create-new-user": "Tạo người dùng mới"
@@ -147,15 +148,21 @@
     "Selected-books": "Sách đã chọn"
   },
   "postsManagement": {
-    "Create-post": "Tạo bài viết"
+    "Create-post": "Tạo bài viết",
+    "Post-is-created": "Bài viết đã được tạo",
+    "Post-is-deleted": "Bài viết đã được xóa"
   },
   "postPage": {
     "Edit-post": "Chỉnh sửa bài viết",
-    "Book-selection": "Chọn sách"
+    "Book-selection": "Chọn sách",
+    "You-cannot-change-book": "Bạn không thể thay đổi sách"
   },
   "createPost": {
     "Create-new-post": "Tạo bài viết mới",
-    "Pick-a-book": "Chọn một quyển sách"
+    "Pick-a-book": "Chọn một quyển sách",
+    "Please-select-a-book": "Vui lòng chọn một cuốn sách",
+    "Please-enter-subject": "Vui lòng nhập chủ đề",
+    "Please-enter-content": "Vui lòng nhập nội dung"
   },
   "export": {
     "Export": "Xuất dữ liệu",
@@ -169,7 +176,7 @@
     "You-are-borrowing-this-book": "Bạn đang mượn cuốn sách này",
     "Your-borrow-for-this-book-dues-on": "Hạn trả sách của bạn là ngày",
     "Confirm-borrow": "Xác nhận mượn sách",
-    "Borrow-created": "Tạo lượt mượn thành công"
+    "Borrow-created": "Mượn sách thành công"
   },
   "post": {
     "Edit-post": "Chỉnh sửa bài viết",
@@ -259,7 +266,8 @@
     "Loading": "Đang tải...",
     "Load-more": "Tải thêm",
     "See-less": "Thu gọn",
-    "Post-not-found": "Không tìm thấy bài viết"
+    "Post-not-found": "Không tìm thấy bài viết",
+    "No-more-post": "Không còn bài viết nào"
   },
   "sortBar": {
     "Search": "Tìm kiếm",
@@ -337,16 +345,15 @@
     "loading": "Đang tải...",
     "empty": "Trống"
   },
-
   "announcement": {
-  "1": {
-    "subject": "Ý kiến của bạn rất quan trọng!",
-    "content": "Chúng tôi rất mong nhận được phản hồi từ bạn. Vui lòng gửi ý kiến cho chúng tôi qua liên kết bên dưới!",
-    "linkText": "Biểu mẫu góp ý"
-  },
-  "2": {
-    "subject": "Website đang phát triển — Trải nghiệm tốt nhất trên máy tính",
-    "content": "Website này vẫn đang trong quá trình phát triển. Giao diện trên thiết bị di động chưa được tối ưu hóa, do đó một số phần có thể hiển thị không chuẩn xác trên màn hình nhỏ. Để có trải nghiệm tốt nhất, vui lòng truy cập bằng trình duyệt trên máy tính bàn hoặc laptop. Cảm ơn bạn đã kiên nhẫn trong khi chúng tôi tiếp tục hoàn thiện nền tảng."
+    "1": {
+      "subject": "Ý kiến của bạn rất quan trọng!",
+      "content": "Chúng tôi rất mong nhận được phản hồi từ bạn. Vui lòng gửi ý kiến cho chúng tôi qua liên kết bên dưới!",
+      "linkText": "Biểu mẫu góp ý"
+    },
+    "2": {
+      "subject": "Website đang phát triển — Trải nghiệm tốt nhất trên máy tính",
+      "content": "Website này vẫn đang trong quá trình phát triển. Giao diện trên thiết bị di động chưa được tối ưu hóa, do đó một số phần có thể hiển thị không chuẩn xác trên màn hình nhỏ. Để có trải nghiệm tốt nhất, vui lòng truy cập bằng trình duyệt trên máy tính bàn hoặc laptop. Cảm ơn bạn đã kiên nhẫn trong khi chúng tôi tiếp tục hoàn thiện nền tảng."
+    }
   }
-}
 }

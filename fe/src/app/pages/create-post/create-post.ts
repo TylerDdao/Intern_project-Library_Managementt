@@ -44,6 +44,10 @@ export class CreatePost {
 
   isLoading: boolean = false
 
+  isBookValid: boolean = false;
+  isSubjectValid: boolean = false;
+  isContentValid: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private langService: LanguageService,
@@ -62,14 +66,15 @@ export class CreatePost {
   
   handleUnselectBook(){
     this.chosenBook = null;
+    this.isBookValid = false;
     this.cdr.markForCheck();
   }
 
   handleSelectBook(book:Book){
-    console.log('handleSelectBook called', book);
     this.chosenBook = book;
     this.bookCover = this.chosenBook.title.replaceAll(' ', '-').toLowerCase();
     this.isOpenBookList = false;
+    this.isBookValid = true;
     this.cdr.markForCheck();
   }
 
@@ -138,6 +143,13 @@ export class CreatePost {
     if(isPlatformBrowser(this.platformId)){
       const user = JSON.parse(sessionStorage.getItem('user') ?? '{}');
       this.username = user.username
+
+      this.postForm.get('subject')?.valueChanges.subscribe(() => {
+        this.isSubjectValid = this.postForm.get('subject')?.valid ?? false;
+      });
+      this.postForm.get('content')?.valueChanges.subscribe(() => {
+        this.isContentValid = this.postForm.get('content')?.valid ?? false;
+      });
     }
   }
 

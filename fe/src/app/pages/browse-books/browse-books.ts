@@ -16,11 +16,10 @@ import { expand, reduce } from 'rxjs/operators';
 import { Page } from '../../models/page';
 import { PagesComponent } from '../../components/pages-component/pages-component';
 import { LoadingComponent } from '../../components/loading-component/loading-component';
-import { BookListComponent } from '../../components/book-list-component/book-list-component';
 
 @Component({
   selector: 'app-browse-books',
-  imports: [NavbarComponent, SortSideBarComponent, BookCardComponent, TranslateModule, PagesComponent, LoadingComponent, BookListComponent],
+  imports: [NavbarComponent, SortSideBarComponent, BookCardComponent, TranslateModule, PagesComponent, LoadingComponent],
   templateUrl: './browse-books.html',
   styleUrl: './browse-books.css',
 })
@@ -34,8 +33,6 @@ export class BrowseBooks {
     private cdr: ChangeDetectorRef
   ) 
   {}
-
-  isOpenBookList:boolean = false;
 
   lastQuery: SideBarQuery | null = null;
 
@@ -59,12 +56,7 @@ export class BrowseBooks {
     number: 0,
     last: true,
     first: true
-  }
-
-  handleCloseBookList(){
-    this.isOpenBookList = false;
-    this.cdr.markForCheck();
-  }
+    }
 
   handleApply(query: SideBarQuery): void {
     if(query.isClear){

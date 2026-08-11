@@ -33,6 +33,7 @@ public class CreatePostService {
         post.setContent(request.getContent());
         post.setBook(book);
         Post savedPost = postRepository.save(post);
+        logger.log("Created post ID#{}", savedPost.getId());
         return new PostResponse(savedPost, false, false);
     }
 }

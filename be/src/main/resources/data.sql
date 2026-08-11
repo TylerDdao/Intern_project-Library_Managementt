@@ -48,23 +48,6 @@ INSERT IGNORE INTO features (id, name) VALUES
     (37, 'EXPORT_BOOK'),
     (38, 'EXPORT_BORROW');
 
-INSERT IGNORE  INTO features_roles (role_id, feature_id) VALUES
-    (4,2),
-    (4,3),
-    (4,5),
-    (4,6),
-    (4,8),
-    (4,9),
-    (4,10),
-    (4,12),
-    (4,13),
-    (4,14),
-    (4,15),
-    (4,16),
-    (4,18),
-    (4,27),
-    (4,31),
-    (4,32);
 -- =========================================================================
 -- 2. USERS (Tyler as ROOT, everyone else as USER)
 -- =========================================================================
