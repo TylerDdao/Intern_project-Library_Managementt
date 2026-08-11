@@ -83,7 +83,6 @@ public class BorrowMailService {
                 ? borrow.getBook().getCoverUrl()
                 : "default.jpg";
         String bookCoverUrl = backEndUrl + "/book-covers/" + bookCoverFile;
-        System.out.println(bookCoverUrl);
         String borrowedAt = messageSource.getMessage("email.borrow.at", new Object[]{formatter.formatDateTime(borrow.getCreatedAt(), locale)}, locale);
         Optional<Policy> penaltyPolicy = policyRepository.findByKey("late_penalty_per_day");
         String penaltyRate;
