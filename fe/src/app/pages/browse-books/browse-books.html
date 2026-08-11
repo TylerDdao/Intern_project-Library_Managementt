@@ -2,12 +2,15 @@
 
 <div class="container">
     <div class="side-menu">
-        <app-sort-side-bar-component
-        [isSearch]="isSearch"
-        [sortBy]="['Title', 'Author']"
-        [filterBy]="genres"
-        (onApply)="handleApply($event)">
-        </app-sort-side-bar-component>
+        <div class="flex flex-col space-y-[10px]">
+            <app-sort-side-bar-component
+            [isSearch]="isSearch"
+            [sortBy]="['Title', 'Author']"
+            [filterBy]="genres"
+            (onApply)="handleApply($event)">
+            </app-sort-side-bar-component>
+            <button class="text-soft-ice p-[5px] rounded-[10px] border bg-sky-blue caption-1 font-bold" (click)="isOpenBookList = true">{{'booksManagement.Book-list'|translate}}</button>
+        </div>
     </div>
 
     <div class="books-area">
@@ -92,4 +95,9 @@
             </div>
         }
     </div>
+    @if(isOpenBookList){
+        <div class="fixed inset-0 flex items-center justify-center z-99">
+            <app-book-list-component [deletable]="false" [selectable]="false" (onClose)="handleCloseBookList()"></app-book-list-component>
+        </div>
+    }
 </div>
