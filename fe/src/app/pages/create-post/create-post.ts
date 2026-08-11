@@ -16,6 +16,7 @@ import { environment } from '../../../environments/environment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
 import { LoadingComponent } from "../../components/loading-component/loading-component";
+import { errorImage } from '../../../assets/constants';
 
 @Component({
   selector: 'app-create-post',
@@ -44,9 +45,10 @@ export class CreatePost {
 
   isLoading: boolean = false
 
-  isBookValid: boolean = false;
-  isSubjectValid: boolean = false;
-  isContentValid: boolean = false;
+  isBookValid: boolean = true;
+  isSubjectValid: boolean = true;
+  isContentValid: boolean = true;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -83,7 +85,17 @@ export class CreatePost {
   }
 
   onSubmit(){
-    console.log("SUbmit")
+    if(!this.chosenBook){
+      this.isBookValid = false;
+    }
+    if(!this.postForm.get("subject")?.valid){
+      this.isSubjectValid = false
+      return
+    }
+    if(!this.postForm.get("content")?.valid){
+      this.isContentValid = false
+      return
+    }
     const { subject, content } = this.postForm.value;
     if (subject && content && this.chosenBook) {
       this.isLoading = true;
@@ -103,7 +115,7 @@ export class CreatePost {
           if (data.code == "200") {
             const message = this.translate.instant("postsManagement.Post-is-created");
             alert(message);
-            this.router.navigate(['/my-posts']); // or wherever makes sense after creating
+            this.router.navigate(['/my-posts']);
           }
           this.isLoading = false;
         },
@@ -145,10 +157,10 @@ export class CreatePost {
       this.username = user.username
 
       this.postForm.get('subject')?.valueChanges.subscribe(() => {
-        this.isSubjectValid = this.postForm.get('subject')?.valid ?? false;
+        this.isSubjectValid = true;
       });
       this.postForm.get('content')?.valueChanges.subscribe(() => {
-        this.isContentValid = this.postForm.get('content')?.valid ?? false;
+        this.isContentValid = true;
       });
     }
   }
@@ -160,7 +172,18 @@ export class CreatePost {
   //   else{return ""}
   // }
 
+  getWebpCover(coverUrl: string | null | undefined): string {
+    if (!coverUrl) {
+      return 'default.webp';
+    }
+
+    return coverUrl.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+  }
+
   onImageError(event: Event): void {
-    (event.target as HTMLImageElement).src = '/book-covers/default.jpg';
+    const image = event.target as HTMLImageElement;
+
+    image.onerror = null;
+    image.src = errorImage;
   }
 }

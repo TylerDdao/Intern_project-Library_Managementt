@@ -68,12 +68,14 @@
                                 <div (click)="selectBook(book)"><app-book-card-component [accessible]="false" [book]="book"></app-book-card-component></div>
                                 <!-- <button class="px-[10px] py-[5px] bg-primary-1 text-soft-ice rounded-[10px]" (click)="selectBook(book)">{{'bookList.Select-this-book' |translate}}</button> -->
                             }
-                            @if (deletable) {
-                                <app-book-card-component [accessible]="false" [book]="book"></app-book-card-component>
-                                <button class="px-[10px] py-[5px] bg-tomato-red text-soft-ice rounded-[10px]" (click)="handleDeleteBook(book)">{{'bookList.Delete-this-book' |translate}}</button>
-                            }
                             @else {
-                                <app-book-card-component [book]="book"></app-book-card-component>
+                                @if (deletable) {
+                                    <app-book-card-component [accessible]="false" [book]="book"></app-book-card-component>
+                                    <button class="px-[10px] py-[5px] bg-tomato-red text-soft-ice rounded-[10px] w-full" (click)="handleDeleteBook(book)">{{'bookList.Delete-this-book' |translate}}</button>
+                                }
+                                @else {
+                                    <app-book-card-component [book]="book"></app-book-card-component>
+                                }
                             }
                         </div>
                     }   

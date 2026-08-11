@@ -1,5 +1,7 @@
 package com.example.library_management.service.post;
 
+import com.example.library_management.dto.request.post.PostRequest;
+import com.example.library_management.dto.response.post.PostResponse;
 import com.example.library_management.model.Post;
 import com.example.library_management.model.PostLike;
 import com.example.library_management.model.User;
@@ -24,6 +26,15 @@ public class UpdatePostService {
     private final PostLikeRepository postLikeRepository;
     private final MessageSource messageSource;
     private final AuditLogger logger;
+
+    public PostResponse updatePost(PostRequest request){
+        Post post = postRepository.findById(request.getId()).orElseThrow(()->new RuntimeException(messageSource.getMessage("error.post.not.found", null, LocaleContextHolder.getLocale())));
+        if(request.getSubject() != null) post.setSubject(request.getSubject());
+        if(request.getContent() != null) post.setContent(request.getContent());
+
+        Post savedPost = postRepository.save(post);
+        return new PostResponse(savedPost);
+    }
 
     public String toggleLike(Long postId, Long userId) {
         if (postId == null || userId == null) {

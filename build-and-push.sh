@@ -47,4 +47,4 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Done. Both images pushed to Docker Hub."
-echo "Now SSH into the VPS and run: bash deploy.sh"
+echo "Now SSH into the VPS and run: ./deploy.sh"

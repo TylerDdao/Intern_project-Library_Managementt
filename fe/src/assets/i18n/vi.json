@@ -145,17 +145,21 @@
     "Book-is-saved": "Sách đã được lưu",
     "Book-is-updated": "Sách đã được cập nhật",
     "Total-books": "Tổng số sách",
-    "Selected-books": "Sách đã chọn"
+    "Selected-books": "Sách đã chọn",
+    "Save-new-book-info": "Lưu thông tin sách mới",
+    "Delete-book": "Xóa sách"
   },
   "postsManagement": {
     "Create-post": "Tạo bài viết",
     "Post-is-created": "Bài viết đã được tạo",
-    "Post-is-deleted": "Bài viết đã được xóa"
+    "Post-is-deleted": "Bài viết đã được xóa",
+    "Post-is-updated": "Bài viết đã được cập nhật"
   },
   "postPage": {
     "Edit-post": "Chỉnh sửa bài viết",
     "Book-selection": "Chọn sách",
-    "You-cannot-change-book": "Bạn không thể thay đổi sách"
+    "You-cannot-change-book": "Bạn không thể thay đổi sách",
+    "Please-make-change-to-your-post": "Vui lòng thực hiện thay đổi cho bài viết của bạn"
   },
   "createPost": {
     "Create-new-post": "Tạo bài viết mới",
@@ -252,7 +256,8 @@
     "Clear": "Xóa bộ lọc",
     "Search-genre": "Tìm theo thể loại",
     "Search-by-name": "Tìm theo tên",
-    "Search-book": "Tìm kiếm sách"
+    "Search-book": "Tìm kiếm sách",
+    "Not-found": "TODO"
   },
   "browseBooks": {
     "Loading": "Đang tải...",
@@ -335,8 +340,15 @@
   },
   "newBookForm": {
     "Create-new-book": "Tạo sách mới",
-    "Upload": "Tải lên",
-    "Available-genres": "Các thể loại có sẵn"
+    "Upload-book-cover": "Tải lên ảnh bìa sách",
+    "Available-genres": "Các thể loại có sẵn",
+    "/": {
+      "WebP-file-only": "Chỉ chấp nhận tập tin .WebP"
+    },
+    "Please-enter-title": "Vui lòng nhập tên sách",
+    "Please-enter-author": "Vui lòng nhập tên tác giả",
+    "Please-enter-number-of-copies": "Vui lòng nhập số lượng bản sao",
+    "Book-is-added": "Đã thêm sách thành công"
   },
   "browseBook": {
     "Result": "Kết quả"

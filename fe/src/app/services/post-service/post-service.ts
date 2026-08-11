@@ -17,6 +17,16 @@ export class PostService {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
+  updatePost(post:Post){
+    const body = {
+      "id": post.id,
+      "subject": post.subject,
+      "content": post.content,
+      "book": post.book.id
+    }
+    return this.http.patch(`${this.baseUrl}`, body, {headers:getAuthHeaders(this.platformId)})
+  }
+
   getPostById(postId:number){
     return this.http.get(`${this.baseUrl}/${postId}`,{
       headers: getAuthHeaders(this.platformId)

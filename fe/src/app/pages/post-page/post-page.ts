@@ -15,6 +15,7 @@ import { Page } from '../../models/page';
 import { environment } from '../../../environments/environment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
+import { errorImage } from '../../../assets/constants';
 
 @Component({
   selector: 'app-post-page',
@@ -39,8 +40,13 @@ export class PostPage {
 
   chosenBook!: Book;
 
-  isSubjectValid: boolean = false;
-  isContentValid: boolean = false;
+  isLoading: boolean = false
+
+  isBookValid: boolean = true;
+  isSubjectValid: boolean = true;
+  isContentValid: boolean = true;
+
+  isPostSame:boolean = false
 
   constructor(
     private route: ActivatedRoute,
@@ -55,15 +61,58 @@ export class PostPage {
   postForm = new FormGroup({
     subject: new FormControl('', Validators.required),
     content: new FormControl('', Validators.required),
-    book: new FormControl<number | null>(null, Validators.required),
   });
 
   handleCancel(){
     this.router.navigate(['/my-posts'])
   }
 
-  onSubmit(){
-    console.log("Submit")
+  onSubmit(): void {
+    this.isBookValid = !!this.chosenBook;
+    this.isSubjectValid = this.postForm.get('subject')?.valid ?? false;
+    this.isContentValid = this.postForm.get('content')?.valid ?? false;
+    if (!this.isBookValid || !this.isSubjectValid || !this.isContentValid) return;
+
+    const { subject, content } = this.postForm.value;
+    
+    if(subject == this.post.subject && content == this.post.content){
+      this.isPostSame = true
+      return
+    }
+
+    if (!subject || !content || !this.chosenBook || !this.postId) return;
+
+    this.isLoading = true;
+
+    const request: Post = {
+      id: this.postId,
+      subject,
+      content,
+      book: this.chosenBook,
+      likeCount: 0,
+      createdAt: '',
+      commentCount: 0,
+      createdBy: '',
+      liked: false,
+      editable: true
+    };
+
+    this.postService.updatePost(request).subscribe({
+      next: (data: any) => {
+        if (data.code !== '200') {
+          this.isLoading = false;
+          return;
+        }
+        const message = this.translate.instant('postsManagement.Post-is-updated');
+        alert(message)
+        this.router.navigate(['my-posts'])
+      },
+      error: (err: HttpErrorResponse) => {
+        errorNoti(err, this.translate);
+        this.isLoading = false;
+        this.cdr.markForCheck();
+      }
+    });
   }
 
   handleCloseBookList(){
@@ -76,6 +125,7 @@ export class PostPage {
     const option = confirm(message+"?")
     if(!option ) return
     if(this.post){
+      this.isLoading = true
       this.postService.deletePost(this.post).subscribe({
         next: (data:any)=>{
           if(data.code == "200"){
@@ -92,22 +142,26 @@ export class PostPage {
   }
 
   fetchBooks(page:Page = this.booksPage){
+    this.isLoading = true
     this.bookService.getAllBooks(page.number).subscribe({
       next: (data: any) => {
         if(data.code == "200"){
           this.books = data.data.content
           this.booksPage = data.data
           this.isOpenBookList = true;
-          this.cdr.markForCheck();
         }
+        this.cdr.markForCheck()
+        this.isLoading = false
       },
-      error: (err) =>{
-        console.error(err)
+      error: (err:HttpErrorResponse) =>{
+        errorNoti(err, this.translate)
+        this.isLoading = false;
       }
     })
   }
 
   fetchPost(id: number){
+    this.isLoading = true
     this.postService.getPostById(id).subscribe({
       next: (data: any)=>{
         if(data.code == "200"){
@@ -115,14 +169,15 @@ export class PostPage {
           this.postForm.patchValue({
             subject: this.post.subject,
             content: this.post.content,
-            book: this.post.book.id
           });
           this.chosenBook = this.post.book;
+          this.isLoading = false
           this.cdr.markForCheck();
         }
       },
-      error: (err)=>{
-        console.error(err)
+      error: (err:HttpErrorResponse)=>{
+        errorNoti(err, this.translate)
+        this.isLoading = false
       }
     })
   }
@@ -135,10 +190,12 @@ export class PostPage {
       this.fetchPost(this.postId);
 
       this.postForm.get('subject')?.valueChanges.subscribe(() => {
-        this.isSubjectValid = this.postForm.get('subject')?.valid ?? false;
+        this.isSubjectValid = true;
+        this.isPostSame = false
       });
       this.postForm.get('content')?.valueChanges.subscribe(() => {
-        this.isContentValid = this.postForm.get('content')?.valid ?? false;
+        this.isContentValid = true;
+        this.isPostSame = false
       });
     }
   }
@@ -150,7 +207,18 @@ export class PostPage {
     else{return ""}
   }
 
+  getWebpCover(coverUrl: string | null | undefined): string {
+    if (!coverUrl) {
+      return 'default.webp';
+    }
+
+    return coverUrl.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+  }
+
   onImageError(event: Event): void {
-    (event.target as HTMLImageElement).src = '/book-covers/default.jpg';
+    const image = event.target as HTMLImageElement;
+
+    image.onerror = null;
+    image.src = errorImage;
   }
 }

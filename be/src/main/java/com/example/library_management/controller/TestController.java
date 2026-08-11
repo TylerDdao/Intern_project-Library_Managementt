@@ -25,8 +25,6 @@ public class TestController {
     @Autowired
     BorrowRepository borrowRepository;
 
-    @Autowired
-    BorrowRepository borrowRepository;
 
     @GetMapping("test")
     public ResponseEntity<ApiResponse<String>> Test(){

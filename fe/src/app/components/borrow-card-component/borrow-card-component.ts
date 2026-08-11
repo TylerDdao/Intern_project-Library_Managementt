@@ -114,8 +114,19 @@ export class BorrowCardComponent implements OnChanges {
         });
     }
 
+    getWebpCover(coverUrl: string | null | undefined): string {
+        if (!coverUrl) {
+        return 'default.webp';
+        }
+
+        return coverUrl.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+    }
+
     onImageError(event: Event): void {
-        (event.target as HTMLImageElement).src = errorImage;
+        const image = event.target as HTMLImageElement;
+
+        image.onerror = null;
+        image.src = errorImage;
     }
 
     handleReturn(){

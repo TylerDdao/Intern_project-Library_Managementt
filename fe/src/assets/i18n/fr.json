@@ -145,17 +145,21 @@
     "Book-is-saved": "Livre enregistré",
     "Book-is-updated": "Livre mis à jour",
     "Total-books": "Total des livres",
-    "Selected-books": "Livres sélectionnés"
+    "Selected-books": "Livres sélectionnés",
+    "Save-new-book-info": "Enregistrer les informations du nouveau livre",
+    "Delete-book": "Supprimer le livre"
   },
   "postsManagement": {
     "Create-post": "Créer une publication",
     "Post-is-created": "La publication a été créée",
-    "Post-is-deleted": "La publication a été supprimée"
+    "Post-is-deleted": "La publication a été supprimée",
+    "Post-is-updated": "La publication a été mise à jour"
   },
   "postPage": {
     "Edit-post": "Modifier la publication",
     "Book-selection": "Sélection du livre",
-    "You-cannot-change-book": "Vous ne pouvez pas changer de livre"
+    "You-cannot-change-book": "Vous ne pouvez pas changer de livre",
+    "Please-make-change-to-your-post": "Veuillez apporter des modifications à votre publication"
   },
   "createPost": {
     "Create-new-post": "Créer une nouvelle publication",
@@ -252,7 +256,8 @@
     "Clear": "Effacer",
     "Search-genre": "Rechercher un genre",
     "Search-by-name": "Rechercher par nom",
-    "Search-book": "Rechercher un livre"
+    "Search-book": "Rechercher un livre",
+    "Not-found": "TODO"
   },
   "browseBooks": {
     "Loading": "Chargement...",
@@ -335,8 +340,15 @@
   },
   "newBookForm": {
     "Create-new-book": "Créer un nouveau livre",
-    "Upload": "Téléverser",
-    "Available-genres": "Genres disponibles"
+    "Upload-book-cover": "Téléverser la couverture du livre",
+    "Available-genres": "Genres disponibles",
+    "/": {
+      "WebP-file-only": "Fichier .WebP uniquement"
+    },
+    "Please-enter-title": "Veuillez entrer le titre",
+    "Please-enter-author": "Veuillez entrer l'auteur",
+    "Please-enter-number-of-copies": "Veuillez entrer le nombre d'exemplaires",
+    "Book-is-added": "Le livre a été ajouté"
   },
   "browseBook": {
     "Result": "Résultat"

@@ -1,9 +1,14 @@
 <div class="container">
+    @if (isLoading) {
+        <div class="absolute inset-0 flex justify-center items-center bg-cool-gray/50 z-50 rounded-[10px]">
+            <app-loading-component></app-loading-component>
+        </div>
+    }
     <div class="flex justify-between items-center">
         <p class="headline font-bold">{{'newBookForm.Create-new-book'|translate}}</p>
         <span (click)="close()" class="material-symbols-outlined cursor-pointer">close</span>
     </div>
-    <div class="new-book-container">
+    <form class="new-book-container" [formGroup]="newBookForm" id="newBookForm" (ngSubmit)="onSubmit()">
         <div class="flex flex-col space-y-[10px] items-start">
             @if (preview) {
                 <img [src]="preview" class="book-cover"/>
@@ -15,26 +20,36 @@
             @else {
                 <div class="flex space-x-[5px] items-center px-[10px] py-[5px] bg-primary-1 rounded-[10px] text-soft-ice cursor-pointer w-fit" (click)="fileInput.click()">
                     <span class="material-symbols-outlined">add_photo_alternate</span>
-                    <div>{{'newBookForm.Upload'|translate}}</div>
-                    <input type="file" accept="image/*" (change)="onFileSelected($event)" #fileInput hidden/>
+                    <div>{{'newBookForm.Upload-book-cover'|translate}}</div>
+                    <input type="file" accept="image/webp" (change)="onFileSelected($event)" #fileInput hidden/>
                 </div>
+                <small>{{'newBookForm./.WebP-file-only'|translate}}</small>
             }
         </div>
         <div class="flex flex-col space-y-[5px]">
             <div class="flex flex-col space-y-[5px]">
                 <label for="title">{{'book.Title'|translate}}</label>
-                <input id="title" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]" placeholder="{{'book.Title'|translate}}"/>
+                <input id="title" formControlName="title" type="text" class="rounded-[10px]" [class]=" isValid['title'] ? 'bg-pastel-blue text-dodger-blue':'bg-pastel-red text-tomato-red'" placeholder="{{'book.Title'|translate}}"/>
             </div>
+            @if (!isValid['title']) {
+                <small class="text-tomato-red">{{"newBookForm.Please-enter-title" |translate}}</small>
+            }
 
             <div class="flex flex-col space-y-[5px]">
                 <label for="author">{{'book.Author'|translate}}</label>
-                <input id="author" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]" placeholder="{{'book.Author'|translate}}"/>
+                <input id="author" formControlName="author" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]" [class]=" isValid['author'] ? 'bg-pastel-blue text-dodger-blue':'bg-pastel-red text-tomato-red'" placeholder="{{'book.Author'|translate}}"/>
             </div>
+            @if (!isValid['author']) {
+                <small class="text-tomato-red">{{"newBookForm.Please-enter-author" |translate}}</small>
+            }
 
             <div class="flex flex-col space-y-[5px]">
                 <label for="copies">{{'book.Copies'|translate}}</label>
-                <input id="copies" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px]" placeholder="{{'book.Copies'|translate}}"/>
+                <input id="copies" formControlName="copies" type="number" class="bg-pastel-blue text-dodger-blue rounded-[10px]" [class]=" isValid['copies'] ? 'bg-pastel-blue text-dodger-blue':'bg-pastel-red text-tomato-red'" placeholder="{{'book.Copies'|translate}}"/>
             </div>
+            @if (!isValid['copies']) {
+                <small class="text-tomato-red">{{"newBookForm.Please-enter-number-of-copies" |translate}}</small>
+            }
 
 
             <div class="">{{'book.Genres'|translate}}</div>
@@ -65,10 +80,17 @@
                 }
             </div>
         </div>
-    </div>
+    </form>
 
     <div class="flex space-x-[10px]">
-        <button type="submit" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice body rounded-[10px]">{{'form.Save'|translate}}</button>
+        @if (isCreatingBook) {
+            <button type="button"class="bg-steel-blue/50 !cursor-not-allowed px-[10px] py-[5px] text-soft-ice body rounded-[10px]">{{'form.Processing'|translate}}...</button>
+        }
+        @else {
+            <button type="submit" form="newBookForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice body rounded-[10px]">{{'form.Save'|translate}}</button>
+        }
         <button class="border border-tomato-red px-[10px] py-[5px] text-tomato-red body rounded-[10px]" (click)="close()">{{'form.Cancel'|translate}}</button>
     </div>
+
+    
 </div>

@@ -80,13 +80,13 @@
                     @for (book of searchBooks; track $index) {
                         <app-book-card-component [book]="book"></app-book-card-component>
                     }
-                    <app-pages-component [pages]="bookPages" (onApply)="fetchLastQuery($event)"></app-pages-component>
+
                 }
                 @else {
                         <div>{{'browseBooks.Book-not-found'|translate}}</div>
                     }
                 </div>
-                
+                <div class="flex w-full justify-center"><app-pages-component [pages]="bookPages" (onApply)="fetchLastQuery($event)"></app-pages-component></div>                
             </div>
         }
     </div>
@@ -98,7 +98,7 @@
 
     @if (isCreateNewBook) {
         <div class="fixed inset-0 flex items-center justify-center z-99">
-            <app-new-book-form (onClose)="handleCloseCreateBookForm()"></app-new-book-form>
+            <app-new-book-form (onClose)="handleCloseCreateBookForm()" (onChange)="handleAddBook()"></app-new-book-form>
         </div>
     }
 

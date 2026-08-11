@@ -43,7 +43,7 @@ public class CreateBookService {
         try {
             Book book = bookRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Book not found"));
-            String fileName =  book.getId() + ".jpg";
+            String fileName =  book.getId() + ".webp";
             Path uploadPath = Paths.get(uploadDir);
             Files.createDirectories(uploadPath);
             Files.write(uploadPath.resolve(fileName), file.getBytes());

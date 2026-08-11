@@ -12,7 +12,7 @@
             <div>
                 <div class="book-info-container select-none cursor-not-allowed">
                     <div class="flex space-x-[5px] items-start">
-                        <img src="{{backendUrl}}/book-covers/{{chosenBook.id}}.jpg" class="book-cover" (error)="onImageError($event)"/>
+                        <img [src]="backendUrl + '/book-covers/' + getWebpCover(post.book.coverUrl)" class="book-cover" (error)="onImageError($event)"/>
                         <div>
                             <h1 class="header font-bold">{{chosenBook.title}}</h1>
                             <h1 class="subheader font-bold">{{'book.Author'|translate}}: {{chosenBook.author}}</h1>
@@ -40,7 +40,10 @@
             </div>
         </div>
 
-        <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="form-container">
+        <form [formGroup]="postForm" id="postForm" (ngSubmit)="onSubmit()" class="form-container">
+            @if (isPostSame) {
+                <small class="text-tomato-red">{{"postPage.Please-make-change-to-your-post"|translate}}</small>
+            }
             <div class="flex flex-col">
                 <input formControlName="subject" type="text" placeholder='{{"post.Subject"|translate}}*' 
                     class="bg-cool-gray text-deep-charcoal rounded-[10px] w-full p-[10px]"/>
@@ -61,7 +64,7 @@
 
         <div class="flex space-x-[10px]">
             @if (post) {
-                <button type="submit" form="postForm" class="p-[5px] text-soft-ice rounded-[10px]" [class]="(!isSubjectValid ||!isContentValid) ? '!cursor-not-allowed bg-cool-gray': 'cursor-pointer bg-leaf-green'">{{'form.Save'|translate}}</button>
+                <button type="submit" form="postForm" class="p-[5px] text-soft-ice rounded-[10px] bg-leaf-green">{{'form.Save'|translate}}</button>
                 <button class="bg-tomato-red p-[5px] text-soft-ice rounded-[10px] caption-1" (click)="handleDeletePost()">{{'form.Delete'|translate}}</button>
                 <button class="border border-tomato-red p-[5px] text-tomato-red rounded-[10px] caption-1" (click)="handleCancel()">{{'form.Cancel'|translate}}</button>
             }

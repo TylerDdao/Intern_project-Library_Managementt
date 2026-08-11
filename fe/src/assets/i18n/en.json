@@ -145,17 +145,21 @@
     "Book-is-saved": "Book is saved",
     "Book-is-updated": "Book is updated",
     "Total-books": "Total books",
-    "Selected-books": "Selected books"
+    "Selected-books": "Selected books",
+    "Save-new-book-info": "Save new book info",
+    "Delete-book": "Delete book"
   },
   "postsManagement": {
     "Create-post": "Create post",
     "Post-is-created": "Post is created",
-    "Post-is-deleted": "Post is deleted"
+    "Post-is-deleted": "Post is deleted",
+    "Post-is-updated": "Post is updated"
   },
   "postPage": {
     "Edit-post": "Edit post",
     "Book-selection": "Book selection",
-    "You-cannot-change-book": "You cannot change book"
+    "You-cannot-change-book": "You cannot change book",
+    "Please-make-change-to-your-post": "Please make change to your post"
   },
   "createPost": {
     "Create-new-post": "Create new post",
@@ -252,7 +256,8 @@
     "Clear": "Clear",
     "Search-genre": "Search genre",
     "Search-by-name": "Search by name",
-    "Search-book": "Search book"
+    "Search-book": "Search book",
+    "Not-found": "TODO"
   },
   "browseBooks": {
     "Loading": "Loading",
@@ -335,8 +340,15 @@
   },
   "newBookForm": {
     "Create-new-book": "Create new book",
-    "Upload": "Upload",
-    "Available-genres": "Available genres"
+    "Upload-book-cover": "Upload book cover",
+    "Available-genres": "Available genres",
+    "/": {
+      "WebP-file-only": ".WebP file only"
+    },
+    "Please-enter-title": "Please enter title",
+    "Please-enter-author": "Please enter author",
+    "Please-enter-number-of-copies": "Please enter number of copies",
+    "Book-is-added": "Book is added"
   },
   "browseBook": {
     "Result": "Result"

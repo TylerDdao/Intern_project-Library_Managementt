@@ -58,7 +58,7 @@
         <div class="mobile-pages-container">
             @for (page of pages; track $index) {
                 <a [routerLink]="page.path" routerLinkActive="active-page">
-                    <h1 class="body">{{page.name|translate}}</h1>
+                    <h1 class="caption-1">{{page.name|translate}}</h1>
                 </a>
                 @if($index < pages.length - 1) {
                     <div class="border border-white"></div>
@@ -70,8 +70,8 @@
             <div class="flex items-center space-x-[5px] select-none cursor-pointer" routerLink='/settings'>
                 <span class="material-symbols-outlined icon-size">account_circle</span>
                 <div>
-                    <h1 class="headline">{{('navBar.hello'|translate)}}: {{user?.fullName}}</h1>
-                    <div class="bg-cool-gray w-fit px-[10px] py-[3px] rounded-3xl">{{user?.role?.name?.replace("ROLE_","")}}</div>
+                    <h1 class="caption-1">{{('navBar.hello'|translate)}}: {{user?.fullName}}</h1>
+                    <div class="bg-cool-gray w-fit px-[10px] py-[3px] caption-2 rounded-3xl">{{user?.role?.name?.replace("ROLE_","")}}</div>
                 </div>
             </div>
             <button class="border border-soft-ice p-[10px] rounded-[10px] caption-1 font-bold" (click)="handleLogout()">Logout</button>

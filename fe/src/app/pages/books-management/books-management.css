@@ -29,6 +29,7 @@
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         gap: 20px;
+        overflow-y: auto;
     }
 }
 
@@ -61,8 +62,8 @@
     }
 
     .books-result-area{
-        display: grid;
-        grid-template-columns: repeat(2, auto);
-        gap: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 }
