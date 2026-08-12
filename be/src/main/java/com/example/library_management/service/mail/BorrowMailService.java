@@ -425,19 +425,19 @@ public class BorrowMailService {
         Locale vi = Locale.of("vi", "VN");
         String subject_vi = messageSource.getMessage("email.borrow.returned.subject", null, vi);
         String greeting_vi = messageSource.getMessage("email.greeting.name", new Object[]{borrow.getUser().getFullName()}, vi);
-        String bodyLabel_vi = messageSource.getMessage("email.borrow.returned.body", new Object[]{formatter.formatDateTime(LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")), vi)}, vi);
+        String bodyLabel_vi = messageSource.getMessage("email.borrow.returned.body", new Object[]{borrow.getBook().getTitle(), formatter.formatDateTime(LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")), vi)}, vi);
         String footer_vi = messageSource.getMessage("email.footer", null, vi);
 
         Locale en = Locale.US;
         String subject_en = messageSource.getMessage("email.borrow.returned.subject", null, en);
         String greeting_en = messageSource.getMessage("email.greeting.name", new Object[]{borrow.getUser().getFullName()}, en);
-        String bodyLabel_en = messageSource.getMessage("email.borrow.returned.body", new Object[]{formatter.formatDateTime(LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")), en)}, en);
+        String bodyLabel_en = messageSource.getMessage("email.borrow.returned.body", new Object[]{borrow.getBook().getTitle(), formatter.formatDateTime(LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")), en)}, en);
         String footer_en = messageSource.getMessage("email.footer", null, en);
 
         Locale fr = Locale.CANADA_FRENCH;
         String subject_fr = messageSource.getMessage("email.borrow.returned.subject", null, fr);
         String greeting_fr = messageSource.getMessage("email.greeting.name", new Object[]{borrow.getUser().getFullName()}, fr);
-        String bodyLabel_fr = messageSource.getMessage("email.borrow.returned.body", new Object[]{formatter.formatDateTime(LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")), fr)}, fr);
+        String bodyLabel_fr = messageSource.getMessage("email.borrow.returned.body", new Object[]{borrow.getBook().getTitle(), formatter.formatDateTime(LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")), fr)}, fr);
         String footer_fr = messageSource.getMessage("email.footer", null, fr);
 
         String emailSubject = subject_vi + " | " + subject_en + " | " +subject_fr;
@@ -446,31 +446,31 @@ public class BorrowMailService {
               <div style="padding:28px 30px;color:#25343F;">
                   <div style="font-size:13px;color:#6B7280;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Nhắc nhở mượn sách</div>
                   <h2 style="margin:0 0 20px;color:#25343F;font-size:22px;">%s</h2>
-                  <p style="font-size:15px;line-height:1.7;margin:0 0 20px;"><strong>%s</strong> %s</p>
+                  <p style="font-size:15px;line-height:1.7;margin:0 0 20px;">%s</p>
                   <div>%s<div>
                   <p style="font-size:14px;line-height:1.7;color:#59636E;margin-top:20px; margin-bottom:20px;">%s</p>
               </div>
-        """.formatted(greeting_vi, borrow.getBook().getTitle(), bodyLabel_vi, buildHtmlBorrowCard(borrow, vi), footer_vi);
+        """.formatted(greeting_vi, bodyLabel_vi, buildHtmlBorrowCard(borrow, vi), footer_vi);
 
         String html_en = """
             <div style="padding:28px 30px;color:#25343F;">
                   <div style="font-size:13px;color:#6B7280;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Book Borrowing Reminder</div>
                   <h2 style="margin:0 0 20px;color:#25343F;font-size:22px;"> %s</h2>
-                  <p style="font-size:15px;line-height:1.7;margin:0 0 20px;"><strong>%s</strong> %s</p>
+                  <p style="font-size:15px;line-height:1.7;margin:0 0 20px;">%s</p>
                   <div>%s</div>
                   <p style="font-size:14px;line-height:1.7;color:#59636E;margin-top:20px; margin-bottom:20px;">%s</p>
               </div>
-        """.formatted(greeting_en, borrow.getBook().getTitle(), bodyLabel_en, buildHtmlBorrowCard(borrow, en), footer_en);
+        """.formatted(greeting_en, bodyLabel_en, buildHtmlBorrowCard(borrow, en), footer_en);
 
         String html_fr = """
              <div style="padding:28px 30px;color:#25343F;">
                   <div style="font-size:13px;color:#6B7280;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Rappel d'emprunt</div>
                   <h2 style="margin:0 0 20px;color:#25343F;font-size:22px;">%s</h2>
-                  <p style="font-size:15px;line-height:1.7;margin:0 0 20px;"><strong>%s</strong> %s</p>
-                  <div>%s</div> 
+                  <p style="font-size:15px;line-height:1.7;margin:0 0 20px;">%s</p>
+                  <div>%s</div>
                   <p style="font-size:14px;line-height:1.7;color:#59636E;margin-top:20px; margin-bottom:20px;">%s</p>
               </div>
-        """.formatted(greeting_fr, borrow.getBook().getTitle(), bodyLabel_fr, buildHtmlBorrowCard(borrow, fr), footer_fr);
+        """.formatted(greeting_fr, bodyLabel_fr, buildHtmlBorrowCard(borrow, fr), footer_fr);
 
         String html = """
         <!DOCTYPE html>
