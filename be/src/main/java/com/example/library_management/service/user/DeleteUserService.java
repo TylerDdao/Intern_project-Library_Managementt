@@ -1,11 +1,9 @@
 package com.example.library_management.service.user;
 
-import com.example.library_management.dto.request.user.UserRequest;
 import com.example.library_management.exception.ApiException;
 import com.example.library_management.model.User;
 import com.example.library_management.repository.BorrowRepository;
 import com.example.library_management.repository.UserRepository;
-import com.example.library_management.service.MailService;
 import com.example.library_management.service.mail.UserMailService;
 import com.example.library_management.util.AuditLogger;
 import lombok.extern.slf4j.Slf4j;

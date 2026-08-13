@@ -1,4 +1,4 @@
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Post } from '../../models/post';
 import { formatNumber, formatTime } from '../../util/format-number';
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
@@ -7,6 +7,8 @@ import { PostService } from '../../services/post-service/post-service';
 import { errorImage } from '../../../assets/constants';
 import { environment } from '../../../environments/environment';
 import { CommentBoxComponent } from "../comment-box-component/comment-box-component";
+import { HttpErrorResponse } from '@angular/common/http';
+import { errorNoti } from '../../util/error-notification';
 
 @Component({
   selector: 'app-mini-post-card-component',
@@ -23,7 +25,8 @@ export class MiniPostCardComponent {
   constructor(
     public langService: LanguageService,
     private cdr: ChangeDetectorRef,
-    private postService: PostService
+    private postService: PostService,
+    private translate: TranslateService
   ) {}
 
   backendUrl = environment.apiUrl;
@@ -44,7 +47,9 @@ export class MiniPostCardComponent {
               this.cdr.markForCheck();
           }
         },
-        error: (err) => console.error(err)
+        error: (err:HttpErrorResponse) =>{
+          errorNoti(err, this.translate)
+        } 
       });
     }
   }
@@ -52,7 +57,6 @@ export class MiniPostCardComponent {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['post'] && this.post) {
         this.bookCover = this.post.book.title.replaceAll(' ', '-').toLowerCase();
-        console.log(this.post)
     }
   }
 

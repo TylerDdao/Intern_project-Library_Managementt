@@ -2,7 +2,6 @@ package com.example.library_management.service.borrow;
 
 import com.example.library_management.dto.request.BorrowRequest;
 import com.example.library_management.dto.response.BorrowResponse;
-import com.example.library_management.exception.ApiException;
 import com.example.library_management.model.Book;
 import com.example.library_management.model.Borrow;
 import com.example.library_management.model.Policy;
@@ -11,18 +10,11 @@ import com.example.library_management.repository.BookRepository;
 import com.example.library_management.repository.BorrowRepository;
 import com.example.library_management.repository.PolicyRepository;
 import com.example.library_management.repository.UserRepository;
-import com.example.library_management.service.MailService;
 import com.example.library_management.service.mail.BorrowMailService;
 import com.example.library_management.util.AuditLogger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

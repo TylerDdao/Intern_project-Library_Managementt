@@ -103,7 +103,9 @@ export class Home {
             }
             this.finishLoading()
         },
-        error: (err) => console.error(err)
+        error: (err:HttpErrorResponse) => {
+          errorNoti(err, this.translate)
+        }
     });
   }
 

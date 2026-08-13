@@ -11,7 +11,16 @@ import org.springframework.stereotype.Component;
 public class AuditLogger {
     private String getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return auth != null ? auth.getName() : "SYSTEM";
+        if(auth == null){
+            return "SYSTEM";
+        }
+        String name = auth.getName();
+        if(name.equals("anonymousUser")){
+            return "SYSTEM";
+        }
+        else {
+            return name;
+        }
     }
 
     public void log(String message, Object... args) {

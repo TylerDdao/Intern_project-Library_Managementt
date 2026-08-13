@@ -5,45 +5,12 @@ import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { TranslateService } from '@ngx-translate/core';
-const baseUrl = environment.apiUrl
+import { getUser } from '../util/session-storage';
 
+const baseUrl = environment.apiUrl;
 
-export const authGuard: CanActivateFn = () => {
-    const router = inject(Router);
-    const http = inject(HttpClient);
-    const platformId = inject(PLATFORM_ID);
-    const translate = inject(TranslateService);
-
-    if (!isPlatformBrowser(platformId)) {
-        return true;
-    }
-
-    const token = sessionStorage.getItem('token');
-
-    if (!token) {
-      sessionStorage.clear()
-      router.navigate(['/login']);
-      return false;
-    }
-
-    return http.get(`${baseUrl}/auth/check`, {
-        headers: { Authorization: `Bearer ${token}` }
-    }).pipe(
-        map(() => true),
-        catchError((err) => {
-            if (err.status === 401) {
-                sessionStorage.clear();
-                router.navigate(['/login']);
-            }
-            return of(false);
-        })
-    );
-};
-
-export const adminGuard: CanActivateFn = () => {
-    
-    const translate = inject(TranslateService); 
+export function authGuard(acceptedFeatures: string[] = []): CanActivateFn {
+  return () => {
     const router = inject(Router);
     const http = inject(HttpClient);
     const platformId = inject(PLATFORM_ID);
@@ -53,24 +20,49 @@ export const adminGuard: CanActivateFn = () => {
     }
 
     const token = sessionStorage.getItem('token');
-    const user = JSON.parse(sessionStorage.getItem('user') ?? '{}');
+    const user = getUser();
 
-    if (!token || user.role == "ROLE_USER") {
-      sessionStorage.clear()
+    if (!token || !user) {
+      sessionStorage.clear();
       router.navigate(['/login']);
       return false;
     }
 
     return http.get(`${baseUrl}/auth/check`, {
-        headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` }
     }).pipe(
-        map(() => true),
-        catchError((err) => {
-            if (err.status === 401) {
+      map(() => {
+        if (user.role?.name === 'ROLE_ROOT') {
+          return true;
+        }
+
+        if (acceptedFeatures.length === 0) {
+            if(user){
+                return true;
+            }
+            else{
                 sessionStorage.clear();
                 router.navigate(['/login']);
-            }
-            return of(false);
-        })
+            }    
+        }
+
+        const userFeatures = user.role?.features?.map(f => f.name) ?? [];
+        const hasAccess = acceptedFeatures.some(feature => userFeatures.includes(feature));
+
+        if (!hasAccess) {
+            sessionStorage.clear();
+            router.navigate(['/login']);
+        }
+
+        return hasAccess;
+      }),
+      catchError((err) => {
+        if (err.status === 401) {
+          sessionStorage.clear();
+          router.navigate(['/login']);
+        }
+        return of(false);
+      })
     );
-};
+  };
+}

@@ -11,6 +11,8 @@ import { Comment } from '../../models/comment';
 import { Router } from '@angular/router';
 import { errorImage } from '../../../assets/constants';
 import { environment } from '../../../environments/environment';
+import { HttpErrorResponse } from '@angular/common/http';
+import { errorNoti } from '../../util/error-notification';
 
 @Component({
   selector: 'app-post-card-component',
@@ -64,6 +66,9 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
             this.post = data.data.content
             this.cdr.markForCheck()
           }
+        },
+        error: (err:HttpErrorResponse) => {
+          errorNoti(err, this.translate)
         }
       })
     }
@@ -77,6 +82,9 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
             this.comments = data.data.content
             this.cdr.markForCheck();
           }
+        },
+        error: (err:HttpErrorResponse) => {
+          errorNoti(err, this.translate)
         }
       })
     }
@@ -96,7 +104,9 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
               this.cdr.markForCheck();
             }
           },
-          error: (err) => console.error(err)
+          error: (err:HttpErrorResponse) => {
+            errorNoti(err, this.translate)
+          }
       });
     }
   }
@@ -119,11 +129,9 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if(this.post && this.post.createdAt){
-      this.langSubscription = this.translate.onLangChange.subscribe(() => {
-        formatTime(this.post.createdAt, this.langService.currentLang)
-      });
-    }
+    this.langSubscription = this.translate.onLangChange.subscribe(() => {
+      formatTime(this.post.createdAt, this.langService.currentLang)
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {

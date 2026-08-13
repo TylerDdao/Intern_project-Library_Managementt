@@ -1,32 +1,13 @@
-package com.example.library_management.service;
+package com.example.library_management.service.mail;
 
-import com.example.library_management.exception.ApiException;
-import com.example.library_management.model.Book;
-import com.example.library_management.model.Borrow;
-import com.example.library_management.model.Policy;
-import com.example.library_management.model.User;
 import com.example.library_management.repository.PolicyRepository;
 import com.example.library_management.util.Formatter;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpStatus;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import tools.jackson.core.internal.shaded.fdp.JavaFloatParser;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

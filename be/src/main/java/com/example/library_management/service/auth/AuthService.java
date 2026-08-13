@@ -4,7 +4,7 @@ import com.example.library_management.model.Feature;
 import com.example.library_management.model.ResetPasswordCode;
 import com.example.library_management.repository.FeatureRepository;
 import com.example.library_management.repository.ResetPasswordCodeRepository;
-import com.example.library_management.service.MailService;
+import com.example.library_management.service.mail.MailService;
 import com.example.library_management.service.TokenBlacklistService;
 import com.example.library_management.service.mail.UserMailService;
 import com.example.library_management.util.AuditLogger;
@@ -19,7 +19,6 @@ import com.example.library_management.model.Role;
 import com.example.library_management.model.User;
 import com.example.library_management.repository.RoleRepository;
 import com.example.library_management.repository.UserRepository;
-import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -33,7 +32,6 @@ import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
-import java.util.Locale;
 
 @Slf4j
 @Service
@@ -123,8 +121,7 @@ public class AuthService {
             String token = jwtUtil.generateToken(auth.getName());
             User user = userRepository.findByUsernameAndIsDeletedFalse(auth.getName()).orElseThrow();
             List<Feature> authorities = featureRepository.findByRoles_Id(user.getRole().getId());
-            System.out.println(authorities);
-            logger.log("SYSTEM","Authorized @{}, ID #{}", user.getUsername(), user.getId());
+            logger.log("Authorized @{}, ID #{}", user.getUsername(), user.getId());
             return new LoginResponse(user, token, authorities);
 
         } catch (org.springframework.security.authentication.BadCredentialsException e) {
@@ -169,7 +166,7 @@ public class AuthService {
         tokenBlacklistService.blacklist(token);
         String username = jwtUtil.extractUsername(token);
         SecurityContextHolder.clearContext();
-        logger.log(username,"Logged out @{}", username);
+        logger.log("Logged out @{}", username);
     }
 
     public UserResponse register(RegisterRequest request) {

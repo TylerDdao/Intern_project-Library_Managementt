@@ -31,6 +31,15 @@ export class UserService {
     }
   }
 
+  clearUser() {
+    if (isPlatformBrowser(this.platformId)) {
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('user');
+      sessionStorage.removeItem('authorities');
+      this.userSubject.next(null);
+    }
+  }
+
   getCurrentUser() {
     return this.userSubject.value;
   }

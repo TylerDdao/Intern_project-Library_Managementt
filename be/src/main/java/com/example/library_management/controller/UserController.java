@@ -48,7 +48,7 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success(getUserService.checkUsername(username)));
     }
 
-    @PreAuthorize("@securityService.hasAccess('GET_USER')")
+    @PreAuthorize("@securityService.hasAccess('GET_USER_MULTI')")
     @GetMapping()
     public ResponseEntity<ApiResponse<Page<UserResponse>>> getUsers(
             @RequestParam(required = false) String role,

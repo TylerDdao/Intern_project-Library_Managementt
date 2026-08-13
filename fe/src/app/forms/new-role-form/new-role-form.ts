@@ -36,6 +36,13 @@ export class NewRoleForm {
     defaultRole: new FormControl<boolean>(false)
   });
 
+  handleAssignedAll(){
+    this.addedFeatures = this.features;
+  }
+  handleResetAssignedFeatures(){
+    this.addedFeatures = [];
+  }
+
   handleToggleFeature(choosenFeature: Feature) {
     if (this.addedFeatures.includes(choosenFeature)) {
       this.addedFeatures = this.addedFeatures.filter(feature => feature !== choosenFeature);

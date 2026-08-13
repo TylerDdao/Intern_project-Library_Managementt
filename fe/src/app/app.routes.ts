@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
 import { BrowseBooks } from './pages/browse-books/browse-books';
 import { Login } from './pages/login/login';
-import { adminGuard, authGuard } from './guards/auth-guard';
+import { authGuard } from './guards/auth-guard';
 import { Signup } from './pages/signup/signup';
 import { ForgotPassword } from './pages/forgot-password/forgot-password';
 import { BrowsePosts } from './pages/browse-posts/browse-posts';
@@ -22,6 +22,11 @@ import { SignupSuccess } from './pages/signup-success/signup-success';
 import { ChangePassword } from './pages/change-password/change-password';
 import { ResetPassword } from './pages/reset-password/reset-password';
 
+const admidFeatures = [
+    "CREATE_BOOK", "CREATE_USER", "CREATE_ROLE", "CREATE_GENRE", 
+    "GET_BORROW_MULTI",
+    "UPDATE_BOOK", "UPDATE_USER_MULTI", "UPDATE_USER_ROLE", "UPDATE_BORROW", "UPDATE_ROLE"]
+
 export const routes: Routes = [
     { path: 'login', component: Login },
     { path: 'signup', component: Signup },
@@ -29,27 +34,27 @@ export const routes: Routes = [
     { path: 'forgot-password', component: ForgotPassword },
     { path: 'reset-password/:code/:email', component: ResetPassword},
 
-    { path: 'home', component: Home, canActivate: [authGuard] },
+    { path: 'home', component: Home, canActivate: [authGuard()]},
 
-    { path: 'books', component: BrowseBooks, canActivate: [authGuard] },
-    { path: 'books/:book-id', component: BookPage, canActivate: [authGuard] },
+    { path: 'books', component: BrowseBooks, canActivate: [authGuard(["GET_BOOK"])] },
+    { path: 'books/:book-id', component: BookPage, canActivate: [authGuard(["GET_BOOK", "CREATE_BORROW"])] },
 
-    { path: 'posts', component: BrowsePosts, canActivate: [authGuard] },
-    { path: 'my-posts/:post-id', component: PostPage, canActivate: [authGuard]},
+    { path: 'posts', component: BrowsePosts, canActivate: [authGuard(["GET_POST"])] },
+    { path: 'my-posts/:post-id', component: PostPage, canActivate: [authGuard(["GET_POST", "UPDATE_POST", "DELETE_POST"])]},
+    {path: 'create-post', component: CreatePost, canActivate: [authGuard(["CREATE_POST"])]},
 
-    { path: 'my-borrows', component: MyBorrows, canActivate: [authGuard]},
-    { path: 'my-posts', component: MyPosts, canActivate: [authGuard]},
-    { path: 'settings', component: Settings, canActivate: [authGuard]},
-    { path: 'settings/change-password', component: ChangePassword, canActivate: [authGuard]},
+    { path: 'my-borrows', component: MyBorrows, canActivate: [authGuard(["GET_BORROW"])]},
+    { path: 'my-posts', component: MyPosts, canActivate: [authGuard(["GET_POST"])]},
+    { path: 'settings', component: Settings, canActivate: [authGuard(["UPDATE_USER"])]},
+    { path: 'settings/change-password', component: ChangePassword, canActivate: [authGuard(["UPDATE_USER"])]},
 
-    {path: 'create-post', component: CreatePost, canActivate: [authGuard]},
-
-    { path: 'dashboard', component: Dashboard, canActivate: [adminGuard]},
-    { path: 'books-management', component: BooksManagement, canActivate: [adminGuard]},
-    { path: 'borrows-management', component: BorrowsManagement, canActivate: [adminGuard]},
-    { path: 'users-management', component: UsersManagement, canActivate: [adminGuard]},
+    { path: 'dashboard', component: Dashboard, canActivate: [authGuard()]},
+    { path: 'books-management', component: BooksManagement, canActivate: [authGuard()]},
+    { path: 'borrows-management', component: BorrowsManagement, canActivate: [authGuard()]},
+    { path: 'users-management', component: UsersManagement, canActivate: [authGuard()]},
+    // { path: ''}
 
     {path: 'test', component: TestPage},
 
-    { path: '**', component: NotFound }
+    { path: '**', component: NotFound },
 ];

@@ -19,7 +19,6 @@ public class PolicyController {
     @Autowired
     private UpdatePolicyService updatePolicyService;
 
-    @PreAuthorize("@securityService.hasAccess('GET_POLICY')")
     @GetMapping()
     public ResponseEntity<ApiResponse<PolicyResponse>> getPolicy(
             @RequestParam() String key

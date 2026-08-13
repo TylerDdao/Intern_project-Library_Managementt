@@ -75,7 +75,6 @@ public class PostController {
         );
     }
 
-    @PreAuthorize("@securityService.hasAccess('UPDATE_POST')")
     @PostMapping("/{postId}/like")
     public ResponseEntity<ApiResponse<String>> toggleLike(@PathVariable Long postId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();

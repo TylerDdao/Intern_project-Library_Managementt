@@ -7,6 +7,7 @@ import { RoleService } from '../../services/role-service/role-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
 import { forkJoin } from 'rxjs';
+import { arraysHaveSameElements } from '../../util/array-compare';
 
 
 @Component({
@@ -34,6 +35,21 @@ export class EditRoleForm implements OnChanges {
     private roleService:RoleService,
     private translate: TranslateService
   ) {}
+
+  handleUnassignedAll(){
+    this.removeFeatures = this.assignedFeatures;
+  }
+  handleResetAssignedFeatures(){
+    this.removeFeatures = []
+  }
+
+  handleResetUnassignedFeatures(){
+    this.addedFeatures = []
+  }
+
+  handleAssignedAll(){
+    this.addedFeatures = this.unassignedFeatures;
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if ((changes['features'] || changes['role']) && this.features && this.role?.features) {

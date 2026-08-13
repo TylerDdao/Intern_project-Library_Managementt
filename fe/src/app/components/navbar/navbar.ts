@@ -6,6 +6,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from '../../services/auth-service';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user-service/user-service';
+import { errorNoti } from '../../util/error-notification';
+import { HttpErrorResponse } from '@angular/common/http';
 
 interface Page{
   name: string,
@@ -35,6 +37,8 @@ export class NavbarComponent {
     { name: 'navBar.admin.Books-management', path: '/books-management', authorities: ['UPDATE_BOOK', 'DELETE_BOOK'] },
     { name: 'navBar.admin.Borrows-management', path: '/borrows-management', authorities: ['GET_BORROW_MULTI', 'UPDATE_BORROW', 'DELETE_BORROW'] },
     { name: 'navBar.admin.Users-management', path: '/users-management', authorities: ['UPDATE_USER_ROLE', 'UPDATE_USER_MULTI', 'DELETE_USER_MULTI'] },
+    { name: 'navBar.admin.Logs-management', path: '/logs-management', authorities: ['EXPORT_LOG'] },
+    { name: 'navBar.admin.Announcements-management', path: '/announcements-management', authorities: ['ANNOUNCEMENTS_MANAGEMENT'] },
   ];
   
   constructor(
@@ -43,7 +47,9 @@ export class NavbarComponent {
     @Inject(PLATFORM_ID) private platformId: Object, 
     private authService: AuthService, 
     private router:Router,
-    private userService:UserService) {}
+    private userService:UserService,
+    private translate: TranslateService
+  ) {}
 
   get validateUser(): boolean {
     if (typeof sessionStorage === 'undefined') return false;
@@ -59,11 +65,12 @@ export class NavbarComponent {
       this.authService.logout().subscribe({
         next: (data:any) => {
           if(data.code == "200"){
-            sessionStorage.removeItem('token')
-            sessionStorage.removeItem('user')
-            sessionStorage.removeItem('authorities')
+            this.userService.clearUser()
             this.router.navigate(['/login'])
           }
+        },
+        error: (err:HttpErrorResponse) => {
+          errorNoti(err, this.translate)
         }
       })
     }

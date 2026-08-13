@@ -7,11 +7,8 @@ import com.example.library_management.model.User;
 import com.example.library_management.repository.ResetPasswordCodeRepository;
 import com.example.library_management.repository.UserRepository;
 import com.example.library_management.repository.VerificationRepository;
-import com.example.library_management.service.MailService;
 import com.example.library_management.service.mail.VerificationMailService;
 import com.example.library_management.util.AuditLogger;
-import jakarta.mail.MessagingException;
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.Optional;
 
 @Slf4j

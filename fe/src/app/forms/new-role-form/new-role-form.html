@@ -9,8 +9,14 @@
             <input id="roleName" formControlName="roleName" type="text" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full" placeholder="{{'role.Role-name' | translate}}"/>
         </div>
 
-        <div>
+        <div class="flex flex-col space-y-[10px]">
             <div class="headline">{{"features.Features" | translate}}</div>
+            @if (addedFeatures.length == features.length) {
+                <button (click)="handleResetAssignedFeatures()" type="button" class="px-[10px] py-[5px] border border-tomato-red text-tomato-red caption-1 rounded-[10px] hover:bg-tomato-red hover:text-soft-ice transition ease-in-out w-full">{{"form.Reset"|translate}}</button>
+            }
+            @else {
+                <button (click)="handleAssignedAll()" type="button" class="px-[10px] py-[5px] border border-primary-1 text-primary-1 caption-1 rounded-[10px] hover:bg-primary-1 hover:text-soft-ice transition ease-in-out w-full">{{"featuresManagement.Unassign-all"|translate}}</button>
+            }
             <div class="features-container">
                 @for (feature of features; track $index) {
                     <div 

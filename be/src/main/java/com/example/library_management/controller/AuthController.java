@@ -10,7 +10,6 @@ import com.example.library_management.dto.response.UserResponse;
 import com.example.library_management.dto.response.auth.VerificationResponse;
 import com.example.library_management.service.auth.AuthService;
 import com.example.library_management.service.auth.VerificationService;
-import com.example.library_management.service.MailService;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -18,8 +17,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Locale;
 
 @RestController
 @RequestMapping("/auth")

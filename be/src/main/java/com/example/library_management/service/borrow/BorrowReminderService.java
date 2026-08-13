@@ -2,23 +2,17 @@ package com.example.library_management.service.borrow;
 
 import com.example.library_management.model.Borrow;
 import com.example.library_management.repository.BorrowRepository;
-import com.example.library_management.service.MailService;
 import com.example.library_management.service.mail.BorrowMailService;
 import com.example.library_management.util.AuditLogger;
-import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
 @RequiredArgsConstructor
