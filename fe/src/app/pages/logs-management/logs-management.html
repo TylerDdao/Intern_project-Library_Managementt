@@ -1,4 +1,15 @@
 <app-navbar></app-navbar>
+@if (announcements) {
+    @for (announcement of announcements; track announcement.id) {
+        @if (announcement.isActive) {
+            <app-announcement-component
+                [location]="'/logs-management'"
+                (onClose)="handleCloseAnnouncement(announcement.id)"
+                [announcement]="announcement">
+            </app-announcement-component>
+        }
+    }
+}
 <div class="body-container">
     <div class="container">
         <div class="font-bold">{{'logsManagement.Logs-management'|translate}}</div>

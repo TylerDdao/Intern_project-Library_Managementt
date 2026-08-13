@@ -92,7 +92,8 @@
     "Confirm-delete": "Xác nhận xóa",
     "Edit-role": "Chỉnh sửa vai trò",
     "New-role": "Vai trò mới",
-    "Processing": "Đang xử lý"
+    "Processing": "Đang xử lý",
+    "Save-change": "Lưu thay đổi"
   },
   "newUserForm": {
     "Create-new-user": "Tạo người dùng mới"
@@ -164,7 +165,7 @@
   "createPost": {
     "Create-new-post": "Tạo bài viết mới",
     "Pick-a-book": "Chọn một quyển sách",
-    "Please-select-a-book": "Vui lòng chọn một cuốn sách",
+    "Please-select-a-book": "Vui lòng chọn một quyển sách",
     "Please-enter-subject": "Vui lòng nhập chủ đề",
     "Please-enter-content": "Vui lòng nhập nội dung"
   },
@@ -185,7 +186,7 @@
   "post": {
     "Edit-post": "Chỉnh sửa bài viết",
     "Subject": "Chủ đề",
-    "Body": "Nội dung"
+    "Content": "Nội dung"
   },
   "comment": {
     "Comment-box": "Khung bình luận",
@@ -221,8 +222,8 @@
       "Users-management": "Quản lý người dùng",
       "Borrows-management": "Quản lý mượn trả",
       "Posts-management": "Quản lý bài viết",
-      "Logs-management": "Quản lý nhật ký",
-      "Announcements-management": "Quản lý logs"
+      "Logs-management": "Quản lý log",
+      "Announcements-management": "Quản lý thông báo"
     }
   },
   "login": {
@@ -259,7 +260,7 @@
     "Search-genre": "Tìm theo thể loại",
     "Search-by-name": "Tìm theo tên",
     "Search-book": "Tìm kiếm sách",
-    "Not-found": "TODO"
+    "Not-found": "Không tìm thấy"
   },
   "browseBooks": {
     "Loading": "Đang tải...",
@@ -305,9 +306,9 @@
     "An-error-has-occurred,-please-login-again": "Đã xảy ra lỗi, vui lòng đăng nhập lại",
     "Please-enter-a-different-password": "Vui lòng nhập mật khẩu khác",
     "An-error-has-occured": "Đã xảy ra lỗi",
-    "Not-found": "TODO",
-    "Page-is-stil-being-constructed": "TODO",
-    "Unauthorized": "TODO"
+    "Not-found": "Không tìm thấy",
+    "Page-is-stil-being-constructed": "Trang vẫn đang trong quá trình xây dựng",
+    "Unauthorized": "Không có quyền truy cập"
   },
   "forgotPassword": {
     "Forgot-password": "Quên mật khẩu",
@@ -363,18 +364,31 @@
     "empty": "Trống"
   },
   "announcement": {
-    "1": {
-      "subject": "Ý kiến của bạn rất quan trọng!",
-      "content": "Chúng tôi rất mong nhận được phản hồi từ bạn. Vui lòng gửi ý kiến cho chúng tôi qua liên kết bên dưới!",
-      "linkText": "Biểu mẫu góp ý"
-    },
-    "2": {
-      "subject": "Website đang phát triển — Một số trang hiện chưa khả dụng",
-      "content": "Website này vẫn đang trong quá trình phát triển nên một số trang hiện chưa thể truy cập được. Chúng tôi sẽ hoàn thiện trong thời gian sớm nhất!"
-    }
+    "This-language-is-not-available-for-this-announcement/,-showing-announcement-in-Vietnamese": "Ngôn ngữ này hiện không khả dụng cho thông báo này, hiển thị thông báo bằng tiếng Việt",
+    "Active": "Hoạt động",
+    "Inactive": "Không hoạt động",
+    "Announcement-type": "Loại thông báo",
+    "Status": "Trạng thái",
+    "Active-status": "Trạng thái hoạt động"
   },
   "featuresManagement": {
-    "Unassign-all": "TODO",
-    "Assign-all": "TODO"
+    "Unassign-all": "Bỏ gán tất cả",
+    "Assign-all": "Gán tất cả"
+  },
+  "logsManagement": {
+    "Logs-management": "Quản lý log",
+    "Start-date": "Ngày bắt đầu",
+    "Invalid-date": "Ngày không hợp lệ",
+    "End-date": "Ngày kết thúc"
+  },
+  "announcementsManagement": {
+    "Announcements management": "Quản lý thông báo",
+    "You-must-have-announcement-subject-in-Vietnamese": "Bạn phải nhập tiêu đề thông báo bằng tiếng Việt",
+    "You-must-have-announcement-content-in-Vietnamese": "Bạn phải nhập nội dung thông báo bằng tiếng Việt",
+    "Preview-announcement": "Xem trước thông báo",
+    "Post-announcement": "Đăng thông báo",
+    "Announcement-locations": "Vị trí hiển thị thông báo",
+    "Preview": "Xem trước",
+    "Leave-blank-if-you-want-announcement-to-be-shown-across-the-web": "Để trống nếu bạn muốn thông báo hiển thị trên toàn bộ trang web"
   }
 }

@@ -1,0 +1,149 @@
+@media (min-width: 1024px) {
+    .container {
+        box-sizing: border-box;
+        padding: 30px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+        background: white;
+        border-radius: 10px;
+        gap: 30px;
+        max-width: 80dvw;
+        max-height: 80dvh;
+        overflow-y: auto;
+    }
+
+    .announcements {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .left-side {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        height: calc(80dvh - 60px);
+        overflow-y: auto;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .center {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        height: calc(80dvh - 60px);
+        overflow-y: auto;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .locations-list{
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .right-side {
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
+        height: calc(80dvh - 60px);
+        gap: 30px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .website-announcements {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        gap: 10px;
+    }
+
+    .announcement-list {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .new-announcement-container {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .container {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+
+        padding: 30px;
+        gap: 30px;
+
+        width: 80dvw;
+        max-width: calc(100dvw - 20px);
+        max-height: 80dvh;
+
+        overflow-y: auto;
+
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+        background: white;
+        border-radius: 10px;
+    }
+
+    .left-side {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        width: 100%;
+    }
+
+    .right-side {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 30px;
+        height: auto;
+    }
+
+    .locations-list{
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .website-announcements {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        gap: 10px;
+    }
+
+    .announcement-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        overflow-y: visible;
+    }
+}

@@ -10,10 +10,13 @@ import { isPlatformBrowser } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { PagesComponent } from '../../components/pages-component/pages-component';
 import { Page } from '../../models/page';
+import { AnnouncementComponent } from "../../components/announcement-component/announcement-component";
+import { Announcement } from '../../models/announcement';
+import { AnnouncementService } from '../../services/announcement-service/announcement-service';
 
 @Component({
   selector: 'app-my-posts',
-  imports: [SortSideBarComponent, NavbarComponent, PostCardComponent, TranslateModule, PagesComponent],
+  imports: [SortSideBarComponent, NavbarComponent, PostCardComponent, TranslateModule, PagesComponent, AnnouncementComponent],
   templateUrl: './my-posts.html',
   styleUrl: './my-posts.css',
 })
@@ -41,8 +44,12 @@ export class MyPosts {
     protected router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef,
-  ) 
-  {}
+    private announcementService: AnnouncementService
+    ){}
+    announcements: Announcement[] = []
+    handleCloseAnnouncement(id: number) {
+      this.announcementService.closeAnnouncement(id);
+    }
 
   handleNavigateCreatePost(){
     this.router.navigate(['/create-post'])
@@ -131,6 +138,7 @@ export class MyPosts {
 
   ngOnInit(){
     if(isPlatformBrowser(this.platformId)){
+      this.announcements = this.announcementService.getAnnouncements()
       this.fetchMyPosts();
     }
   }

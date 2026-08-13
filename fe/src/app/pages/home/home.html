@@ -1,14 +1,13 @@
 <app-navbar></app-navbar>
-@for (announcement of announcements; track announcement.id) {
-    @if (announcement.isOpen) {
-        <app-announcement-component
-            (onClose)="handleCloseAnnouncement(announcement.id)"
-            [type]="announcement.type"
-            [subject]="announcement.subjectKey |translate"
-            [content]="announcement.contentKey |translate"
-            [link]="announcement.link ?? ''"
-            [linkText]="announcement.linkText |translate : ''">
-        </app-announcement-component>
+@if (announcements) {
+    @for (announcement of announcements; track announcement.id) {
+        @if (announcement.isActive) {
+            <app-announcement-component
+            [location]="'/home'"
+                (onClose)="handleCloseAnnouncement(announcement.id)"
+                [announcement]="announcement">
+            </app-announcement-component>
+        }
     }
 }
 

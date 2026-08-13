@@ -24,7 +24,7 @@ import { ResetPassword } from './pages/reset-password/reset-password';
 import { UnauthorizedPage } from './pages/unauthorized-page/unauthorized-page';
 import { OnDevPage } from './pages/on-dev-page/on-dev-page';
 import { LogsManagement } from './pages/logs-management/logs-management';
-import { AnnouncementComponent } from './components/announcement-component/announcement-component';
+import { AnnouncementsManagementPage } from './pages/announcements-management-page/announcements-management-page';
 
 const admidFeatures = [
     "CREATE_BOOK", "CREATE_USER", "CREATE_ROLE", "CREATE_GENRE", 
@@ -57,7 +57,7 @@ export const routes: Routes = [
     { path: 'borrows-management', component: BorrowsManagement, canActivate: [authGuard(['GET_BORROW_MULTI', 'UPDATE_BORROW', 'DELETE_BORROW'])]},
     { path: 'users-management', component: UsersManagement, canActivate: [authGuard(['UPDATE_USER_ROLE', 'UPDATE_USER_MULTI', 'DELETE_USER_MULTI'])]},
     { path: 'logs-management', component: LogsManagement, canActivate: [onDev()]},
-    { path: 'announcements-management', component: AnnouncementComponent, canActivate: [onDev()]},
+    { path: 'announcements-management', component: AnnouncementsManagementPage, canActivate: [onDev()]},
 
     // { path: ''}
     { path: 'unauthorized', component: UnauthorizedPage},

@@ -25,10 +25,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
 import { PagesComponent } from "../../components/pages-component/pages-component";
 import { getUser } from '../../util/session-storage';
+import { Announcement } from '../../models/announcement';
+import { AnnouncementComponent } from "../../components/announcement-component/announcement-component";
+import { webAnnouncements } from '../../../assets/constants';
+import { AnnouncementService } from '../../services/announcement-service/announcement-service';
 
 @Component({
   selector: 'app-users-management',
-  imports: [NavbarComponent, UserCard, TranslateModule, NewUserForm, EditUserForm, NewRoleForm, RoleListComponent, EditRoleForm, ExportUsersForm, SortSideBarComponent, LoadingComponent, PagesComponent],
+  imports: [NavbarComponent, UserCard, TranslateModule, NewUserForm, EditUserForm, NewRoleForm, RoleListComponent, EditRoleForm, ExportUsersForm, SortSideBarComponent, LoadingComponent, PagesComponent, AnnouncementComponent],
   templateUrl: './users-management.html',
   styleUrl: './users-management.css',
 })
@@ -80,8 +84,13 @@ export class UsersManagement {
     public langService: LanguageService,
     private translate: TranslateService,
     private roleService: RoleService,
-    private exportService: ExportService
+    private announcementService: AnnouncementService
   ){}
+
+  announcements: Announcement[] = []
+  handleCloseAnnouncement(id: number) {
+    this.announcementService.closeAnnouncement(id);
+  }
 
   private startLoading() {
     this.pendingRequests++;
@@ -202,6 +211,7 @@ export class UsersManagement {
 
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
+      this.announcements = this.announcementService.getAnnouncements()
       const sessionUser = getUser();
       if(sessionUser){
         this.canDeleteUser =

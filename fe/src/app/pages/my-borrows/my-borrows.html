@@ -1,12 +1,22 @@
 <app-navbar></app-navbar>
-
+@if (announcements) {
+    @for (announcement of announcements; track announcement.id) {
+        @if (announcement.isActive) {
+            <app-announcement-component
+                [location]="'/my-borrows'"
+                (onClose)="handleCloseAnnouncement(announcement.id)"
+                [announcement]="announcement">
+            </app-announcement-component>
+        }
+    }
+}
 <div class="container">
     <div class="side-menu"> 
         <app-sort-side-bar-component></app-sort-side-bar-component>
     </div>
 
     <div class="borrows-container">
-        <div class="title-3 borrows-count font-bold">{{'borrowsManagement.Total-borrows-that-have-not-been-returned'|translate}}: {{borrowing.length}} {{'borrow.Borrows'}}</div>
+        <div class="title-3 borrows-count font-bold">{{'borrowsManagement.Total-borrows-that-have-not-been-returned'|translate}}: {{borrowing.length}} {{'borrow.Borrows'|translate}}</div>
         <div class="borrowing-container">
             <h1 class="headline">{{'myBorrow.Books-that-you-are-borrowing'|translate}}</h1>
             <div class="borrows-scrolling-area">

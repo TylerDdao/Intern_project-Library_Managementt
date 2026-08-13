@@ -14,10 +14,14 @@ import { UserService } from '../../services/user-service/user-service';
 import { isPlatformBrowser } from '@angular/common';
 import { errorNoti } from '../../util/error-notification';
 import { LoadingComponent } from "../../components/loading-component/loading-component";
+import { AnnouncementComponent } from "../../components/announcement-component/announcement-component";
+import { Announcement } from '../../models/announcement';
+import { webAnnouncements } from '../../../assets/constants';
+import { AnnouncementService } from '../../services/announcement-service/announcement-service';
 
 @Component({
   selector: 'app-signup',
-  imports: [TranslateModule, NavbarComponent, ReactiveFormsModule, LoadingComponent],
+  imports: [TranslateModule, NavbarComponent, ReactiveFormsModule, LoadingComponent, AnnouncementComponent],
   templateUrl: './signup.html',
   styleUrl: './signup.css',
 })
@@ -35,6 +39,7 @@ export class Signup {
     private translate: TranslateService,
     private userService: UserService,
     @Inject(PLATFORM_ID) private platformId: Object,
+    private announcementService: AnnouncementService
   ) 
   {}
 
@@ -59,6 +64,11 @@ export class Signup {
     password: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/)])
   });
+
+  announcements:Announcement[] =[]
+  handleCloseAnnouncement(id: number) {
+    this.announcementService.closeAnnouncement(id);
+  }
 
   handleSendVerificationCode(){
     this.isVerifyingEmail = true;
@@ -201,6 +211,8 @@ export class Signup {
 
   ngOnInit(){
     if (isPlatformBrowser(this.platformId)) {
+      this.announcements = this.announcementService.getAnnouncements()
+
       this.newUserForm.get('username')?.valueChanges.subscribe(() => {
         this.isUsernameAvailable = null;
         this.isUsernameInvalid = false;

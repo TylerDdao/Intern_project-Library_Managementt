@@ -8,10 +8,13 @@ import { isPlatformBrowser } from '@angular/common';
 import { Borrow } from '../../models/borrow';
 import { PagesComponent } from '../../components/pages-component/pages-component';
 import { Page } from '../../models/page';
+import { Announcement } from '../../models/announcement';
+import { AnnouncementService } from '../../services/announcement-service/announcement-service';
+import { AnnouncementComponent } from "../../components/announcement-component/announcement-component";
 
 @Component({
   selector: 'app-my-borrows',
-  imports: [TranslateModule, NavbarComponent, SortSideBarComponent, BorrowCardComponent, PagesComponent],
+  imports: [TranslateModule, NavbarComponent, SortSideBarComponent, BorrowCardComponent, PagesComponent, AnnouncementComponent],
   templateUrl: './my-borrows.html',
   styleUrl: './my-borrows.css',
 })
@@ -46,7 +49,12 @@ export class MyBorrows {
     private borrowService: BorrowService,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
+    private announcementService: AnnouncementService
   ){}
+  announcements: Announcement[] = []
+  handleCloseAnnouncement(id: number) {
+    this.announcementService.closeAnnouncement(id);
+  }
 
   fetchBorrowsByUserId(page: Page = this.borrowingPages):void{
     const userId = JSON.parse(sessionStorage.getItem("user") ?? "{}").id
@@ -80,6 +88,7 @@ export class MyBorrows {
 
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
+      this.announcements = this.announcementService.getAnnouncements()
       this.fetchBorrowsByUserId()
       this.fetchBorrowsHistoryByUserId()
     }

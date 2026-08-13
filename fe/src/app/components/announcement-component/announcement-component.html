@@ -1,20 +1,66 @@
-<div class="p-[10px] flex items-center justify-between" [class]="type == 'info' ? 'bg-pastel-blue text-primary-1' : type == 'warning' ? 'bg-[#FEF3C7] text-[#92400E]' : 'bg-pastel-red text-tomato-red'">
-    <div class="flex items-center space-x-[10px]">
-        <div><span class="material-symbols-outlined">{{type}}</span></div>
-        <div>
-            <div class="headline">{{subject}}</div>
-            <div class="caption-1">{{content}}</div>
-            @if (link) {
-                <a
-                    [href]="link"
-                    class="caption-1 font-bold underline"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    {{linkText ? linkText : link}}
-                </a>
+@if (announcement) {
+    <div
+        class="p-[10px] flex items-center justify-between space-x-[10px] transition-all ease-in-out"
+        [class.opacity-50]="!announcement.isActive"
+        [class.bg-pastel-blue]="announcement.type === 'info'"
+        [class.text-primary-1]="announcement.type === 'info'"
+        [class.bg-pastel-yellow]="announcement.type === 'warning'"
+        [class.text-dark-amber]="announcement.type === 'warning'"
+        [class.bg-pastel-red]="announcement.type !== 'info' && announcement.type !== 'warning'"
+        [class.text-tomato-red]="announcement.type !== 'info' && announcement.type !== 'warning'"
+        [class.hidden]="!isVisible"
+    >
+        <div class="flex items-center space-x-[5px]">
+            @if (showActiveIndicator) {
+                @if (announcement.isActive) {
+                    <div class="mx-[10px]">
+                        <span class="relative flex size-3">
+                            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-leaf-green opacity-75"></span>
+                            <span class="relative inline-flex size-3 rounded-full bg-leaf-green"></span>
+                        </span>
+                    </div>
+                }
+                @else {
+                    <div class="mx-[10px]">
+                        <span class="relative flex size-3">
+                            <span class="relative inline-flex size-3 rounded-full bg-tomato-red"></span>
+                        </span>
+                    </div>
+                }
             }
+            <div class="flex items-center space-x-[10px]">
+                <div><span class="material-symbols-outlined">{{announcement.type}}</span></div>
+                <div>
+                    @if (!isLangAvailable(langService.currentLang)) {
+                        <small class="text-tomato-red">{{"announcement.This-language-is-not-available-for-this-announcement/,-showing-announcement-in-Vietnamese"|translate}}</small>
+                    }
+                    <div class="headline">{{getAnnouncementSubject()}}</div>
+                    <div class="caption-1">{{getAnnouncementContent()}}</div>
+                    @if (announcement.link) {
+                        <a
+                            [href]="announcement.link"
+                            class="caption-1 font-bold underline"
+                            target="_blank"
+                            rel="noopener noreferrer">
+                            {{getAnnouncementLinkText() ? getAnnouncementLinkText() : announcement.link}}
+                        </a>
+                    }
+                </div>
+            </div>
         </div>
+        <button class="flex items-center select-none" (click)="close()"><span class="material-symbols-outlined">close</span></button>
     </div>
-
-    <button class="flex items-center" (click)="close()"><span class="material-symbols-outlined">close</span></button>
-</div>
+}
+@else {
+    <div class="p-[10px] sapce-x-[10px] flex items-center justify-between bg-cool-gray w-full ">
+        <div class="flex  items-center animate-pulse space-x-[10px] w-full">
+            <div class="size-10 rounded-full bg-gray-200"></div>
+            <div class="flex flex-col w-full space-y-[5px]">
+                <div class="bg-soft-ice w-1/2 h-[10px] rounded-full"></div>
+                <div class="bg-soft-ice w-2/3 h-[10px] rounded-full"></div>
+                <div class="bg-soft-ice w-1/3 h-[10px] rounded-full"></div>
+            </div>
+        </div>
+        <button class="flex items-center animate-pulse text-soft-ice select-none"><span class="material-symbols-outlined">close</span></button>
+    </div>
+}

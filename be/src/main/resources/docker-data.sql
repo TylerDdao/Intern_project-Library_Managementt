@@ -42,7 +42,9 @@ INSERT IGNORE INTO features (id, name) VALUES
     (35, 'UNASSIGN_FEATURE'),
     (36, 'EXPORT_USER'),
     (37, 'EXPORT_BOOK'),
-    (38, 'EXPORT_BORROW');
+    (38, 'EXPORT_BORROW'),
+    (39, 'EXPORT_LOG'),
+    (40, 'ANNOUNCEMENTS_MANAGEMENT');
 
 INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
     (4,2),

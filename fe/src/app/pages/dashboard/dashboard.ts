@@ -18,10 +18,13 @@ import { BorrowCardComponent } from '../../components/borrow-card-component/borr
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
 import { LoadingComponent } from '../../components/loading-component/loading-component';
+import { Announcement } from '../../models/announcement';
+import { AnnouncementService } from '../../services/announcement-service/announcement-service';
+import { AnnouncementComponent } from "../../components/announcement-component/announcement-component";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [TranslateModule, NavbarComponent, ChartComponent, BookCardComponent, PagesComponent, BorrowCardComponent, LoadingComponent],
+  imports: [TranslateModule, NavbarComponent, ChartComponent, BookCardComponent, PagesComponent, BorrowCardComponent, LoadingComponent, AnnouncementComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
@@ -61,9 +64,14 @@ export class Dashboard {
     protected router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef,
-    private transalte: TranslateService
-  ) 
-  {}
+    private transalte: TranslateService,
+    private announcementService: AnnouncementService
+    ) 
+    {}
+    announcements: Announcement[] = []
+    handleCloseAnnouncement(id: number) {
+      this.announcementService.closeAnnouncement(id);
+    }
 
   private startLoading() {
     this.pendingRequests++;
@@ -207,6 +215,7 @@ export class Dashboard {
   
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
+      this.announcements = this.announcementService.getAnnouncements()
       this.fetchOnTimeBorrows();
       this.fetchNearBorrows();
       this.fetchLateBorrows();

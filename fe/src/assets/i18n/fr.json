@@ -92,7 +92,8 @@
     "Confirm-delete": "Confirmer la suppression",
     "Edit-role": "Modifier le rôle",
     "New-role": "Nouveau rôle",
-    "Processing": "Traitement en cours"
+    "Processing": "Traitement en cours",
+    "Save-change": "Enregistrer les modifications"
   },
   "newUserForm": {
     "Create-new-user": "Créer un nouvel utilisateur"
@@ -165,8 +166,8 @@
     "Create-new-post": "Créer une nouvelle publication",
     "Pick-a-book": "Choisir un livre",
     "Please-select-a-book": "Veuillez sélectionner un livre",
-    "Please-enter-subject": "Veuillez entrer un sujet",
-    "Please-enter-content": "Veuillez entrer du contenu"
+    "Please-enter-subject": "Veuillez entrer le sujet",
+    "Please-enter-content": "Veuillez entrer le contenu"
   },
   "export": {
     "Export": "Exporter",
@@ -185,7 +186,7 @@
   "post": {
     "Edit-post": "Modifier la publication",
     "Subject": "Sujet",
-    "Body": "Contenu"
+    "Content": "Contenu"
   },
   "comment": {
     "Comment-box": "Espace commentaires",
@@ -259,7 +260,7 @@
     "Search-genre": "Rechercher un genre",
     "Search-by-name": "Rechercher par nom",
     "Search-book": "Rechercher un livre",
-    "Not-found": "TODO"
+    "Not-found": "Introuvable"
   },
   "browseBooks": {
     "Loading": "Chargement...",
@@ -305,9 +306,9 @@
     "An-error-has-occurred,-please-login-again": "Une erreur est survenue, veuillez vous reconnecter",
     "Please-enter-a-different-password": "Veuillez entrer un mot de passe différent",
     "An-error-has-occured": "Une erreur est survenue",
-    "Not-found": "TODO",
-    "Page-is-stil-being-constructed": "TODO",
-    "Unauthorized": "TODO"
+    "Not-found": "Introuvable",
+    "Page-is-stil-being-constructed": "La page est encore en cours de construction",
+    "Unauthorized": "Non autorisé"
   },
   "forgotPassword": {
     "Forgot-password": "Mot de passe oublié",
@@ -363,18 +364,31 @@
     "empty": "Vide"
   },
   "announcement": {
-    "1": {
-      "subject": "Votre avis compte !",
-      "content": "Nous avons hâte de connaître votre avis. Veuillez nous le transmettre via le lien ci-dessous !",
-      "linkText": "Formulaire de commentaires"
-    },
-    "2": {
-      "subject": "Site en cours de développement — Certaines pages ne sont pas disponibles",
-      "content": "Ce site web est encore en cours de développement, certaines pages ne sont donc pas accessibles pour le moment. Nous les finaliserons dès que possible !"
-    }
+    "This-language-is-not-available-for-this-announcement/,-showing-announcement-in-Vietnamese": "Cette langue n'est pas disponible pour cette annonce, affichage de l'annonce en vietnamien",
+    "Announcement-type": "Type d'annonce",
+    "Status": "Statut",
+    "Active-status": "Statut d'activité",
+    "Active": "Actif",
+    "Inactive": "Inactif"
   },
   "featuresManagement": {
-    "Unassign-all": "TODO",
-    "Assign-all": "TODO"
+    "Unassign-all": "Tout désattribuer",
+    "Assign-all": "Tout attribuer"
+  },
+  "logsManagement": {
+    "Logs-management": "Gestion des journaux",
+    "Start-date": "Date de début",
+    "Invalid-date": "Date invalide",
+    "End-date": "Date de fin"
+  },
+  "announcementsManagement": {
+    "Announcements management": "Gestion des annonces",
+    "You-must-have-announcement-subject-in-Vietnamese": "Vous devez saisir le sujet de l'annonce en vietnamien",
+    "You-must-have-announcement-content-in-Vietnamese": "Vous devez saisir le contenu de l'annonce en vietnamien",
+    "Preview-announcement": "Aperçu de l'annonce",
+    "Post-announcement": "Publier l'annonce",
+    "Announcement-locations": "Emplacements de l'annonce",
+    "Preview": "Aperçu",
+    "Leave-blank-if-you-want-announcement-to-be-shown-across-the-web": "Laissez vide si vous souhaitez que l'annonce soit affichée sur l'ensemble du site"
   }
 }

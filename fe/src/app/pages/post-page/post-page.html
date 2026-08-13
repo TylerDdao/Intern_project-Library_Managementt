@@ -45,7 +45,7 @@
                 <small class="text-tomato-red">{{"postPage.Please-make-change-to-your-post"|translate}}</small>
             }
             <div class="flex flex-col">
-                <input formControlName="subject" type="text" placeholder='{{"post.Subject"|translate}}*' 
+                <input formControlName="subject" type="text" placeholder='{{"post.Subject"|translate}}' 
                     class="bg-cool-gray text-deep-charcoal rounded-[10px] w-full p-[10px]"/>
                     @if (!isSubjectValid) {
                         <small class="text-tomato-red">{{"createPost.Please-enter-subject"|translate}}</small>
@@ -53,7 +53,7 @@
             </div>
             <div>
                 <div class="post-content-container">
-                    <textarea formControlName="content" placeholder='{{"post.Body"|translate}}*' 
+                    <textarea formControlName="content" placeholder='{{"post.Content"|translate}}*' 
                         class="bg-cool-gray text-deep-charcoal rounded-[10px] w-full p-[10px] max-h-full min-h-full resize-none"></textarea>
                 </div>
                 @if (!isContentValid) {

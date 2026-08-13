@@ -29,7 +29,8 @@
     --color-leaf-green: #6FAF4F;
     --color-tomato-red: #E50046;
     --color-bright-gold: #F9D923;
-    --color-pastel-yellow: #FACE68;
+    --color-pastel-yellow: #FEF3C7;
+    --color-dark-amber: #92400E;
     --color-pastel-red: rgba(229, 0, 70, 0.3);
 
     --color-primary-1: #2C5EAD;
@@ -54,14 +55,21 @@
 
 @media (min-width: 1024px) {
 .body-container{
-    display: flex;
+    /* display: flex;
     align-items: center;
     justify-content: center;
     position: fixed;
     top: 80px;
     right: 0;
     bottom: 10px;
-    left: 0;
+    left: 0; */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-sizing: border-box;
+    min-height: calc(100dvh - 100px);
         
 }
 .large-title{
@@ -104,7 +112,7 @@
 
 @media (max-width: 1023px) {
 .body-container{
-    display: flex;
+    /* display: flex;
     align-items: center;
     justify-content: center;
     position: fixed;
@@ -112,7 +120,14 @@
     bottom: 10px;
     left: 0px;
     right: 0px;
+    padding: 10px; */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 10px;
+    box-sizing: border-box;
+    min-height: calc(100dvh - 100px);
 }
 .large-title{
     font-size: 34pt;

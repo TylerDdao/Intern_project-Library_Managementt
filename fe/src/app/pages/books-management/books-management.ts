@@ -22,10 +22,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
 import { ExportBooksForm } from "../../forms/export/export-books-form/export-books-form";
 import { LoadingComponent } from '../../components/loading-component/loading-component';
+import { AnnouncementComponent } from "../../components/announcement-component/announcement-component";
+import { Announcement } from '../../models/announcement';
+import { AnnouncementService } from '../../services/announcement-service/announcement-service';
 
 @Component({
   selector: 'app-books-management',
-  imports: [GenresManagementForm, NavbarComponent, SortSideBarComponent, BookCardComponent, TranslateModule, PagesComponent, BookListComponent, NewBookForm, ExportBooksForm, LoadingComponent],
+  imports: [GenresManagementForm, NavbarComponent, SortSideBarComponent, BookCardComponent, TranslateModule, PagesComponent, BookListComponent, NewBookForm, ExportBooksForm, LoadingComponent, AnnouncementComponent],
   templateUrl: './books-management.html',
   styleUrl: './books-management.css',
 })
@@ -37,9 +40,15 @@ export class BooksManagement {
     protected router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private announcementService: AnnouncementService
   ) 
   {}
+  announcements: Announcement[] = []
+  handleCloseAnnouncement(id: number) {
+    this.announcementService.closeAnnouncement(id);
+  }
+    
 
   isCreateNewBook:boolean = false;
   isExportBook:boolean =false;
@@ -257,6 +266,7 @@ export class BooksManagement {
 
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
+      this.announcements = this.announcementService.getAnnouncements()
       this.fetchAllGenres();
       this.fetchBooks();
     }

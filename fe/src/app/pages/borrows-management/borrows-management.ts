@@ -12,10 +12,13 @@ import { BorrowListComponent } from '../../components/borrow-list-component/borr
 import { BorrowPolicyForm } from '../../forms/borrow-policy-form/borrow-policy-form';
 import { ExportBorrowsForm } from '../../forms/export/export-borrows-form/export-borrows-form';
 import { LoadingComponent } from '../../components/loading-component/loading-component';
+import { Announcement } from '../../models/announcement';
+import { AnnouncementService } from '../../services/announcement-service/announcement-service';
+import { AnnouncementComponent } from "../../components/announcement-component/announcement-component";
 
 @Component({
   selector: 'app-borrows-management',
-  imports: [TranslateModule, NavbarComponent, SortSideBarComponent, BorrowCardComponent, PagesComponent, BorrowListComponent, BorrowPolicyForm, ExportBorrowsForm],
+  imports: [TranslateModule, NavbarComponent, SortSideBarComponent, BorrowCardComponent, PagesComponent, BorrowListComponent, BorrowPolicyForm, ExportBorrowsForm, AnnouncementComponent],
   templateUrl: './borrows-management.html',
   styleUrl: './borrows-management.css',
 })
@@ -87,7 +90,13 @@ export class BorrowsManagement {
     private borrowService: BorrowService,
     protected cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
-  ){}
+    private announcementService: AnnouncementService
+  ) 
+  {}
+  announcements: Announcement[] = []
+  handleCloseAnnouncement(id: number) {
+    this.announcementService.closeAnnouncement(id);
+  }
 
   handleCloseExportBorrow(){
     this.isExportBorrow = false;
@@ -221,6 +230,7 @@ export class BorrowsManagement {
 
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
+      this.announcements = this.announcementService.getAnnouncements()
       this.fetchOnGoingBorrows()
       this.fetchNearDueBorrows()
       this.fetchLateBorrows()

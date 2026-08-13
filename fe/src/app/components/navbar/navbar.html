@@ -33,8 +33,8 @@
             <button class="border border-soft-ice p-[10px] rounded-[10px] caption-1 font-bold" (click)="handleLogout()">Logout</button>
         </div>
 
-        <div class="mobile-setting-icon lg:hidden">
-            <span class="material-symbols-outlined cursor-default" (click)="toggleMobileMenu()">menu</span>
+        <div class="mobile-setting-icon lg:hidden select-none ">
+            <span class="material-symbols-outlined cursor-pointer" (click)="toggleMobileMenu()">menu</span>
             <app-language-selector></app-language-selector>
         </div>
         }

@@ -1,4 +1,15 @@
 <app-navbar></app-navbar>
+@if (announcements) {
+    @for (announcement of announcements; track announcement.id) {
+        @if (announcement.isActive) {
+            <app-announcement-component
+                [location]="'/signup'"
+                (onClose)="handleCloseAnnouncement(announcement.id)"
+                [announcement]="announcement">
+            </app-announcement-component>
+        }
+    }
+}
 <div class="body-container">
     <div class="sign-up-container">
         <div class="flex justify-between items-center">

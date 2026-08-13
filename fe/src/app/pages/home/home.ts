@@ -21,16 +21,9 @@ import { LoadingComponent } from '../../components/loading-component/loading-com
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
 import { AnnouncementComponent } from "../../components/announcement-component/announcement-component";
-
-interface Announcement {
-  id: number;
-  type: 'info' | 'warning' | 'error';
-  subjectKey: string;
-  contentKey: string;
-  link?: string;
-  linkText?: string;
-  isOpen: boolean;
-}
+import { Announcement } from '../../models/announcement';
+import { webAnnouncements } from '../../../assets/constants';
+import { AnnouncementService } from '../../services/announcement-service/announcement-service';
 
 @Component({
   selector: 'app-home',
@@ -67,15 +60,13 @@ export class Home {
     protected router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private announcementService: AnnouncementService
   ) 
   {}
 
   handleCloseAnnouncement(id: number) {
-    const announcement = this.announcements.find(a => a.id === id);
-    if (announcement) {
-      announcement.isOpen = false;
-    }
+    this.announcementService.closeAnnouncement(id);
   }
 
   private startLoading() {
@@ -183,24 +174,35 @@ export class Home {
 
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
-      this.announcements = [
-        {
-          id: 1,
-          type: 'info',
-          subjectKey: 'announcement.1.subject',
-          contentKey: 'announcement.1.content',
-          link: 'https://forms.gle/8agsuPwmFonKSzPb6',
-          linkText: 'announcement.1.linkText',
-          isOpen: true,
-        },
-        {
-          id: 2,
-          type: 'warning',
-          subjectKey: 'announcement.2.subject',
-          contentKey: 'announcement.2.content',
-          isOpen: true,
-        },
-      ];
+      this.announcements = this.announcementService.getAnnouncements();
+      // this.announcements = [
+      //   {
+      //     id: 1,
+      //     type: 'info',
+      //     subject_vi: "Ý kiến của bạn rất quan trọng!",
+      //     content_vi: "Chúng tôi rất mong nhận được phản hồi từ bạn. Vui lòng gửi ý kiến cho chúng tôi qua liên kết bên dưới!",
+
+      //     subject_en: 'Your feedback matters!',
+      //     content_en: 'We are excited to hear your feedback. Please send it to us via the link below!',
+
+      //     link: 'https://forms.gle/8agsuPwmFonKSzPb6',
+      //     linkText_vi: 'Biểu mẫu góp ý',
+      //     linkText_en: 'Feedback Form',
+      //     isActive: true,
+      //     locations: ['']
+      //   },
+      //   {
+      //     id: 2,
+      //     type: 'warning',
+      //     subject_vi: 'Website đang phát triển — Một số trang hiện chưa khả dụng',
+      //     content_vi: 'Website này vẫn đang trong quá trình phát triển nên một số trang chưa thể truy cập vào lúc này. Chúng tôi sẽ hoàn thiện sớm nhất có thể!',
+
+      //     subject_en: 'Site Under Development — Some pages are not available',
+      //     content_en: 'This website is still under active development so some pages are not available to access at the moment. We will finish them as soon as possible!',
+      //     isActive: true,
+      //     locations: ['']
+      //   },
+      // ];
 
       this.fetchMostLikesPosts()
       this.fetchBorrowsByUserId()

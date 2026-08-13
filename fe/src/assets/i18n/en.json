@@ -92,7 +92,8 @@
     "Confirm-delete": "Confirm delete",
     "Edit-role": "Edit role",
     "New-role": "New role",
-    "Processing": "Processing"
+    "Processing": "Processing",
+    "Save-change": "Save changes"
   },
   "newUserForm": {
     "Create-new-user": "Create new user"
@@ -185,7 +186,7 @@
   "post": {
     "Edit-post": "Edit post",
     "Subject": "Subject",
-    "Body": "Body"
+    "Content": "Content"
   },
   "comment": {
     "Comment-box": "Comment box",
@@ -259,7 +260,7 @@
     "Search-genre": "Search genre",
     "Search-by-name": "Search by name",
     "Search-book": "Search book",
-    "Not-found": "TODO"
+    "Not-found": "Not found"
   },
   "browseBooks": {
     "Loading": "Loading",
@@ -305,9 +306,9 @@
     "An-error-has-occurred,-please-login-again": "An error has occurred, please login again",
     "Please-enter-a-different-password": "Please enter a different password",
     "An-error-has-occured": "An error has occurred",
-    "Not-found": "TODO",
-    "Page-is-stil-being-constructed": "TODO",
-    "Unauthorized": "TODO"
+    "Not-found": "Not found",
+    "Page-is-stil-being-constructed": "Page is still being constructed",
+    "Unauthorized": "Unauthorized"
   },
   "forgotPassword": {
     "Forgot-password": "Forgot password",
@@ -363,18 +364,31 @@
     "empty": "Empty"
   },
   "announcement": {
-    "1": {
-      "subject": "Your feedback matters!",
-      "content": "We are excited to hear your feedback. Please send it to us via the link below!",
-      "linkText": "Feedback Form"
-    },
-    "2": {
-      "subject": "Site Under Development — Some pages are not available",
-      "content": "This website is still under active development so some pages are not available to access at the moment. We will finish them as soon as possible!"
-    }
+    "This-language-is-not-available-for-this-announcement/,-showing-announcement-in-Vietnamese": "This language is not available for this announcement, showing announcement in Vietnamese",
+    "Active": "Active",
+    "Inactive": "Inactive",
+    "Announcement-type": "Announcement type",
+    "Status": "Status",
+    "Active-status": "Active status"
   },
   "featuresManagement": {
-    "Unassign-all": "TODO",
-    "Assign-all": "TODO"
+    "Unassign-all": "Unassign all",
+    "Assign-all": "Assign all"
+  },
+  "logsManagement": {
+    "Logs-management": "Logs management",
+    "Start-date": "Start date",
+    "Invalid-date": "Invalid date",
+    "End-date": "End date"
+  },
+  "announcementsManagement": {
+    "Announcements management": "Announcements management",
+    "You-must-have-announcement-subject-in-Vietnamese": "You must have announcement subject in Vietnamese",
+    "You-must-have-announcement-content-in-Vietnamese": "You must have announcement content in Vietnamese",
+    "Preview-announcement": "Preview announcement",
+    "Post-announcement": "Post announcement",
+    "Announcement-locations": "Announcement locations",
+    "Preview": "Preview",
+    "Leave-blank-if-you-want-announcement-to-be-shown-across-the-web": "Leave blank if you want announcement to be shown across the web"
   }
 }

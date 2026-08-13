@@ -1,0 +1,221 @@
+<app-navbar></app-navbar>
+<div class="announcements">
+    @if (announcements) {
+        @for (announcement of announcements; track announcement.id) {
+            @if (announcement.isActive) {
+                <app-announcement-component
+                    [location]="'/books-management'"
+                    (onClose)="handleCloseAnnouncement(announcement.id)"
+                    [announcement]="announcement">
+                </app-announcement-component>
+            }
+        }
+    }
+</div>
+
+
+<div class="body-container">
+    <div class="container relative">
+        <div class="left-side">
+            <div class="font-bold">{{'announcementsManagement.Announcements management'|translate}}</div>
+            <form [formGroup]="announcementForm" id="announcementForm" class="new-announcement-container" (ngSubmit)="onSubmit()">
+                <!-- ANNOUNCEMENT TYPE -->
+                <div>
+                    <div class="font-bold">{{'announcements.Announcement-type'|translate}}</div>
+                    <div class="border border-primary-1 rounded-[10px] px-[5px] select-none">
+                        <div class="relative grid grid-cols-3 justify-between items-center py-[5px] w-full caption-1">
+                            <div
+                                class="absolute top-1 bottom-1 left-1 w-[calc((100%_-_8px)/3)] rounded-md bg-primary-1 transition-transform duration-300 ease-in-out"
+                                [class.translate-x-0]="selectedAnnouncementType === 'info'"
+                                [class.bg-primary-1]="selectedAnnouncementType === 'info'"
+                                [class.translate-x-full]="selectedAnnouncementType === 'warning'"
+                                [class.bg-pastel-yellow]="selectedAnnouncementType === 'warning'"
+                                [class.translate-x-[200%]]="selectedAnnouncementType === 'error'"
+                                [class.bg-pastel-red]="selectedAnnouncementType === 'error'"
+                            ></div>
+
+                            <button type="button" (click)="setAnnouncementType('info')" class="select-none w-full relative z-10 px-[10px] py-[5px] text-center transition-colors duration-300" [class.text-soft-ice]="selectedAnnouncementType === 'info'" [class.text-primary-1]="selectedAnnouncementType !== 'info'">
+                                <div class="flex items-center space-x-[5px] justify-center">
+                                    <span class="material-symbols-outlined">info</span>
+                                </div>
+                            </button>
+
+                            <button type="button" (click)="setAnnouncementType('warning')" class="w-full select-none justify-self-center relative z-10 px-[10px] py-[5px] text-center transition-colors duration-300" [class.text-dark-amber]="selectedAnnouncementType === 'warning'" [class.text-primary-1]="selectedAnnouncementType !== 'warning'">
+                                <div class="flex items-center space-x-[5px] justify-center">
+                                    <span class="material-symbols-outlined">warning</span>
+                                </div>
+                            </button>
+
+
+                            <button type="button" (click)="setAnnouncementType('error')" class="w-full select-none justify-self-center relative z-10 px-[10px] py-[5px] text-center transition-colors duration-300" [class.text-tomato-red]="selectedAnnouncementType === 'error'" [class.text-primary-1]="selectedAnnouncementType !== 'error'">
+                                <div class="flex items-center space-x-[5px] justify-center">
+                                    <span class="material-symbols-outlined">error</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ACTIVE -->
+                <div>
+                    <div class="font-bold">{{'announcement.Status'|translate}}</div>
+                    <div class="border border-primary-1 rounded-[10px] px-[5px] select-none">
+                        <div class="relative grid grid-cols-2 justify-between items-center py-[5px] w-full caption-1">
+                            <div
+                                class="absolute top-1 bottom-1 left-1 w-[calc((100%_-_8px)/2)] rounded-md bg-primary-1 transition-transform duration-300 ease-in-out"
+                                [class.translate-x-0]="announcementActivity === true"
+                                [class.bg-primary-1]="announcementActivity === true"
+                                [class.translate-x-[100%]]="announcementActivity === false"
+                                [class.bg-pastel-red]="announcementActivity === false"
+                            ></div>
+
+                            <button type="button" (click)="setActive(true)" class="select-none w-full relative z-10 px-[10px] py-[5px] text-center transition-colors duration-300" [class.text-soft-ice]="announcementActivity === true" [class.text-primary-1]="announcementActivity !== true">
+                                <div class="flex items-center space-x-[5px] justify-center">
+                                    <div>Active</div>
+                                </div>
+                            </button>
+
+                            <button type="button" (click)="setActive(false)" class="w-full select-none justify-self-center relative z-10 px-[10px] py-[5px] text-center transition-colors duration-300" [class.text-tomato-red]="announcementActivity === false" [class.text-primary-1]="announcementActivity !== false">
+                                <div class="flex items-center space-x-[5px] justify-center">
+                                    <div>Inactive</div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTENT -->
+                <div>
+                    <div class="font-bold">Tiếng Việt</div>
+                    <div class="flex flex-col">
+                        <label for="subject_vi">{{"post.Subject"|translate}}</label>
+                        <input type="text" id="subject_vi" formControlName="subject_vi" class="rounded-[10px]" [class]="isValid['subject']? 'bg-pastel-blue text-dodger-blue': 'bg-pastel-red text-tomato-red'"/>
+                    </div>
+                    @if (!isValid['subject']) {
+                        <small class="text-tomato-red">{{"announcementsManagement.You-must-have-announcement-subject-in-Vietnamese"|translate}}</small>
+                    }
+
+                    <div class="flex flex-col">
+                        <label for="content_vi">{{"post.Content"|translate}}</label>
+                        <textarea type="text" id="content_vi" formControlName="content_vi" class="p-[10px] rounded-[10px] h-[300px] resize-none" [class]="isValid['content']? 'bg-pastel-blue text-dodger-blue': 'bg-pastel-red text-tomato-red'"></textarea>
+                    </div>
+                    @if (!isValid['content']) {
+                        <small class="text-tomato-red">{{"announcementsManagement.You-must-have-announcement-content-in-Vietnamese"|translate}}</small>
+                    }
+                </div>
+
+                <div>
+                    <div class="font-bold">English</div>
+                    <div class="flex flex-col">
+                        <label for="subject_en">{{"post.Subject"|translate}}</label>
+                        <input type="text" id="subject_en" formControlName="subject_en" class="rounded-[10px] bg-pastel-blue text-dodger-blue" />
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="content_en">{{"post.Content"|translate}}</label>
+                        <textarea type="text" id="content_en" formControlName="content_en" class="p-[10px] rounded-[10px] h-[300px] resize-none bg-pastel-blue text-dodger-blue"></textarea>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="font-bold">Français</div>
+                    <div class="flex flex-col">
+                        <label for="subject_fr">{{"post.Subject"|translate}}</label>
+                        <input type="text" id="subject_fr" formControlName="subject_fr" class="rounded-[10px] bg-pastel-blue text-dodger-blue"/>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="content_fr">{{"post.Content"|translate}}</label>
+                        <textarea type="text" id="content_fr" formControlName="content_fr" class="p-[10px] rounded-[10px] h-[300px] resize-none bg-pastel-blue text-dodger-blue"></textarea>
+                    </div>
+                </div>
+
+            </form>
+            <div class="flex flex-col space-y-[10px]">
+                <button type="button" class="px-[10px] py-[5px] rounded-[10px] border border-leaf-green text-leaf-green caption-1 hover:bg-leaf-green hover:text-soft-ice transition ease-in-out" (click)="handlePreview()">{{"announcementsManagement.Preview-announcement"|translate}}</button>
+                <button form="announcementForm" class="px-[10px] py-[5px] rounded-[10px] bg-primary-1 text-soft-ice caption-1 font-bold">{{"announcementsManagement.Post-announcement"|translate}}</button>
+            </div>
+        </div>
+
+        <div class="center">
+            <div class="flex flex-col">
+                <div class="font-bold">{{"announcementsManagement.Announcement-locations"|translate}}</div>
+                <small>{{"announcementsManagement.Leave-blank-if-you-want-announcement-to-be-shown-across-the-web"|translate}}</small>
+            </div>
+            <div class="locations-list">
+                @for (page of pages; track $index) {
+                    <button (click)="toggleLocation(page.path)" type="button" class="px-[10px] py-[5px] rounded-[10px] border border-primary-1 text-primary-1 hover:text-soft-ice hover:bg-primary-1 transition ease-in-out select-none" [class]="selectedLocation.includes(page.path) ? 'bg-primary-1 text-soft-ice' : 'border border-primary-1'">{{page.name|translate}}</button>
+                }
+            </div>
+        </div>
+
+        <div class="right-side">
+            <div>
+                <div class="font-bold">{{'announcementsManagement.Preview'|translate}}</div>
+                <app-announcement-component [announcement]="previewAnnouncement" (onClose)="handleResetPreview()"></app-announcement-component>
+            </div>
+            <div class="website-announcements">
+                <div class="font-bold">{{"AnnouncementsManagement.Website-announcements"}}</div>
+                <div class="flex flex-col space-y-[5px]">
+                    <div>{{"announcement.Active-status"|translate}}</div>
+                    <div class="flex space-x-[10px] items-center">
+                        <div>
+                            <span class="relative flex size-3">
+                                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-leaf-green opacity-75"></span>
+                                <span class="relative inline-flex size-3 rounded-full bg-leaf-green"></span>
+                            </span>
+                        </div>
+                        <div class="text-leaf-green">{{"announcement.Active"|translate}}</div>
+                    </div>
+
+                    <div class="flex space-x-[10px] items-center">
+                        <div>
+                            <span class="relative flex size-3">
+                                <span class="relative inline-flex size-3 rounded-full bg-tomato-red"></span>
+                            </span>
+                        </div>
+                        <div class="text-tomato-red">{{"announcement.Inactive"|translate}}</div>
+                    </div>
+                </div>
+                <div class="w-full h-[5px] bg-primary-1 rounded-full"></div>
+                <div class="announcement-list">
+                    @for (announcement of announcementsList; track announcement.id) {
+                        <div>
+                            <div class="border border-primary-1 rounded-[10px] px-[5px] select-none">
+                                <div class="relative grid grid-cols-2 justify-between items-center py-[5px] w-full caption-1">
+                                    <div
+                                        class="absolute top-1 bottom-1 left-1 w-[calc((100%_-_8px)/2)] rounded-md bg-primary-1 transition-transform duration-300 ease-in-out"
+                                        [class.translate-x-0]="announcement.isActive === true"
+                                        [class.bg-primary-1]="announcement.isActive === true"
+                                        [class.translate-x-[100%]]="announcement.isActive === false"
+                                        [class.bg-pastel-red]="announcement.isActive === false"
+                                    ></div>
+
+                                    <button type="button" (click)="announcement.isActive = true" class="select-none w-full relative z-10 px-[10px] py-[5px] text-center transition-colors duration-300" [class.text-soft-ice]="announcement.isActive === true" [class.text-primary-1]="announcement.isActive !== true">
+                                        <div class="flex items-center space-x-[5px] justify-center">
+                                            <div>Active</div>
+                                        </div>
+                                    </button>
+
+                                    <button type="button" (click)="announcement.isActive = false" class="w-full select-none justify-self-center relative z-10 px-[10px] py-[5px] text-center transition-colors duration-300" [class.text-tomato-red]="announcement.isActive === false" [class.text-primary-1]="announcement.isActive !== false">
+                                        <div class="flex items-center space-x-[5px] justify-center">
+                                            <div>Inactive</div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex space-x-[10px] items-center">
+                            <app-announcement-component [showActiveIndicator]="true" [announcement]="announcement"></app-announcement-component>
+                            <button class="flex items-center select-none text-tomato-red"><span class="material-symbols-outlined">delete</span></button>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="flex flex-col space-y-[10px]">
+                <button type="button" class="px-[10px] py-[5px] rounded-[10px] border border-tomato-red text-tomato-red caption-1 hover:bg-tomato-red hover:text-soft-ice transition ease-in-out">{{"form.Reset"|translate}}</button>
+                <button type="button" class="px-[10px] py-[5px] rounded-[10px] bg-primary-1 text-soft-ice caption-1 font-bold">{{"form.Save-change"|translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

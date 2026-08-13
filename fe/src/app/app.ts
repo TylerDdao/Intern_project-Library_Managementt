@@ -16,7 +16,6 @@ export class App implements OnInit {
   onDev: string[] = ['/logs-management', '/announcements-management']
 
   constructor(
-    private translate: TranslateService,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
