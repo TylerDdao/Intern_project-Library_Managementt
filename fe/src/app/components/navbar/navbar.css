@@ -4,13 +4,12 @@
 
 @media (min-width: 1024px) {
   .pages-container {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: max-content;
+    display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 10px;
     overflow-x: auto;
-    max-width: 100%;
+    width: 80dvw;
     padding: 5px;
   }
 
@@ -18,6 +17,9 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
   }
   .icon-size {
     font-size: 34px; /* tablet */

@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppLogsManagement } from './app-logs-management';
+import { OnDevPage } from './on-dev-page';
 
-describe('AppLogsManagement', () => {
-  let component: AppLogsManagement;
-  let fixture: ComponentFixture<AppLogsManagement>;
+describe('OnDevPage', () => {
+  let component: OnDevPage;
+  let fixture: ComponentFixture<OnDevPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppLogsManagement],
+      imports: [OnDevPage],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AppLogsManagement);
+    fixture = TestBed.createComponent(OnDevPage);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

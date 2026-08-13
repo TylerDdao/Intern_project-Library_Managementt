@@ -1,0 +1,16 @@
+@media (min-width: 1024px) {
+    .container{
+        box-sizing: border-box;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+        background: white;
+        border-radius: 10px;
+        gap: 30px;
+        max-width: 80dvw;
+        width: fit-content;
+        max-height: 80dvh;
+        overflow-y: auto;
+    }
+}

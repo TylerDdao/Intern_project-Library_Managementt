@@ -1,55 +1,47 @@
-<nav class="sticky top-0 left-0 w-full z-50 p-4 bg-steel-blue text-white">
+<nav class="sticky top-0 left-0 min-w-screen z-50 p-4 bg-steel-blue text-white">
     <div class="flex justify-between items-center space-x-[10px]">
         @if (validateUser) {
             <div class="pages-container">
                 @for (page of pages; track $index) {
                     <a [routerLink]="page.path" routerLinkActive="active-page">
-                        <h1 class="body">{{page.name|translate}}</h1>
+                        <h1 class="caption-1 text-nowrap">{{page.name | translate}}</h1>
                     </a>
                     @if($index < pages.length - 1) {
                         <div class="border border-white"></div>
                     }
                 }
             </div>
+
+        
         <div class="setting-container">
-            <select [value]="langService.currentLang" (change)="langService.switchLanguage($any($event.target).value)" class="text-deep-charcoal bg-soft-ice rounded p-1">
-                <option value="en">English</option>
-                <option value="vi">Tiếng Việt</option>
-                <option value="fr">Français</option>
-            </select>
-
             <!-- <span class="material-symbols-outlined icon-size">notifications</span> -->
-
-            <div class="flex items-center space-x-[5px] select-none cursor-pointer" routerLink='/settings'>
-                <span class="material-symbols-outlined icon-size ">account_circle</span>
-                <div>
-                    <h1 class="headline">{{('navBar.hello'|translate)}}: {{user?.fullName}}</h1>
-                    <div class="bg-cool-gray w-fit px-[10px] py-[3px] rounded-3xl">{{user?.role?.name?.replace("ROLE_","")}}</div>
+            <app-language-selector></app-language-selector>
+            <div>
+                <div class="flex items-center space-x-[5px] select-none cursor-pointer" routerLink='/settings'>
+                    <span class="material-symbols-outlined icon-size ">account_circle</span>
+                    <div>
+                        <h1 class="text-nowrap">{{user?.fullName}}</h1>
+                        <div class="bg-cool-gray w-fit px-[10px] py-[3px] rounded-3xl">{{user?.role?.name?.replace("ROLE_","")}}</div>
+                    </div>
                 </div>
+                
             </div>
 
-            <div class="border border-white mx-[10px]"></div> 
+
+            <div class="border border-white mx-[10px] h-[50px]"></div> 
 
             <button class="border border-soft-ice p-[10px] rounded-[10px] caption-1 font-bold" (click)="handleLogout()">Logout</button>
         </div>
 
         <div class="mobile-setting-icon lg:hidden">
             <span class="material-symbols-outlined cursor-default" (click)="toggleMobileMenu()">menu</span>
-            <select [value]="langService.currentLang" (change)="langService.switchLanguage($any($event.target).value)" class="text-deep-charcoal bg-soft-ice rounded p-1">
-                <option value="en">English</option>
-                <option value="vi">Tiếng Việt</option>
-                <option value="fr">Français</option>
-            </select>
+            <app-language-selector></app-language-selector>
         </div>
         }
         @else {
             <div class="flex items-center justify-between w-full">
                 <h1 class="subheadline font-bold">Library Management System</h1>
-                <select [value]="langService.currentLang" (change)="langService.switchLanguage($any($event.target).value)" class="text-deep-charcoal bg-soft-ice rounded p-1">
-                    <option value="en">English</option>
-                    <option value="vi">Tiếng Việt</option>
-                    <option value="fr">Français</option>
-                </select>
+                <app-language-selector></app-language-selector>
             </div>
         }
     </div>
@@ -70,7 +62,7 @@
             <div class="flex items-center space-x-[5px] select-none cursor-pointer" routerLink='/settings'>
                 <span class="material-symbols-outlined icon-size">account_circle</span>
                 <div>
-                    <h1 class="caption-1">{{('navBar.hello'|translate)}}: {{user?.fullName}}</h1>
+                    <h1 class="caption-1">{{user?.fullName}}</h1>
                     <div class="bg-cool-gray w-fit px-[10px] py-[3px] caption-2 rounded-3xl">{{user?.role?.name?.replace("ROLE_","")}}</div>
                 </div>
             </div>

@@ -1,0 +1,24 @@
+<app-navbar></app-navbar>
+<div class="body-container">
+    <div class="container">
+        <div class="font-bold">{{'logsManagement.Logs-management'|translate}}</div>
+        <form [formGroup]="logForm" id="logForm" (ngSubmit)="onSubmit()">
+            <div class="flex flex-col">
+                <label for="from">{{"logsManagement.Start-date"|translate}}</label>
+                <input type="date" id="from" formControlName="from" [max]="today" class="rounded-[10px]" [class]="isValid['from']? 'bg-pastel-blue text-dodger-blue': 'bg-pastel-red text-tomato-red'"/>
+            </div>
+            @if (!isValid['from']) {
+                <small class="text-tomato-red">{{"logsManagement.Invalid-date"|translate}}</small>
+            }
+
+            <div class="flex flex-col">
+                <label for="to">{{"logsManagement.End-date"|translate}}</label>
+                <input type="date" id="to" formControlName="to" [max]="today" class="rounded-[10px]" [class]="isValid['to']? 'bg-pastel-blue text-dodger-blue': 'bg-pastel-red text-tomato-red'"/>
+            </div>
+            @if (!isValid['to']) {
+                <small class="text-tomato-red">{{"logsManagement.Invalid-date"|translate}}</small>
+            }
+        </form>
+        <button form="logForm" class="px-[10px] py-[5px] rounded-[10px] bg-primary-1 text-soft-ice caption-1">{{"export.Export"|translate}}</button>
+    </div>
+</div>

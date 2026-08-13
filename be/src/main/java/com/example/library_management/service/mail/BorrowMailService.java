@@ -92,25 +92,23 @@ public class BorrowMailService {
             penaltyRate = messageSource.getMessage("error.Unknown", null, locale);
         }
         return """
-                <div style="background:#F3F7F2;border-left:4px solid #5C8D5A;padding:16px 18px;margin:20px 0;border-radius:6px;">
-                    <div style="font-size:12px;color:#6B7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">%s</div>
-                    <div style="display: flex;">
-                        <img src="%s" style=" width:100px; object-fit:cover; border-radius:5px; display:block;"/>
-                        <div style="margin-left: 10px;">
-                            <div style="font-size:17px;font-weight:bold;color:#25343F; ">
-                                %s
-                            </div>
-                            <div style="font-size:17px;color:#25343F;">
-                                %s
-                            </div>
-                            <div style="font-size:13px; line-height:1.8; color:#4B5563;">
-                                <div>%s</div>
-                                <div>%s</div>
-                            </div>
+            <div style="width:100%%; box-sizing:border-box; background:#F3F7F2; border-left:4px solid #5C8D5A; padding:16px 18px; margin:20px 0; border-radius:6px;">
+                <div style="font-size:12px;color:#6B7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">%s</div>
+                <div style="display:flex;width:100%%;box-sizing:border-box;">
+                    <img src="%s" style="width:100px;min-width:100px;height:auto;object-fit:cover;border-radius:5px;display:block;"/>
+        
+                    <div style="margin-left:10px;flex:1;min-width:0;">
+                        <div style="font-size:17px;font-weight:bold;color:#25343F;">%s</div>
+        
+                        <div style="font-size:17px;color:#25343F;">%s</div>
+                        <div style="font-size:13px;line-height:1.8;color:#4B5563;">
+                            <div>%s</div>
+                            <div>%s</div>
                         </div>
                     </div>
                 </div>
-                """.formatted(borrowString, bookCoverUrl, borrow.getBook().getTitle(), borrow.getBook().getAuthor(), borrowedAt, penaltyRate);
+            </div>
+            """.formatted(borrowString, bookCoverUrl, borrow.getBook().getTitle(), borrow.getBook().getAuthor(), borrowedAt, penaltyRate);
     }
 
     private String buildHtmlLateBorrowCard(Borrow borrow, Locale locale){
@@ -132,6 +130,7 @@ public class BorrowMailService {
         } else {
             penaltyRate_vi = messageSource.getMessage("error.Unknown", null, locale);
         }
+        String reminder = messageSource.getMessage("email.borrow.late.reminder", null, locale);
         return """
                 <div style="background:#FEF2F2; border-left:4px solid #DC2626; padding:16px 18px; margin:20px 0; border-radius:6px;">
                 <!-- Label -->
@@ -154,9 +153,9 @@ public class BorrowMailService {
                     </div>
                 </div>
                 <!-- Warning -->
-                <div style=" margin-top:18px; padding-top:14px; border-top:1px solid #FECACA; font-size:13px; color:#991B1B;">Vui lòng trả sách sớm nhất có thể để tránh phát sinh thêm tiền phạt.</div>
+                <div style=" margin-top:18px; padding-top:14px; border-top:1px solid #FECACA; font-size:13px; color:#991B1B;">%s</div>
             </div>
-                """.formatted(lateBorrow, bookCoverUrl, borrow.getBook().getTitle(), borrow.getBook().getAuthor(), borrowedAt_vi, late, penaltyFee_vi, penaltyRate_vi);
+                """.formatted(lateBorrow, bookCoverUrl, borrow.getBook().getTitle(), borrow.getBook().getAuthor(), borrowedAt_vi, late, penaltyFee_vi, penaltyRate_vi, reminder);
     }
 
     public void sendLateBorrowReminder(Borrow borrow) {
@@ -306,7 +305,7 @@ public class BorrowMailService {
                   <div style="font-size:13px;color:#6B7280;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Nhắc nhở mượn sách</div>
                   <h2 style="margin:0 0 20px;color:#25343F;font-size:22px;">%s</h2>
                   <p style="font-size:15px;line-height:1.7;margin:0 0 20px;"><strong>%s</strong> %s</p>
-                  <div>%s<div>
+                  <div>%s</div>
                   <p style="font-size:14px;line-height:1.7;color:#59636E;margin-top:20px; margin-bottom:20px;">%s</p>
               </div>
         """.formatted(greeting_vi, borrow.getBook().getTitle(), bodyLabel_vi, buildHtmlBorrowCard(borrow, vi), footer_vi);

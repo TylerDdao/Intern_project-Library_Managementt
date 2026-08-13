@@ -16,7 +16,7 @@
     <div class="books-area">
         @if (!isSearch) {
             <div>
-                <h1 class="title font-bold">{{'browseBooks.Top-borrowed-books'|translate}}</h1>
+                <h1 class="font-bold">{{'browseBooks.Top-borrowed-books'|translate}}</h1>
                 <div class="book-scrolling-area">
                     @if (isLoadMostBorrowedBooks) {
                         <app-loading-component></app-loading-component>
@@ -35,7 +35,7 @@
             </div>
 
             <div>
-                <h1 class="title font-bold">{{'browseBooks.People-are-writing-about-these-books'|translate}}</h1>
+                <h1 class="font-bold">{{'browseBooks.People-are-writing-about-these-books'|translate}}</h1>
                 <div class="book-scrolling-area">
                     @if (isLoadMostPostsBooks) {
                         <app-loading-component></app-loading-component>
@@ -54,7 +54,7 @@
             </div>
 
             <div>
-                <h1 class="title font-bold">{{'browseBooks.Newly-arrived'|translate}}</h1>
+                <h1 class="font-bold">{{'browseBooks.Newly-arrived'|translate}}</h1>
                 <div class="book-scrolling-area">
                     @if (isLoadNewlyArrivedBooks) {
                         <app-loading-component></app-loading-component>

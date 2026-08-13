@@ -220,7 +220,9 @@
       "Books-management": "Quản lý sách",
       "Users-management": "Quản lý người dùng",
       "Borrows-management": "Quản lý mượn trả",
-      "Posts-management": "Quản lý bài viết"
+      "Posts-management": "Quản lý bài viết",
+      "Logs-management": "Quản lý nhật ký",
+      "Announcements-management": "Quản lý logs"
     }
   },
   "login": {
@@ -302,7 +304,10 @@
     "Unauthorized-access": "Truy cập không được phép",
     "An-error-has-occurred,-please-login-again": "Đã xảy ra lỗi, vui lòng đăng nhập lại",
     "Please-enter-a-different-password": "Vui lòng nhập mật khẩu khác",
-    "An-error-has-occured": "Đã xảy ra lỗi"
+    "An-error-has-occured": "Đã xảy ra lỗi",
+    "Not-found": "TODO",
+    "Page-is-stil-being-constructed": "TODO",
+    "Unauthorized": "TODO"
   },
   "forgotPassword": {
     "Forgot-password": "Quên mật khẩu",
@@ -364,8 +369,12 @@
       "linkText": "Biểu mẫu góp ý"
     },
     "2": {
-      "subject": "Website đang phát triển — Trải nghiệm tốt nhất trên máy tính",
-      "content": "Website này vẫn đang trong quá trình phát triển. Giao diện trên thiết bị di động chưa được tối ưu hóa, do đó một số phần có thể hiển thị không chuẩn xác trên màn hình nhỏ. Để có trải nghiệm tốt nhất, vui lòng truy cập bằng trình duyệt trên máy tính bàn hoặc laptop. Cảm ơn bạn đã kiên nhẫn trong khi chúng tôi tiếp tục hoàn thiện nền tảng."
+      "subject": "Website đang phát triển — Một số trang hiện chưa khả dụng",
+      "content": "Website này vẫn đang trong quá trình phát triển nên một số trang hiện chưa thể truy cập được. Chúng tôi sẽ hoàn thiện trong thời gian sớm nhất!"
     }
+  },
+  "featuresManagement": {
+    "Unassign-all": "TODO",
+    "Assign-all": "TODO"
   }
 }

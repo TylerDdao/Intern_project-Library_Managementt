@@ -12,7 +12,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class App implements OnInit {
   protected readonly title = signal('library-management-fe');
 
-  whiteList: string[] = ['/login', '/signup', '/signup/success', '/reset-password', '/test'];
+  whiteList: string[] = ['/login', '/signup', '/signup/success', '/reset-password', '/test', '/unauthorized'];
+  onDev: string[] = ['/logs-management', '/announcements-management']
 
   constructor(
     private translate: TranslateService,
@@ -21,22 +22,25 @@ export class App implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      
-      const token = sessionStorage.getItem('token');
-      const currentPath = window.location.pathname;
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+    const token = sessionStorage.getItem('token');
+    const currentPath = window.location.pathname;
+    const isWhitelisted = this.whiteList.some(path =>
+      currentPath.startsWith(path)
+    );
 
-      if (token) {
-        if (currentPath === '/' || currentPath === '/login') {
-          this.router.navigate(['/home']);
-        }
-      } else {
-        const isWhitelisted = this.whiteList.some(path => currentPath.startsWith(path));
-        if (!isWhitelisted) {
-          console.log("WHITE LIST")
-          this.router.navigate(['/login']);
-        }
+    if (token) {
+      if (currentPath === '/' || currentPath === '/login') {
+        this.router.navigate(['/home']);
+        return;
       }
+      return;
+    }
+    if (!isWhitelisted) {
+      this.router.navigate(['/unauthorized']);
+      return;
     }
   }
 }

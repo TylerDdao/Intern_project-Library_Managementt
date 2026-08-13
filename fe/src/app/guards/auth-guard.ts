@@ -6,12 +6,30 @@ import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { getUser } from '../util/session-storage';
+import { UserService } from '../services/user-service/user-service';
 
 const baseUrl = environment.apiUrl;
+
+export function onDev(): CanActivateFn {
+  return () => {
+    const router = inject(Router);
+    const platformId = inject(PLATFORM_ID);
+
+    if (!isPlatformBrowser(platformId)) {
+      return true;
+    }
+    const user = getUser();
+    if(user?.role?.name == "ROLE_ROOT"){
+        return true;
+    }
+    return router.createUrlTree(['/on-dev']);
+  };
+}
 
 export function authGuard(acceptedFeatures: string[] = []): CanActivateFn {
   return () => {
     const router = inject(Router);
+    const userService = inject(UserService);
     const http = inject(HttpClient);
     const platformId = inject(PLATFORM_ID);
 
@@ -28,6 +46,8 @@ export function authGuard(acceptedFeatures: string[] = []): CanActivateFn {
       return false;
     }
 
+    userService.setCurrentUser(user);
+
     return http.get(`${baseUrl}/auth/check`, {
       headers: { Authorization: `Bearer ${token}` }
     }).pipe(
@@ -42,7 +62,7 @@ export function authGuard(acceptedFeatures: string[] = []): CanActivateFn {
             }
             else{
                 sessionStorage.clear();
-                router.navigate(['/login']);
+                router.navigate(['/unauthorized']);
             }    
         }
 
@@ -59,10 +79,11 @@ export function authGuard(acceptedFeatures: string[] = []): CanActivateFn {
       catchError((err) => {
         if (err.status === 401) {
           sessionStorage.clear();
-          router.navigate(['/login']);
+          router.navigate(['/unauthorized']);
         }
         return of(false);
       })
     );
   };
 }
+

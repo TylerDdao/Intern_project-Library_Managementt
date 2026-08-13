@@ -8,6 +8,7 @@ import { User } from '../../models/user';
 import { UserService } from '../../services/user-service/user-service';
 import { errorNoti } from '../../util/error-notification';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LanguageSelector } from "../language-selector/language-selector";
 
 interface Page{
   name: string,
@@ -18,7 +19,7 @@ interface Page{
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [TranslateModule, RouterLink, RouterLinkActive],
+  imports: [TranslateModule, RouterLink, RouterLinkActive, LanguageSelector],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
