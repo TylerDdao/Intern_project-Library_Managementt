@@ -3,14 +3,11 @@ import { NavbarComponent } from '../../components/navbar/navbar';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AnnouncementService } from '../../services/announcement-service/announcement-service';
-import { webAnnouncements } from '../../../assets/constants';
-import { Announcement } from '../../models/announcement';
-import { AnnouncementComponent } from "../../components/announcement-component/announcement-component";
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-signup-success',
-  imports: [NavbarComponent, TranslateModule, AnnouncementComponent],
+  imports: [NavbarComponent, TranslateModule],
   templateUrl: './signup-success.html',
   styleUrl: './signup-success.css',
 })
@@ -25,14 +22,8 @@ export class SignupSuccess {
     this.router.navigate(['/login'])
   }
 
-  announcements: Announcement[] = []
-  handleCloseAnnouncement(id: number) {
-    this.announcementService.closeAnnouncement(id);
-  }
-
   ngOnInit(){
     if(isPlatformBrowser(this.platformId)){
-      this.announcements = this.announcementService.getAnnouncements()
     }
   }
 }

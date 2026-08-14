@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Data
 @EqualsAndHashCode(callSuper = true)
 public class Announcement extends BaseEntity{
     @Id
@@ -49,9 +50,6 @@ public class Announcement extends BaseEntity{
 
     @Column(columnDefinition = "TEXT")
     private String linkTextFr;
-
-    @Column(nullable = false)
-    private boolean isActive;
 
     @ElementCollection
     @CollectionTable(

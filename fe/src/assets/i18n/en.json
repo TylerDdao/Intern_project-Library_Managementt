@@ -230,7 +230,8 @@
     "Login": "Login",
     "Dont-have-an-account-yet": "Don't have an account yet",
     "Forgot-password": "Forgot password",
-    "Username-or-password-is-wrong": "Username or password is wrong"
+    "Username-or-password-is-wrong": "Username or password is wrong",
+    "Logout": "Logout"
   },
   "signup": {
     "Sign/-up": "Sign-up",
@@ -389,6 +390,10 @@
     "Post-announcement": "Post announcement",
     "Announcement-locations": "Announcement locations",
     "Preview": "Preview",
-    "Leave-blank-if-you-want-announcement-to-be-shown-across-the-web": "Leave blank if you want announcement to be shown across the web"
+    "Leave-blank-if-you-want-announcement-to-be-shown-across-the-web": "Leave blank if you want announcement to be shown across the web",
+    "Announcement-is-deleted": "Announcement is deleted",
+    "Announcement-is-posted": "Announcement is posted",
+    "Announcements-is-updated": "Announcement is updated",
+    "Website-announcements": "Website announcements"
   }
 }

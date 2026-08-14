@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 @if (announcements) {
     @for (announcement of announcements; track announcement.id) {
-        @if (announcement.isActive) {
+        @if (announcement.active) {
             <app-announcement-component
                 [location]="'/books'"
                 (onClose)="handleCloseAnnouncement(announcement.id)"

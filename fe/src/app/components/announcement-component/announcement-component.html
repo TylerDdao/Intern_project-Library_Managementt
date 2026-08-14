@@ -1,18 +1,18 @@
 @if (announcement) {
     <div
         class="p-[10px] flex items-center justify-between space-x-[10px] transition-all ease-in-out"
-        [class.opacity-50]="!announcement.isActive"
-        [class.bg-pastel-blue]="announcement.type === 'info'"
-        [class.text-primary-1]="announcement.type === 'info'"
-        [class.bg-pastel-yellow]="announcement.type === 'warning'"
-        [class.text-dark-amber]="announcement.type === 'warning'"
-        [class.bg-pastel-red]="announcement.type !== 'info' && announcement.type !== 'warning'"
-        [class.text-tomato-red]="announcement.type !== 'info' && announcement.type !== 'warning'"
+        [class.opacity-50]="!announcement.active"
+        [class.bg-pastel-blue]="announcement.type.toLowerCase() === 'info'"
+        [class.text-primary-1]="announcement.type.toLowerCase() === 'info'"
+        [class.bg-pastel-yellow]="announcement.type.toLowerCase() === 'warning'"
+        [class.text-dark-amber]="announcement.type.toLowerCase() === 'warning'"
+        [class.bg-pastel-red]="announcement.type.toLowerCase() === 'error'"
+        [class.text-tomato-red]="announcement.type.toLowerCase() === 'error'"
         [class.hidden]="!isVisible"
     >
         <div class="flex items-center space-x-[5px]">
             @if (showActiveIndicator) {
-                @if (announcement.isActive) {
+                @if (announcement.active) {
                     <div class="mx-[10px]">
                         <span class="relative flex size-3">
                             <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-leaf-green opacity-75"></span>

@@ -49,6 +49,8 @@ export class MyPosts {
     announcements: Announcement[] = []
     handleCloseAnnouncement(id: number) {
       this.announcementService.closeAnnouncement(id);
+      this.announcements = this.announcementService.getAnnouncements();
+      this.cdr.markForCheck();
     }
 
   handleNavigateCreatePost(){

@@ -16,12 +16,12 @@
         <div class="setting-container">
             <!-- <span class="material-symbols-outlined icon-size">notifications</span> -->
             <app-language-selector></app-language-selector>
-            <div>
-                <div class="flex items-center space-x-[5px] select-none cursor-pointer" routerLink='/settings'>
+            <div class="">
+                <div class="group flex items-center space-x-[10px] select-none cursor-pointer bg-white text-primary-1 px-[10px] py-[5px] rounded-[10px] hover:bg-primary-1 hover:text-soft-ice transition ease-in-out" routerLink='/settings'>
                     <span class="material-symbols-outlined icon-size ">account_circle</span>
                     <div>
                         <h1 class="text-nowrap">{{user?.fullName}}</h1>
-                        <div class="bg-cool-gray w-fit px-[10px] py-[3px] rounded-3xl">{{user?.role?.name?.replace("ROLE_","")}}</div>
+                        <div class="bg-primary-1 text-soft-ice w-fit px-[10px] py-[3px] rounded-full caption-1 group-hover:bg-cool-gray group-hover:text-primary-1 transition ease-in-out">{{user?.role?.name?.replace("ROLE_","")}}</div>
                     </div>
                 </div>
                 
@@ -30,7 +30,7 @@
 
             <div class="border border-white mx-[10px] h-[50px]"></div> 
 
-            <button class="border border-soft-ice p-[10px] rounded-[10px] caption-1 font-bold" (click)="handleLogout()">Logout</button>
+            <button class="border border-soft-ice p-[10px] rounded-[10px] caption-1 font-bold" (click)="handleLogout()">{{"login.Logout"|translate}}</button>
         </div>
 
         <div class="mobile-setting-icon lg:hidden select-none ">
@@ -66,7 +66,7 @@
                     <div class="bg-cool-gray w-fit px-[10px] py-[3px] caption-2 rounded-3xl">{{user?.role?.name?.replace("ROLE_","")}}</div>
                 </div>
             </div>
-            <button class="border border-soft-ice p-[10px] rounded-[10px] caption-1 font-bold" (click)="handleLogout()">Logout</button>
+            <button class="border border-soft-ice p-[10px] rounded-[10px] caption-1 font-bold" (click)="handleLogout()">"login.Logout"|translate</button>
         </div>
     </div>
 </nav>

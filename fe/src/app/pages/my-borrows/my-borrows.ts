@@ -54,6 +54,8 @@ export class MyBorrows {
   announcements: Announcement[] = []
   handleCloseAnnouncement(id: number) {
     this.announcementService.closeAnnouncement(id);
+    this.announcements = this.announcementService.getAnnouncements();
+    this.cdr.markForCheck();
   }
 
   fetchBorrowsByUserId(page: Page = this.borrowingPages):void{

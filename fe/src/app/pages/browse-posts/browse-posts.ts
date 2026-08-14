@@ -49,6 +49,8 @@ export class BrowsePosts {
   announcements: Announcement[] = []
   handleCloseAnnouncement(id: number) {
     this.announcementService.closeAnnouncement(id);
+    this.announcements = this.announcementService.getAnnouncements();
+    this.cdr.markForCheck();
   }
 
   handleNavigateCreatePost(){
@@ -158,6 +160,7 @@ export class BrowsePosts {
     if(isPlatformBrowser(this.platformId)){
       this.announcements = this.announcementService.getAnnouncements()
       this.fetchAllPosts();
+      this.cdr.markForCheck()
     }
   }
 

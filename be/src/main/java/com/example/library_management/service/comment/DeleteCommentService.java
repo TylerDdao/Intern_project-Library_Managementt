@@ -15,9 +15,10 @@ public class DeleteCommentService {
     @Autowired
     MessageSource messageSource;
 
-    public boolean deleteComment(Long id){
+    public String deleteComment(Long id){
         Comment comment = commentRepository.findById(id).orElseThrow(()-> new RuntimeException((messageSource.getMessage("error.comment.not.found", null, LocaleContextHolder.getLocale()))));
         commentRepository.delete(comment);
-        return true;
+        String message = messageSource.getMessage("comment.delete", null, LocaleContextHolder.getLocale());
+        return message + " created by " + comment.getCreatedBy() + " at " + comment.getCreatedAt();
     }
 }

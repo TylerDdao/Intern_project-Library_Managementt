@@ -14,6 +14,7 @@ export class AnnouncementComponent {
   @Input({ required: false }) announcement: Announcement | null = null
   @Input({ required: false}) showActiveIndicator: boolean = false
   @Input({ required: false }) location: string | null = null
+  @Input({ required: false }) preview: boolean = false;
   @Output() onClose = new EventEmitter<void>();
 
   constructor(
@@ -22,6 +23,9 @@ export class AnnouncementComponent {
   ){}
 
   get isVisible(): boolean {
+    if(this.preview){
+      return true
+    }
     if (!this.announcement) {
       return false;
     }
@@ -32,6 +36,7 @@ export class AnnouncementComponent {
     }
 
     // Has specific locations = must match current location
+    console.log(!!this.location && this.announcement.locations.includes(this.location))
     return !!this.location && this.announcement.locations.includes(this.location);
   }
 
@@ -47,20 +52,20 @@ export class AnnouncementComponent {
     switch (lang) {
       case 'vi':
         return !!(
-          this.announcement.subject_vi &&
-          this.announcement.content_vi
+          this.announcement.subjectVi &&
+          this.announcement.contentVi
         );
 
       case 'en':
         return !!(
-          this.announcement.subject_en &&
-          this.announcement.content_en
+          this.announcement.subjectEn &&
+          this.announcement.contentEn
         );
 
       case 'fr':
         return !!(
-          this.announcement.subject_fr &&
-          this.announcement.content_fr
+          this.announcement.subjectFr &&
+          this.announcement.contentFr
         );
 
       default:
@@ -74,14 +79,14 @@ export class AnnouncementComponent {
     }
 
     if (this.langService.currentLang === 'en') {
-      return this.announcement.subject_en || this.announcement.subject_vi;
+      return this.announcement.subjectEn || this.announcement.subjectVi;
     }
 
     if (this.langService.currentLang === 'fr') {
-      return this.announcement.subject_fr || this.announcement.subject_vi;
+      return this.announcement.subjectFr || this.announcement.subjectVi;
     }
 
-    return this.announcement.subject_vi;
+    return this.announcement.subjectVi;
   }
 
   getAnnouncementContent(): string {
@@ -90,14 +95,14 @@ export class AnnouncementComponent {
     }
 
     if (this.langService.currentLang === 'en') {
-      return this.announcement.content_en || this.announcement.content_vi;
+      return this.announcement.contentEn || this.announcement.contentVi;
     }
 
     if (this.langService.currentLang === 'fr') {
-      return this.announcement.content_fr || this.announcement.content_vi;
+      return this.announcement.contentFr || this.announcement.contentVi;
     }
 
-    return this.announcement.content_vi;
+    return this.announcement.contentVi;
   }
 
   getAnnouncementLinkText(): string {
@@ -107,8 +112,8 @@ export class AnnouncementComponent {
 
     if (this.langService.currentLang === 'en') {
       return (
-        this.announcement.linkText_en ??
-        this.announcement.linkText_vi ??
+        this.announcement.linkTextEn ??
+        this.announcement.linkTextVi ??
         this.announcement.link ??
         ''
       );
@@ -116,15 +121,15 @@ export class AnnouncementComponent {
 
     if (this.langService.currentLang === 'fr') {
       return (
-        this.announcement.linkText_fr ??
-        this.announcement.linkText_vi ??
+        this.announcement.linkTextFr ??
+        this.announcement.linkTextVi ??
         this.announcement.link ??
         ''
       );
     }
 
     return (
-      this.announcement.linkText_vi ??
+      this.announcement.linkTextVi ??
       this.announcement.link ??
       ''
     );

@@ -1,15 +1,4 @@
 <app-navbar></app-navbar>
-@if (announcements) {
-    @for (announcement of announcements; track announcement.id) {
-        @if (announcement.isActive) {
-            <app-announcement-component
-                [location]="'/signup/success'"
-                (onClose)="handleCloseAnnouncement(announcement.id)"
-                [announcement]="announcement">
-            </app-announcement-component>
-        }
-    }
-}
 <div class="body-container">
     <div class="sign-container">
         <div class="headline text-nowrap">{{"signup.Sign/-up-completed"|translate}}</div>

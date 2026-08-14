@@ -29,7 +29,7 @@ public class AnnouncementRequest {
     private String linkTextVi;
     private String linkTextEn = null;
     private String linkTextFr = null;
-    private boolean isActive = true;
+    private Boolean isActive = true;
 
     private List<String> locations = null;
 }

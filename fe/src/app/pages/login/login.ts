@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, PLATFORM_ID } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NavbarComponent } from '../../components/navbar/navbar';
 import { AuthService } from '../../services/auth-service';
@@ -6,10 +6,15 @@ import { Router, RouterLink } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { LanguageService } from '../../services/language-service/language-service';
 import { UserService } from '../../services/user-service/user-service';
+import { AnnouncementComponent } from "../../components/announcement-component/announcement-component";
+import { Announcement } from '../../models/announcement';
+import { AnnouncementService } from '../../services/announcement-service/announcement-service';
+import { isPlatformBrowser } from '@angular/common';
+import { removeAuthInfo } from '../../util/session-storage';
 
 @Component({
   selector: 'app-login',
-  imports: [TranslateModule, NavbarComponent, ReactiveFormsModule, RouterLink],
+  imports: [TranslateModule, NavbarComponent, ReactiveFormsModule, RouterLink, AnnouncementComponent],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -21,12 +26,18 @@ export class Login {
     private authService: AuthService,
     protected router: Router,
     private cdr: ChangeDetectorRef,
-    private userService: UserService
-  ) 
-  {}
+    private userService: UserService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private announcementService: AnnouncementService
+  ){}
+
+  announcements: Announcement[] = []
+  handleCloseAnnouncement(id: number) {
+    this.announcementService.closeAnnouncement(id);
+  }
 
   login(username: string, password: string){
-    sessionStorage.clear()
+    removeAuthInfo()
     this.authService.login(username, password).subscribe({
       next: (data: any) => {
         console.log(data)
@@ -56,5 +67,11 @@ export class Login {
     const { username, password } = this.loginForm.value;
     
     this.login(username ?? '', password ?? '')
+  }
+
+  ngOnInit(){
+    if(isPlatformBrowser(this.platformId)){
+      this.announcements = this.announcementService.getAnnouncements();
+    }
   }
 }

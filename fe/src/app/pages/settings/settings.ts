@@ -10,10 +10,13 @@ import { User } from '../../models/user';
 import { getUser } from '../../util/session-storage';
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
+import { AnnouncementService } from '../../services/announcement-service/announcement-service';
+import { Announcement } from '../../models/announcement';
+import { AnnouncementComponent } from "../../components/announcement-component/announcement-component";
 
 @Component({
   selector: 'app-settings',
-  imports: [TranslateModule, NavbarComponent, ReactiveFormsModule],
+  imports: [TranslateModule, NavbarComponent, ReactiveFormsModule, AnnouncementComponent],
   templateUrl: './settings.html',
   styleUrl: './settings.css',
 })
@@ -35,7 +38,16 @@ export class Settings{
     private translate: TranslateService,
     private authService: AuthService,
     private cdr: ChangeDetectorRef,
-    private router:Router) {}
+    private router:Router,
+    private announcementService: AnnouncementService
+  ){}
+
+    announcements:Announcement[] =[]
+    handleCloseAnnouncement(id: number) {
+      this.announcementService.closeAnnouncement(id);
+      this.announcements = this.announcementService.getAnnouncements();
+      this.cdr.markForCheck();
+    }
 
   newUserForm = new FormGroup({
     username: new FormControl('', Validators.required),
@@ -217,6 +229,7 @@ export class Settings{
 
   ngOnInit(){
     if (isPlatformBrowser(this.platformId)) {
+      this.announcements = this.announcementService.getAnnouncements()
       const sessionUser = getUser();
       if(sessionUser){
         this.user = sessionUser;

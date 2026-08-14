@@ -41,6 +41,7 @@ public class SecurityConfig {
     private String frontendUrl;
 
     private static final String[] WHITE_LIST = {
+            "/announcements",
             "/auth/login",
             "/auth/register",
             "/mail",

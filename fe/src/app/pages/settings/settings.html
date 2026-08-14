@@ -1,4 +1,15 @@
 <app-navbar></app-navbar>
+@if (announcements) {
+    @for (announcement of announcements; track announcement.id) {
+        @if (announcement.active) {
+            <app-announcement-component
+                [location]="'/settings'"
+                (onClose)="handleCloseAnnouncement(announcement.id)"
+                [announcement]="announcement">
+            </app-announcement-component>
+        }
+    }
+}
 <div class="body-container">
     @if (user) {
         <div class="container">

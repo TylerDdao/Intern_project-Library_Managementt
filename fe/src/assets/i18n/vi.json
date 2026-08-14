@@ -222,7 +222,7 @@
       "Users-management": "Quản lý người dùng",
       "Borrows-management": "Quản lý mượn trả",
       "Posts-management": "Quản lý bài viết",
-      "Logs-management": "Quản lý log",
+      "Logs-management": "Quản lý nhật ký",
       "Announcements-management": "Quản lý thông báo"
     }
   },
@@ -230,7 +230,8 @@
     "Login": "Đăng nhập",
     "Dont-have-an-account-yet": "Chưa có tài khoản?",
     "Forgot-password": "Quên mật khẩu?",
-    "Username-or-password-is-wrong": "Tên đăng nhập hoặc mật khẩu không đúng"
+    "Username-or-password-is-wrong": "Tên đăng nhập hoặc mật khẩu không đúng",
+    "Logout": "Đăng xuất"
   },
   "signup": {
     "Sign/-up": "Đăng ký",
@@ -364,7 +365,7 @@
     "empty": "Trống"
   },
   "announcement": {
-    "This-language-is-not-available-for-this-announcement/,-showing-announcement-in-Vietnamese": "Ngôn ngữ này hiện không khả dụng cho thông báo này, hiển thị thông báo bằng tiếng Việt",
+    "This-language-is-not-available-for-this-announcement/,-showing-announcement-in-Vietnamese": "Ngôn ngữ này chưa có sẵn cho thông báo, hiện đang hiển thị bằng tiếng Việt",
     "Active": "Hoạt động",
     "Inactive": "Không hoạt động",
     "Announcement-type": "Loại thông báo",
@@ -376,19 +377,23 @@
     "Assign-all": "Gán tất cả"
   },
   "logsManagement": {
-    "Logs-management": "Quản lý log",
+    "Logs-management": "Quản lý nhật ký",
     "Start-date": "Ngày bắt đầu",
     "Invalid-date": "Ngày không hợp lệ",
     "End-date": "Ngày kết thúc"
   },
   "announcementsManagement": {
     "Announcements management": "Quản lý thông báo",
-    "You-must-have-announcement-subject-in-Vietnamese": "Bạn phải nhập tiêu đề thông báo bằng tiếng Việt",
-    "You-must-have-announcement-content-in-Vietnamese": "Bạn phải nhập nội dung thông báo bằng tiếng Việt",
+    "You-must-have-announcement-subject-in-Vietnamese": "Vui lòng nhập tiêu đề thông báo bằng tiếng Việt",
+    "You-must-have-announcement-content-in-Vietnamese": "Vui lòng nhập nội dung thông báo bằng tiếng Việt",
     "Preview-announcement": "Xem trước thông báo",
     "Post-announcement": "Đăng thông báo",
     "Announcement-locations": "Vị trí hiển thị thông báo",
     "Preview": "Xem trước",
-    "Leave-blank-if-you-want-announcement-to-be-shown-across-the-web": "Để trống nếu bạn muốn thông báo hiển thị trên toàn bộ trang web"
+    "Leave-blank-if-you-want-announcement-to-be-shown-across-the-web": "Để trống nếu bạn muốn hiển thị thông báo trên toàn bộ website",
+    "Announcement-is-deleted": "Thông báo đã được xóa",
+    "Announcement-is-posted": "Thông báo đã được đăng",
+    "Announcements-is-updated": "Thông báo đã được cập nhật",
+    "Website-announcements": "Thông báo website"
   }
 }

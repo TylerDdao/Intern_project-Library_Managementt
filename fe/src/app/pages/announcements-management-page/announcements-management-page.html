@@ -2,7 +2,7 @@
 <div class="announcements">
     @if (announcements) {
         @for (announcement of announcements; track announcement.id) {
-            @if (announcement.isActive) {
+            @if (announcement.active) {
                 <app-announcement-component
                     [location]="'/books-management'"
                     (onClose)="handleCloseAnnouncement(announcement.id)"
@@ -21,7 +21,7 @@
             <form [formGroup]="announcementForm" id="announcementForm" class="new-announcement-container" (ngSubmit)="onSubmit()">
                 <!-- ANNOUNCEMENT TYPE -->
                 <div>
-                    <div class="font-bold">{{'announcements.Announcement-type'|translate}}</div>
+                    <div class="font-bold">{{'announcement.Announcement-type'|translate}}</div>
                     <div class="border border-primary-1 rounded-[10px] px-[5px] select-none">
                         <div class="relative grid grid-cols-3 justify-between items-center py-[5px] w-full caption-1">
                             <div
@@ -133,7 +133,7 @@
             </form>
             <div class="flex flex-col space-y-[10px]">
                 <button type="button" class="px-[10px] py-[5px] rounded-[10px] border border-leaf-green text-leaf-green caption-1 hover:bg-leaf-green hover:text-soft-ice transition ease-in-out" (click)="handlePreview()">{{"announcementsManagement.Preview-announcement"|translate}}</button>
-                <button form="announcementForm" class="px-[10px] py-[5px] rounded-[10px] bg-primary-1 text-soft-ice caption-1 font-bold">{{"announcementsManagement.Post-announcement"|translate}}</button>
+                <button type="submit" form="announcementForm" class="px-[10px] py-[5px] rounded-[10px] bg-primary-1 text-soft-ice caption-1 font-bold">{{"announcementsManagement.Post-announcement"|translate}}</button>
             </div>
         </div>
 
@@ -152,10 +152,10 @@
         <div class="right-side">
             <div>
                 <div class="font-bold">{{'announcementsManagement.Preview'|translate}}</div>
-                <app-announcement-component [announcement]="previewAnnouncement" (onClose)="handleResetPreview()"></app-announcement-component>
+                <app-announcement-component [preview]="true" [announcement]="previewAnnouncement" (onClose)="handleResetPreview()"></app-announcement-component>
             </div>
             <div class="website-announcements">
-                <div class="font-bold">{{"AnnouncementsManagement.Website-announcements"}}</div>
+                <div class="font-bold">{{"announcementsManagement.Website-announcements"|translate}}</div>
                 <div class="flex flex-col space-y-[5px]">
                     <div>{{"announcement.Active-status"|translate}}</div>
                     <div class="flex space-x-[10px] items-center">
@@ -180,24 +180,24 @@
                 <div class="w-full h-[5px] bg-primary-1 rounded-full"></div>
                 <div class="announcement-list">
                     @for (announcement of announcementsList; track announcement.id) {
-                        <div>
+                        <div class="w-full">
                             <div class="border border-primary-1 rounded-[10px] px-[5px] select-none">
                                 <div class="relative grid grid-cols-2 justify-between items-center py-[5px] w-full caption-1">
                                     <div
                                         class="absolute top-1 bottom-1 left-1 w-[calc((100%_-_8px)/2)] rounded-md bg-primary-1 transition-transform duration-300 ease-in-out"
-                                        [class.translate-x-0]="announcement.isActive === true"
-                                        [class.bg-primary-1]="announcement.isActive === true"
-                                        [class.translate-x-[100%]]="announcement.isActive === false"
-                                        [class.bg-pastel-red]="announcement.isActive === false"
+                                        [class.translate-x-0]="announcement.active === true"
+                                        [class.bg-primary-1]="announcement.active === true"
+                                        [class.translate-x-[100%]]="announcement.active === false"
+                                        [class.bg-pastel-red]="announcement.active === false"
                                     ></div>
 
-                                    <button type="button" (click)="announcement.isActive = true" class="select-none w-full relative z-10 px-[10px] py-[5px] text-center transition-colors duration-300" [class.text-soft-ice]="announcement.isActive === true" [class.text-primary-1]="announcement.isActive !== true">
+                                    <button type="button" (click)="announcement.active = true" class="select-none w-full relative z-10 px-[10px] py-[5px] text-center transition-colors duration-300" [class.text-soft-ice]="announcement.active === true" [class.text-primary-1]="announcement.active !== true">
                                         <div class="flex items-center space-x-[5px] justify-center">
                                             <div>Active</div>
                                         </div>
                                     </button>
 
-                                    <button type="button" (click)="announcement.isActive = false" class="w-full select-none justify-self-center relative z-10 px-[10px] py-[5px] text-center transition-colors duration-300" [class.text-tomato-red]="announcement.isActive === false" [class.text-primary-1]="announcement.isActive !== false">
+                                    <button type="button" (click)="announcement.active = false" class="w-full select-none justify-self-center relative z-10 px-[10px] py-[5px] text-center transition-colors duration-300" [class.text-tomato-red]="announcement.active === false" [class.text-primary-1]="announcement.active !== false">
                                         <div class="flex items-center space-x-[5px] justify-center">
                                             <div>Inactive</div>
                                         </div>
@@ -205,16 +205,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex space-x-[10px] items-center">
-                            <app-announcement-component [showActiveIndicator]="true" [announcement]="announcement"></app-announcement-component>
-                            <button class="flex items-center select-none text-tomato-red"><span class="material-symbols-outlined">delete</span></button>
+                        <div class="flex space-x-[10px] items-center w-full">
+                            <app-announcement-component [preview]="true" [showActiveIndicator]="true" [announcement]="announcement" class="w-full"></app-announcement-component>
+                            <button type="button" class="flex items-center select-none text-tomato-red" (click)="handleDeleteAnnouncement(announcement)"><span class="material-symbols-outlined">delete</span></button>
                         </div>
                     }
                 </div>
             </div>
             <div class="flex flex-col space-y-[10px]">
-                <button type="button" class="px-[10px] py-[5px] rounded-[10px] border border-tomato-red text-tomato-red caption-1 hover:bg-tomato-red hover:text-soft-ice transition ease-in-out">{{"form.Reset"|translate}}</button>
-                <button type="button" class="px-[10px] py-[5px] rounded-[10px] bg-primary-1 text-soft-ice caption-1 font-bold">{{"form.Save-change"|translate}}</button>
+                <button type="button" class="px-[10px] py-[5px] rounded-[10px] border border-tomato-red text-tomato-red caption-1 hover:bg-tomato-red hover:text-soft-ice transition ease-in-out" (click)="handleResetAnnouncementList()">{{"form.Reset"|translate}}</button>
+                <button type="button" class="px-[10px] py-[5px] rounded-[10px] bg-primary-1 text-soft-ice caption-1 font-bold" (click)="handleUpdateAnnouncement(announcementsList)">{{"form.Save-change"|translate}}</button>
             </div>
         </div>
     </div>

@@ -67,6 +67,8 @@ export class Home {
 
   handleCloseAnnouncement(id: number) {
     this.announcementService.closeAnnouncement(id);
+    this.announcements = this.announcementService.getAnnouncements();
+    this.cdr.markForCheck();
   }
 
   private startLoading() {
@@ -175,39 +177,13 @@ export class Home {
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
       this.announcements = this.announcementService.getAnnouncements();
-      // this.announcements = [
-      //   {
-      //     id: 1,
-      //     type: 'info',
-      //     subject_vi: "Ý kiến của bạn rất quan trọng!",
-      //     content_vi: "Chúng tôi rất mong nhận được phản hồi từ bạn. Vui lòng gửi ý kiến cho chúng tôi qua liên kết bên dưới!",
-
-      //     subject_en: 'Your feedback matters!',
-      //     content_en: 'We are excited to hear your feedback. Please send it to us via the link below!',
-
-      //     link: 'https://forms.gle/8agsuPwmFonKSzPb6',
-      //     linkText_vi: 'Biểu mẫu góp ý',
-      //     linkText_en: 'Feedback Form',
-      //     isActive: true,
-      //     locations: ['']
-      //   },
-      //   {
-      //     id: 2,
-      //     type: 'warning',
-      //     subject_vi: 'Website đang phát triển — Một số trang hiện chưa khả dụng',
-      //     content_vi: 'Website này vẫn đang trong quá trình phát triển nên một số trang chưa thể truy cập vào lúc này. Chúng tôi sẽ hoàn thiện sớm nhất có thể!',
-
-      //     subject_en: 'Site Under Development — Some pages are not available',
-      //     content_en: 'This website is still under active development so some pages are not available to access at the moment. We will finish them as soon as possible!',
-      //     isActive: true,
-      //     locations: ['']
-      //   },
-      // ];
 
       this.fetchMostLikesPosts()
       this.fetchBorrowsByUserId()
       this.fetchBooksCountByGenre()
       this.fetchBorrowsCountByGenre();
+
+      this.cdr.markForCheck();
     }
   }
 

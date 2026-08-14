@@ -9,6 +9,7 @@ import { UserService } from '../../services/user-service/user-service';
 import { errorNoti } from '../../util/error-notification';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LanguageSelector } from "../language-selector/language-selector";
+import { AnnouncementService } from '../../services/announcement-service/announcement-service';
 
 interface Page{
   name: string,
@@ -49,7 +50,8 @@ export class NavbarComponent {
     private authService: AuthService, 
     private router:Router,
     private userService:UserService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private announcementService: AnnouncementService
   ) {}
 
   get validateUser(): boolean {
@@ -67,6 +69,7 @@ export class NavbarComponent {
         next: (data:any) => {
           if(data.code == "200"){
             this.userService.clearUser()
+              // this.announcementService.clearAnnouncements();
             this.router.navigate(['/login'])
           }
         },

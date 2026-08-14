@@ -10,10 +10,13 @@ import { errorNoti } from '../../util/error-notification';
 import { UserService } from '../../services/user-service/user-service';
 import { LoadingComponent } from "../../components/loading-component/loading-component";
 import { Router } from '@angular/router';
+import { Announcement } from '../../models/announcement';
+import { AnnouncementService } from '../../services/announcement-service/announcement-service';
+import { AnnouncementComponent } from "../../components/announcement-component/announcement-component";
 
 @Component({
   selector: 'app-change-password',
-  imports: [NavbarComponent, TranslateModule, ReactiveFormsModule, LoadingComponent],
+  imports: [NavbarComponent, TranslateModule, ReactiveFormsModule, LoadingComponent, AnnouncementComponent],
   templateUrl: './change-password.html',
   styleUrl: './change-password.css',
 })
@@ -31,8 +34,16 @@ export class ChangePassword {
     private userService: UserService,
     private translate: TranslateService,
     private cdr: ChangeDetectorRef,
-    private router: Router
-  ){}
+    private router: Router,
+    private announcementService: AnnouncementService
+    ) 
+  {}
+  announcements: Announcement[] = []
+  handleCloseAnnouncement(id: number) {
+    this.announcementService.closeAnnouncement(id);
+    this.announcements = this.announcementService.getAnnouncements();
+    this.cdr.markForCheck();
+  }
 
   passwordForm = new FormGroup({
     oldPassword: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/)]),
@@ -42,6 +53,7 @@ export class ChangePassword {
 
   ngOnInit(){
     if(isPlatformBrowser(this.platformId)){
+      this.announcements = this.announcementService.getAnnouncements()
       this.passwordForm.get("oldPassword")?.valueChanges.subscribe(()=>{
         this.isOldPasswordCorrect = true;
       })

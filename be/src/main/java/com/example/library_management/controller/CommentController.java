@@ -45,7 +45,7 @@ public class CommentController {
 
     @PreAuthorize("@securityService.hasAccess('DELETE_COMMENT')")
     @DeleteMapping()
-    public ResponseEntity<ApiResponse<Boolean>> deleteComment(
+    public ResponseEntity<ApiResponse<String>> deleteComment(
             @RequestParam() Long id
     ){
         return ResponseEntity.ok(ApiResponse.success(deleteCommentService.deleteComment(id)));

@@ -1,4 +1,15 @@
 <app-navbar></app-navbar>
+@if (announcements) {
+    @for (announcement of announcements; track announcement.id) {
+        @if (announcement.active) {
+            <app-announcement-component
+                [location]="'/login'"
+                (onClose)="handleCloseAnnouncement(announcement.id)"
+                [announcement]="announcement">
+            </app-announcement-component>
+        }
+    }
+}
 <div class="login-container">
     <div class="login-area">
         <div class="flex flex-col justify-center items-center space-y-[20px] w-full">

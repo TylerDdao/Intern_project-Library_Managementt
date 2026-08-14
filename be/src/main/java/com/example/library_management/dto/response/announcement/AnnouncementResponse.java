@@ -1,5 +1,6 @@
 package com.example.library_management.dto.response.announcement;
 
+import com.example.library_management.model.Announcement;
 import com.example.library_management.model.AnnouncementType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
@@ -34,4 +35,25 @@ public class AnnouncementResponse {
     private boolean isActive = true;
 
     private List<String> locations = null;
+
+    public AnnouncementResponse(Announcement announcement){
+        this.id = announcement.getId();
+        this.type = announcement.getType();
+        this.subjectVi = announcement.getSubjectVi();
+        this.subjectEn = announcement.getSubjectEn();
+        this.subjectFr = announcement.getSubjectFr();
+
+        this.contentVi = announcement.getContentVi();
+        this.contentEn = announcement.getContentEn();
+        this.contentFr = announcement.getContentFr();
+
+        this.link = announcement.getLink();
+
+        this.linkTextVi = announcement.getLinkTextVi();
+        this.linkTextEn = announcement.getLinkTextEn();
+        this.linkTextFr = announcement.getLinkTextFr();
+
+        this.isActive = announcement.getIsActive();
+        this.locations = announcement.getLocations();
+    }
 }
