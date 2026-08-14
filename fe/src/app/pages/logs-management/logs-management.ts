@@ -1,4 +1,4 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, PLATFORM_ID } from '@angular/core';
 import { NavbarComponent } from "../../components/navbar/navbar";
 import { TranslateModule } from '@ngx-translate/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -18,11 +18,14 @@ export class LogsManagement {
   constructor(
     private exportService: ExportService,
     @Inject(PLATFORM_ID) private platformId:Object,
-    private announcementService: AnnouncementService
+    private announcementService: AnnouncementService,
+    private cdr: ChangeDetectorRef
   ){}
   announcements: Announcement[] = []
   handleCloseAnnouncement(id: number) {
     this.announcementService.closeAnnouncement(id);
+    this.announcements = this.announcementService.getAnnouncements();
+    this.cdr.markForCheck();
   }
 
 

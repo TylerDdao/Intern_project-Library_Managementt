@@ -11,15 +11,21 @@
                     <div>
                         <label for="borrow-duration">{{"borrowPolicy.Borrow-duration"|translate}}</label>
                         <div class="flex items-center space-x-[5px]">
-                            <input id="borrow-duration" formControlName="borrowDuration" placeholder="{{'Borrow.Borrow-duation' | translate}}" type="number" class="rounded-[10px] w-full bg-pastel-blue text-dodger-blue "/>
+                            <input id="borrow-duration" formControlName="borrowDuration" placeholder="{{'Borrow.Borrow-duation' | translate}}" type="number" class="rounded-[10px] w-full" [class]="isValid['borrowDuration'] ? 'bg-pastel-blue text-dodger-blue' : 'bg-pastel-red text-tomato-red'"/>
                             <div class="">/{{"borrow.Days"|translate}}</div>
                         </div>
+                        @if (!isValid["borrowDuration"]) {
+                            <small class="text-tomato-red">{{"form.Invalid-value"|translate}}</small>
+                        }
                     </div>
                     <div>
                         <label for="late-penalty">{{"borrowPolicy.Late-penalty"|translate}}/{{"borrow.day"|translate}}</label>
                         <div class="flex items-center space-x-[5px]">
-                            <input id="late-penalty" formControlName="latePenaltyPerDay" placeholder="{{'Borrow.Late-penalty-per-day' | translate}}" type="number" class="rounded-[10px] w-full bg-pastel-blue text-dodger-blue "/>
+                            <input id="late-penalty" formControlName="latePenaltyPerDay" placeholder="{{'Borrow.Late-penalty-per-day' | translate}}" type="number" class="rounded-[10px] w-full" [class]="isValid['latePenaltyPerDay'] ? 'bg-pastel-blue text-dodger-blue' : 'bg-pastel-red text-tomato-red'"/>
                         </div>
+                        @if (!isValid["latePenaltyPerDay"]) {
+                            <small class="text-tomato-red">{{"form.Invalid-value"|translate}}</small>
+                        }
                     </div>
                 </div>
             </form>
@@ -30,7 +36,18 @@
     </div>
 
     <div class="flex space-x-[10px]">
-        <button type="submit" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice body rounded-[10px]" (click)="onSubmit()">{{'form.Save'|translate}}</button>
-        <button class="border border-tomato-red px-[10px] py-[5px] text-tomato-red body rounded-[10px]" (click)="close()">{{'form.Cancel'|translate}}</button>
+        
+        @if (!isProcessing) {
+            <button type="submit" form="borrowPolicyForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice caption-1 rounded-[10px]" (click)="onSubmit()">{{'form.Save'|translate}}</button>
+        }
+        @else {
+            <button type="button" class="bg-steel-blue/50 px-[10px] py-[5px] text-soft-ice caption-1 rounded-[10px]">{{'form.Processing'|translate}}...</button>
+        }
+        <button class="border border-tomato-red px-[10px] py-[5px] text-tomato-red caption-1 rounded-[10px]" (click)="close()">{{'form.Cancel'|translate}}</button>
     </div>
+    @if (isLoading) {
+    <div class="fixed inset-0 flex items-center justify-center z-99 bg-soft-ice/50">
+        <app-loading-component></app-loading-component>
+    </div>
+    }
 </div>

@@ -43,24 +43,39 @@ public class UpdateUserService {
     @Autowired
     private UserMailService userMailService;
 
-    public UserResponse updateUserRole(UserRequest request){
-        Role defaultRole = roleRepository.findByIsDefaultIsTrue()
-                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
+    public UserResponse updateUserRole(UserRequest request) {
+        Role defaultRole = roleRepository.findByIsDefaultIsTrue().orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
+        User user = userRepository.findById(request.getId()).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.id.not.found", null, LocaleContextHolder.getLocale())));
 
-        User user = userRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.id.not.found", null, LocaleContextHolder.getLocale())));
+        Role newRole = request.getRole() != null ? roleRepository.findById(request.getRole()).orElse(defaultRole) : defaultRole;
 
-        Role newRole = roleRepository.findById(request.getRole())
-                .orElse(defaultRole);
+        String username = Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication()).getName();
+        boolean isRoot = user.getRole().getName().equals("ROLE_ROOT");
 
+        boolean changingRole = user.getRole().getId() != newRole.getId();
 
-        // update only the fields that should change
-        if (request.getRole() != null) user.setRole(newRole);
+        if (changingRole && user.getUsername().equals(username) && isRoot) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "ROOT-USER", messageSource.getMessage("error.cannot.delete.root.user", null, LocaleContextHolder.getLocale()));
+        }
 
-        User savedUser = userRepository.save(user);
-        System.out.println(request);
-        logger.log("Updated role for @{}, ID #{} to {}", savedUser.getUsername(),savedUser.getId(), savedUser.getRole().getName());
-        return new UserResponse(savedUser);
+        if (changingRole && isRoot && !newRole.getName().equals("ROLE_ROOT")) {
+            long rootCount = userRepository.countByRole_NameAndIsDeletedFalse("ROLE_ROOT");
+
+            if (rootCount <= 1) {
+                throw new ApiException(HttpStatus.BAD_REQUEST, "ROOT-USER", messageSource.getMessage("error.cannot.remove.last.root.user", null, LocaleContextHolder.getLocale()));
+            }
+
+            user.setRole(newRole);
+            User savedUser = userRepository.save(user);
+            logger.log("Updated role for @{}, ID #{} to {}", savedUser.getUsername(), savedUser.getId(), savedUser.getRole().getName());
+            return new UserResponse(savedUser);
+        }
+        else{
+            user.setRole(newRole);
+            User savedUser = userRepository.save(user);
+            logger.log("Updated role for @{}, ID #{} to {}", savedUser.getUsername(), savedUser.getId(), savedUser.getRole().getName());
+            return new UserResponse(savedUser);
+        }
     }
 
     @Transactional

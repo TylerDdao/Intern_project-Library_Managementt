@@ -8,11 +8,12 @@ import { errorNoti } from '../../util/error-notification';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RoleService } from '../../services/role-service/role-service';
 import { Role } from '../../models/role';
+import { LoadingComponent } from "../../components/loading-component/loading-component";
 
 
 @Component({
   selector: 'app-new-role-form',
-  imports: [TranslateModule, ReactiveFormsModule],
+  imports: [TranslateModule, ReactiveFormsModule, LoadingComponent],
   templateUrl: './new-role-form.html',
   styleUrl: './new-role-form.css',
 })
@@ -26,6 +27,10 @@ export class NewRoleForm {
     private cdr: ChangeDetectorRef,
     private translate: TranslateService
   ) {}
+
+  isProcessing:boolean = false
+  isDeleting:boolean = false
+  isLoading:boolean = false;
 
   addedFeatures: Feature[] = [];
 
@@ -57,6 +62,9 @@ export class NewRoleForm {
 
     if(!roleName) return;
 
+    this.isLoading = true
+    this.isProcessing = true
+
     const role: Role = {
       name: roleName.startsWith("ROLE_")
         ? roleName.replace("ROLE_", "") : roleName,
@@ -78,21 +86,27 @@ export class NewRoleForm {
                 if(featureData.code === "200"){
                   this.save(true);
                 }
+                this.isLoading = false
+                this.isProcessing = false
               },
               error:(err:HttpErrorResponse)=>{
                 errorNoti(err, this.translate);
-                this.save(false);
+                this.isLoading = false
+                this.isProcessing = false
               }
             });
           }
           else {
             this.save(true);
+            this.isLoading = false
+            this.isProcessing = false
           }
         }
       },
       error:(err:HttpErrorResponse)=>{
         errorNoti(err, this.translate);
-        this.save(false);
+        this.isLoading = false
+        this.isProcessing = false
       }
     });
   }

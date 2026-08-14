@@ -397,6 +397,8 @@
     "Announcement-is-posted": "Thông báo đã được đăng",
     "Announcements-is-updated": "Thông báo đã được cập nhật",
     "Website-announcements": "Thông báo website",
-    "You-must-have-a-link-to-enter-link-text": "Bạn phải có đường dẫn trước khi nhập văn bản hiển thị liên kết"
+    "You-must-have-a-link-to-enter-link-text": "Bạn phải có đường dẫn trước khi nhập văn bản hiển thị liên kết",
+    "Showing-on": "Hiển thị tại",
+    "Showing-on-all-pages": "Hiển thị trên tất cả các trang"
   }
 }

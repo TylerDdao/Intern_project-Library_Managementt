@@ -84,12 +84,12 @@
 
     <div class="flex space-x-[10px]">
         @if (isCreatingBook) {
-            <button type="button"class="bg-steel-blue/50 !cursor-not-allowed px-[10px] py-[5px] text-soft-ice body rounded-[10px]">{{'form.Processing'|translate}}...</button>
+            <button type="button"class="bg-steel-blue/50 !cursor-not-allowed px-[10px] py-[5px] text-soft-ice caption-1 rounded-[10px]">{{'form.Processing'|translate}}...</button>
         }
         @else {
-            <button type="submit" form="newBookForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice body rounded-[10px]">{{'form.Save'|translate}}</button>
+            <button type="submit" form="newBookForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice caption-1 rounded-[10px]">{{'form.Save'|translate}}</button>
         }
-        <button class="border border-tomato-red px-[10px] py-[5px] text-tomato-red body rounded-[10px]" (click)="close()">{{'form.Cancel'|translate}}</button>
+        <button class="border border-tomato-red px-[10px] py-[5px] text-tomato-red caption-1 rounded-[10px]" (click)="close()">{{'form.Cancel'|translate}}</button>
     </div>
 
     

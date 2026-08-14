@@ -157,8 +157,8 @@
 
             </form>
             <div class="flex flex-col space-y-[10px]">
-                <button type="button" class="px-[10px] py-[5px] rounded-[10px] border border-leaf-green text-leaf-green caption-1 hover:bg-leaf-green hover:text-soft-ice transition ease-in-out" (click)="handlePreview()">{{"announcementsManagement.Preview-announcement"|translate}}</button>
-                <button type="submit" form="announcementForm" class="px-[10px] py-[5px] rounded-[10px] bg-primary-1 text-soft-ice caption-1 font-bold">{{"announcementsManagement.Post-announcement"|translate}}</button>
+                <button type="button" class="px-[10px] py-[5px] rounded-[10px] border border-leaf-green text-leaf-green caption-1 hover:bg-leaf-green hover:text-soft-ice transition ease-in-out select-none" (click)="handlePreview()">{{"announcementsManagement.Preview-announcement"|translate}}</button>
+                <button type="submit" form="announcementForm" class="px-[10px] py-[5px] rounded-[10px] bg-primary-1 text-soft-ice caption-1 font-bold select-none">{{"announcementsManagement.Post-announcement"|translate}}</button>
             </div>
         </div>
 
@@ -205,7 +205,7 @@
                 <div class="w-full h-[5px] bg-primary-1 rounded-full"></div>
                 <div class="announcement-list">
                     @for (announcement of announcementsList; track announcement.id) {
-                        <div class="w-full">
+                        <div class="w-full flex flex-col space-y-[5px]">
                             <div class="border border-primary-1 rounded-[10px] px-[5px] select-none">
                                 <div class="relative grid grid-cols-2 justify-between items-center py-[5px] w-full caption-1">
                                     <div
@@ -229,17 +229,29 @@
                                     </button>
                                 </div>
                             </div>
+                            <div class="flex space-x-[10px] items-center w-full">
+                                <app-announcement-component [preview]="true" [showActiveIndicator]="true" [announcement]="announcement" class="w-full"></app-announcement-component>
+                                <button type="button" class="flex items-center select-none text-tomato-red" (click)="handleDeleteAnnouncement(announcement)"><span class="material-symbols-outlined">delete</span></button>
+                            </div>
+                            <div>
+                                @if (announcement.locations.length >0) {
+                                    <div class="font-bold">{{'announcementsManagement.Showing-on'|translate}}</div>
+                                    @for (page of announcement.locations; track $index) {
+                                        <span>{{page}} </span>
+                                    }
+                                }
+                                @else {
+                                    <div class="font-bold">{{'announcementsManagement.Showing-on-all-pages'|translate}}</div>
+                                }
+                            </div>
                         </div>
-                        <div class="flex space-x-[10px] items-center w-full">
-                            <app-announcement-component [preview]="true" [showActiveIndicator]="true" [announcement]="announcement" class="w-full"></app-announcement-component>
-                            <button type="button" class="flex items-center select-none text-tomato-red" (click)="handleDeleteAnnouncement(announcement)"><span class="material-symbols-outlined">delete</span></button>
-                        </div>
+                        
                     }
                 </div>
             </div>
             <div class="flex flex-col space-y-[10px]">
-                <button type="button" class="px-[10px] py-[5px] rounded-[10px] border border-tomato-red text-tomato-red caption-1 hover:bg-tomato-red hover:text-soft-ice transition ease-in-out" (click)="handleResetAnnouncementList()">{{"form.Reset"|translate}}</button>
-                <button type="button" class="px-[10px] py-[5px] rounded-[10px] bg-primary-1 text-soft-ice caption-1 font-bold" (click)="handleUpdateAnnouncement(announcementsList)">{{"form.Save-change"|translate}}</button>
+                <button type="button" class="px-[10px] py-[5px] rounded-[10px] border border-tomato-red text-tomato-red caption-1 hover:bg-tomato-red hover:text-soft-ice transition ease-in-out select-none" (click)="handleResetAnnouncementList()">{{"form.Reset"|translate}}</button>
+                <button type="button" class="px-[10px] py-[5px] rounded-[10px] bg-primary-1 text-soft-ice caption-1 font-bold select-none" (click)="handleUpdateAnnouncement(announcementsList)">{{"form.Save-change"|translate}}</button>
             </div>
         </div>
     </div>

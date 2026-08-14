@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language-service/language-service';
 import { LanguageSelector } from '../../components/language-selector/language-selector';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-not-found',
@@ -11,6 +12,7 @@ import { LanguageSelector } from '../../components/language-selector/language-se
 })
 export class NotFound {
   constructor(
-    protected langService: LanguageService
+    protected langService: LanguageService,
+    protected router: Router
   ){}
 }

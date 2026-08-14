@@ -48,7 +48,7 @@ export class NavbarComponent {
     private cdr: ChangeDetectorRef, 
     @Inject(PLATFORM_ID) private platformId: Object, 
     private authService: AuthService, 
-    private router:Router,
+    protected router:Router,
     private userService:UserService,
     private translate: TranslateService,
     private announcementService: AnnouncementService

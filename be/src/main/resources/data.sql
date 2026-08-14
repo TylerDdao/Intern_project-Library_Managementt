@@ -73,7 +73,7 @@ INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
 -- =========================================================================
 
 INSERT IGNORE INTO users (id, full_name, username, address, email, phone_number, password, role_id, created_at, is_deleted, is_active) VALUES
-    (1, 'Tyler Dao', 'tyler', '32 Noecker Street', 'baonamfpt@gmail.com', '5483843681', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '1', NOW(), false, true),
+    (1, 'Tyler Dao', 'tyler', '32 Noecker Street', 'baonam6a3@gmail.com', '5483843681', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '1', NOW(), false, true),
     (2, 'Alex Mercer', 'alex_m', '123 University Ave', 'baonamfpt@gmail.com', '5195550143', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '4', NOW(), false, true),
     (3, 'Chloe Laurent', 'chloe_l', '88 Columbia St W', 'baonamfpt@gmail.com', '5195550177', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '3', NOW(), false, true),
     (4, 'Marcus Vance', 'marcus_v', '12 King St N', 'baonamfpt@gmail.com', '5195550198', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '2', NOW(), false, true),

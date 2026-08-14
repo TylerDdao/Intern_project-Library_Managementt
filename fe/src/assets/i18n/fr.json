@@ -397,6 +397,8 @@
     "Announcement-is-posted": "L'annonce a été publiée",
     "Announcements-is-updated": "L'annonce a été mise à jour",
     "Website-announcements": "Annonces du site",
-    "You-must-have-a-link-to-enter-link-text": "Vous devez fournir un lien pour saisir le texte du lien"
+    "You-must-have-a-link-to-enter-link-text": "Vous devez fournir un lien pour saisir le texte du lien",
+    "Showing-on": "Affiché sur",
+    "Showing-on-all-pages": "Affiché sur toutes les pages"
   }
 }

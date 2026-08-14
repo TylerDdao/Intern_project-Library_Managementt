@@ -131,7 +131,6 @@ export class AnnouncementsManagementPage {
               ...a
             }));
 
-            this.handleResetPreview();
             this.cdr.markForCheck();
           }
         });
@@ -301,6 +300,7 @@ export class AnnouncementsManagementPage {
               }));
 
               this.handleResetPreview();
+              this.selectedLocation = [];
 
               this.cdr.markForCheck();
             }

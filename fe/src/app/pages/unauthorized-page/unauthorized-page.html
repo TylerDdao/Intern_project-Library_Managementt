@@ -1,7 +1,11 @@
-<div class="fixed inset-0 flex items-center justify-center">
-    <div class="container">
+<div class="body-container">
+    <div class="container select-none">
         <div class="flex flex-col space-y-[10px] items-center justify-center">
-            <div class="headline text-tomato-red flex items-center space-x-[5px]"><span class="material-symbols-outlined">cancel</span>{{"error.Unauthorized"|translate}}</div>
+            <div class="headline text-primary-1 text-center">Library Management System</div>
+            <div class="flex space-x-[10px] items-center text-tomato-red">
+                <span class="material-symbols-outlined">cancel</span>
+                <div class="font-bold">{{"error.Unauthorized"|translate}}</div>
+            </div>
             <button class="caption-1 px-[10px] py-[5px] rounded-[10px] bg-primary-1 text-soft-ice" (click)="navigateTologin()">{{"signup.Back-to-login"|translate}}</button>
         </div>
         <app-language-selector></app-language-selector>
