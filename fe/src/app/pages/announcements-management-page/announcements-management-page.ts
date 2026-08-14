@@ -39,6 +39,7 @@ export class AnnouncementsManagementPage {
   isValid: { [key: string]: boolean } = {
     subject: true,
     content: true,    
+    link: true
   };
 
   previewAnnouncement: Announcement | null = null
@@ -214,14 +215,21 @@ export class AnnouncementsManagementPage {
     this.cdr.markForCheck();
   }
 
-  handlePreview(){
+  handlePreview(){    
     const {subject_vi, content_vi, linkText_vi, subject_en, content_en, linkText_en, subject_fr, content_fr, linkText_fr, link, type, isActive, locations} = this.announcementForm.value
-    if(!subject_vi || !content_vi){
+    if(!subject_vi){
       this.isValid["subject"] = false
+      return
+    }
+    if( !content_vi){
       this.isValid["content"] = false
       return
     }
-    console.log("preview")
+    if (link == '' && (linkText_vi != '' || linkText_en != '' || linkText_fr != '')) {
+      this.isValid["link"] = false;
+      return;
+    }
+    console.log(linkText_vi)
     const announcementType: AnnouncementType = type ?? 'info';
     this.previewAnnouncement = {
       id: 0,
@@ -251,6 +259,11 @@ export class AnnouncementsManagementPage {
     this.isValid['subject'] = this.announcementForm.get('subject_vi')?.valid ?? false;
     this.isValid['content'] = this.announcementForm.get('content_vi')?.valid ?? false;
     const {subject_vi, subject_en, subject_fr, content_vi, content_en, content_fr, linkText_vi, linkText_en, linkText_fr, link, type, isActive, locations} = this.announcementForm.value
+    
+    if (link == '' && (linkText_vi != '' || linkText_en != '' || linkText_fr != '')) {
+      this.isValid["link"] = false;
+      return;
+    }
 
     if(!this.isValid['content'] || !this.isValid['subject']) return
     if(!subject_vi || !content_vi) return
@@ -313,6 +326,9 @@ export class AnnouncementsManagementPage {
       });
       this.announcementForm.get('content_vi')?.valueChanges.subscribe(() => {
         this.isValid["content"] = true
+      });
+      this.announcementForm.get('link')?.valueChanges.subscribe(() => {
+        this.isValid["link"] = true
       });
     }
   }

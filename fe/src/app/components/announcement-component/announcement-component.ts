@@ -105,33 +105,30 @@ export class AnnouncementComponent {
     return this.announcement.contentVi;
   }
 
+  private firstNonEmpty(...values: (string | undefined)[]): string {
+    for (const value of values) {
+      if (value && value.trim().length > 0) {
+        return value;
+      }
+    }
+    return '';
+  }
+
   getAnnouncementLinkText(): string {
     if (!this.announcement) {
       return '';
     }
 
-    if (this.langService.currentLang === 'en') {
-      return (
-        this.announcement.linkTextEn ??
-        this.announcement.linkTextVi ??
-        this.announcement.link ??
-        ''
-      );
-    }
+    const textByLang: Record<string, string | undefined> = {
+      en: this.announcement.linkTextEn,
+      fr: this.announcement.linkTextFr,
+      vi: this.announcement.linkTextVi,
+    };
 
-    if (this.langService.currentLang === 'fr') {
-      return (
-        this.announcement.linkTextFr ??
-        this.announcement.linkTextVi ??
-        this.announcement.link ??
-        ''
-      );
-    }
-
-    return (
-      this.announcement.linkTextVi ??
-      this.announcement.link ??
-      ''
+    return this.firstNonEmpty(
+      textByLang[this.langService.currentLang],
+      this.announcement.linkTextVi,
+      this.announcement.link
     );
   }
 }

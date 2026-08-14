@@ -4,7 +4,7 @@
         @for (announcement of announcements; track announcement.id) {
             @if (announcement.active) {
                 <app-announcement-component
-                    [location]="'/books-management'"
+                    [location]="'/announcements-management'"
                     (onClose)="handleCloseAnnouncement(announcement.id)"
                     [announcement]="announcement">
                 </app-announcement-component>
@@ -86,9 +86,18 @@
 
                 <!-- CONTENT -->
                 <div>
+                    <div class="flex flex-col">
+                        <label for="link">{{"announcement.Link"|translate}}</label>
+                        <input type="url" id="link" formControlName="link" class="rounded-[10px]" [class]="isValid['link']? 'bg-pastel-blue text-dodger-blue': 'bg-pastel-red text-tomato-red'"/>
+                    </div>
+                    @if (!isValid['link']) {
+                        <small class="text-tomato-red">{{"announcementsManagement.You-must-have-a-link-to-enter-link-text"|translate}}</small>
+                    }
+                </div>
+                <div>
                     <div class="font-bold">Tiếng Việt</div>
                     <div class="flex flex-col">
-                        <label for="subject_vi">{{"post.Subject"|translate}}</label>
+                        <label for="subject_vi">{{"post.Subject"|translate}}<sup class="text-tomato-red">*</sup></label>
                         <input type="text" id="subject_vi" formControlName="subject_vi" class="rounded-[10px]" [class]="isValid['subject']? 'bg-pastel-blue text-dodger-blue': 'bg-pastel-red text-tomato-red'"/>
                     </div>
                     @if (!isValid['subject']) {
@@ -96,12 +105,17 @@
                     }
 
                     <div class="flex flex-col">
-                        <label for="content_vi">{{"post.Content"|translate}}</label>
+                        <label for="content_vi">{{"post.Content"|translate}}<sup class="text-tomato-red">*</sup></label>
                         <textarea type="text" id="content_vi" formControlName="content_vi" class="p-[10px] rounded-[10px] h-[300px] resize-none" [class]="isValid['content']? 'bg-pastel-blue text-dodger-blue': 'bg-pastel-red text-tomato-red'"></textarea>
                     </div>
                     @if (!isValid['content']) {
                         <small class="text-tomato-red">{{"announcementsManagement.You-must-have-announcement-content-in-Vietnamese"|translate}}</small>
                     }
+
+                    <div class="flex flex-col">
+                        <label for="linkText_vi">{{"announcement.Link-text"|translate}}</label>
+                        <input type="text" id="linkText_vi" formControlName="linkText_vi" class="rounded-[10px] bg-pastel-blue text-dodger-blue" />
+                    </div>
                 </div>
 
                 <div>
@@ -115,6 +129,12 @@
                         <label for="content_en">{{"post.Content"|translate}}</label>
                         <textarea type="text" id="content_en" formControlName="content_en" class="p-[10px] rounded-[10px] h-[300px] resize-none bg-pastel-blue text-dodger-blue"></textarea>
                     </div>
+
+                    <div class="flex flex-col">
+                        <label for="linkText_en">{{"announcement.Link-text"|translate}}</label>
+                        <input type="text" id="linkText_en" formControlName="linkText_en" class="rounded-[10px] bg-pastel-blue text-dodger-blue" />
+                    </div>
+                    
                 </div>
 
                 <div>
@@ -127,6 +147,11 @@
                     <div class="flex flex-col">
                         <label for="content_fr">{{"post.Content"|translate}}</label>
                         <textarea type="text" id="content_fr" formControlName="content_fr" class="p-[10px] rounded-[10px] h-[300px] resize-none bg-pastel-blue text-dodger-blue"></textarea>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="linkText_fr">{{"announcement.Link-text"|translate}}</label>
+                        <input type="text" id="linkText_fr" formControlName="linkText_fr" class="rounded-[10px] bg-pastel-blue text-dodger-blue" />
                     </div>
                 </div>
 

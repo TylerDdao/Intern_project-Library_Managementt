@@ -370,7 +370,9 @@
     "Inactive": "Inactif",
     "Announcement-type": "Type d'annonce",
     "Status": "Statut",
-    "Active-status": "Statut actif"
+    "Active-status": "Statut actif",
+    "Link": "Lien",
+    "Link-text": "Texte du lien"
   },
   "featuresManagement": {
     "Unassign-all": "Tout désattribuer",
@@ -394,6 +396,7 @@
     "Announcement-is-deleted": "L'annonce a été supprimée",
     "Announcement-is-posted": "L'annonce a été publiée",
     "Announcements-is-updated": "L'annonce a été mise à jour",
-    "Website-announcements": "Annonces du site"
+    "Website-announcements": "Annonces du site",
+    "You-must-have-a-link-to-enter-link-text": "Vous devez fournir un lien pour saisir le texte du lien"
   }
 }

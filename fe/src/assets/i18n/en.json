@@ -370,7 +370,9 @@
     "Inactive": "Inactive",
     "Announcement-type": "Announcement type",
     "Status": "Status",
-    "Active-status": "Active status"
+    "Active-status": "Active status",
+    "Link": "Link",
+    "Link-text": "Link text"
   },
   "featuresManagement": {
     "Unassign-all": "Unassign all",
@@ -394,6 +396,7 @@
     "Announcement-is-deleted": "Announcement is deleted",
     "Announcement-is-posted": "Announcement is posted",
     "Announcements-is-updated": "Announcement is updated",
-    "Website-announcements": "Website announcements"
+    "Website-announcements": "Website announcements",
+    "You-must-have-a-link-to-enter-link-text": "You must have a link to enter link text"
   }
 }

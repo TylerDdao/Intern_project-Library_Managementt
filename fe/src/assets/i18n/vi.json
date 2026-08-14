@@ -370,7 +370,9 @@
     "Inactive": "Không hoạt động",
     "Announcement-type": "Loại thông báo",
     "Status": "Trạng thái",
-    "Active-status": "Trạng thái hoạt động"
+    "Active-status": "Trạng thái hoạt động",
+    "Link": "Đường dẫn",
+    "Link-text": "Văn bản hiển thị liên kết"
   },
   "featuresManagement": {
     "Unassign-all": "Bỏ gán tất cả",
@@ -394,6 +396,7 @@
     "Announcement-is-deleted": "Thông báo đã được xóa",
     "Announcement-is-posted": "Thông báo đã được đăng",
     "Announcements-is-updated": "Thông báo đã được cập nhật",
-    "Website-announcements": "Thông báo website"
+    "Website-announcements": "Thông báo website",
+    "You-must-have-a-link-to-enter-link-text": "Bạn phải có đường dẫn trước khi nhập văn bản hiển thị liên kết"
   }
 }

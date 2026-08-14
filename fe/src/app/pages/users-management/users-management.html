@@ -3,7 +3,7 @@
     @for (announcement of announcements; track announcement.id) {
         @if (announcement.active) {
             <app-announcement-component
-                [location]="'users-management'"
+                [location]="'/users-management'"
                 (onClose)="handleCloseAnnouncement(announcement.id)"
                 [announcement]="announcement">
             </app-announcement-component>

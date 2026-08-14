@@ -15,14 +15,20 @@ WORKDIR /app
 
 # Non-root user for security
 RUN addgroup -S spring && adduser -S spring -G spring
-USER spring
+
+# su-exec lets us start as root (to fix volume ownership) then drop to
+# the non-root spring user before running the actual application
+RUN apk add --no-cache su-exec
 
 # Copy application jar and seed default book cover image
-COPY --from=build --chown=spring:spring /app/target/*.jar app.jar
+# (still owned by root at this point; entrypoint fixes ownership at runtime)
+COPY --from=build /app/target/*.jar app.jar
+COPY uploads/book-covers/*.jpg /app/uploads/book-covers/
+COPY uploads/book-covers/*.webp /app/uploads/book-covers/
 
-COPY --chown=spring:spring uploads/book-covers/*.jpg /app/uploads/book-covers/
-COPY --chown=spring:spring uploads/book-covers/*.webp /app/uploads/book-covers/
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
