@@ -25,6 +25,7 @@ import { UnauthorizedPage } from './pages/unauthorized-page/unauthorized-page';
 import { OnDevPage } from './pages/on-dev-page/on-dev-page';
 import { LogsManagement } from './pages/logs-management/logs-management';
 import { AnnouncementsManagementPage } from './pages/announcements-management-page/announcements-management-page';
+import { LandingPage } from './pages/landing-page/landing-page';
 
 const admidFeatures = [
     "CREATE_BOOK", "CREATE_USER", "CREATE_ROLE", "CREATE_GENRE", 
@@ -32,6 +33,7 @@ const admidFeatures = [
     "UPDATE_BOOK", "UPDATE_USER_MULTI", "UPDATE_USER_ROLE", "UPDATE_BORROW", "UPDATE_ROLE"]
 
 export const routes: Routes = [
+    { path: '', component: LandingPage },
     { path: 'login', component: Login },
     { path: 'signup', component: Signup },
     { path: 'signup/success', component: SignupSuccess },

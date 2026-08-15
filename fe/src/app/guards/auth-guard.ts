@@ -22,7 +22,7 @@ export function rootOnly(): CanActivateFn {
     if(user?.role?.name == "ROLE_ROOT"){
         return true;
     }
-    return router.createUrlTree(['/unauthorzied']);
+    return router.createUrlTree(['/unauthorized']);
   };
 }
 
