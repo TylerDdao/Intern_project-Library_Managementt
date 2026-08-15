@@ -1,4 +1,4 @@
-<nav class="sticky top-0 left-0 min-w-screen z-50 p-4 bg-steel-blue text-white">
+<nav class="sticky top-0 left-0 z-50 p-4 bg-steel-blue text-white">
     <div class="flex justify-between items-center space-x-[10px]">
         @if (validateUser) {
             <div class="pages-container">
@@ -41,7 +41,6 @@
         @else {
             <div class="flex items-center justify-between w-full">
                 <div class="select-none cursor-pointer" (click)="router.navigate(['/login'])"><h1 class="font-bold ">Library Management System</h1></div>
-                
                 <app-language-selector></app-language-selector>
             </div>
         }

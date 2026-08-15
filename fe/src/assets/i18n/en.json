@@ -186,7 +186,9 @@
   "post": {
     "Edit-post": "Edit post",
     "Subject": "Subject",
-    "Content": "Content"
+    "Content": "Content",
+    "Read-more": "Read more",
+    "See-less": "See less"
   },
   "comment": {
     "Comment-box": "Comment box",
@@ -355,7 +357,9 @@
     "Please-enter-author": "Please enter author",
     "Please-enter-number-of-copies": "Please enter number of copies",
     "Book-is-added": "Book is added",
-    "File-too-large": "File too large"
+    "File-too-large": "File too large",
+    "Your-file-size-is": "Your file size is",
+    "Maximum-size-of-file": "Maximum size of file"
   },
   "browseBook": {
     "Result": "Result"

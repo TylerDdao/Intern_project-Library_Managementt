@@ -186,7 +186,9 @@
   "post": {
     "Edit-post": "Chỉnh sửa bài viết",
     "Subject": "Chủ đề",
-    "Content": "Nội dung"
+    "Content": "Nội dung",
+    "Read-more": "Đọc thêm",
+    "See-less": "Thu gọn"
   },
   "comment": {
     "Comment-box": "Khung bình luận",

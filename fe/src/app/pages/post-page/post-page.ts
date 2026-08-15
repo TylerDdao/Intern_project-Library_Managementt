@@ -16,6 +16,7 @@ import { environment } from '../../../environments/environment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
 import { errorImage } from '../../../assets/constants';
+import { NavigationService } from '../../services/navigation-service/navigation-service';
 
 @Component({
   selector: 'app-post-page',
@@ -36,7 +37,6 @@ export class PostPage {
     totalPages: 1
   }
   isOpenBookList: boolean = false;
-  private router = inject(Router);
 
   chosenBook!: Book;
 
@@ -55,7 +55,9 @@ export class PostPage {
     private bookService: BookService,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private router:Router,
+    private naviagtionService: NavigationService
   ){}
 
   postForm = new FormGroup({
@@ -64,7 +66,7 @@ export class PostPage {
   });
 
   handleCancel(){
-    this.router.navigate(['/my-posts'])
+    this.router.navigate([this.naviagtionService.getPreviousUrl()])
   }
 
   onSubmit(): void {

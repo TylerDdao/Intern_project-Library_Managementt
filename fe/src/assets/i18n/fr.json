@@ -186,7 +186,9 @@
   "post": {
     "Edit-post": "Modifier la publication",
     "Subject": "Sujet",
-    "Content": "Contenu"
+    "Content": "Contenu",
+    "Read-more": "Lire la suite",
+    "See-less": "Voir moins"
   },
   "comment": {
     "Comment-box": "Espace commentaires",
