@@ -44,12 +44,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     """)
     Page<User> findBySearchQuery(@Param("q") String query, Pageable pageable);
 
-    @Query("""
-    SELECT COUNT(*)
-    FROM users u
-    JOIN roles r ON u.role_id = r.id
-    WHERE r.name = 'ROLE_ROOT'
-    AND u.is_deleted = false;
-    """)
-    long countByRole_NameAndIsDeletedFalse(String roleRoot);
+    long countByRole_NameAndIsDeletedFalse(String roleName);
 }

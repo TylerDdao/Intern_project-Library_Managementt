@@ -1,4 +1,4 @@
-package com.example.library_management.dto.request;
+package com.example.library_management.dto.request.book;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

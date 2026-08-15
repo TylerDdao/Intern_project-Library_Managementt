@@ -1,7 +1,7 @@
 package com.example.library_management.service.user;
 
 import com.example.library_management.dto.request.user.UserRequest;
-import com.example.library_management.dto.response.UserResponse;
+import com.example.library_management.dto.response.user.UserResponse;
 import com.example.library_management.exception.ApiException;
 import com.example.library_management.model.Role;
 import com.example.library_management.model.User;

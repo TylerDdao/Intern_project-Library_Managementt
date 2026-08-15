@@ -119,7 +119,7 @@
                 <select formControlName="role" class="bg-pastel-blue text-dodger-blue rounded-[10px] h-10">
                     @for (role of roles; track role.id) {
                         <option [value]="role.id">
-                            {{ role.name }}
+                            {{ role.name.replace("ROLE_", "") }}
                         </option>
                     }
                 </select>
@@ -154,6 +154,6 @@
     @if (isLoading) {
     <div class="fixed inset-0 flex items-center justify-center z-99 bg-soft-ice/50">
         <app-loading-component></app-loading-component>
-    </div>  
+    </div>
     }
 </div>

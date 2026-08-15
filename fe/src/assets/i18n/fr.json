@@ -372,7 +372,10 @@
     "Status": "Statut",
     "Active-status": "Statut actif",
     "Link": "Lien",
-    "Link-text": "Texte du lien"
+    "Link-text": "Texte du lien",
+    "Info": "Info",
+    "Warning": "Avertissement",
+    "Error": "Erreur"
   },
   "featuresManagement": {
     "Unassign-all": "Tout désattribuer",

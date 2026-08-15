@@ -68,7 +68,12 @@
                                     <div class="text-center">{{"list.Empty"|translate}}</div>
                                 }
                                 @else {
-                                    <button class="py-[5px] px-[10px] border border-primary-1 text-primary-1 rounded-[10px] h-fit" (click)="handleMoreGenre()">{{"list.Load-more"|translate}}</button>
+                                    @if (searchGenres.length > 0) {
+                                        <button class="py-[5px] px-[10px] border border-primary-1 text-primary-1 rounded-[10px] h-fit" (click)="handleMoreGenre()">{{"list.Load-more"|translate}}</button>
+                                    }
+                                    @else {
+                                        <div>{{'list.Empty'|translate}}</div>
+                                    }
                                 }
                             }
                         }

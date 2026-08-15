@@ -1,5 +1,6 @@
-package com.example.library_management.dto.response;
+package com.example.library_management.dto.response.borrow;
 
+import com.example.library_management.dto.response.user.UserResponse;
 import com.example.library_management.dto.response.book.BookResponse;
 import com.example.library_management.model.Borrow;
 import com.fasterxml.jackson.annotation.JsonInclude;

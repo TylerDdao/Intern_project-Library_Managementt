@@ -1,4 +1,4 @@
-package com.example.library_management.dto.response;
+package com.example.library_management.dto.response.genre;
 
 import com.example.library_management.model.Genre;
 import lombok.AllArgsConstructor;

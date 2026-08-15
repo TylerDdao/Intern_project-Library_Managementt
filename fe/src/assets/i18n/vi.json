@@ -372,7 +372,10 @@
     "Status": "Trạng thái",
     "Active-status": "Trạng thái hoạt động",
     "Link": "Đường dẫn",
-    "Link-text": "Văn bản hiển thị liên kết"
+    "Link-text": "Văn bản hiển thị liên kết",
+    "Info": "Thông tin",
+    "Warning": "Cảnh báo",
+    "Error": "Lỗi"
   },
   "featuresManagement": {
     "Unassign-all": "Bỏ gán tất cả",

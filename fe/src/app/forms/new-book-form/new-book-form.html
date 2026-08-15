@@ -1,5 +1,5 @@
 <div class="container">
-    @if (isLoading) {
+    @if (isLoading["createBook"]) {
         <div class="absolute inset-0 flex justify-center items-center bg-cool-gray/50 z-50 rounded-[10px]">
             <app-loading-component></app-loading-component>
         </div>
@@ -64,26 +64,55 @@
         <div class="flex flex-col space-y-[10px]">
             <div>
                 <div class="body font-bold">{{'newBookForm.Available-genres'|translate}}</div>
-                @if (genres) {
-                    <div class="genres-list">
-                        @for (genre of genres; track $index) {
-                            <div class="flex items-center space-x-[5px]">
-                                <div (click)="toggleChosenGenre(genre)" class="w-full px-[10px] py-[5px] rounded-[10px] select-none cursor-pointer" [class]="chosenGenres.includes(genre) ? 'bg-primary-1 text-soft-ice' : 'border border-primary-1 text-primary-1 hover:bg-primary-1 hover:text-soft-ice transition ease-in-out'">{{genre.name}}</div>
-                            </div>                
-                        }
-                        <app-pages-component [pages]="genresPage"></app-pages-component>
-                    </div>
-                    
+                <div class="flex space-x-[10px] items-center">
+                    <input class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full" placeholder="{{'genre.Name'|translate}}" [(ngModel)]="query" [ngModelOptions]="{standalone: true}"/>
+                    <button type="button" class="flex items-center select-none" (click)="handleSearchGenres()"><span class="material-symbols-outlined">search</span></button>
+                    <button type="button" class="bg-cool-gray text-soft-ice px-[10px] py-[5px] rounded-[10px]" (click)="handleClearSearch()">{{"search.Clear"|translate}}</button>
+                </div>
+                @if (isLoading["loadSearch"]|| isLoading["loadGenres"]) {
+                    <div class="flex justify-center"><app-loading-component></app-loading-component></div>
                 }
                 @else {
-                    <div class="flex justify-center"><div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div></div>
+                    @if (isSearch) {
+                        <div>{{"search.Result"|translate}}</div>
+                        @if (resultGenres.length > 0) {
+                            <div class="genres-list">
+                                @for (genre of resultGenres; track $index) {
+                                    <div class="flex items-center space-x-[5px] w-full">
+                                        <div (click)="toggleChosenGenre(genre)" class="w-full px-[10px] py-[5px] rounded-[10px] select-none cursor-pointer" [class]="chosenGenres.includes(genre) ? 'bg-primary-1 text-soft-ice' : 'border border-primary-1 text-primary-1 hover:bg-primary-1 hover:text-soft-ice transition ease-in-out'">{{genre.name}}</div>
+                                    </div>                
+                                }
+                                <app-pages-component [pages]="resultGenresPage"></app-pages-component>
+                            </div>
+                            
+                        }
+                        @else {
+                            <div>{{'list.Empty'|translate}}</div>
+                        }
+                    }
+                    @else {
+                        @if (genres.length > 0) {
+                            <div class="genres-list">
+                                @for (genre of genres; track $index) {
+                                    <div class="flex items-center space-x-[5px] w-full">
+                                        <div (click)="toggleChosenGenre(genre)" class="w-full px-[10px] py-[5px] rounded-[10px] select-none cursor-pointer" [class]="chosenGenres.includes(genre) ? 'bg-primary-1 text-soft-ice' : 'border border-primary-1 text-primary-1 hover:bg-primary-1 hover:text-soft-ice transition ease-in-out'">{{genre.name}}</div>
+                                    </div>                
+                                }
+                                <app-pages-component [pages]="genresPage"></app-pages-component>
+                            </div>
+                            
+                        }
+                        @else {
+                            <div>{{'list.Empty'|translate}}</div>
+                        }
+                    }
                 }
             </div>
         </div>
     </form>
 
     <div class="flex space-x-[10px]">
-        @if (isCreatingBook) {
+        @if (isLoading["createBook"]) {
             <button type="button"class="bg-steel-blue/50 !cursor-not-allowed px-[10px] py-[5px] text-soft-ice caption-1 rounded-[10px]">{{'form.Processing'|translate}}...</button>
         }
         @else {

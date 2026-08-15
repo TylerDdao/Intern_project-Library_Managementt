@@ -1,8 +1,7 @@
 package com.example.library_management.controller;
 
 import com.example.library_management.dto.response.ApiResponse;
-import com.example.library_management.dto.response.FeatureResponse;
-import com.example.library_management.dto.response.RoleResponse;
+import com.example.library_management.dto.response.feature.FeatureResponse;
 import com.example.library_management.service.feature.GetFeatureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

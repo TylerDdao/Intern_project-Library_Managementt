@@ -1,7 +1,6 @@
 package com.example.library_management.service.borrow;
 
-import com.example.library_management.dto.response.BorrowResponse;
-import com.example.library_management.model.Book;
+import com.example.library_management.dto.response.borrow.BorrowResponse;
 import com.example.library_management.model.Borrow;
 import com.example.library_management.repository.BorrowRepository;
 import com.example.library_management.util.AuditLogger;
@@ -10,10 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

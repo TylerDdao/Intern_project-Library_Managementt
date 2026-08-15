@@ -1,5 +1,6 @@
-package com.example.library_management.dto.response;
+package com.example.library_management.dto.response.auth;
 
+import com.example.library_management.dto.response.user.UserResponse;
 import com.example.library_management.model.Feature;
 import com.example.library_management.model.User;
 import lombok.AllArgsConstructor;

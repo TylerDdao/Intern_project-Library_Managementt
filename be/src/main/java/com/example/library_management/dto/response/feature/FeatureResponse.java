@@ -1,4 +1,4 @@
-package com.example.library_management.dto.response;
+package com.example.library_management.dto.response.feature;
 
 import com.example.library_management.model.Feature;
 import lombok.AllArgsConstructor;

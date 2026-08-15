@@ -1,4 +1,4 @@
-package com.example.library_management.dto.response;
+package com.example.library_management.dto.response.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

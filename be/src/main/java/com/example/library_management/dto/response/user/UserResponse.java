@@ -1,11 +1,10 @@
-package com.example.library_management.dto.response;
+package com.example.library_management.dto.response.user;
 
+import com.example.library_management.dto.response.role.RoleResponse;
 import com.example.library_management.model.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor

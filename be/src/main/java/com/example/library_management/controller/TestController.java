@@ -26,7 +26,7 @@ public class TestController {
 //        user.setEmail("baonam6a3@gmail.com");
         Long borrowId = Long.parseLong("3");
         Borrow borrow = borrowRepository.findById(borrowId).orElseThrow(()->new RuntimeException("ERROR"));
-        borrowMailService.sendLateBorrowReminder(borrow);
+        borrowMailService.sendBorrowReturned(borrow);
         return ResponseEntity.ok(ApiResponse.success("OK"));
     }
 }

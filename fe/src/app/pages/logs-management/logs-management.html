@@ -30,6 +30,16 @@
                 <small class="text-tomato-red">{{"logsManagement.Invalid-date"|translate}}</small>
             }
         </form>
-        <button form="logForm" class="px-[10px] py-[5px] rounded-[10px] bg-primary-1 text-soft-ice caption-1">{{"export.Export"|translate}}</button>
+        @if (!isProcessing) {
+            <button form="logForm" class="px-[10px] py-[5px] rounded-[10px] bg-primary-1 text-soft-ice caption-1">{{"export.Export"|translate}}</button>
+        }
+        @else {
+            <button type="button" class="px-[10px] py-[5px] rounded-[10px] bg-primary-1/50 cursor-not-allowed text-soft-ice caption-1">{{"form.Processing"|translate}}...</button>
+        }
     </div>
+    @if (isProcessing) {
+        <div class="flex inset-0 fixed items-center justify-center bg-cool-gray/50">
+            <app-loading-component></app-loading-component>
+        </div>
+    }
 </div>

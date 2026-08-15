@@ -66,7 +66,7 @@ export class EditRoleForm implements OnChanges {
     }
     if(changes["role"] && this.role){
       this.newRoleForm.patchValue({
-        roleName: this.role.name,
+        roleName: this.role.name.replace("ROLE_", ""),
         defaultRole: this.role.default
       })
   }
@@ -123,14 +123,21 @@ export class EditRoleForm implements OnChanges {
   onSubmit(){
     if(!this.role) return;
 
+    
+
     const requests = [];
 
     const { roleName, defaultRole } = this.newRoleForm.value;
+    if (!roleName) {
+      return;
+    }
+
     this.isProcessing = true;
     this.isLoading = true
 
-    if(roleName && this.role.name !== roleName || this.role.default !== defaultRole){
+    if((roleName && this.role.name !== roleName || this.role.default !== defaultRole)){
       this.role.default = defaultRole ?? false;
+      this.role.name = roleName;
 
       requests.push(
         this.roleService.updateRole(this.role)

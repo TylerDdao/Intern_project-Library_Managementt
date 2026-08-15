@@ -7,10 +7,11 @@ import { isPlatformBrowser } from '@angular/common';
 import { AnnouncementComponent } from "../../components/announcement-component/announcement-component";
 import { AnnouncementService } from '../../services/announcement-service/announcement-service';
 import { Announcement } from '../../models/announcement';
+import { LoadingComponent } from "../../components/loading-component/loading-component";
 
 @Component({
   selector: 'app-logs-management',
-  imports: [NavbarComponent, TranslateModule, ReactiveFormsModule, AnnouncementComponent],
+  imports: [NavbarComponent, TranslateModule, ReactiveFormsModule, AnnouncementComponent, LoadingComponent],
   templateUrl: './logs-management.html',
   styleUrl: './logs-management.css',
 })
@@ -27,6 +28,8 @@ export class LogsManagement {
     this.announcements = this.announcementService.getAnnouncements();
     this.cdr.markForCheck();
   }
+
+  isProcessing:boolean = false;
 
 
   today = new Date().toISOString().split('T')[0];
@@ -50,10 +53,12 @@ export class LogsManagement {
     if (!from || !to) {
       return;
     }
+    this.isProcessing = true;
     if (from > to) {
       [from, to] = [to, from];
     }
     this.exportService.exportLogs(from, to)
+    this.isProcessing = false;
   }
 
   ngOnInit() {

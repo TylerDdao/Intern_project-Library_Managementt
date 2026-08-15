@@ -1,7 +1,7 @@
 package com.example.library_management.service.borrow;
 
-import com.example.library_management.dto.request.BorrowRequest;
-import com.example.library_management.dto.response.BorrowResponse;
+import com.example.library_management.dto.request.borrow.BorrowRequest;
+import com.example.library_management.dto.response.borrow.BorrowResponse;
 import com.example.library_management.model.*;
 import com.example.library_management.repository.BookRepository;
 import com.example.library_management.repository.BorrowRepository;

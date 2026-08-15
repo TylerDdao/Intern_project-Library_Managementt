@@ -1,6 +1,6 @@
 package com.example.library_management.service.genre;
 
-import com.example.library_management.dto.response.GenreResponse;
+import com.example.library_management.dto.response.genre.GenreResponse;
 import com.example.library_management.model.Genre;
 import com.example.library_management.repository.GenreRepository;
 import lombok.extern.slf4j.Slf4j;

@@ -22,6 +22,17 @@
                 <!-- ANNOUNCEMENT TYPE -->
                 <div>
                     <div class="font-bold">{{'announcement.Announcement-type'|translate}}</div>
+                    <div class="transition-all ease-in-out">
+                        @if (selectedAnnouncementType === 'warning') {
+                            <div class="text-dark-amber">{{"announcement.Warning"|translate}}</div>
+                        }
+                        @else if (selectedAnnouncementType === 'error'){
+                            <div class="text-tomato-red">{{"announcement.Error"|translate}}</div>
+                        }
+                        @else {
+                            <div class="text-primary-1">{{"announcement.Info"|translate}}</div>
+                        }
+                    </div>
                     <div class="border border-primary-1 rounded-[10px] px-[5px] select-none">
                         <div class="relative grid grid-cols-3 justify-between items-center py-[5px] w-full caption-1">
                             <div
@@ -58,13 +69,31 @@
                 
                 <!-- ACTIVE -->
                 <div>
-                    <div class="font-bold">{{'announcement.Status'|translate}}</div>
+                    
+                    <div class="flex space-x-[10px] items-center">
+                        <div class="font-bold">{{'announcement.Status'|translate}}</div>
+                        @if (announcementActivity === false) {
+                            <div class="">
+                                <span class="relative flex size-3">
+                                    <span class="relative inline-flex size-3 rounded-full bg-tomato-red"></span>
+                                </span>
+                            </div>
+                        }
+                        @else {
+                            <div class="">
+                                <span class="relative flex size-3">
+                                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-leaf-green opacity-75"></span>
+                                    <span class="relative inline-flex size-3 rounded-full bg-leaf-green"></span>
+                                </span>
+                            </div>
+                        }
+                    </div>
                     <div class="border border-primary-1 rounded-[10px] px-[5px] select-none">
                         <div class="relative grid grid-cols-2 justify-between items-center py-[5px] w-full caption-1">
                             <div
-                                class="absolute top-1 bottom-1 left-1 w-[calc((100%_-_8px)/2)] rounded-md bg-primary-1 transition-transform duration-300 ease-in-out"
+                                class="absolute top-1 bottom-1 left-1 w-[calc((100%_-_8px)/2)] rounded-md transition-transform duration-300 ease-in-out"
                                 [class.translate-x-0]="announcementActivity === true"
-                                [class.bg-primary-1]="announcementActivity === true"
+                                [class.bg-leaf-green]="announcementActivity === true"
                                 [class.translate-x-[100%]]="announcementActivity === false"
                                 [class.bg-pastel-red]="announcementActivity === false"
                             ></div>

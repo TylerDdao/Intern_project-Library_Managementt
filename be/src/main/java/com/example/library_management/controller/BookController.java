@@ -1,6 +1,6 @@
 package com.example.library_management.controller;
 
-import com.example.library_management.dto.request.BookRequest;
+import com.example.library_management.dto.request.book.BookRequest;
 import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.dto.response.book.BookResponse;
 import com.example.library_management.service.book.CreateBookService;
@@ -9,7 +9,6 @@ import com.example.library_management.service.book.GetBookService;
 import com.example.library_management.service.book.UpdateBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

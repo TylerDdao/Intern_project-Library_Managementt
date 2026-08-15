@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
 import { BrowseBooks } from './pages/browse-books/browse-books';
 import { Login } from './pages/login/login';
-import { authGuard, onDev } from './guards/auth-guard';
+import { authGuard, onDev, rootOnly } from './guards/auth-guard';
 import { Signup } from './pages/signup/signup';
 import { ForgotPassword } from './pages/forgot-password/forgot-password';
 import { BrowsePosts } from './pages/browse-posts/browse-posts';
@@ -56,14 +56,14 @@ export const routes: Routes = [
     { path: 'books-management', component: BooksManagement, canActivate: [authGuard(['UPDATE_BOOK', 'DELETE_BOOK'])]},
     { path: 'borrows-management', component: BorrowsManagement, canActivate: [authGuard(['GET_BORROW_MULTI', 'UPDATE_BORROW', 'DELETE_BORROW'])]},
     { path: 'users-management', component: UsersManagement, canActivate: [authGuard(['UPDATE_USER_ROLE', 'UPDATE_USER_MULTI', 'DELETE_USER_MULTI'])]},
-    { path: 'logs-management', component: LogsManagement, canActivate: [onDev()]},
-    { path: 'announcements-management', component: AnnouncementsManagementPage, canActivate: [onDev()]},
+    { path: 'logs-management', component: LogsManagement, canActivate: [authGuard(["EXPORT_LOGS"])]},
+    { path: 'announcements-management', component: AnnouncementsManagementPage, canActivate: [authGuard(["ANNOUNCEMENT_MANAGEMENT"])]},
 
     // { path: ''}
     { path: 'unauthorized', component: UnauthorizedPage},
     { path: 'on-dev', component: OnDevPage},
 
-    {path: 'test', component: TestPage},
+    {path: 'test', component: TestPage, canActivate: [rootOnly()]},
 
     { path: '**', component: NotFound },
     

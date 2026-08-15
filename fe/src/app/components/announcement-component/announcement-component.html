@@ -29,7 +29,7 @@
                 }
             }
             <div class="flex items-center space-x-[10px]">
-                <div><span class="material-symbols-outlined">{{announcement.type}}</span></div>
+                <div class="select-none"><span class="material-symbols-outlined">{{announcement.type}}</span></div>
                 <div>
                     @if (!isLangAvailable(langService.currentLang)) {
                         <small class="text-tomato-red">{{"announcement.This-language-is-not-available-for-this-announcement/,-showing-announcement-in-Vietnamese"|translate}}</small>

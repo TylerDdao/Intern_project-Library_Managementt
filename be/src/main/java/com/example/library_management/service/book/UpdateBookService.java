@@ -1,6 +1,6 @@
 package com.example.library_management.service.book;
 
-import com.example.library_management.dto.request.BookRequest;
+import com.example.library_management.dto.request.book.BookRequest;
 import com.example.library_management.dto.response.book.BookResponse;
 import com.example.library_management.model.Book;
 import com.example.library_management.model.Genre;
@@ -9,7 +9,6 @@ import com.example.library_management.repository.GenreRepository;
 import com.example.library_management.util.AuditLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;

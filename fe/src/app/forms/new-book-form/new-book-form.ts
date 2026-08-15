@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, Inject, Output, PLATFORM_ID } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { GenreService } from '../../services/genre-service/genre-service';
 import { Genre } from '../../models/genre';
@@ -15,7 +15,7 @@ import { Book } from '../../models/book';
 
 @Component({
   selector: 'app-new-book-form',
-  imports: [ReactiveFormsModule, TranslateModule, PagesComponent, LoadingComponent],
+  imports: [ReactiveFormsModule, TranslateModule, PagesComponent, LoadingComponent, FormsModule],
   templateUrl: './new-book-form.html',
   styleUrl: './new-book-form.css',
 })
@@ -35,14 +35,27 @@ export class NewBookForm {
   }
   chosenGenres: Genre[] = []
 
-  isLoading:boolean = false
-  isCreatingBook: boolean = false
+  isLoading: {[key:string]: boolean} = {
+    "createBook": false,
+    "loadGenres": false,
+    "loadSearch": false
+  }
 
   isValid: { [key: string]: boolean } = {
     title: true,
     author: true,
     copies: true
   };
+
+  query: string = ''
+  isSearch: boolean = false
+  resultGenres: Genre[] = []
+  resultGenresPage: Page = {
+    first: true,
+    last: true,
+    number: 0,
+    totalPages: 1
+  }
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -68,19 +81,19 @@ export class NewBookForm {
   }
 
   fetchGenre(page: Page = this.genresPage){
-    this.isLoading=true;
+    this.isLoading["loadGenres"]=true;
     this.genreService.getAllGenres(page.number).subscribe({
       next: (data: any)=>{
         if(data.code == "200"){
           this.genres = data.data.content
           this.cdr.markForCheck();
         }
-        this.isLoading=false
+        this.isLoading["loadGenres"]=false
         this.cdr.markForCheck()
       },
       error: (err:HttpErrorResponse)=>{
         errorNoti(err, this.translate)
-        this.isLoading=false
+        this.isLoading["loadGenres"]=false
         this.cdr.markForCheck()
       }
     })
@@ -98,8 +111,7 @@ export class NewBookForm {
       return;
     }
 
-    this.isLoading = true;
-    this.isCreatingBook = true;
+    this.isLoading["createBook"] = true;
 
     const bookData: Book = {
       id: 0, // Backend should generate the real ID
@@ -111,8 +123,7 @@ export class NewBookForm {
     this.bookService.createBook(bookData).subscribe({
       next: (data: any) => {
         if (data.code !== '200') {
-          this.isLoading = false;
-          this.isCreatingBook = false;
+          this.isLoading["createBook"] = false;
           return;
         }
         const savedBook: Book = data.data;
@@ -121,8 +132,7 @@ export class NewBookForm {
           alert(message)
           this.onChange.emit();
           this.close();
-          this.isLoading = false;
-          this.isCreatingBook = false;
+          this.isLoading["createBook"] = false;
           return;
         }
         this.bookService.uploadBookCover(savedBook.id, this.selectedFile).subscribe({
@@ -133,21 +143,18 @@ export class NewBookForm {
               this.onChange.emit();
               this.close();
             } else {
-              this.isLoading = false;
-              this.isCreatingBook = false;
+              this.isLoading["createBook"] = false;
             }
           },
           error: (err: HttpErrorResponse) => {
             errorNoti(err, this.translate);
-            this.isLoading = false;
-            this.isCreatingBook = false;
+            this.isLoading["createBook"] = false;
           }
         });
       },
       error: (err: HttpErrorResponse) => {
         errorNoti(err, this.translate);
-        this.isLoading = false;
-        this.isCreatingBook = false;
+        this.isLoading["createBook"] = false;
       }
     });
   }
@@ -193,6 +200,32 @@ export class NewBookForm {
         
       });
     }
+  }
+
+  handleSearchGenres(){
+    if(this.query === '') return
+    this.isLoading["loadSearch"] = true
+    this.genreService.getGenresByName(this.query, this.genresPage.number).subscribe({
+      next: (data:any)=>{
+        if(data.code == "200"){
+          this.resultGenres = data.data.content
+          this.resultGenresPage = data.data
+          this.isSearch = true
+        }
+        this.isLoading["loadSearch"] = false
+        this.cdr.markForCheck();
+      },
+      error: (err:HttpErrorResponse)=>{
+        errorNoti(err, this.translate)
+        this.isLoading["loadSearch"] = false;
+      }
+    })
+  }
+
+  handleClearSearch(){
+    this.isSearch = false
+    this.query = '';
+    this.cdr.markForCheck();
   }
 
 }

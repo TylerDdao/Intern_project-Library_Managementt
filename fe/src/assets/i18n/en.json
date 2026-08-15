@@ -372,7 +372,10 @@
     "Status": "Status",
     "Active-status": "Active status",
     "Link": "Link",
-    "Link-text": "Link text"
+    "Link-text": "Link text",
+    "Info":"Info",
+    "Warning": "Warning",
+    "Error": "Error"
   },
   "featuresManagement": {
     "Unassign-all": "Unassign all",

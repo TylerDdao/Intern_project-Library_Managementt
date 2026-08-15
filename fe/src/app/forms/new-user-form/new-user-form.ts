@@ -83,10 +83,9 @@ export class NewUserForm {
         this.isSendingVerificationEmail = false;
         this.cdr.markForCheck();
       },
-      error: (err)=>{
-        const message = this.translate.instant("verification.There-is-an-error-while-sending-verification-code");
-        alert(message)
-        console.error(err)
+      error: (err:HttpErrorResponse)=>{
+        errorNoti(err, this.translate)
+        this.isSendingVerificationEmail = false;
       }
     })
     this.cdr.markForCheck();
@@ -119,9 +118,7 @@ export class NewUserForm {
         }
       },
       error: (err)=>{
-        const message = this.translate.instant("verification.There-is-an-error-while-verifying-your-email");
-        alert(message)
-        console.error(err)
+        errorNoti(err, this.translate)
       }
     })
   }
@@ -144,7 +141,9 @@ export class NewUserForm {
         }
         this.cdr.markForCheck();
       },
-      error: (err:HttpErrorResponse) => console.error(err)
+      error: (err:HttpErrorResponse) => {
+        errorNoti(err, this.translate)
+      }
     });
   }
 

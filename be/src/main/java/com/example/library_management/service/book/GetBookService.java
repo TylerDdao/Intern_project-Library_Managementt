@@ -1,6 +1,5 @@
 package com.example.library_management.service.book;
 
-import com.example.library_management.dto.response.BorrowResponse;
 import com.example.library_management.dto.response.book.BookResponse;
 import com.example.library_management.model.Book;
 import com.example.library_management.model.Borrow;
@@ -8,9 +7,7 @@ import com.example.library_management.repository.BookRepository;
 import com.example.library_management.repository.BorrowRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +16,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
