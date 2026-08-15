@@ -30,8 +30,9 @@
     }
 
     .posts-scrolling-area{
-        height: 65vh;
-        overflow-y: scroll;
+        /* height: 65vh; */
+        overflow-y: auto;
+        height: 80dvh;
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -39,13 +40,14 @@
 }
 
 @media (max-width: 1023px) {
-    .container{
-        padding: 20px;
-        /* display: grid;
-        grid-template-rows: 1fr 1fr; */
+    .book-page-container{
+        padding: 30px;
+        /* width: 500px; */
         display: flex;
         flex-direction: column;
+        align-items: center;
         gap: 30px;
+        overflow-y: auto;
     }
 
     .book-container{
@@ -72,9 +74,11 @@
 
     .posts-scrolling-area{
         height: 80dvh;
+        padding: 30px;
         overflow-y: scroll;
         display: flex;
         flex-direction: column;
+        align-items: center;
         gap: 10px;
     }
 }

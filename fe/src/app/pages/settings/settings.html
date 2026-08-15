@@ -35,7 +35,7 @@
                                     <span class="material-symbols-outlined text-tomato-red">cancel</span>
                                 }
                             }
-                            <button type="button" class="bg-tomato-red text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px]" (click)="handleResetUsername()">
+                            <button type="button" class="bg-tomato-red text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px] caption-1" (click)="handleResetUsername()">
                                 {{'form.Reset'|translate}}
                             </button>
                         </div>
@@ -55,12 +55,12 @@
                             <input id="email" formControlName="email" placeholder="{{'user.Email' | translate}}" type="text" class="rounded-[10px] w-full"  [class]="isEmailVerified == false || newUserForm.get('email')?.errors?.['email'] || isEmailUsed ? 'bg-pastel-red text-tomato-red' : 'bg-pastel-blue text-dodger-blue'"/>
                             @if (newUserForm.get('email')?.value?.trim() !== user.email.trim() && !isEmailVerified){
                                 @if (!isSendingVerificationEmail) {
-                                    <button type="button" class="bg-steel-blue text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px]" (click)="handleSendVerificationCode()">
+                                    <button type="button" class="bg-steel-blue text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px] caption-1" (click)="handleSendVerificationCode()">
                                         {{'email.Verify'|translate}}
                                     </button>
                                 }
                                 @else {
-                                    <div type="button" class="bg-steel-blue/70 text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px] cursor-not-allowed">
+                                    <div type="button" class="bg-steel-blue/70 text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px] cursor-not-allowed caption-1">
                                         {{'email.Sending'|translate}}...
                                     </div>
                                 }
@@ -68,7 +68,7 @@
                             @else if(isEmailVerified){
                                 <span class="material-symbols-outlined text-leaf-green">check_circle</span>
                             }
-                            <button type="button" class="bg-tomato-red text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px]" (click)="handleResetEmail()">
+                            <button type="button" class="bg-tomato-red text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px] caption-1" (click)="handleResetEmail()">
                                 {{'form.Reset'|translate}}
                             </button>
                         </div>
@@ -100,7 +100,7 @@
                                 [class]="isEmailVerified ? 'bg-pastel-blue/50 text-dodger-blue/50 rounded-[10px] w-full cursor-not-allowed' : 'bg-pastel-blue text-dodger-blue rounded-[10px] w-full'"/>
                                 
                                 @if (!isEmailVerified) {
-                                    <button type="button" class="bg-steel-blue text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px]" (click)="handleVerify()">
+                                    <button type="button" class="bg-steel-blue text-soft-ice rounded-[10px] px-[10px] text-nowrap py-[5px] caption-1" (click)="handleVerify()">
                                         {{'form.Send'|translate}}
                                     </button>
                                 }
@@ -128,7 +128,7 @@
                     </div>
 
                     <div class="my-[30px]">
-                        <button type="button" class="border border-primary-1 text-primary-1 hover:bg-steel-blue px-[10px] py-[5px] hover:text-soft-ice body rounded-[10px] transition ease-in-out" (click)="handleChangePassword()">{{'settings.Change-password'|translate}}</button>
+                        <button type="button" class="border border-primary-1 text-primary-1 hover:bg-steel-blue px-[10px] py-[5px] hover:text-soft-ice caption-1 rounded-[10px] transition ease-in-out" (click)="handleChangePassword()">{{'settings.Change-password'|translate}}</button>
                     </div>
 
                 </form>
@@ -136,8 +136,8 @@
             </div>
 
             <div class="flex space-x-[10px]">
-                <button type="submit" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice body rounded-[10px]">{{'form.Save'|translate}}</button>
-                <button type="button" class="bg-tomato-red px-[10px] py-[5px] text-soft-ice body rounded-[10px]" (click)="handleDeleteUser()">{{'usersManagement.Delete-user'|translate}}</button>
+                <button type="submit" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice rounded-[10px] caption-1">{{'form.Save'|translate}}</button>
+                <button type="button" class="bg-tomato-red px-[10px] py-[5px] text-soft-ice caption-1 rounded-[10px]" (click)="handleDeleteUser()">{{'usersManagement.Delete-user'|translate}}</button>
             </div>
         </div>
     }

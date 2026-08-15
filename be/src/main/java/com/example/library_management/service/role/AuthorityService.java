@@ -1,7 +1,7 @@
 package com.example.library_management.service.role;
 
 import com.example.library_management.dto.request.role.AuthorityRequest;
-import com.example.library_management.dto.response.AuthorityResponse;
+import com.example.library_management.dto.response.auth.AuthorityResponse;
 import com.example.library_management.model.Feature;
 import com.example.library_management.model.Role;
 import com.example.library_management.repository.FeatureRepository;

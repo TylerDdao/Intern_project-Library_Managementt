@@ -186,7 +186,9 @@
   "post": {
     "Edit-post": "Edit post",
     "Subject": "Subject",
-    "Content": "Content"
+    "Content": "Content",
+    "Read-more": "Read more",
+    "See-less": "See less"
   },
   "comment": {
     "Comment-box": "Comment box",
@@ -349,13 +351,15 @@
     "Create-new-book": "Create new book",
     "Upload-book-cover": "Upload book cover",
     "Available-genres": "Available genres",
-    "/": {
-      "WebP-file-only": ".WebP file only"
-    },
+    "/.WebP-file-only": ".WebP file only",
+    "Book-information":"Book information",
     "Please-enter-title": "Please enter title",
     "Please-enter-author": "Please enter author",
     "Please-enter-number-of-copies": "Please enter number of copies",
-    "Book-is-added": "Book is added"
+    "Book-is-added": "Book is added",
+    "File-too-large": "File too large",
+    "Your-file-size-is": "Your file size is",
+    "Maximum-size-of-file": "Maximum size of file"
   },
   "browseBook": {
     "Result": "Result"
@@ -372,7 +376,10 @@
     "Status": "Status",
     "Active-status": "Active status",
     "Link": "Link",
-    "Link-text": "Link text"
+    "Link-text": "Link text",
+    "Info":"Info",
+    "Warning": "Warning",
+    "Error": "Error"
   },
   "featuresManagement": {
     "Unassign-all": "Unassign all",
@@ -397,6 +404,8 @@
     "Announcement-is-posted": "Announcement is posted",
     "Announcements-is-updated": "Announcement is updated",
     "Website-announcements": "Website announcements",
-    "You-must-have-a-link-to-enter-link-text": "You must have a link to enter link text"
+    "You-must-have-a-link-to-enter-link-text": "You must have a link to enter link text",
+    "Showing-on": "Showing on",
+    "Showing-on-all-pages": "Showing on all pages"
   }
 }

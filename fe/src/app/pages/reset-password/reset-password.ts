@@ -10,10 +10,11 @@ import { errorNoti } from '../../util/error-notification';
 import { UserService } from '../../services/user-service/user-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingComponent } from '../../components/loading-component/loading-component';
+import { LanguageSelector } from "../../components/language-selector/language-selector";
 
 @Component({
   selector: 'app-reset-password',
-  imports: [TranslateModule, ReactiveFormsModule, NavbarComponent, LoadingComponent],
+  imports: [TranslateModule, ReactiveFormsModule, NavbarComponent],
   templateUrl: './reset-password.html',
   styleUrl: './reset-password.css',
 })
@@ -61,7 +62,7 @@ export class ResetPassword {
             this.isCodeCorrect = true;
           }
           else{
-            this.isCodeCorrect = false;
+            this.router.navigate(["/unauthorized"])
           }
           this.cdr.markForCheck()
         },

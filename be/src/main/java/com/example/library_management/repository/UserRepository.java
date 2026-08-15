@@ -43,4 +43,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
         OR LOWER(r.name) LIKE LOWER(CONCAT('%', :q, '%'))
     """)
     Page<User> findBySearchQuery(@Param("q") String query, Pageable pageable);
+
+    long countByRole_NameAndIsDeletedFalse(String roleName);
 }

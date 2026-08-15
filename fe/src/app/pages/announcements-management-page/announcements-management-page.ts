@@ -131,7 +131,6 @@ export class AnnouncementsManagementPage {
               ...a
             }));
 
-            this.handleResetPreview();
             this.cdr.markForCheck();
           }
         });
@@ -301,6 +300,7 @@ export class AnnouncementsManagementPage {
               }));
 
               this.handleResetPreview();
+              this.selectedLocation = [];
 
               this.cdr.markForCheck();
             }
@@ -319,8 +319,17 @@ export class AnnouncementsManagementPage {
 
   ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
-      this.announcements = this.announcementService.getAnnouncements()
-      this.announcementsList = this.announcementService.getAnnouncements();
+      this.announcements = this.announcementService.getAnnouncements();
+
+      this.announcementService.loadAnnouncements(true).subscribe({
+        next: (announcements) => {
+          this.announcementsList = announcements;
+          this.cdr.markForCheck();
+        },
+        error: (err: HttpErrorResponse) => {
+          errorNoti(err, this.translate);
+        }
+      });
       this.announcementForm.get('subject_vi')?.valueChanges.subscribe(() => {
         this.isValid["subject"] = true
       });

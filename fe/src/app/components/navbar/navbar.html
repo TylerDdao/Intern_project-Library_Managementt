@@ -1,4 +1,4 @@
-<nav class="sticky top-0 left-0 min-w-screen z-50 p-4 bg-steel-blue text-white">
+<nav class="sticky top-0 left-0 z-50 p-4 bg-steel-blue text-white">
     <div class="flex justify-between items-center space-x-[10px]">
         @if (validateUser) {
             <div class="pages-container">
@@ -30,7 +30,7 @@
 
             <div class="border border-white mx-[10px] h-[50px]"></div> 
 
-            <button class="border border-soft-ice p-[10px] rounded-[10px] caption-1 font-bold" (click)="handleLogout()">{{"login.Logout"|translate}}</button>
+            <button class="select-none border border-tomato-red bg-white text-tomato-red hover:bg-tomato-red hover:text-soft-ice p-[10px] rounded-[10px] caption-1 font-bold" (click)="handleLogout()">{{"login.Logout"|translate}}</button>
         </div>
 
         <div class="mobile-setting-icon lg:hidden select-none ">
@@ -40,7 +40,7 @@
         }
         @else {
             <div class="flex items-center justify-between w-full">
-                <h1 class="font-bold">Library Management System</h1>
+                <div class="select-none cursor-pointer" (click)="router.navigate(['/login'])"><h1 class="font-bold ">Library Management System</h1></div>
                 <app-language-selector></app-language-selector>
             </div>
         }
@@ -59,14 +59,14 @@
         </div>
 
         <div class="mobile-setting-container">
-            <div class="flex items-center space-x-[5px] select-none cursor-pointer" routerLink='/settings'>
+            <div class="flex items-center space-x-[5px] select-none cursor-pointer group bg-white text-primary-1 px-[10px] py-[5px] rounded-[10px] hover:bg-primary-1 hover:text-soft-ice transition ease-in-out"  routerLink='/settings'>
                 <span class="material-symbols-outlined icon-size">account_circle</span>
                 <div>
                     <h1 class="caption-1">{{user?.fullName}}</h1>
                     <div class="bg-cool-gray w-fit px-[10px] py-[3px] caption-2 rounded-3xl">{{user?.role?.name?.replace("ROLE_","")}}</div>
                 </div>
             </div>
-            <button class="border border-soft-ice p-[10px] rounded-[10px] caption-1 font-bold" (click)="handleLogout()">"login.Logout"|translate</button>
+            <button class="p-[10px] rounded-[10px] caption-1 font-bold border border-tomato-red bg-white text-tomato-red hover:bg-tomato-red hover:text-soft-ice transition ease-in-out select-none" (click)="handleLogout()">{{"login.Logout"|translate}}</button>
         </div>
     </div>
 </nav>

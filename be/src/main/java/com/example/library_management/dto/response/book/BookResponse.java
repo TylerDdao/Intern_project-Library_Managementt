@@ -1,6 +1,6 @@
 package com.example.library_management.dto.response.book;
 
-import com.example.library_management.dto.response.GenreResponse;
+import com.example.library_management.dto.response.genre.GenreResponse;
 import com.example.library_management.model.Book;
 import com.example.library_management.model.Genre;
 import lombok.AllArgsConstructor;

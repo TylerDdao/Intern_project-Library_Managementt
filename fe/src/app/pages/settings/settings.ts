@@ -195,7 +195,7 @@ export class Settings{
       return;
     }
 
-    if(this.user.email.trim().toLocaleLowerCase() !== email?.trim().toLocaleLowerCase()){
+    if(this.user.email.trim().toLocaleLowerCase() !== email?.trim().toLocaleLowerCase() && this.isEmailVerified !== true){
       this.isEmailVerified = false;
       return;
     }

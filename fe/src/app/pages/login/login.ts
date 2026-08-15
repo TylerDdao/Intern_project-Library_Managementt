@@ -34,6 +34,8 @@ export class Login {
   announcements: Announcement[] = []
   handleCloseAnnouncement(id: number) {
     this.announcementService.closeAnnouncement(id);
+    this.announcements = this.announcementService.getAnnouncements();
+    this.cdr.markForCheck();
   }
 
   login(username: string, password: string){

@@ -19,11 +19,8 @@
         justify-items: center;
         align-items: center;
         overflow-y: auto;
-        padding-left: 10px;
-        padding-right: 10px;
+        padding: 10px;
         min-height: 0;
-        padding-bottom: 10px;
-        padding-top: 10px;
     }
 
     .search-container{
@@ -44,6 +41,7 @@
         gap: 10px;
         max-height: 80dvh;
         width: calc(100dvw - 20px);
+        overflow-y: auto;
         /* align-items: center; */
     }
 
@@ -54,11 +52,8 @@
         justify-items: center;
         align-items: center;
         overflow-y: auto;
-        padding-left: 10px;
-        padding-right: 10px;
+        padding: 10px;
         min-height: 0;
-        padding-bottom: 10px;
-        padding-top: 10px;
     }
     .search-container{
         display: flex;

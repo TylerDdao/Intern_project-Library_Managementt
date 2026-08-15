@@ -22,13 +22,12 @@ import { errorNoti } from '../../util/error-notification';
 })
 export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
   @Input({ required: true }) post!: Post;
-  @Input() accessible:boolean = true;
+  // @Input() editable:boolean | null = null
   @Output() onLikeToggled = new EventEmitter<Post>();
 
   bookCover: string = '';
   isOpenComment:boolean = false;
   comments!: Comment[]
-  private router = inject(Router);
 
   
   private langSubscription!: Subscription;
@@ -40,9 +39,29 @@ export class PostCardComponent implements OnChanges, OnInit, OnDestroy {
     private translate: TranslateService,
     private cdr: ChangeDetectorRef,
     private postService: PostService,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private router: Router
   ) {}
   backendUrl = environment.apiUrl;
+  isReadMore:boolean = false
+  isContentLong:boolean = false;
+
+  @ViewChild('postContent')
+  postContent!: ElementRef<HTMLElement>;
+
+  ngAfterViewInit() {
+    this.checkContentHeight();
+  }
+
+  checkContentHeight() {
+    const element = this.postContent.nativeElement;
+
+    this.isContentLong = element.scrollHeight > element.clientHeight;
+  }
+
+  toggleReadMore(){
+    this.isReadMore = !this.isReadMore
+  }
 
   handleChange(commentCount:number){
     if(this.post.commentCount){

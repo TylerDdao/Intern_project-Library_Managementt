@@ -2,8 +2,7 @@ package com.example.library_management.controller;
 
 import com.example.library_management.dto.request.genre.GenreRequest;
 import com.example.library_management.dto.response.ApiResponse;
-import com.example.library_management.dto.response.GenreResponse;
-import com.example.library_management.model.Genre;
+import com.example.library_management.dto.response.genre.GenreResponse;
 import com.example.library_management.service.genre.CreateGenreService;
 import com.example.library_management.service.genre.DeleteGenreService;
 import com.example.library_management.service.genre.GetGenreService;

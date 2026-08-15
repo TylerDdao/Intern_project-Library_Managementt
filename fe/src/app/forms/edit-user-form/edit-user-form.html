@@ -119,7 +119,7 @@
                 <select formControlName="role" class="bg-pastel-blue text-dodger-blue rounded-[10px] h-10">
                     @for (role of roles; track role.id) {
                         <option [value]="role.id">
-                            {{ role.name }}
+                            {{ role.name.replace("ROLE_", "") }}
                         </option>
                     }
                 </select>
@@ -128,9 +128,21 @@
     </div>
 
     <div class="flex space-x-[10px]">
-        <button type="submit" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice caption-1 rounded-[10px]">{{'form.Save'|translate}}</button>
+        @if (!isProcessing) {
+            <button type="submit" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice caption-1 rounded-[10px]">{{'form.Save'|translate}}</button>
+        }
+        @else {
+            <button type="button" class="bg-steel-blue/50 px-[10px] py-[5px] text-soft-ice caption-1 rounded-[10px]">{{'form.Processing'|translate}}...</button>
+        }
+        
         @if (deletable) {
-            <button type="button" class="bg-tomato-red px-[10px] py-[5px] text-soft-ice caption-1 rounded-[10px]" (click)="handleDeleteUser()">{{'usersManagement.Delete-user'|translate}}</button>
+            @if (!isDeleting) {
+                <button type="button" class="bg-tomato-red px-[10px] py-[5px] text-soft-ice caption-1 rounded-[10px]" (click)="handleDeleteUser()">{{'usersManagement.Delete-user'|translate}}</button>
+            }
+            @else {
+                <button type="button" class="bg-tomato-red/50 px-[10px] py-[5px] text-soft-ice caption-1 rounded-[10px]">{{'form.Processing'|translate}}...</button>
+            }
+            
         }
         <button type="button" class="border border-tomato-red px-[10px] py-[5px] text-tomato-red caption-1 rounded-[10px]" (click)="close()">{{'form.Cancel'|translate}}</button>
     </div>
@@ -142,6 +154,6 @@
     @if (isLoading) {
     <div class="fixed inset-0 flex items-center justify-center z-99 bg-soft-ice/50">
         <app-loading-component></app-loading-component>
-    </div>  
+    </div>
     }
 </div>

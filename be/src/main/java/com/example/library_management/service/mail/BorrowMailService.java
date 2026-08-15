@@ -92,12 +92,12 @@ public class BorrowMailService {
             penaltyRate = messageSource.getMessage("error.Unknown", null, locale);
         }
         return """
-            <div style="width:100%%; box-sizing:border-box; background:#F3F7F2; border-left:4px solid #5C8D5A; padding:16px 18px; margin:20px 0; border-radius:6px;">
+            <div style="background:#F3F7F2; border-left:4px solid #5C8D5A; padding:16px 18px; margin:20px 0; border-radius:6px;">
                 <div style="font-size:12px;color:#6B7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">%s</div>
-                <div style="display:flex;width:100%%;box-sizing:border-box;">
-                    <img src="%s" style="width:100px;min-width:100px;height:auto;object-fit:cover;border-radius:5px;display:block;"/>
+                <div style="display:flex; align-items:flex-start;">
+                    <img src="%s" style="width:100px;object-fit:cover;border-radius:5px;display:block;"/>
         
-                    <div style="margin-left:10px;flex:1;min-width:0;">
+                    <div style="margin-left:15px; flex:1;">
                         <div style="font-size:17px;font-weight:bold;color:#25343F;">%s</div>
         
                         <div style="font-size:17px;color:#25343F;">%s</div>
@@ -325,7 +325,7 @@ public class BorrowMailService {
                   <div style="font-size:13px;color:#6B7280;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Rappel d'emprunt</div>
                   <h2 style="margin:0 0 20px;color:#25343F;font-size:22px;">%s</h2>
                   <p style="font-size:15px;line-height:1.7;margin:0 0 20px;"><strong>%s</strong> %s</p>
-                  <div>%s</div> 
+                  <div>%s</div>
                   <p style="font-size:14px;line-height:1.7;color:#59636E;margin-top:20px; margin-bottom:20px;">%s</p>
               </div>
         """.formatted(greeting_fr, borrow.getBook().getTitle(), bodyLabel_fr, buildHtmlBorrowCard(borrow, fr), footer_fr);
@@ -376,19 +376,15 @@ public class BorrowMailService {
         String reminder = messageSource.getMessage("email.borrow.created.return.remind", new Object[]{formatter.formatDateTime(borrow.getDueDate(), locale)}, locale);
         String footer = messageSource.getMessage("email.footer", null, locale);
 
-
-        String penaltyFeeAnnounce = messageSource.getMessage("email.borrow.created.penalty.announcement", null, locale);
-
         String html_body = """
               <div style="padding:28px 30px;color:#25343F;">
                   <h2 style="margin:0 0 20px;color:#25343F;font-size:22px;">%s</h2>
                   <p style="font-size:15px;line-height:1.7;margin:0 0 20px;">%s</p>
-                  <div>%s<div>
+                  <div>%s</div>
                   <div style="margin-top:20px; margin-bottom:20px;">%s<div>
-                  <p style="margin:0; font-size:11px; color:#9CA3AF;">%s</p>
                   <p style="font-size:14px;line-height:1.7;color:#59636E;margin-top:20px; margin-bottom:20px;">%s</p>
               </div>
-        """.formatted(greeting, body, buildHtmlBorrowCard(borrow, locale), reminder,penaltyFeeAnnounce, footer);
+        """.formatted(greeting, body, buildHtmlBorrowCard(borrow, locale), reminder, footer);
 
 
         String html = """
@@ -446,7 +442,7 @@ public class BorrowMailService {
                   <div style="font-size:13px;color:#6B7280;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Nhắc nhở mượn sách</div>
                   <h2 style="margin:0 0 20px;color:#25343F;font-size:22px;">%s</h2>
                   <p style="font-size:15px;line-height:1.7;margin:0 0 20px;">%s</p>
-                  <div>%s<div>
+                  <div>%s</div>
                   <p style="font-size:14px;line-height:1.7;color:#59636E;margin-top:20px; margin-bottom:20px;">%s</p>
               </div>
         """.formatted(greeting_vi, bodyLabel_vi, buildHtmlBorrowCard(borrow, vi), footer_vi);
@@ -474,7 +470,7 @@ public class BorrowMailService {
         String html = """
         <!DOCTYPE html>
         <html>
-            <body style="margin:0; padding:0; background:#F4F6F8; font-family:Arial,Helvetica,sans-serif; color:#25343F;">
+            <body style="background:#F4F6F8; font-family:Arial,Helvetica,sans-serif; color:#25343F; margin:0; padding:0;">
                 <div style="max-width:620px; margin:35px auto; background:#FFFFFF; border-radius:12px; overflow:hidden; box-shadow:0 3px 12px rgba(0,0,0,0.08);">
                 <!-- Header -->
                 <div>%s</div>

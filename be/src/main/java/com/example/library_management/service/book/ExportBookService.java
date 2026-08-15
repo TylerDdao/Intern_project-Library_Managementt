@@ -1,12 +1,9 @@
 package com.example.library_management.service.user;
 
-import com.example.library_management.dto.request.BookRequest;
-import com.example.library_management.dto.request.user.UserRequest;
+import com.example.library_management.dto.request.book.BookRequest;
 import com.example.library_management.model.Book;
 import com.example.library_management.model.Genre;
-import com.example.library_management.model.User;
 import com.example.library_management.repository.BookRepository;
-import com.example.library_management.repository.UserRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;

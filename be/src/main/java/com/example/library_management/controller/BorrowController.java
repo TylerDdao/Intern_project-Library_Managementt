@@ -1,8 +1,8 @@
 package com.example.library_management.controller;
 
-import com.example.library_management.dto.request.BorrowRequest;
+import com.example.library_management.dto.request.borrow.BorrowRequest;
 import com.example.library_management.dto.response.ApiResponse;
-import com.example.library_management.dto.response.BorrowResponse;
+import com.example.library_management.dto.response.borrow.BorrowResponse;
 import com.example.library_management.service.borrow.CreateBorrowService;
 import com.example.library_management.service.borrow.GetBorrowService;
 import com.example.library_management.service.borrow.UpdateBorrowService;

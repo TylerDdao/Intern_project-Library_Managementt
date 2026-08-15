@@ -1,9 +1,7 @@
 package com.example.library_management.service.feature;
 
-import com.example.library_management.dto.response.FeatureResponse;
-import com.example.library_management.dto.response.RoleResponse;
+import com.example.library_management.dto.response.feature.FeatureResponse;
 import com.example.library_management.model.Feature;
-import com.example.library_management.model.Role;
 import com.example.library_management.repository.FeatureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,8 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class GetFeatureService {

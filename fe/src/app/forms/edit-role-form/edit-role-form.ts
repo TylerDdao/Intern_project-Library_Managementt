@@ -8,11 +8,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
 import { forkJoin } from 'rxjs';
 import { arraysHaveSameElements } from '../../util/array-compare';
+import { LoadingComponent } from "../../components/loading-component/loading-component";
 
 
 @Component({
   selector: 'app-edit-role-form',
-  imports: [TranslateModule, ReactiveFormsModule],
+  imports: [TranslateModule, ReactiveFormsModule, LoadingComponent],
   templateUrl: './edit-role-form.html',
   styleUrl: './edit-role-form.css',
 })
@@ -29,6 +30,10 @@ export class EditRoleForm implements OnChanges {
   removeFeatures: Feature[] =[];
 
   isSaved: boolean = false;
+
+  isProcessing:boolean = false
+  isDeleting:boolean = false
+  isLoading:boolean = false;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -61,7 +66,7 @@ export class EditRoleForm implements OnChanges {
     }
     if(changes["role"] && this.role){
       this.newRoleForm.patchValue({
-        roleName: this.role.name,
+        roleName: this.role.name.replace("ROLE_", ""),
         defaultRole: this.role.default
       })
   }
@@ -76,15 +81,21 @@ export class EditRoleForm implements OnChanges {
     const message = this.translate.instant("form.Confirm-delete")
     const option = confirm(message + "?")
     if(option){
+      this.isDeleting=true
+      this.isLoading = true
       this.roleService.deleteRole(this.role).subscribe({
         next: (data: any)=>{
           if(data.code == "200"){
             this.save(true)
           }
+          this.isDeleting=false
+          this.isLoading = false
         },
         error:(err:HttpErrorResponse)=>{
           errorNoti(err, this.translate)
           this.save(false);
+          this.isDeleting=false
+          this.isLoading = false
         }
       })
     }
@@ -112,12 +123,21 @@ export class EditRoleForm implements OnChanges {
   onSubmit(){
     if(!this.role) return;
 
+    
+
     const requests = [];
 
     const { roleName, defaultRole } = this.newRoleForm.value;
+    if (!roleName) {
+      return;
+    }
 
-    if(roleName && this.role.name !== roleName || this.role.default !== defaultRole){
+    this.isProcessing = true;
+    this.isLoading = true
+
+    if((roleName && this.role.name !== roleName || this.role.default !== defaultRole)){
       this.role.default = defaultRole ?? false;
+      this.role.name = roleName;
 
       requests.push(
         this.roleService.updateRole(this.role)
@@ -138,6 +158,8 @@ export class EditRoleForm implements OnChanges {
 
     if(requests.length === 0){
       this.save(false);
+      this.isProcessing = false;
+      this.isLoading = false
       return;
     }
 
@@ -145,10 +167,14 @@ export class EditRoleForm implements OnChanges {
       next: (responses:any[]) => {
         const success = responses.every(res => res.code === "200");
         this.save(success);
+        this.isProcessing=false;
+        this.isLoading = false
       },
       error:(err:HttpErrorResponse)=>{
         errorNoti(err, this.translate);
-        this.save(false);
+        // this.save(false);
+        this.isProcessing=false;
+        this.isLoading = false
       }
     });
   }

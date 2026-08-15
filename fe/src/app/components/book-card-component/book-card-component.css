@@ -9,6 +9,7 @@
         padding: 5px;
         border-radius: 10px;
         width: 100%;
+        height: auto;
         min-width: 0;
     }
 
@@ -23,6 +24,7 @@
 
     .book-cover-container{
         height: 250px;
+        object-fit: cover;
         overflow-y: hidden;
         
     }
@@ -30,7 +32,8 @@
     .book-cover{
         /* width: 200px; */
         border-radius: 10px;
-        height: 250px;
+        height: 20dvh;
+        
         max-width: 250px;
     }
 }
@@ -50,7 +53,7 @@
 
     .book-cover {
         border-radius: 10px;
-        height: 200px;
+        height: 20dvh;
         max-width: 200px;
     }
 

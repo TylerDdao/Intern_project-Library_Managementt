@@ -37,6 +37,8 @@ export class EditUserForm implements OnChanges {
   isLoading:boolean = false
   
   isEmailUsed: boolean = false;
+  isProcessing:boolean = false
+  isDeleting:boolean = false
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -59,6 +61,7 @@ export class EditUserForm implements OnChanges {
     const message= this.translate.instant("usersManagement.Delete-user")
     const option = confirm(message + "?")
     if(!option) return
+    this.isDeleting = true
     this.isLoading=true
     this.userService.deleteUser(this.user)
     .pipe(
@@ -72,9 +75,11 @@ export class EditUserForm implements OnChanges {
         if (data.code === "200") {
           this.save(true);
         }
+        this.isDeleting = false;
       },
       error: (err: HttpErrorResponse) => {
         errorNoti(err, this.translate);
+        this.isDeleting = false
       }
     });
   }

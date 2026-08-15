@@ -1,7 +1,7 @@
 package com.example.library_management.service.role;
 
 import com.example.library_management.dto.request.role.RoleRequest;
-import com.example.library_management.dto.response.RoleResponse;
+import com.example.library_management.dto.response.role.RoleResponse;
 import com.example.library_management.model.Role;
 import com.example.library_management.repository.RoleRepository;
 import com.example.library_management.util.AuditLogger;

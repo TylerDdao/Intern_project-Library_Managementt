@@ -1,6 +1,6 @@
 @media (min-width: 1024px) {
-    .container{
-        padding: 50px;
+    .browse-posts-container{
+        padding: 30px;
         display: flex;
         justify-content: space-between;
         align-items:start;
@@ -13,6 +13,8 @@
         flex-direction: column;
         width: 100%;
         gap: 30px;
+        height: 80dvh;
+        overflow-y: auto;
     }
     
     .create-post-button{
@@ -29,16 +31,22 @@
         padding: 20px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        align-items:start;
+        justify-content: center;
+        align-items:center;
+        width: 100%;
         gap:30px
     }
 
     .posts-area{
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow-y: auto;
+        height: 70dvh;
         width: 100%;
         gap: 30px;
+        padding: 10px;
     }
 
     .side-menu{

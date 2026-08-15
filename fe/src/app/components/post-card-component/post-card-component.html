@@ -1,6 +1,6 @@
 
 @if (post) {
-    <div class="container">
+    <div class="post-card-container">
         <div class="post-card">
             <div class="user-info-container">
                 <div>
@@ -8,7 +8,6 @@
                     <div class="caption-2">{{formattedPostedAt}}</div>
                 </div>
             </div>
-
             <div class="book-info-container">
                 <div class="flex space-x-[5px] items-start">
                     <img [src]="backendUrl + '/book-covers/' + getWebpCover(post.book.coverUrl)" class="book-cover" (error)="onImageError($event)"/>
@@ -36,10 +35,20 @@
                 </div>
             </div>
             <div class="post-subject-container">
-                <h1 class="header font-bold">{{post.subject}}</h1>
+                <h1 class="headline">{{post.subject}}</h1>
             </div>
             <div class="post-content-container">
-                <h1 class="body">{{post.content}}</h1>
+                <div #postContent [class.line-clamp-5]="!isReadMore">
+                    <h1 class="">{{post.content}}</h1>
+                </div>
+                @if (isContentLong) {
+                    @if (isReadMore) {
+                        <div class="underline cursor-pointer select-none" (click)="toggleReadMore()">{{"post.See-less"|translate}}</div>
+                    }
+                    @else {
+                        <div class="underline cursor-pointer select-none" (click)="toggleReadMore()">{{"post.Read-more"|translate}}</div>
+                    }
+                }
             </div>
 
             <div class="post-react-container select-none">
@@ -55,12 +64,10 @@
             </div>
 
             @if (post.editable) {
-            
                 <button class="edit-button cursor-pointer select-none" (click)="handleEditPost()">
                     <span class="material-symbols-outlined">edit</span>
-                    <h1 class="headline">{{'post.Edit-post'|translate}}</h1>
+                    <h1 class="caption-1">{{'post.Edit-post'|translate}}</h1>
                 </button>
-            
             }
         </div>
         <div class="comment-box-overlay" [class.inactive]="!isOpenComment">

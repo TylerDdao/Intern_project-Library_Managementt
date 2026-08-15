@@ -2,21 +2,14 @@ package com.example.library_management.controller;
 
 import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.dto.request.user.UserRequest;
-import com.example.library_management.dto.response.UserResponse;
-import com.example.library_management.model.User;
+import com.example.library_management.dto.response.user.UserResponse;
 import com.example.library_management.service.user.*;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.ByteArrayInputStream;
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")

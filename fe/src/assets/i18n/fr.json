@@ -186,7 +186,9 @@
   "post": {
     "Edit-post": "Modifier la publication",
     "Subject": "Sujet",
-    "Content": "Contenu"
+    "Content": "Contenu",
+    "Read-more": "Lire la suite",
+    "See-less": "Voir moins"
   },
   "comment": {
     "Comment-box": "Espace commentaires",
@@ -349,13 +351,15 @@
     "Create-new-book": "Créer un nouveau livre",
     "Upload-book-cover": "Téléverser la couverture du livre",
     "Available-genres": "Genres disponibles",
-    "/": {
-      "WebP-file-only": "Fichier .WebP uniquement"
-    },
+    "/.WebP-file-only": "Fichier .WebP uniquement",
+    "Book-information": "Informations sur le livre",
     "Please-enter-title": "Veuillez entrer le titre",
     "Please-enter-author": "Veuillez entrer l'auteur",
     "Please-enter-number-of-copies": "Veuillez entrer le nombre d'exemplaires",
-    "Book-is-added": "Le livre a été ajouté"
+    "Book-is-added": "Le livre a été ajouté",
+    "File-too-large": "Fichier trop volumineux",
+    "Your-file-size-is": "La taille de votre fichier est",
+    "Maximum-size-of-file": "Taille maximale du fichier"
   },
   "browseBook": {
     "Result": "Résultat"
@@ -372,7 +376,10 @@
     "Status": "Statut",
     "Active-status": "Statut actif",
     "Link": "Lien",
-    "Link-text": "Texte du lien"
+    "Link-text": "Texte du lien",
+    "Info": "Info",
+    "Warning": "Avertissement",
+    "Error": "Erreur"
   },
   "featuresManagement": {
     "Unassign-all": "Tout désattribuer",
@@ -397,6 +404,8 @@
     "Announcement-is-posted": "L'annonce a été publiée",
     "Announcements-is-updated": "L'annonce a été mise à jour",
     "Website-announcements": "Annonces du site",
-    "You-must-have-a-link-to-enter-link-text": "Vous devez fournir un lien pour saisir le texte du lien"
+    "You-must-have-a-link-to-enter-link-text": "Vous devez fournir un lien pour saisir le texte du lien",
+    "Showing-on": "Affiché sur",
+    "Showing-on-all-pages": "Affiché sur toutes les pages"
   }
 }

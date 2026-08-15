@@ -15,7 +15,7 @@
             @if (role.name == "ROOT") {
                 <div class="w-full py-[5px] px-[10px] w-[300px] border border-primary-1/70 text-primary-1/70 rounded-[10px] cursor-not-allowed">
                     <div class="flex space-x-[5px]">
-                        <div class="body font-bold select-none">{{role.name}}</div>
+                        <div class="body font-bold select-none">{{role.name.replace("ROLE_", "")}}</div>
                         <span class="material-symbols-outlined [font-variation-settings:'FILL'_1,'wght'_400,'GRAD'_0,'opsz'_24] text-primary-1/70 ">star</span>
                     </div>
                     <div>{{getUserCount(role.name)}} {{'roleList.members' | translate}}</div>
@@ -25,7 +25,7 @@
             @else {
                 <div class="select-none cursor-pointer w-full py-[5px] px-[10px] w-[300px] border border-primary-1 text-primary-1 rounded-[10px] hover:bg-primary-1 hover:text-soft-ice ease-in-out transition" (click)="choose(role)">
                     <div class="flex space-x-[5px] items-center">
-                        <div class="body font-bold select-none">{{role.name}}</div>
+                        <div class="body font-bold select-none">{{role.name.replace("ROLE_", "")}}</div>
                         @if(role.default){
                             <small class="px-[10px] rounded-3xl bg-cool-gray text-deep-charcoal">{{"role.Default-role" | translate}}</small>
                         }
@@ -40,7 +40,7 @@
             @if (role.name == "ROOT") {
                 <div class="w-full py-[5px] px-[10px] w-[300px] border border-primary-1/70 text-primary-1/70 rounded-[10px] cursor-not-allowed">
                     <div class="flex space-x-[5px]">
-                        <div class="body font-bold select-none">{{role.name}}</div>
+                        <div class="body font-bold select-none">{{role.name.replace("ROLE_", "")}}</div>
                         <span class="material-symbols-outlined [font-variation-settings:'FILL'_1,'wght'_400,'GRAD'_0,'opsz'_24] text-primary-1/70 ">star</span>
                     </div>
                     <div>{{getUserCount(role.name)}} {{'roleList.members' | translate}}</div>
@@ -49,7 +49,7 @@
             }
             @else {
                 <div class="select-none cursor-pointer w-full py-[5px] px-[10px] w-[300px] border border-primary-1 text-primary-1 rounded-[10px] hover:bg-primary-1 hover:text-soft-ice ease-in-out transition" (click)="choose(role)">
-                    <div class="body font-bold select-none">{{role.name}}</div>
+                    <div class="body font-bold select-none">{{role.name.replace("ROLE_", "")}}</div>
                     <div>{{getUserCount(role.name)}} {{'roleList.members' | translate}}</div>
                 </div>
             }

@@ -186,7 +186,9 @@
   "post": {
     "Edit-post": "Chỉnh sửa bài viết",
     "Subject": "Chủ đề",
-    "Content": "Nội dung"
+    "Content": "Nội dung",
+    "Read-more": "Đọc thêm",
+    "See-less": "Thu gọn"
   },
   "comment": {
     "Comment-box": "Khung bình luận",
@@ -349,13 +351,15 @@
     "Create-new-book": "Tạo sách mới",
     "Upload-book-cover": "Tải lên ảnh bìa sách",
     "Available-genres": "Các thể loại có sẵn",
-    "/": {
-      "WebP-file-only": "Chỉ chấp nhận tập tin .WebP"
-    },
+    "/.WebP-file-only": "Chỉ chấp nhận tập tin .WebP",
+    "Book-information": "Thông tin sách",
     "Please-enter-title": "Vui lòng nhập tên sách",
     "Please-enter-author": "Vui lòng nhập tên tác giả",
     "Please-enter-number-of-copies": "Vui lòng nhập số lượng bản sao",
-    "Book-is-added": "Đã thêm sách thành công"
+    "Book-is-added": "Đã thêm sách thành công",
+    "File-too-large": "Tập tin quá lớn",
+    "Your-file-size-is": "Kích thước tập tin của bạn là",
+    "Maximum-size-of-file": "Kích thước tập tin tối đa"
   },
   "browseBook": {
     "Result": "Kết quả"
@@ -372,7 +376,10 @@
     "Status": "Trạng thái",
     "Active-status": "Trạng thái hoạt động",
     "Link": "Đường dẫn",
-    "Link-text": "Văn bản hiển thị liên kết"
+    "Link-text": "Văn bản hiển thị liên kết",
+    "Info": "Thông tin",
+    "Warning": "Cảnh báo",
+    "Error": "Lỗi"
   },
   "featuresManagement": {
     "Unassign-all": "Bỏ gán tất cả",
@@ -397,6 +404,8 @@
     "Announcement-is-posted": "Thông báo đã được đăng",
     "Announcements-is-updated": "Thông báo đã được cập nhật",
     "Website-announcements": "Thông báo website",
-    "You-must-have-a-link-to-enter-link-text": "Bạn phải có đường dẫn trước khi nhập văn bản hiển thị liên kết"
+    "You-must-have-a-link-to-enter-link-text": "Bạn phải có đường dẫn trước khi nhập văn bản hiển thị liên kết",
+    "Showing-on": "Hiển thị tại",
+    "Showing-on-all-pages": "Hiển thị trên tất cả các trang"
   }
 }

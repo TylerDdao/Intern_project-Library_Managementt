@@ -8,24 +8,24 @@
 
             <form [formGroup]="newGenreForm" id="newGenreForm" (ngSubmit)="onSubmit()">
                 <div class="search-container">
-                    <div class="flex space-x-[10px] items-center w-full">
+                    <div class="flex space-x-[10px] items-center w-full select_none">
                         <input type="text" formControlName="genreName" placeholder="{{'genre.Name'|translate}}" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full"/>
                         <button type="submit" form="newGenreForm" class="px-[10px] text-soft-ice bg-primary-1 rounded-[10px] py-[5px]">{{"list.Add"|translate}}</button>
                     </div>
-                    <button type="button" class="bg-cool-gray p-[5px] rounded-[10px]" (click)="handleClear()">{{"search.Clear"|translate}}</button>
+                    <button type="button" class="bg-cool-gray p-[5px] rounded-[10px] text-nowrap" (click)="handleClear()">{{"search.Clear"|translate}}</button>
                 </div>
             </form>
         </div>
 
         <div class="flex flex-col space-y-[10px]">
             <div class="body font-bold">{{'genresManagement.Available-genres'|translate}}</div>
-            <div class="flex space-x-[10px] items-center">
+            <div class="flex space-x-[10px] items-center select-none">
                 <input type="text" placeholder="{{'search.Search'|translate}}" class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full" [(ngModel)]="query"/>
                 <button class="flex items-center" (click)="handleSearch()"><span class="material-symbols-outlined">search</span></button>
-                <button class="bg-cool-gray p-[5px] rounded-[10px]" (click)="handleClearSearch()">{{"search.Clear"|translate}}</button>
+                <button class="bg-cool-gray p-[5px] rounded-[10px] text-nowrap" (click)="handleClearSearch()">{{"search.Clear"|translate}}</button>
             </div>
             @if (isLoading) {
-                <div class="flex justify-center"><div class="w-10 h-10 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div></div>
+                <div class="flex justify-center"><app-loading-component></app-loading-component></div>
             }
             @else {
                     @if (isSearch) {
@@ -68,7 +68,12 @@
                                     <div class="text-center">{{"list.Empty"|translate}}</div>
                                 }
                                 @else {
-                                    <button class="py-[5px] px-[10px] border border-primary-1 text-primary-1 rounded-[10px] h-fit" (click)="handleMoreGenre()">{{"list.Load-more"|translate}}</button>
+                                    @if (searchGenres.length > 0) {
+                                        <button class="py-[5px] px-[10px] border border-primary-1 text-primary-1 rounded-[10px] h-fit" (click)="handleMoreGenre()">{{"list.Load-more"|translate}}</button>
+                                    }
+                                    @else {
+                                        <div>{{'list.Empty'|translate}}</div>
+                                    }
                                 }
                             }
                         }
@@ -124,7 +129,7 @@
     </div>
     
     <div class="flex space-x-[10px]">
-        <button (click)="save()" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice body rounded-[10px]">{{'form.Save'|translate}}</button>
-        <button class="border border-tomato-red px-[10px] py-[5px] text-tomato-red body rounded-[10px]" (click)="close()">{{'form.Cancel'|translate}}</button>
+        <button (click)="save()" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice caption-1 rounded-[10px]">{{'form.Save'|translate}}</button>
+        <button class="border border-tomato-red px-[10px] py-[5px] text-tomato-red caption-1 rounded-[10px]" (click)="close()">{{'form.Cancel'|translate}}</button>
     </div>
 </div>

@@ -9,10 +9,11 @@ import { UserService } from '../../services/user-service/user-service';
 import { isPlatformBrowser } from '@angular/common';
 import { User } from '../../models/user';
 import { errorNoti } from '../../util/error-notification';
+import { LoadingComponent } from "../../components/loading-component/loading-component";
 
 @Component({
   selector: 'app-new-user-form',
-  imports: [TranslateModule, ReactiveFormsModule],
+  imports: [TranslateModule, ReactiveFormsModule, LoadingComponent],
   templateUrl: './new-user-form.html',
   styleUrl: './new-user-form.css',
 })
@@ -27,6 +28,9 @@ export class NewUserForm {
     private userService: UserService,
     @Inject(PLATFORM_ID) private platformId:Object
   ){}
+
+  isProcessing:boolean = false
+  isLoading:boolean = false;
 
   isPasswordMatch:boolean = true;
   isPasswordValid:boolean = true;
@@ -79,10 +83,9 @@ export class NewUserForm {
         this.isSendingVerificationEmail = false;
         this.cdr.markForCheck();
       },
-      error: (err)=>{
-        const message = this.translate.instant("verification.There-is-an-error-while-sending-verification-code");
-        alert(message)
-        console.error(err)
+      error: (err:HttpErrorResponse)=>{
+        errorNoti(err, this.translate)
+        this.isSendingVerificationEmail = false;
       }
     })
     this.cdr.markForCheck();
@@ -115,9 +118,7 @@ export class NewUserForm {
         }
       },
       error: (err)=>{
-        const message = this.translate.instant("verification.There-is-an-error-while-verifying-your-email");
-        alert(message)
-        console.error(err)
+        errorNoti(err, this.translate)
       }
     })
   }
@@ -140,7 +141,9 @@ export class NewUserForm {
         }
         this.cdr.markForCheck();
       },
-      error: (err:HttpErrorResponse) => console.error(err)
+      error: (err:HttpErrorResponse) => {
+        errorNoti(err, this.translate)
+      }
     });
   }
 
@@ -186,6 +189,8 @@ export class NewUserForm {
       return;
     }
     if(username && fullName && phoneNumber && email && password){
+      this.isProcessing = true
+      this.isLoading = true
       const roleId = role!== null ? role : this.roles.find(role => role.default)?.id;
       let user:User={
         username: username,
@@ -203,10 +208,13 @@ export class NewUserForm {
           if(data.code == "200"){
             this.save(true);
           }
+          this.isProcessing = false
+          this.isLoading = false
         },
         error:(err:HttpErrorResponse)=>{
           errorNoti(err, this.translate)
-          this.save(false)
+          this.isProcessing = false
+          this.isLoading = false
         }
       })
     }
