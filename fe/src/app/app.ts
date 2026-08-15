@@ -47,14 +47,14 @@ export class App implements OnInit {
 
   if (token) {
     if (currentPath === '/' || currentPath === '/login') {
-      this.router.navigate(['/home']);
+      window.location.href = '/home';
     }
 
     return;
   }
 
   if (!isWhitelisted) {
-    this.router.navigate(['/unauthorized']);
+    window.location.href = '/login';
   }
 }
 }
