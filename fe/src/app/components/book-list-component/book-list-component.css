@@ -1,5 +1,5 @@
 @media (min-width: 1024px) {
-    .container {
+    .book-list-container {
     padding: 30px;
     display: flex;
     flex-direction: column;
@@ -31,7 +31,7 @@
 }
 
 @media (max-width: 1023px) {
-    .container {
+    .book-list-container {
         padding: 30px;
         display: flex;
         flex-direction: column;
@@ -39,8 +39,9 @@
         background: white;
         border-radius: 10px;
         gap: 10px;
-        max-height: 80dvh;
+        /* max-height: 80dvh; */
         width: calc(100dvw - 20px);
+        max-height: calc(100dvh - 20px);
         overflow-y: auto;
         /* align-items: center; */
     }
@@ -51,7 +52,8 @@
         gap: 10px;
         justify-items: center;
         align-items: center;
-        overflow-y: auto;
+        /* overflow-y: auto; */
+        overflow-x: auto;
         padding: 10px;
         min-height: 0;
     }
