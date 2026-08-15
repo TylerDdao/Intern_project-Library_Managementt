@@ -349,13 +349,13 @@
     "Create-new-book": "Create new book",
     "Upload-book-cover": "Upload book cover",
     "Available-genres": "Available genres",
-    "/": {
-      "WebP-file-only": ".WebP file only"
-    },
+    "/.WebP-file-only": ".WebP file only",
+    "Book-information":"Book information",
     "Please-enter-title": "Please enter title",
     "Please-enter-author": "Please enter author",
     "Please-enter-number-of-copies": "Please enter number of copies",
-    "Book-is-added": "Book is added"
+    "Book-is-added": "Book is added",
+    "File-too-large": "File too large"
   },
   "browseBook": {
     "Result": "Result"

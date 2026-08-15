@@ -349,13 +349,15 @@
     "Create-new-book": "Créer un nouveau livre",
     "Upload-book-cover": "Téléverser la couverture du livre",
     "Available-genres": "Genres disponibles",
-    "/": {
-      "WebP-file-only": "Fichier .WebP uniquement"
-    },
+    "/.WebP-file-only": "Fichier .WebP uniquement",
+    "Book-information": "Informations sur le livre",
     "Please-enter-title": "Veuillez entrer le titre",
     "Please-enter-author": "Veuillez entrer l'auteur",
     "Please-enter-number-of-copies": "Veuillez entrer le nombre d'exemplaires",
-    "Book-is-added": "Le livre a été ajouté"
+    "Book-is-added": "Le livre a été ajouté",
+    "File-too-large": "Fichier trop volumineux",
+    "Your-file-size-is": "La taille de votre fichier est",
+    "Maximum-size-of-file": "Taille maximale du fichier"
   },
   "browseBook": {
     "Result": "Résultat"

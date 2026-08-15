@@ -169,10 +169,22 @@ export class NewBookForm {
     this.cdr.markForCheck()
   }
 
+  MAXIMUM_FILE: number = 500
+
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files?.[0]) {
       this.selectedFile = input.files[0];
+
+      const maxSizeBytes = this.MAXIMUM_FILE * 1024;
+
+      if (this.selectedFile.size > maxSizeBytes) {
+        const fileSizeLabel = this.translate.instant("newBookForm.Your-file-size-is");
+        const message = this.translate.instant('newBookForm.File-too-large');
+        alert(`${message}\n${fileSizeLabel}: ${(this.selectedFile.size / 1024).toFixed(2)} KB`);
+        input.value = '';
+        return;
+      }
 
       const reader = new FileReader();
       reader.onload = () => {

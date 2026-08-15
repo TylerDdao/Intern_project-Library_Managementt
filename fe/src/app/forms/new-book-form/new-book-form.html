@@ -11,10 +11,13 @@
     <form class="new-book-container" [formGroup]="newBookForm" id="newBookForm" (ngSubmit)="onSubmit()">
         <div class="flex flex-col space-y-[10px] items-start">
             @if (preview) {
-                <img [src]="preview" class="book-cover"/>
-                <div class="flex space-x-[5px] items-center">
-                    <span class="material-symbols-outlined text-tomato-red cursor-pointer select-none" (click)="handleClearBookCover()">delete</span>
-                    <div>{{selectedFile?.name}}</div>
+                <div class="flex flex-col space-y-[5px]">
+                    <img [src]="preview" class="book-cover"/>
+                    <div class="flex space-x-[5px] items-center">
+                        <span class="material-symbols-outlined text-tomato-red cursor-pointer select-none" (click)="handleClearBookCover()">delete</span>
+                        <div>{{selectedFile?.name}}</div>
+                    </div>
+                    <div>{{selectedFile && (selectedFile.size / 1024).toFixed(2) + ' KB'}}</div>
                 </div>
             }
             @else {
@@ -24,9 +27,11 @@
                     <input type="file" accept="image/webp" (change)="onFileSelected($event)" #fileInput hidden/>
                 </div>
                 <small>{{'newBookForm./.WebP-file-only'|translate}}</small>
+                <small>{{'newBookForm.Maximum-size-of-file'|translate}}: {{MAXIMUM_FILE}}KB</small>
             }
         </div>
         <div class="flex flex-col space-y-[5px]">
+            <div class="body font-bold">{{'newBookForm.Book-information'|translate}}</div>
             <div class="flex flex-col space-y-[5px]">
                 <label for="title">{{'book.Title'|translate}}</label>
                 <input id="title" formControlName="title" type="text" class="rounded-[10px]" [class]=" isValid['title'] ? 'bg-pastel-blue text-dodger-blue':'bg-pastel-red text-tomato-red'" placeholder="{{'book.Title'|translate}}"/>
@@ -62,12 +67,12 @@
             }
         </div>
         <div class="flex flex-col space-y-[10px]">
-            <div>
+            <div class="flex flex-col space-y-[5px]">
                 <div class="body font-bold">{{'newBookForm.Available-genres'|translate}}</div>
                 <div class="flex space-x-[10px] items-center">
                     <input class="bg-pastel-blue text-dodger-blue rounded-[10px] w-full" placeholder="{{'genre.Name'|translate}}" [(ngModel)]="query" [ngModelOptions]="{standalone: true}"/>
                     <button type="button" class="flex items-center select-none" (click)="handleSearchGenres()"><span class="material-symbols-outlined">search</span></button>
-                    <button type="button" class="bg-cool-gray text-soft-ice px-[10px] py-[5px] rounded-[10px]" (click)="handleClearSearch()">{{"search.Clear"|translate}}</button>
+                    <button type="button" class="bg-cool-gray text-soft-ice px-[10px] py-[5px] rounded-[10px] text-nowrap" (click)="handleClearSearch()">{{"search.Clear"|translate}}</button>
                 </div>
                 @if (isLoading["loadSearch"]|| isLoading["loadGenres"]) {
                     <div class="flex justify-center"><app-loading-component></app-loading-component></div>
