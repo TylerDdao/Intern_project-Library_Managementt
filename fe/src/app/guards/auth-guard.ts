@@ -22,7 +22,8 @@ export function rootOnly(): CanActivateFn {
     if(user?.role?.name == "ROLE_ROOT"){
         return true;
     }
-    return router.createUrlTree(['/unauthorzied']);
+    window.location.href = '/unauthorized';
+    return false
   };
 }
 
@@ -92,7 +93,8 @@ export function authGuard(
 
         // User is logged in but does NOT have permission
         if (!hasAccess) {
-          return router.createUrlTree(['/unauthorized']);
+          window.location.href = '/unauthorized';
+          return false
         }
         return true;
       }),
@@ -101,9 +103,7 @@ export function authGuard(
         // Token is invalid/expired
         if (err.status === 401) {
           sessionStorage.clear();
-          return of(
-            router.createUrlTree(['/unauthorized'])
-          );
+          window.location.href = '/unauthorized';
         }
         return of(false);
       })

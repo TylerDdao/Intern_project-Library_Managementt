@@ -1,0 +1,91 @@
+<div class="landing">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="eyebrow">
+          <span class="material-symbols-outlined eyebrow-icon">local_library</span>
+          Intern project &middot; Viettel Software
+        </div>
+
+        <h1 class="large-title hero-title">
+          A library system,<br />built from the ground up.
+        </h1>
+
+        <p class="body hero-subtitle">
+          This is my internship project at Viettel Software: a full-stack library
+          management platform covering the whole lending workflow &mdash; cataloging,
+          borrowing, reader discussions, and admin tools &mdash; built with Spring Boot,
+          Angular, and MySQL.
+        </p>
+
+        <div class="hero-actions">
+          <a routerLink="/login" class="btn-primary">
+            Log in
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </a>
+          <a [href]="githubUrl" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+            <span class="material-symbols-outlined">code</span>
+            View source on GitHub
+          </a>
+        </div>
+
+        <div class="dev-stamp">
+          <span class="material-symbols-outlined dev-stamp-icon">construction</span>
+          <span class="caption-1">Still under active development &mdash; best viewed on desktop</span>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="catalog-drawer">
+          <div class="catalog-card" style="--i: 0"></div>
+          <div class="catalog-card" style="--i: 1"></div>
+          <div class="catalog-card" style="--i: 2"></div>
+          <div class="catalog-card catalog-card--front">
+            <div class="catalog-card-header">
+              <span class="material-symbols-outlined">book_5</span>
+              <span class="caption-2">CALL NO. 025.6 CIRC</span>
+            </div>
+            <div class="catalog-card-line"></div>
+            <div class="catalog-card-line catalog-card-line--short"></div>
+            <div class="catalog-card-line catalog-card-line--short"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="features-header">
+      <div class="footnote features-kicker">What's inside</div>
+      <h2 class="title-1">Everything a library needs to run</h2>
+    </div>
+
+    <div class="features-grid">
+      @for (feature of features; track feature.title) {
+        <div class="feature-card">
+          <div class="feature-call-number">
+            <span class="material-symbols-outlined">{{ feature.icon }}</span>
+            <span class="caption-2">{{ feature.callNumber }}</span>
+          </div>
+          <h3 class="headline feature-title">{{ feature.title }}</h3>
+          <p class="callout feature-description">{{ feature.description }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <p class="footnote">
+      Built by Tyler Dao &middot; Fullstack Dev Intern, Viettel Software
+    </p>
+    <a [href]="githubUrl" target="_blank" rel="noopener noreferrer" class="footer-link">
+      <span class="material-symbols-outlined">open_in_new</span>
+      GitHub repository
+    </a>
+  </footer>
+
+</div>

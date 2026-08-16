@@ -47,7 +47,7 @@ export class Login {
           sessionStorage.setItem("token", data.data.token);
           this.userService.setCurrentUser(data.data.user);
           sessionStorage.setItem("authorities", JSON.stringify(data.data.authorities));
-          this.router.navigate(['/home']);
+          window.location.href = "/home"
         }
       },
       error: (err) => {

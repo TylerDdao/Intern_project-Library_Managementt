@@ -106,7 +106,7 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
-        width: 80dvw;
+        /* width: 80dvw; */
     }
     .post-card{
         padding: 10px;

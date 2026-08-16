@@ -13,8 +13,8 @@ import { AnnouncementService } from './services/announcement-service/announcemen
 export class App implements OnInit {
   protected readonly title = signal('library-management-fe');
 
-  whiteList: string[] = ['/login', '/signup', '/signup/success', '/reset-password', '/test', '/unauthorized'];
-  onDev: string[] = ['/logs-management', '/announcements-management']
+  whiteList: string[] = ['/','/login', '/signup', '/signup/success', '/reset-password', '/test', '/unauthorized'];
+  // onDev: string[] = ['/logs-management', '/announcements-management']
 
   constructor(
     private router: Router,
@@ -47,14 +47,14 @@ export class App implements OnInit {
 
   if (token) {
     if (currentPath === '/' || currentPath === '/login') {
-      this.router.navigate(['/home']);
+      window.location.href = '/home';
     }
 
     return;
   }
 
   if (!isWhitelisted) {
-    this.router.navigate(['/unauthorized']);
+    window.location.href = '/login';
   }
 }
 }

@@ -70,7 +70,7 @@ export class NavbarComponent {
           if(data.code == "200"){
             this.userService.clearUser()
               // this.announcementService.clearAnnouncements();
-            this.router.navigate(['/login'])
+            window.location.href = '/';
           }
         },
         error: (err:HttpErrorResponse) => {
