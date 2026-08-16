@@ -103,7 +103,7 @@ export function authGuard(
         // Token is invalid/expired
         if (err.status === 401) {
           sessionStorage.clear();
-          window.location.href = '/unauthorized';
+          window.location.href = '/';
         }
         return of(false);
       })
