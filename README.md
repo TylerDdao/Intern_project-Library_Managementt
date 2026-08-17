@@ -82,7 +82,7 @@ including the admin dashboard and management tools:
 
 ### 1. Create your own `.env` file
 
-**Yes — every environment (your local machine, a teammate's machine, a
+**Yes - every environment (your local machine, a teammate's machine, a
 server) needs its own `.env` file.** It is never committed to the repo, since
 it holds real credentials (database password, JWT secret, mail password).
 
