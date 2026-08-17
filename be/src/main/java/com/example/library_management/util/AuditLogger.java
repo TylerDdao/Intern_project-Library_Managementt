@@ -28,6 +28,11 @@ public class AuditLogger {
         String formatted = MessageFormatter.arrayFormat(message, args).getMessage();
         log.info("[{}] {}", user, formatted);
     }
+    public void warn(String message, Object... args) {
+        String user = getCurrentUser();
+        String formatted = MessageFormatter.arrayFormat(message, args).getMessage();
+        log.warn("[{}] {}", user, formatted);
+    }
 
     public void error(String message, Object... args){
         String user = getCurrentUser();
