@@ -81,7 +81,7 @@ public class AuthService {
                     .orElseThrow();
             resetCode.setReset(true);
             resetPasswordCodeRepository.save(resetCode);
-            logger.log("Password reset for user @{}", user.getUsername());
+            logger.log("SYSTEM", "Password reset for @{}", user.getUsername());
             return true;
         }
         catch (Exception e){
@@ -92,7 +92,10 @@ public class AuthService {
 
     public Boolean verifyPassword(LoginRequest request) {
         try {
-            User user = userRepository.findByUsernameAndIsDeletedFalse(request.getUsername()).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
+            User user = userRepository.findByUsernameAndIsDeletedFalse(request.getUsername())
+                    .orElseThrow(() -> new RuntimeException(
+                            messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())
+                    ));
             if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
                 String message = messageSource.getMessage("error.invalid.credential", null, LocaleContextHolder.getLocale());
                 throw new AuthException(message);
@@ -120,12 +123,11 @@ public class AuthService {
             String token = jwtUtil.generateToken(auth.getName());
             User user = userRepository.findByUsernameAndIsDeletedFalse(auth.getName()).orElseThrow();
             List<Feature> authorities = featureRepository.findByRoles_Id(user.getRole().getId());
-            logger.log("Authorized user @{}, ID #{}", user.getUsername(), user.getId());
+            logger.log("Authorized @{}, ID #{}", user.getUsername(), user.getId());
             return new LoginResponse(user, token, authorities);
 
         } catch (org.springframework.security.authentication.BadCredentialsException e) {
             String message = messageSource.getMessage("error.invalid.credential", null, LocaleContextHolder.getLocale());
-            logger.warn("Unable to authorize user @{}: {}", request.getUsername(), message);
             throw new AuthException(message);
         }
     }
@@ -148,23 +150,17 @@ public class AuthService {
             if (request.getPassword() != null) user.setPassword(passwordEncoder.encode(request.getPassword()));
 
             User savedUser = userRepository.save(user);
-            logger.log("Updated user @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
+            logger.log("Updated @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
             return new UserResponse(savedUser);
         }
         catch (org.springframework.security.access.AccessDeniedException e) {
-            String message = messageSource.getMessage("error.access.denied", null, LocaleContextHolder.getLocale());
-            logger.log("Unable to update user  @{}:", request.getUsername(), e.getMessage());
-            throw new RuntimeException(message);
+            throw new RuntimeException(messageSource.getMessage("error.access.denied", null, LocaleContextHolder.getLocale()));
         }
         catch (jakarta.persistence.EntityNotFoundException e) {
-            String message = messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale());
-            logger.warn("Unable to update user @{}: {}", request.getUsername(), e.getMessage());
-            throw new RuntimeException(message);
+            throw new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale()));
         }
         catch (RuntimeException e) {
-            logger.error("Failed to update user @{}: {}", request.getUsername(), e.getMessage());
-            String message = messageSource.getMessage("error.runtime", null, LocaleContextHolder.getLocale());
-            throw new RuntimeException(message);
+            throw new RuntimeException(messageSource.getMessage("error.runtime", null, LocaleContextHolder.getLocale()) + e.getMessage());
         }
     }
 
@@ -172,7 +168,7 @@ public class AuthService {
         tokenBlacklistService.blacklist(token);
         String username = jwtUtil.extractUsername(token);
         SecurityContextHolder.clearContext();
-        logger.log("Logged out user @{}", username);
+        logger.log("Logged out @{}", username);
     }
 
     public UserResponse register(RegisterRequest request) {
@@ -198,12 +194,12 @@ public class AuthService {
         user.setRole(defaultRole);
 
         User savedUser = userRepository.save(user);
-        logger.log( "Registered user @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
+        logger.log("SYSTEM", "Registered @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
 
         try {
             userMailService.sendWelcomeEmail(savedUser);
         } catch (Exception e) {
-            logger.error("Failed to send welcome email to user @{}: {}", savedUser.getUsername(), e.getMessage());
+            logger.error("Failed to send welcome email to @{}: {}", savedUser.getUsername(), e.getMessage());
         }
 
         return new UserResponse(savedUser);

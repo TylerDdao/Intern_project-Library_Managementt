@@ -52,7 +52,7 @@ public class UpdateBookService {
             book.setGenres(genres);
         }
         Book savedBook = bookRepository.save(book);
-        logger.log("Updated book title {}, author {}, ID #{}", savedBook.getTitle(), savedBook.getAuthor(), savedBook.getId());
+        logger.log("Updated book ID #{} | Title: {} | Author: {}", savedBook.getId(), savedBook.getTitle(), savedBook.getAuthor());
         return new BookResponse(book);
     }
 }

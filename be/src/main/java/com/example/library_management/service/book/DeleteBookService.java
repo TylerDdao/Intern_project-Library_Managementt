@@ -6,6 +6,7 @@ import com.example.library_management.model.Borrow;
 import com.example.library_management.model.Post;
 import com.example.library_management.repository.*;
 import com.example.library_management.util.AuditLogger;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +14,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -57,9 +57,9 @@ public class DeleteBookService {
             Path filePath = Paths.get(uploadDir, book.getCoverUrl());
             Files.deleteIfExists(filePath);
 
-            logger.log("Deleted book cover {} of book {}, ID #{}", filePath, book.getTitle(), book.getId());
+            logger.log("Deleted book cover {}", filePath);
         } catch (IOException e) {
-            log.error("Failed to delete book cover {} of book {}, ID #{}: {}", book.getCoverUrl(), book.getTitle(), book.getId(), e.getMessage());
+            log.error("Failed to delete book cover {}: {}", book.getCoverUrl(), e.getMessage());
         }
     }
 
@@ -69,9 +69,7 @@ public class DeleteBookService {
                 .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
 
         if (borrowRepository.existsByBook_IdAndIsActiveTrue(id)){
-            String message = messageSource.getMessage("error.there.are.borrows.of.this.book", null, LocaleContextHolder.getLocale());
-            log.warn("Failed to delete book {}, ID #{}: {}", book.getTitle(), book.getId(), message);
-            throw new ApiException(HttpStatus.BAD_REQUEST, "BORROWS-EXIST", message);
+            throw new ApiException(HttpStatus.BAD_REQUEST, "BORROWS-EXIST",messageSource.getMessage("error.there.are.borrows.of.this.book", null, LocaleContextHolder.getLocale()));
         }
 
         List<Post> posts = postRepository.findByBook_Id(id);
@@ -83,14 +81,14 @@ public class DeleteBookService {
 
         List<Borrow> borrows = borrowRepository.findByBook_Id(id);
         borrowRepository.deleteAll(borrows);
-        logger.log("Deleted {} inactive borrows that are associated with book {}, ID #{}",borrows.size(), book.getTitle(), book.getId());
+        logger.log("Deleted {} borrows that are associated with book {}, ID #{}",borrows.size(), book.getTitle(), book.getId());
 
         bookRepository.delete(book);
         deleteBookCover(book);
         String message = messageSource.getMessage("book.delete", null, LocaleContextHolder.getLocale());
         String author = messageSource.getMessage("book.author", null, LocaleContextHolder.getLocale());
         String title = messageSource.getMessage("book.title", null, LocaleContextHolder.getLocale());
-        logger.log("Deleted book title {}, author {}, ID #{}", book.getTitle(), book.getAuthor(), book.getId());
+        logger.log("Deleted book ID #{} | Title: {} | Author: {}", book.getId(), book.getTitle(), book.getAuthor());
         return  message + " ID#"+ book.getId() + " | " + title + ": " + book.getTitle() + " | " + author + ": " + book.getAuthor();
     }
 }

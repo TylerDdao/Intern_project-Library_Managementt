@@ -8,6 +8,7 @@ import com.example.library_management.repository.BorrowRepository;
 import com.example.library_management.repository.PolicyRepository;
 import com.example.library_management.service.mail.BorrowMailService;
 import com.example.library_management.util.AuditLogger;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -16,7 +17,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -71,6 +71,7 @@ public class UpdateBorrowService {
         book.setCopies(book.getCopies() + 1);
         borrowRepository.save(borrow);
         Book savedBook = bookRepository.save(book);
+        System.out.println("New copies value (Return): " + savedBook.getCopies());
 
         logger.log("Returned borrow ID #{}", borrow.getId());
         borrowMailService.sendBorrowReturned(borrow);

@@ -273,10 +273,8 @@ public class BorrowMailService {
             helper.setSubject(emailSubject);
             helper.setText(html,true);
             mailSender.send(message);
-            logger.log("Sent late borrow reminder email to {}, borrow ID #{} with book {} ID# {}", borrow.getUser().getEmail(), borrow.getId(), borrow.getBook().getTitle(), borrow.getBook().getId());
 
         } catch (Exception e) {
-            logger.error("Failed to send late borrow reminder email to {}, borrow ID #{} with book {} ID# {}: {}", borrow.getUser().getEmail(), borrow.getId(), borrow.getBook().getTitle(), borrow.getBook().getId(), e.getMessage());
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,"EMAIL-ISSUE",messageSource.getMessage("email.failed",null,LocaleContextHolder.getLocale()));
         }
     }
@@ -364,10 +362,8 @@ public class BorrowMailService {
             helper.setSubject(emailSubject);
             helper.setText(html, true);
             mailSender.send(message);
-            logger.log("Sent borrow reminder email to {}, borrow ID #{} with book {} ID# {}", borrow.getUser().getEmail(), borrow.getId(), borrow.getBook().getTitle(), borrow.getBook().getId());
         }
         catch (Exception e){
-            logger.error("Failed to send borrow reminder email to {}, borrow ID #{} with book {} ID# {}: {}", borrow.getUser().getEmail(), borrow.getId(), borrow.getBook().getTitle(), borrow.getBook().getId(), e.getMessage());
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "EMAIL-ISSUE", messageSource.getMessage("email.failed", null, LocaleContextHolder.getLocale()));
         }
     }
@@ -413,10 +409,9 @@ public class BorrowMailService {
             helper.setSubject(subject);
             helper.setText(html, true);
             mailSender.send(message);
-            logger.log("Sent borrow created email to {}, borrow ID #{} with book {} ID# {}", borrow.getUser().getEmail(), borrow.getId(), borrow.getBook().getTitle(), borrow.getBook().getId());
+            logger.log("Sent borrow created email to {}", borrow.getUser().getEmail());
         }
         catch (Exception e){
-            logger.error("Failed to send borrow created email to {}, borrow ID #{} with book {} ID# {}: {}", borrow.getUser().getEmail(), borrow.getId(), borrow.getBook().getTitle(), borrow.getBook().getId(), e.getMessage());
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "EMAIL-ISSUE", messageSource.getMessage("email.failed", null, locale));
         }
     }
@@ -504,9 +499,9 @@ public class BorrowMailService {
             helper.setSubject(emailSubject);
             helper.setText(html, true);
             mailSender.send(message);
-            logger.log("Sent borrow returned email to {}, borrow ID #{} with book {} ID# {}", borrow.getUser().getEmail(), borrow.getId(), borrow.getBook().getTitle(), borrow.getBook().getId());        }
+            logger.log("Sent borrow returned email to {}", borrow.getUser().getEmail());
+        }
         catch (Exception e){
-            logger.error("Failed to send borrow returned email to {}, borrow ID #{} with book {} ID# {}: {}", borrow.getUser().getEmail(), borrow.getId(), borrow.getBook().getTitle(), borrow.getBook().getId(), e.getMessage());
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "EMAIL-ISSUE", messageSource.getMessage("email.failed", null, LocaleContextHolder.getLocale()));
         }
     }
