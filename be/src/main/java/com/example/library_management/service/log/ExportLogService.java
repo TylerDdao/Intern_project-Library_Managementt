@@ -177,9 +177,10 @@ public class ExportLogService {
             }
 
             workbook.write(out);
-            logger.log("Exported log file for range {}", rangeLabel);
+            logger.log("Exported log data for range {}", rangeLabel);
             return new ByteArrayInputStream(out.toByteArray());
         } catch (IOException e) {
+            logger.error("Failed to export log data for range {}", rangeLabel);
             throw new RuntimeException(messageSource.getMessage("error.failed.to.export", null, LocaleContextHolder.getLocale()) + ": " + e.getMessage());
         }
     }

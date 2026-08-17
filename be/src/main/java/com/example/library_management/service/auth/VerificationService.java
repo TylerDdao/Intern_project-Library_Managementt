@@ -88,9 +88,11 @@ public class VerificationService {
         try {
             verificationMailService.sendResetPasswordEmail(email, resetLink, EXPIRY_MINUTES);
             resetPasswordCodeRepository.save(resetPasswordCode);
+            logger.log("Sent reset password email to user @{}, ID #{}", user.getUsername(), user.getId());
             return "reset.password.Link.is.sent";
         }
         catch (Exception e){
+            logger.log("Failed to send reset password email to user @{}, ID #{}: {}", user.getUsername(), user.getId(), e.getMessage());
             return e.toString();
         }
     }
@@ -117,9 +119,11 @@ public class VerificationService {
         try {
             verificationMailService.sentVerificationEmail(request.getEmail(), code, EXPIRY_MINUTES);
             verificationRepository.save(verification);
+            logger.log("Sent verification code to email {}", request.getEmail());
             return "verification.Code.is.sent";
         }
         catch (Exception e){
+            logger.error("Unable to send verification code to email {}: {}", request.getEmail(), e.getMessage());
             return e.toString();
         }
     }

@@ -49,6 +49,7 @@ public class CreateBookService {
             Files.write(uploadPath.resolve(fileName), file.getBytes());
             book.setCoverUrl(fileName);
             bookRepository.save(book);
+            logger.log("Saved book cover {} for book title {}, ID #{}",fileName, book.getTitle(), book.getId());
             return true;
         } catch (IOException e) {
             log.error("Failed to save book cover: {}", e.getMessage());
@@ -76,7 +77,7 @@ public class CreateBookService {
         book.setGenres(genres);
 
         Book savedBook = bookRepository.save(book);
-        logger.log("Created book ID#{} | Title: {} | Author: {}", savedBook.getId(), savedBook.getTitle(), savedBook.getAuthor());
+        logger.log("Created book title {}, author {}, ID #{}", savedBook.getTitle(), savedBook.getAuthor(), savedBook.getId());
         return new BookResponse(savedBook);
     }
 }

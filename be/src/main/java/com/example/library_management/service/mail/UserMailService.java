@@ -94,6 +94,7 @@ public class UserMailService {
             logger.log("Sent welcome email to {}", user.getEmail());
         }
         catch (Exception e){
+            logger.log("Failed to send welcome email to {}: {}", user.getEmail(), e.getMessage());
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "EMAIL-ISSUE", messageSource.getMessage("email.failed", null, locale));
         }
     }
@@ -127,6 +128,7 @@ public class UserMailService {
             logger.log("Sent account deleted email to {}", user.getEmail());
         }
         catch (Exception e){
+            logger.error("Failed to sent account deleted email to {}: {}", user.getEmail(), e.getMessage());
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "EMAIL-ISSUE", messageSource.getMessage("email.failed", null, locale));
         }
     }
@@ -160,6 +162,7 @@ public class UserMailService {
             logger.log("Sent password changed email to {}", user.getEmail());
         }
         catch (Exception e){
+            logger.error("Failed to send password changed email to {}: {}", user.getEmail(), e.getMessage());
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "EMAIL-ISSUE", messageSource.getMessage("email.failed", null, locale));
         }
     }

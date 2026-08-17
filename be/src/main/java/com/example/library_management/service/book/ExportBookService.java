@@ -4,6 +4,7 @@ import com.example.library_management.dto.request.book.BookRequest;
 import com.example.library_management.model.Book;
 import com.example.library_management.model.Genre;
 import com.example.library_management.repository.BookRepository;
+import com.example.library_management.util.AuditLogger;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class ExportBookService {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private AuditLogger logger;
 
     public ByteArrayInputStream booksToExcel(List<BookRequest> requests) {
         List<Book> books = new ArrayList<>();
@@ -65,8 +69,10 @@ public class ExportBookService {
             }
 
             workbook.write(out);
+            logger.log("Book data is exported");
             return new ByteArrayInputStream(out.toByteArray());
         } catch (IOException e) {
+            logger.error("Failed to export book data: {}", e.getMessage());
             throw new RuntimeException("Failed to export data to Excel: " + e.getMessage());
         }
     }

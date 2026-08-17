@@ -50,14 +50,18 @@ public class CreateBorrowService {
     public BorrowResponse createBorrow(BorrowRequest request){
         Optional<Borrow> existing = borrowRepository.findByUserIdAndBookIdAndIsActive(request.getUserId(), request.getBookId(), true);
         if (existing.isPresent()) {
-            throw new RuntimeException(messageSource.getMessage("error.borrow.already.existed",null, LocaleContextHolder.getLocale()));
+            String message = messageSource.getMessage("error.borrow.already.existed",null, LocaleContextHolder.getLocale());
+            logger.warn("Unable to create borrow for user ID #{} with book ID #{}: {}", request.getUserId(), request.getBookId(), message);
+            throw new RuntimeException(message);
         }
 
-        Borrow newBorrow = new Borrow();
         User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.id.not.found", null, LocaleContextHolder.getLocale())));
+        Borrow newBorrow = new Borrow();
         Book book = bookRepository.findByIdForUpdate(request.getBookId()).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.id.not.found", null, LocaleContextHolder.getLocale())));;
         if(book.getCopies() == 0){
-            throw new ApiException(HttpStatus.BAD_REQUEST, "BOOk-NOT-AVAILABLE", messageSource.getMessage("error.book.is.not.available", null, LocaleContextHolder.getLocale()));
+            String message = messageSource.getMessage("error.book.is.not.available", null, LocaleContextHolder.getLocale());
+            logger.warn("Unable to create borrow for user ID #{} with book ID #{}: {}", request.getUserId(), request.getBookId(), message);
+            throw new ApiException(HttpStatus.BAD_REQUEST, "BOOk-NOT-AVAILABLE", message);
         }
 
         book.setCopies(book.getCopies() - 1);
@@ -72,12 +76,12 @@ public class CreateBorrowService {
 
         borrowRepository.save(newBorrow);
         Book savedBook = bookRepository.save(book);
-        System.out.println("New copies value (Borrow): " + savedBook.getCopies());
         try {
             borrowMailService.sendBorrowCreatedEmail(newBorrow);
         } catch (Exception e) {
             logger.error("Failed to send borrow confirmation email for borrow ID #{}: {}", newBorrow.getId(), e.getMessage());
         }
+        logger.log("Created borrow for user @{} ID #{} with book {} ID#{}", user.getUsername(), user.getId(), book.getTitle(), book.getId());
         return new BorrowResponse(newBorrow);
     }
 }
