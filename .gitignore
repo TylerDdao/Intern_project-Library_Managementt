@@ -1,3 +1,4 @@
 be/app-logs.log
 be/app-logs.log
 *.log
+.env
