@@ -36,13 +36,12 @@ role-based permission system and a trilingual interface.
 - Apache POI (Excel export)
 - Logback (daily-rotating file logs)
 - JavaMailSender (SMTP email)
-- Maven
+- i18n for translation
 
 **Frontend**
 - Angular (standalone components)
 - Tailwind CSS
-- ngx-translate (i18n)
-- RxJS
+- i18n for translation
 
 **Infrastructure**
 - Docker & Docker Compose
@@ -69,7 +68,7 @@ role-based permission system and a trilingual interface.
 
 The project is deployed at **[tylerdao.site](https://tylerdao.site)**.
 
-A pre-created root account for local environment is available to explore the full feature set,
+A pre-created root account is available to explore the full feature set,
 including the admin dashboard and management tools:
 
 | | |
@@ -129,6 +128,73 @@ is available at `http://localhost`.
 ```bash
 docker compose down          # stops containers, keeps data (DB, logs, uploads)
 docker compose down -v       # also wipes all volumes — irreversible
+```
+
+### Alternative: running the pre-built images
+
+The backend and frontend images are also published on Docker Hub as
+[`tylerdao/library-management-be`](https://hub.docker.com/r/tylerdao/library-management-be)
+and [`tylerdao/library-management-fe`](https://hub.docker.com/r/tylerdao/library-management-fe),
+if you'd rather run them without cloning and building from source.
+
+Pulling the images alone isn't enough to run the app — Docker images only
+contain what's baked in at build time; they don't include your `.env`
+values. **You still need your own `.env` file** (same as above) and a
+compose file that references the images instead of building them:
+
+```yaml
+# docker-compose.images.yaml
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db-data:/var/lib/mysql
+
+  redis:
+    image: redis:7-alpine
+
+  backend:
+    image: tylerdao/library-management-be:latest
+    depends_on:
+      - db
+      - redis
+    environment:
+      DB_HOST: db
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      FRONTEND_URL: ${FRONTEND_URL}
+      BACKEND_URL: ${BACKEND_URL}
+    ports:
+      - "8080:8080"
+
+  frontend:
+    image: tylerdao/library-management-fe:latest
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  db-data:
+```
+
+```bash
+docker compose -f docker-compose.images.yaml pull
+docker compose -f docker-compose.images.yaml up -d
 ```
 
 ### Useful commands
