@@ -72,7 +72,7 @@
                 @for (borrow of borrows; track borrow.id) {
                     <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
                 }
-                <app-pages-component [pages]="borrowsPage" (onApply)="fetchBorrowsByUserId($event)"></app-pages-component>
+                <div class="flex items-center justify-center"><app-pages-component [pages]="borrowsPage" (onApply)="fetchBorrowsByUserId($event)"></app-pages-component></div>
             } 
             @else {
                 <div>{{"list.Empty"|translate}}</div>

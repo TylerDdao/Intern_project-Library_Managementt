@@ -1,6 +1,5 @@
 package com.example.library_management;
 
-import com.example.library_management.util.HashGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

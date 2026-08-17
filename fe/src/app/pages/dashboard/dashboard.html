@@ -47,15 +47,17 @@
 
     <div class="books-area">
         <h1 class="text-deep-charcoal header headline">{{'dashboard.Unavailable-books' |translate}}</h1>
-        <div class="books-scrolling-area">
+        <div class="">
             @if (isLoading && unavailableBooks.length == 0) {
                 <app-loading-component></app-loading-component>
             }
             @else if(unavailableBooks.length > 0){
-                @for (book of unavailableBooks; track $index) {
-                    <app-book-card-component [book]="book"></app-book-card-component>
-                }
-                <app-pages-component [pages]="unavailableBooksPage" (onApply)="fetchUnavailableBooks($event)"></app-pages-component>
+                <div class="books-scrolling-area">
+                    @for (book of unavailableBooks; track $index) {
+                        <app-book-card-component [book]="book"></app-book-card-component>
+                    }
+                </div>
+                <div class="flex items-center justify-center"><app-pages-component [pages]="unavailableBooksPage" (onApply)="fetchUnavailableBooks($event)"></app-pages-component></div>
             }
             @else {
                 <div>{{'list.Empty'|translate}}</div>
@@ -73,7 +75,7 @@
                 @for (borrow of lateBorrows; track borrow.id) {
                     <app-borrow-card-component [borrow]="borrow"></app-borrow-card-component>
                 }
-                <app-pages-component [pages]="lateBorrowsPage" (onApply)="fetchLateBorrow($event)"></app-pages-component>
+                <div class="flex items-center justify-center"><app-pages-component [pages]="lateBorrowsPage" (onApply)="fetchLateBorrow($event)"></app-pages-component></div>
             }
             @else {
                 <div>{{'list.Empty'|translate}}</div>

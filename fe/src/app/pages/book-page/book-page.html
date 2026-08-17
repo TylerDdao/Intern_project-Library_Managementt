@@ -87,14 +87,14 @@
                             </div>
                             <div>
                                 @if (book.borrowed) {
-                                    <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold !cursor-not-allowed w-full">{{'bookPage.You-are-borrowing-this-book'|translate}}</button>
+                                    <button type="button" class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold !cursor-not-allowed w-full">{{'bookPage.You-are-borrowing-this-book'|translate}}</button>
                                 }
                                 @else {
                                     @if (book.copies > 0) {
-                                        <button class="bg-leaf-green p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold w-full" (click)="handleBorrow()">{{'bookPage.Borrow-this-book'|translate}}</button>
+                                        <button type="button" class="bg-leaf-green p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold w-full" (click)="handleBorrow()">{{'bookPage.Borrow-this-book'|translate}}</button>
                                     }
                                     @else {
-                                        <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold !cursor-not-allowed w-full">{{'bookPage.Book-is-not-available'|translate}}</button>
+                                        <button type="button" class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold !cursor-not-allowed w-full">{{'bookPage.Book-is-not-available'|translate}}</button>
                                     }
                                 }
                             </div>
@@ -133,14 +133,14 @@
                         </div>
                     </div>
                     @if (book.borrowed) {
-                        <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold !cursor-not-allowed w-full">{{'bookPage.You-are-borrowing-this-book'|translate}}</button>
+                        <button type="button" class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold !cursor-not-allowed w-full">{{'bookPage.You-are-borrowing-this-book'|translate}}</button>
                     }
                     @else {
                         @if (book.copies > 0) {
-                            <button class="bg-leaf-green p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold w-full" (click)="handleBorrow()">{{'bookPage.Borrow-this-book'|translate}}</button>
+                            <button type="button" class="bg-leaf-green p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold w-full" (click)="handleBorrow()">{{'bookPage.Borrow-this-book'|translate}}</button>
                         }
                         @else {
-                            <button class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold !cursor-not-allowed w-full">{{'bookPage.Book-is-not-available'|translate}}</button>
+                            <button type="button" class="bg-tomato-red/40 p-[5px] rounded-[10px] text-soft-ice caption-1 font-bold !cursor-not-allowed w-full">{{'bookPage.Book-is-not-available'|translate}}</button>
                         }
                     }
                 </div>

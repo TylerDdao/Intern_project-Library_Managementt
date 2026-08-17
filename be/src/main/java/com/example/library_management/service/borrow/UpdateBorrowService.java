@@ -70,7 +70,8 @@ public class UpdateBorrowService {
         Book book = bookRepository.findByIdForUpdate(borrow.getBook().getId()).orElseThrow(() ->new RuntimeException(messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
         book.setCopies(book.getCopies() + 1);
         borrowRepository.save(borrow);
-        bookRepository.save(book);
+        Book savedBook = bookRepository.save(book);
+        System.out.println("New copies value (Return): " + savedBook.getCopies());
 
         logger.log("Returned borrow ID #{}", borrow.getId());
         borrowMailService.sendBorrowReturned(borrow);

@@ -30,7 +30,7 @@
         flex-wrap: nowrap;
         gap: 20px;
         overflow-x: auto;
-        height: 380px;
+        height: fit-content;
         width: 100%;
     }
 

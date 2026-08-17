@@ -2,6 +2,7 @@ package com.example.library_management.service.borrow;
 
 import com.example.library_management.dto.request.borrow.BorrowRequest;
 import com.example.library_management.dto.response.borrow.BorrowResponse;
+import com.example.library_management.exception.ApiException;
 import com.example.library_management.model.Book;
 import com.example.library_management.model.Borrow;
 import com.example.library_management.model.Policy;
@@ -15,6 +16,7 @@ import com.example.library_management.util.AuditLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +47,6 @@ public class CreateBorrowService {
     private BorrowMailService borrowMailService;
 
     @Transactional
-//    @CacheEvict(value = "books", key = "#request.id")
     public BorrowResponse createBorrow(BorrowRequest request){
         Optional<Borrow> existing = borrowRepository.findByUserIdAndBookIdAndIsActive(request.getUserId(), request.getBookId(), true);
         if (existing.isPresent()) {
@@ -56,7 +57,7 @@ public class CreateBorrowService {
         User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.id.not.found", null, LocaleContextHolder.getLocale())));
         Book book = bookRepository.findByIdForUpdate(request.getBookId()).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.id.not.found", null, LocaleContextHolder.getLocale())));;
         if(book.getCopies() == 0){
-            throw new RuntimeException(messageSource.getMessage("error.book.is.not.available", null, LocaleContextHolder.getLocale()));
+            throw new ApiException(HttpStatus.BAD_REQUEST, "BOOk-NOT-AVAILABLE", messageSource.getMessage("error.book.is.not.available", null, LocaleContextHolder.getLocale()));
         }
 
         book.setCopies(book.getCopies() - 1);
@@ -70,8 +71,13 @@ public class CreateBorrowService {
         newBorrow.setDueDate(LocalDateTime.now().plusDays(days));
 
         borrowRepository.save(newBorrow);
-        bookRepository.save(book);
-        borrowMailService.sendBorrowCreatedEmail(newBorrow);
+        Book savedBook = bookRepository.save(book);
+        System.out.println("New copies value (Borrow): " + savedBook.getCopies());
+        try {
+            borrowMailService.sendBorrowCreatedEmail(newBorrow);
+        } catch (Exception e) {
+            logger.error("Failed to send borrow confirmation email for borrow ID #{}: {}", newBorrow.getId(), e.getMessage());
+        }
         return new BorrowResponse(newBorrow);
     }
 }
