@@ -106,6 +106,7 @@ cp .env.example .env
 | `REDIS_HOST` / `REDIS_PORT` | `redis` / `6379` (leave as-is) |
 | `FRONTEND_URL` | The frontend's origin, used for CORS (e.g. `http://localhost`) |
 | `BACKEND_URL` | The backend's public base URL, used in email links (e.g. `http://localhost/api`) |
+| `TURNSTILE_SECRET_KEY` |The secret key for cloudflare's capcha check (currently dummy key that always return true, leave it as-it for demo purpose) |
 | `DOCKERHUB_USERNAME` | Only needed for `docker-compose.prod.yaml` |
 
 Generate a random JWT secret:
