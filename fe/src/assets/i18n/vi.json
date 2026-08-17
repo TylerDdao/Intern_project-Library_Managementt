@@ -93,7 +93,8 @@
     "Edit-role": "Chỉnh sửa vai trò",
     "New-role": "Vai trò mới",
     "Processing": "Đang xử lý",
-    "Save-change": "Lưu thay đổi"
+    "Save-change": "Lưu thay đổi",
+    "Invalid-value": "Giá trị không hợp lệ"
   },
   "newUserForm": {
     "Create-new-user": "Tạo người dùng mới"
@@ -233,7 +234,8 @@
     "Dont-have-an-account-yet": "Chưa có tài khoản?",
     "Forgot-password": "Quên mật khẩu?",
     "Username-or-password-is-wrong": "Tên đăng nhập hoặc mật khẩu không đúng",
-    "Logout": "Đăng xuất"
+    "Logout": "Đăng xuất",
+    "Please-complete-the-captcha": "TODO"
   },
   "signup": {
     "Sign/-up": "Đăng ký",
@@ -351,7 +353,9 @@
     "Create-new-book": "Tạo sách mới",
     "Upload-book-cover": "Tải lên ảnh bìa sách",
     "Available-genres": "Các thể loại có sẵn",
-    "/.WebP-file-only": "Chỉ chấp nhận tập tin .WebP",
+    "/": {
+      "WebP-file-only": "Chỉ chấp nhận tập tin .WebP"
+    },
     "Book-information": "Thông tin sách",
     "Please-enter-title": "Vui lòng nhập tên sách",
     "Please-enter-author": "Vui lòng nhập tên tác giả",
@@ -407,5 +411,8 @@
     "You-must-have-a-link-to-enter-link-text": "Bạn phải có đường dẫn trước khi nhập văn bản hiển thị liên kết",
     "Showing-on": "Hiển thị tại",
     "Showing-on-all-pages": "Hiển thị trên tất cả các trang"
+  },
+  "capcha": {
+    "Please-complete-the-captcha": "Vui lòng hoàn thành mã captcha"
   }
 }

@@ -93,7 +93,8 @@
     "Edit-role": "Modifier le rôle",
     "New-role": "Nouveau rôle",
     "Processing": "Traitement en cours",
-    "Save-change": "Enregistrer les modifications"
+    "Save-change": "Enregistrer les modifications",
+    "Invalid-value": "Valeur invalide"
   },
   "newUserForm": {
     "Create-new-user": "Créer un nouvel utilisateur"
@@ -351,7 +352,9 @@
     "Create-new-book": "Créer un nouveau livre",
     "Upload-book-cover": "Téléverser la couverture du livre",
     "Available-genres": "Genres disponibles",
-    "/.WebP-file-only": "Fichier .WebP uniquement",
+    "/": {
+      "WebP-file-only": "Fichier .WebP uniquement"
+    },
     "Book-information": "Informations sur le livre",
     "Please-enter-title": "Veuillez entrer le titre",
     "Please-enter-author": "Veuillez entrer l'auteur",
@@ -407,5 +410,8 @@
     "You-must-have-a-link-to-enter-link-text": "Vous devez fournir un lien pour saisir le texte du lien",
     "Showing-on": "Affiché sur",
     "Showing-on-all-pages": "Affiché sur toutes les pages"
+  },
+  "capcha": {
+    "Please-complete-the-captcha": "Veuillez compléter le captcha"
   }
 }

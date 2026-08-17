@@ -1,6 +1,6 @@
 package com.example.library_management.controller;
 
-import com.example.library_management.dto.request.LoginRequest;
+import com.example.library_management.dto.request.auth.LoginRequest;
 import com.example.library_management.dto.request.auth.RegisterRequest;
 import com.example.library_management.dto.request.auth.VerificationRequest;
 import com.example.library_management.dto.request.user.UserRequest;
@@ -48,9 +48,10 @@ public class AuthController {
 
     @GetMapping("/forgot-password")
     public ResponseEntity<ApiResponse<String>> sendResetPasswordEmail(
-            @RequestParam String email
+            @RequestParam String email,
+            @RequestParam String capcha
     ){
-        String message = verificationService.sendResetPasswordEmail(email);
+        String message = verificationService.sendResetPasswordEmail(email, capcha);
         return switch (message) {
             case "reset.password.Link.is.sent" -> ResponseEntity.ok(ApiResponse.success(messageSource.getMessage("reset.password.Link.is.sent", null, LocaleContextHolder.getLocale())));
             case "error.Code.is.already.sent" -> ResponseEntity.badRequest().body(ApiResponse.error("CODE-ALREADY-SENT", messageSource.getMessage("error.Code.is.already.sent", null, LocaleContextHolder.getLocale())));

@@ -1,6 +1,7 @@
 package com.example.library_management.service.auth;
 
 import com.example.library_management.dto.request.user.UserRequest;
+import com.example.library_management.exception.AuthException;
 import com.example.library_management.model.EmailVerification;
 import com.example.library_management.model.ResetPasswordCode;
 import com.example.library_management.model.User;
@@ -44,6 +45,9 @@ public class VerificationService {
     @Value("${frontend.url}")
     private String frontendUrl;
 
+    @Autowired
+    private TurnstileService turnstileService;
+
     private static final int CODE_LENGTH = 5;
     private static final int EXPIRY_MINUTES = 10;
 
@@ -62,7 +66,12 @@ public class VerificationService {
         resetPasswordCodeRepository.deleteByExpiresAtBefore(LocalDateTime.now());
     }
 
-    public String sendResetPasswordEmail(String email){
+    public String sendResetPasswordEmail(String email, String turnstileToken){
+        if (!turnstileService.verify(turnstileToken)) {
+            String message = messageSource.getMessage("error.captcha.failed", null, LocaleContextHolder.getLocale());
+            logger.warn("Unable to verify capcha for reset password attempt");
+            throw new AuthException(message);
+        }
         User user = userRepository.findByEmailAndIsDeletedFalse(email).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
         if(resetPasswordCodeRepository.existsByUser_EmailAndIsResetFalseAndExpiresAtAfter(email, LocalDateTime.now())){
             return "error.Code.is.already.sent";

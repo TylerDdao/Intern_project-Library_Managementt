@@ -1,4 +1,4 @@
-package com.example.library_management.dto.request;
+package com.example.library_management.dto.request.auth;
 
 import lombok.Data;
 
@@ -7,4 +7,5 @@ import lombok.Data;
 public class LoginRequest {
     private String username;
     private String password;
+    private String turnstileToken;
 }

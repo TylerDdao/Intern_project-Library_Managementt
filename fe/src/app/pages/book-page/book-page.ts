@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject, NgZone, OnChanges, PLATFORM_ID, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Inject, NgZone, OnChanges, PLATFORM_ID, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar';
 import { Book } from '../../models/book';
@@ -24,7 +24,6 @@ import { Page } from '../../models/page';
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorNoti } from '../../util/error-notification';
 import { LoadingComponent } from "../../components/loading-component/loading-component";
-import { errorImage } from '../../../assets/constants';
 
 
 @Component({

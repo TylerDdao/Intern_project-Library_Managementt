@@ -135,12 +135,19 @@
                 </div>
             </form>
 
+        <div>
+            <div #turnstileContainer></div>
+            @if (!turnstileToken) {
+                <small class="text-tomato-red">{{'capcha.Please-complete-the-captcha'|translate}}</small>
+            }
+        </div>
+
         <div class="flex space-x-[10px]">
             @if (isRegister) {
                 <div class="bg-steel-blue/50 px-[10px] py-[5px] text-soft-ice/50 cursor-not-allowed caption-1 rounded-[10px] select-none">{{'signup.Signing-up'|translate}}</div>
             }
             @else {
-                <button type="submit" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice caption-1 rounded-[10px]">{{'signup.Sign-up'|translate}}</button>
+                <button type="submit" [disabled]="!turnstileToken || newUserForm.invalid" form="newUserForm" class="bg-steel-blue px-[10px] py-[5px] text-soft-ice caption-1 rounded-[10px] disabled:opacity-50 disabled:cursor-not-allowed">{{'signup.Sign-up'|translate}}</button>
             }
             <button class="border border-tomato-red px-[10px] py-[5px] text-tomato-red caption-1 rounded-[10px]" (click)="close()">{{'signup.Back-to-login'|translate}}</button>
         </div>

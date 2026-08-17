@@ -14,4 +14,5 @@ public class RegisterRequest {
     private String address = null;
     private String email = null;
     private String password;
+    private String turnstileToken;
 }

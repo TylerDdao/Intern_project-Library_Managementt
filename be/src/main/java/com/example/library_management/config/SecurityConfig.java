@@ -3,6 +3,7 @@ package com.example.library_management.config;
 import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.filter.JwtAuthFilter;
 import com.example.library_management.service.UserDetailsServiceImpl;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +30,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import tools.jackson.databind.ObjectMapper;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -37,8 +39,9 @@ import java.util.List;
 @EnableJpaAuditing(auditorAwareRef = "auditorAwareImpl")
 public class SecurityConfig {
 
-    @Value("${frontend.url}")
+    @Value("${frontend.url:http://localhost:4200}")
     private String frontendUrl;
+
 
     private static final String[] WHITE_LIST = {
             "/announcements",
@@ -68,6 +71,32 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+//    @PostConstruct
+//    public void printCorsConfiguration() {
+//        System.out.println("========== CORS CONFIGURATION ==========");
+//
+//        System.out.println("  - " + frontendUrl);
+//
+//        System.out.println("Allowed Methods:");
+//        System.out.println("  - GET");
+//        System.out.println("  - POST");
+//        System.out.println("  - PUT");
+//        System.out.println("  - DELETE");
+//        System.out.println("  - OPTIONS");
+//        System.out.println("  - PATCH");
+//
+//        System.out.println("Allowed Headers:");
+//        System.out.println("  - *");
+//
+//        System.out.println("Allow Credentials:");
+//        System.out.println("  - true");
+//
+//        System.out.println("CORS Path:");
+//        System.out.println("  - /**");
+//
+//        System.out.println("========================================");
+//    }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) {
         try {
@@ -87,7 +116,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of(frontendUrl, "http://192.168.2.1:4200"));
+        config.setAllowedOrigins(List.of(frontendUrl, "http://localhost:4200", "http://192.168.1.2:4200"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);

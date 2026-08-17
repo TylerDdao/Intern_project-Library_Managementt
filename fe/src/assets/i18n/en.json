@@ -93,7 +93,8 @@
     "Edit-role": "Edit role",
     "New-role": "New role",
     "Processing": "Processing",
-    "Save-change": "Save changes"
+    "Save-change": "Save changes",
+    "Invalid-value": "invalid value"
   },
   "newUserForm": {
     "Create-new-user": "Create new user"
@@ -351,8 +352,10 @@
     "Create-new-book": "Create new book",
     "Upload-book-cover": "Upload book cover",
     "Available-genres": "Available genres",
-    "/.WebP-file-only": ".WebP file only",
-    "Book-information":"Book information",
+    "/": {
+      "WebP-file-only": ".WebP file only"
+    },
+    "Book-information": "Book information",
     "Please-enter-title": "Please enter title",
     "Please-enter-author": "Please enter author",
     "Please-enter-number-of-copies": "Please enter number of copies",
@@ -377,7 +380,7 @@
     "Active-status": "Active status",
     "Link": "Link",
     "Link-text": "Link text",
-    "Info":"Info",
+    "Info": "Info",
     "Warning": "Warning",
     "Error": "Error"
   },
@@ -407,5 +410,8 @@
     "You-must-have-a-link-to-enter-link-text": "You must have a link to enter link text",
     "Showing-on": "Showing on",
     "Showing-on-all-pages": "Showing on all pages"
+  },
+  "capcha": {
+    "Please-complete-the-captcha": "Please complete the capcha"
   }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject, NgZone, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Inject, NgZone, PLATFORM_ID, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth-service';
 import { NavbarComponent } from '../../components/navbar/navbar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -18,6 +18,9 @@ import { AnnouncementComponent } from "../../components/announcement-component/a
 import { Announcement } from '../../models/announcement';
 import { webAnnouncements } from '../../../assets/constants';
 import { AnnouncementService } from '../../services/announcement-service/announcement-service';
+import { environment } from '../../../environments/environment';
+
+declare const turnstile: any;
 
 @Component({
   selector: 'app-signup',
@@ -26,6 +29,7 @@ import { AnnouncementService } from '../../services/announcement-service/announc
   styleUrl: './signup.css',
 })
 export class Signup {
+  @ViewChild('turnstileContainer') turnstileContainer!: ElementRef<HTMLDivElement>;
   invalidInformation = false;
   signupCompleted = false;
   user!:User
@@ -64,6 +68,32 @@ export class Signup {
     password: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/)])
   });
+
+
+  turnstileToken: string | null = null;
+  private turnstileWidgetId: string | null = null;
+
+  ngAfterViewInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    this.renderTurnstile();
+  }
+
+  private renderTurnstile(attempt = 0): void {
+    if (typeof turnstile !== 'undefined') {
+      this.turnstileWidgetId = turnstile.render(this.turnstileContainer.nativeElement, {
+        sitekey: environment.turnstileSitekey,
+        theme: 'light',
+        callback: (token: string) => {
+          this.turnstileToken = token;
+          this.cdr.markForCheck();
+        },
+      });
+      return;
+    }
+    if (attempt < 20) {
+      setTimeout(() => this.renderTurnstile(attempt + 1), 100);
+    }
+  }
 
   announcements:Announcement[] =[]
   handleCloseAnnouncement(id: number) {
@@ -161,7 +191,7 @@ export class Signup {
       this.isRegister = false;
       return;
     }
-    if(username && fullName && phoneNumber && email && password){
+    if(username && fullName && phoneNumber && email && password && this.turnstileToken){
       this.user = {
         username,
         fullName,
@@ -171,7 +201,7 @@ export class Signup {
         address: address ?? ''
       };
 
-      this.authService.signup(this.user).subscribe({
+      this.authService.signup(this.user, this.turnstileToken).subscribe({
         next:(data:any)=>{
           if(data.code == "200"){
             this.router.navigate(['/signup/success'])

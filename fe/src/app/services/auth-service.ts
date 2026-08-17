@@ -44,8 +44,8 @@ export class AuthService {
     })
   }
 
-  sendResetPasswordLink(email:string){
-    return this.http.get(`${this.baseUrl}/forgot-password?email=${email}`, {headers:getAuthHeaders(this.platformId)})
+  sendResetPasswordLink(email:string, turnstile: string){
+    return this.http.get(`${this.baseUrl}/forgot-password?email=${email}&capcha=${turnstile}`, {headers:getAuthHeaders(this.platformId)})
   }
 
   resetPassword(email:string, password:string){
@@ -68,15 +68,16 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/verify-password`, body, {headers:getAuthHeaders(this.platformId)});
   }
 
-  login(username: string, password: string){
+  login(username: string, password: string, turnstileToken: string){
     const body = {
       'username': username,
-      'password': password
+      'password': password,
+      'turnstileToken': turnstileToken
     }
     return this.http.post(`${this.baseUrl}/login`, body);
   }
 
-  signup(user:User){
+  signup(user:User, turnstile: string){
     const body = {
       'username': user.username,
       'password': user.password,
@@ -84,6 +85,7 @@ export class AuthService {
       'fullName': user.fullName,
       'phoneNumber': user.phoneNumber,
       'address': user.address,
+      'turnstileToken': turnstile
     }
 
     return this.http.post(`${this.baseUrl}/register`, body)

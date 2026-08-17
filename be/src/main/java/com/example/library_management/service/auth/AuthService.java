@@ -4,12 +4,11 @@ import com.example.library_management.model.Feature;
 import com.example.library_management.model.ResetPasswordCode;
 import com.example.library_management.repository.FeatureRepository;
 import com.example.library_management.repository.ResetPasswordCodeRepository;
-import com.example.library_management.service.mail.MailService;
 import com.example.library_management.service.TokenBlacklistService;
 import com.example.library_management.service.mail.UserMailService;
 import com.example.library_management.util.AuditLogger;
 import com.example.library_management.util.JwtUtil;
-import com.example.library_management.dto.request.LoginRequest;
+import com.example.library_management.dto.request.auth.LoginRequest;
 import com.example.library_management.dto.request.auth.RegisterRequest;
 import com.example.library_management.dto.request.user.UserRequest;
 import com.example.library_management.dto.response.auth.LoginResponse;
@@ -69,6 +68,9 @@ public class AuthService {
     @Autowired
     private ResetPasswordCodeRepository resetPasswordCodeRepository;
 
+    @Autowired
+    private TurnstileService turnstileService;
+
     public Boolean resetPassword(UserRequest request){
         try{
             User user = userRepository.findByEmailAndIsDeletedFalse(request.getEmail()).orElseThrow(()->new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
@@ -102,6 +104,12 @@ public class AuthService {
     }
 
     public LoginResponse login(LoginRequest request) {
+        if (!turnstileService.verify(request.getTurnstileToken())) {
+            String message = messageSource.getMessage("error.captcha.failed", null, LocaleContextHolder.getLocale());
+            logger.warn("Unable to verify capcha for login attempt on @{}", request.getUsername());
+            throw new AuthException(message);
+        }
+
         try {
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -168,6 +176,11 @@ public class AuthService {
     }
 
     public UserResponse register(RegisterRequest request) {
+        if (!turnstileService.verify(request.getTurnstileToken())) {
+            String message = messageSource.getMessage("error.captcha.failed", null, LocaleContextHolder.getLocale());
+            logger.warn("Unable to verify capcha for register attempt");
+            throw new AuthException(message);
+        }
         if (userRepository.existsByUsernameAndIsDeletedFalse(request.getUsername())) {
             throw new RuntimeException(messageSource.getMessage("error.username.taken", null, LocaleContextHolder.getLocale()));
         }
