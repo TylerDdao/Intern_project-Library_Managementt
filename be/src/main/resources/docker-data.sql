@@ -1,8 +1,6 @@
 INSERT IGNORE INTO roles (id, created_at, created_by, updated_at, updated_by, name, is_default) VALUES
     (1, NOW(), 'SYSTEM', NOW(), 'SYSTEM', 'ROLE_ROOT', false),
-    (2, NOW(), 'SYSTEM', NOW(), 'SYSTEM', 'ROLE_ADMIN', false),
-    (3, NOW(), 'SYSTEM', NOW(), 'SYSTEM', 'ROLE_LIBRARIAN', false),
-    (4, NOW(), 'SYSTEM', NOW(), 'SYSTEM', 'ROLE_USER', true);
+    (2, NOW(), 'SYSTEM', NOW(), 'SYSTEM', 'ROLE_USER', true);
 
 INSERT IGNORE INTO features (id, name) VALUES
     (1, 'CREATE_BOOK'),
@@ -47,22 +45,22 @@ INSERT IGNORE INTO features (id, name) VALUES
     (40, 'ANNOUNCEMENTS_MANAGEMENT');
 
 INSERT IGNORE INTO features_roles (role_id, feature_id) VALUES
-    (4,2),
-    (4,3),
-    (4,5),
-    (4,6),
-    (4,8),
-    (4,9),
-    (4,10),
-    (4,12),
-    (4,13),
-    (4,14),
-    (4,15),
-    (4,16),
-    (4,18),
-    (4,27),
-    (4,31),
-    (4,32);
+    (2,2),
+    (2,3),
+    (2,5),
+    (2,6),
+    (2,8),
+    (2,9),
+    (2,10),
+    (2,12),
+    (2,13),
+    (2,14),
+    (2,15),
+    (2,16),
+    (2,18),
+    (2,27),
+    (2,31),
+    (2,32);
 
 INSERT IGNORE INTO genres (id, name) VALUES
      (1, 'Sci-fi'),
@@ -130,7 +128,7 @@ INSERT IGNORE INTO books_genres (book_id, genre_id) VALUES
     (25, 4);
 
 INSERT IGNORE INTO users (id, full_name, username, address, email, phone_number, password, role_id, created_at, is_deleted, is_active) VALUES
-    (1, 'Tyler Dao', 'tyler', '32 Noecker Street', 'baonamfpt@gmail.com', '5483843681', '$2a$10$SWzx7vnpEzMZlj6F1tGrSOcwWclGU2lS0FKSck2eyz16V0gi3A3rm', '1', NOW(), false, true);
+    (1, 'Root User', 'root', null, 'root@email.com', '0912345678', '$2a$10$STB7sFlSBELvINoKa9IPPOQ4I72QrHThlY4AbNSfUhBQm0uQiTax2', '1', NOW(), false, true);
 
 INSERT IGNORE INTO policies (policy_key, policy_value) VALUES
     ("borrow_duration", "14"),

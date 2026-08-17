@@ -61,13 +61,7 @@ public class AuthService {
     private MessageSource messageSource;
 
     @Autowired
-    private VerificationService verificationService;
-
-    @Autowired
     private AuditLogger logger;
-
-    @Autowired
-    private MailService mailService;
 
     @Autowired
     private UserMailService userMailService;
