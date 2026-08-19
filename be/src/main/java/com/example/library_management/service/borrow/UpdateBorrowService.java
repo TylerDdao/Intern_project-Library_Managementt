@@ -77,17 +77,4 @@ public class UpdateBorrowService {
         borrowMailService.sendBorrowReturned(borrow);
         return new BorrowResponse(borrow);
     }
-
-    public BorrowResponse updateBorrow(BorrowRequest request){
-        Borrow borrow = borrowRepository.findById(request.getId()).orElseThrow(()-> new RuntimeException(messageSource.getMessage("error.borrow.not.found", null, LocaleContextHolder.getLocale())));
-
-        if (request.getDueDate() != null) {
-            borrow.setDueDate(request.getDueDate());
-        }
-
-        borrowRepository.save(borrow);
-
-        logger.log("Updated borrow ID #{}", borrow.getId());
-        return new BorrowResponse(borrow);
-    }
 }

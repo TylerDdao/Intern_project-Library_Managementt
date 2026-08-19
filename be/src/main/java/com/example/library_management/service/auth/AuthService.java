@@ -1,5 +1,6 @@
 package com.example.library_management.service.auth;
 
+import com.example.library_management.exception.ApiException;
 import com.example.library_management.model.Feature;
 import com.example.library_management.model.ResetPasswordCode;
 import com.example.library_management.repository.FeatureRepository;
@@ -21,6 +22,7 @@ import com.example.library_management.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -178,7 +180,7 @@ public class AuthService {
             throw new AuthException(message);
         }
         if (userRepository.existsByUsernameAndIsDeletedFalse(request.getUsername())) {
-            throw new RuntimeException(messageSource.getMessage("error.username.taken", null, LocaleContextHolder.getLocale()));
+            throw new ApiException(HttpStatus.BAD_REQUEST, "USERNAME-TAKEN",messageSource.getMessage("error.username.taken", null, LocaleContextHolder.getLocale()));
         }
 
         Role defaultRole = roleRepository.findByIsDefaultIsTrue()
@@ -195,13 +197,7 @@ public class AuthService {
 
         User savedUser = userRepository.save(user);
         logger.log("SYSTEM", "Registered @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
-
-        try {
-            userMailService.sendWelcomeEmail(savedUser);
-        } catch (Exception e) {
-            logger.error("Failed to send welcome email to @{}: {}", savedUser.getUsername(), e.getMessage());
-        }
-
+        userMailService.sendWelcomeEmail(savedUser);
         return new UserResponse(savedUser);
     }
 

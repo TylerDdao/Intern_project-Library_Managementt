@@ -14,10 +14,15 @@ public class TurnstileService {
     @Value("${turnstile.secret-key}")
     private String secretKey;
 
+    @Value("${turnstile.enabled:true}")
+    private boolean turnstileEnabled;
+
     private final RestTemplate restTemplate = new RestTemplate();
 
     public boolean verify(String token) {
-        System.out.println("SECRET KEY: " + secretKey);
+        if(!turnstileEnabled){
+            return true;
+        }
         if (token == null || token.isBlank()) {
             return false;
         }

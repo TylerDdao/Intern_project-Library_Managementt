@@ -275,6 +275,7 @@ public class BorrowMailService {
             mailSender.send(message);
 
         } catch (Exception e) {
+            logger.error("Failed to send late borrow reminder email");
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,"EMAIL-ISSUE",messageSource.getMessage("email.failed",null,LocaleContextHolder.getLocale()));
         }
     }
