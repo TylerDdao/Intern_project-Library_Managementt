@@ -1,6 +1,7 @@
 package com.example.library_management.service.auth;
 
 import com.example.library_management.dto.request.user.UserRequest;
+import com.example.library_management.exception.ApiException;
 import com.example.library_management.exception.AuthException;
 import com.example.library_management.model.EmailVerification;
 import com.example.library_management.model.ResetPasswordCode;
@@ -15,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -66,52 +69,41 @@ public class VerificationService {
         resetPasswordCodeRepository.deleteByExpiresAtBefore(LocalDateTime.now());
     }
 
-    public String sendResetPasswordEmail(String email, String turnstileToken){
+    public String sendResetPasswordEmail(String email, String turnstileToken) {
         if (!turnstileService.verify(turnstileToken)) {
             String message = messageSource.getMessage("error.captcha.failed", null, LocaleContextHolder.getLocale());
-            logger.warn("Unable to verify capcha for reset password attempt");
             throw new AuthException(message);
         }
+
         User user = userRepository.findByEmailAndIsDeletedFalse(email).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
-        if(resetPasswordCodeRepository.existsByUser_EmailAndIsResetFalseAndExpiresAtAfter(email, LocalDateTime.now())){
-            return "error.Code.is.already.sent";
+
+        if (resetPasswordCodeRepository.existsByUser_EmailAndIsResetFalseAndExpiresAtAfter(email, LocalDateTime.now())) {
+            throw new ApiException(HttpStatus.BAD_REQUEST,"EMAIL-ALREADY-SENT", messageSource.getMessage("error.Code.is.already.sent", null, LocaleContextHolder.getLocale()));
         }
         String code;
         do {
             code = generateRandomDigits(CODE_LENGTH);
-        }
-        while (resetPasswordCodeRepository.existsByUser_EmailAndCodeAndIsResetFalseAndExpiresAtAfter(email, code, LocalDateTime.now()));
+        } while (
+                resetPasswordCodeRepository.existsByUser_EmailAndCodeAndIsResetFalseAndExpiresAtAfter(email, code, LocalDateTime.now())
+        );
 
-        String resetLink = frontendUrl
-                + "/reset-password/"
-                + code
-                + "/"
-                + email;
-
+        String resetLink = frontendUrl + "/reset-password/" + code + "/" + email;
         ResetPasswordCode resetPasswordCode = new ResetPasswordCode();
         resetPasswordCode.setCode(code);
         resetPasswordCode.setUser(user);
         LocalDateTime now = LocalDateTime.now();
         resetPasswordCode.setExpiresAt(now.plusMinutes(EXPIRY_MINUTES));
-
-        try {
-            verificationMailService.sendResetPasswordEmail(email, resetLink, EXPIRY_MINUTES);
-            resetPasswordCodeRepository.save(resetPasswordCode);
-            logger.log("Sent reset password email to user @{}, ID #{}", user.getUsername(), user.getId());
-            return "reset.password.Link.is.sent";
-        }
-        catch (Exception e){
-            logger.log("Failed to send reset password email to user @{}, ID #{}: {}", user.getUsername(), user.getId(), e.getMessage());
-            return e.toString();
-        }
+        verificationMailService.sendResetPasswordEmail(email, resetLink, EXPIRY_MINUTES);
+        resetPasswordCodeRepository.save(resetPasswordCode);
+        return messageSource.getMessage("reset.password.Link.is.sent", null, LocaleContextHolder.getLocale());
     }
 
     public String sendVerificationEmail(UserRequest request){
         if (userRepository.existsByEmailAndIsDeletedFalse(request.getEmail())){
-            return "error.Email.has.been.used";
+            throw new ApiException(HttpStatus.BAD_REQUEST, "EMAIL-IS-USED", messageSource.getMessage("error.Email.has.been.used", null, LocaleContextHolder.getLocale()));
         }
         if(verificationRepository.existsByEmailAndVerifiedFalseAndExpiresAtAfter(request.getEmail(), LocalDateTime.now())){
-            return "error.Code.is.already.sent";
+            throw new ApiException(HttpStatus.BAD_REQUEST, "CODE-IS-SENT", messageSource.getMessage("error.Code.is.already.sent", null, LocaleContextHolder.getLocale()));
         }
         String code;
         do {
@@ -125,16 +117,9 @@ public class VerificationService {
         LocalDateTime now = LocalDateTime.now();
         verification.setExpiresAt(now.plusMinutes(EXPIRY_MINUTES));
 
-        try {
-            verificationMailService.sentVerificationEmail(request.getEmail(), code, EXPIRY_MINUTES);
-            verificationRepository.save(verification);
-            logger.log("Sent verification code to email {}", request.getEmail());
-            return "verification.Code.is.sent";
-        }
-        catch (Exception e){
-            logger.error("Unable to send verification code to email {}: {}", request.getEmail(), e.getMessage());
-            return e.toString();
-        }
+        verificationMailService.sentVerificationEmail(request.getEmail(), code, EXPIRY_MINUTES);
+        verificationRepository.save(verification);
+        return "verification.Code.is.sent";
     }
 
     public boolean verifyResetPasswordCode(String email, String inputCode) {
@@ -150,6 +135,7 @@ public class VerificationService {
         if (vc.getExpiresAt().isBefore(LocalDateTime.now())) return false;
         return vc.getCode().equals(inputCode);
     }
+
 
     public boolean verifyCode(String email, String inputCode) {
         Optional<EmailVerification> latest = verificationRepository.findTopByEmailOrderByCreatedAtDesc(email);

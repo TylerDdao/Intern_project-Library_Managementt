@@ -6,8 +6,10 @@ import com.example.library_management.service.UserDetailsServiceImpl;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
@@ -54,7 +56,9 @@ public class SecurityConfig {
             "/test",
             "/users/check-username",
             "/auth/forgot-password",
-            "/auth/reset-password"
+            "/auth/reset-password",
+            "/swagger-ui/**",
+            "/api-docs/**"
     };
 
     @Autowired
@@ -66,36 +70,13 @@ public class SecurityConfig {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private MessageSource messageSource;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    @PostConstruct
-//    public void printCorsConfiguration() {
-//        System.out.println("========== CORS CONFIGURATION ==========");
-//
-//        System.out.println("  - " + frontendUrl);
-//
-//        System.out.println("Allowed Methods:");
-//        System.out.println("  - GET");
-//        System.out.println("  - POST");
-//        System.out.println("  - PUT");
-//        System.out.println("  - DELETE");
-//        System.out.println("  - OPTIONS");
-//        System.out.println("  - PATCH");
-//
-//        System.out.println("Allowed Headers:");
-//        System.out.println("  - *");
-//
-//        System.out.println("Allow Credentials:");
-//        System.out.println("  - true");
-//
-//        System.out.println("CORS Path:");
-//        System.out.println("  - /**");
-//
-//        System.out.println("========================================");
-//    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) {
@@ -144,9 +125,7 @@ public class SecurityConfig {
                         response.setStatus(401);
                         response.setContentType("application/json");
                         response.getWriter().write(
-                                objectMapper.writeValueAsString(
-                                        ApiResponse.error("401", "Unauthorized - please login")
-                                )
+                                objectMapper.writeValueAsString(ApiResponse.error("401", messageSource.getMessage("error.unauthorized", null, LocaleContextHolder.getLocale())))
                         );
                     })
                     .accessDeniedHandler((request, response, e) -> {
@@ -154,7 +133,7 @@ public class SecurityConfig {
                         response.setContentType("application/json");
                         response.getWriter().write(
                                 objectMapper.writeValueAsString(
-                                        ApiResponse.error("403", "Access denied")
+                                        ApiResponse.error("403", messageSource.getMessage("error.access.denied", null, LocaleContextHolder.getLocale()))
                                 )
                         );
                     })

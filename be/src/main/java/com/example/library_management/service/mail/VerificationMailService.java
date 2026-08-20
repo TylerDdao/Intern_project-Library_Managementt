@@ -88,10 +88,8 @@ public class VerificationMailService {
             helper.setSubject(subject);
             helper.setText(html, true);
             mailSender.send(message);
-            logger.log("Sent reset password email to {}", to);
         }
         catch (Exception e){
-            logger.error("Failed to send reset password email to {}: {}", to, e.getMessage());
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "EMAIL-ISSUE", messageSource.getMessage("email.failed", null, locale));
         }
     }
@@ -121,10 +119,8 @@ public class VerificationMailService {
             helper.setSubject(subject);
             helper.setText(html, true);
             mailSender.send(message);
-            logger.log("Sent verification email to {}", to);
         }
         catch (Exception e){
-            logger.log("Failed to send verification email to {}: {}", to, e.getMessage());
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "EMAIL-ISSUE", messageSource.getMessage("email.failed", null, locale));
         }
     }

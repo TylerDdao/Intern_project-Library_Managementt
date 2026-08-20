@@ -29,7 +29,6 @@ export class NewRoleForm {
   ) {}
 
   isProcessing:boolean = false
-  isDeleting:boolean = false
   isLoading:boolean = false;
 
   addedFeatures: Feature[] = [];

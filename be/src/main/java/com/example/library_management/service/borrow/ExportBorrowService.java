@@ -3,7 +3,6 @@ package com.example.library_management.service.borrow;
 import com.example.library_management.dto.request.borrow.BorrowRequest;
 import com.example.library_management.model.Borrow;
 import com.example.library_management.repository.BorrowRepository;
-import com.example.library_management.util.AuditLogger;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +25,6 @@ public class ExportBorrowService {
 
     private static final DateTimeFormatter DATE_FORMATTER =
             DateTimeFormatter.ofPattern("dd/MM/yyyy @ HH:mm:ss");
-
-    @Autowired
-    AuditLogger logger;
 
     public ByteArrayInputStream borrowsToExcel(List<BorrowRequest> requests) {
         List<Borrow> borrows = new ArrayList<>();
@@ -90,10 +86,8 @@ public class ExportBorrowService {
             }
 
             workbook.write(out);
-            logger.log("Borrow data is exported");
             return new ByteArrayInputStream(out.toByteArray());
         } catch (IOException e) {
-            logger.error("Failed to export borrow data: {}", e.getMessage());
             throw new RuntimeException("Failed to export data to Excel: " + e.getMessage());
         }
     }

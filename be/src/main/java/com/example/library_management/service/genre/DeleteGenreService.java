@@ -37,7 +37,7 @@ public class DeleteGenreService {
         logger.log("Removed genre {} from all books", genre.getName());
 
         genreRepository.delete(genre);
-        logger.log("Deleted genre {} ID #{}", genre.getName(), genre.getId());
+        logger.log("Deleted genre {}, ID #{}", genre.getName(), genre.getId());
         return messageSource.getMessage("genre.delete", null, LocaleContextHolder.getLocale());
     }
 }

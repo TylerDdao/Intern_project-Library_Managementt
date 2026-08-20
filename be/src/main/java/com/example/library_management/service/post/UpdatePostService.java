@@ -21,11 +21,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UpdatePostService {
 
-    private PostRepository postRepository;
-    private UserRepository userRepository;
-    private PostLikeRepository postLikeRepository;
-    private MessageSource messageSource;
-    private AuditLogger logger;
+    private final PostRepository postRepository;
+    private final UserRepository userRepository;
+    private final PostLikeRepository postLikeRepository;
+    private final MessageSource messageSource;
+    private final AuditLogger logger;
 
     public PostResponse updatePost(PostRequest request){
         Post post = postRepository.findById(request.getId()).orElseThrow(()->new RuntimeException(messageSource.getMessage("error.post.not.found", null, LocaleContextHolder.getLocale())));
@@ -37,7 +37,7 @@ public class UpdatePostService {
     }
 
     public String toggleLike(Long postId, Long userId) {
-        if (postId == null || userId == null) {;
+        if (postId == null || userId == null) {
             return messageSource.getMessage("post.invalid.post.id.or.user.id", null, LocaleContextHolder.getLocale());
         }
 

@@ -7,12 +7,19 @@ import com.example.library_management.service.announcement.CreateAnnouncementSer
 import com.example.library_management.service.announcement.DeleteAnnouncementService;
 import com.example.library_management.service.announcement.GetAnnouncementService;
 import com.example.library_management.service.announcement.UpdateAnnouncementService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Announcements", description = "Announcement management endpoints")
+@io.swagger.v3.oas.annotations.security.SecurityRequirement(name = "BearerAuth")
 @RestController
 @RequestMapping("/announcements")
 public class AnnouncementController {
@@ -31,6 +38,21 @@ public class AnnouncementController {
 
     @PreAuthorize("@securityService.hasAccess('ANNOUNCEMENTS_MANAGEMENT')")
     @PostMapping()
+    @Operation(summary = "Create announcement", description = "Create a new announcement")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Success"
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized request",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            )
+    })
     public ResponseEntity<ApiResponse<AnnouncementResponse>> createAnnouncement(
             @RequestBody AnnouncementRequest request
             ){
@@ -39,6 +61,21 @@ public class AnnouncementController {
 
     @PreAuthorize("@securityService.hasAccess('ANNOUNCEMENTS_MANAGEMENT')")
     @PatchMapping()
+    @Operation(summary = "Update announcement", description = "Update an announcement's status between 'Active' and 'Inactive'")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Success"
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized request"
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "500",
+                    description = "Server error"
+            )
+    })
     public ResponseEntity<ApiResponse<AnnouncementResponse>> updateAnnouncement(
             @RequestBody AnnouncementRequest request
     ){
@@ -47,6 +84,29 @@ public class AnnouncementController {
 
     @PreAuthorize("@securityService.hasAccess('ANNOUNCEMENTS_MANAGEMENT')")
     @DeleteMapping()
+    @Operation(summary = "Delete announcement", description = "Delete an announcement")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Success"
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized request",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "500",
+                    description = "Server error",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+    })
     public ResponseEntity<ApiResponse<String>> deleteAnnouncement(
             @RequestParam Long id
     ){
@@ -54,6 +114,29 @@ public class AnnouncementController {
     }
 
     @GetMapping()
+    @Operation(summary = "Get announcement", description = "Get announcements")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Success"
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "500",
+                    description = "Announcement not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+    })
     public ResponseEntity<ApiResponse<Page<AnnouncementResponse>>> getAnnouncements(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,

@@ -1,5 +1,6 @@
 package com.example.library_management.filter;
 
+import com.example.library_management.exception.AuthException;
 import com.example.library_management.util.JwtUtil;
 import com.example.library_management.service.TokenBlacklistService;
 import com.example.library_management.service.UserDetailsServiceImpl;
@@ -40,7 +41,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         if (request.getMethod().equals("OPTIONS") ||
                 request.getServletPath().contains("/api/auth/login") ||
                 request.getServletPath().contains("/api/auth/register")) {
-            System.out.println("OPTION REQUEST, PASS");
             filterChain.doFilter(request, response);
             return;
         }
