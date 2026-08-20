@@ -13,13 +13,8 @@ public class ApiResponse<T> {
     private T data;
     private LocalDateTime timestamp = LocalDateTime.now();
 
-    // static factory methods for convenience
     public static <T> ApiResponse<T> success(T data) {
         return new ApiResponse<>("200", "Success", data, LocalDateTime.now());
-    }
-
-    public static <T> ApiResponse<T> success(String message, T data) {
-        return new ApiResponse<>("200", message, data, LocalDateTime.now());
     }
 
     public static <T> ApiResponse<T> error(String code, String message) {
