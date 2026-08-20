@@ -2,6 +2,7 @@ package com.example.library_management.service.book;
 
 import com.example.library_management.dto.request.book.BookRequest;
 import com.example.library_management.dto.response.book.BookResponse;
+import com.example.library_management.exception.ApiException;
 import com.example.library_management.model.Book;
 import com.example.library_management.model.Genre;
 import com.example.library_management.repository.BookRepository;
@@ -11,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,8 +44,7 @@ public class CreateBookService {
 
     public boolean uploadBookCover(Long id, MultipartFile file) {
         try {
-            Book book = bookRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Book not found"));
+            Book book = bookRepository.findById(id).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "BOOK-NOT-FOUND", messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
             String fileName =  book.getId() + ".webp";
             Path uploadPath = Paths.get(uploadDir);
             Files.createDirectories(uploadPath);
@@ -52,7 +54,8 @@ public class CreateBookService {
             return true;
         } catch (IOException e) {
             log.error("Failed to save book cover: {}", e.getMessage());
-            return false;
+            throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "BOOK-COVER-UPLOAD-FAILED", messageSource.getMessage("error.book.cover.upload.failed", null, LocaleContextHolder.getLocale())
+            );
         }
     }
 

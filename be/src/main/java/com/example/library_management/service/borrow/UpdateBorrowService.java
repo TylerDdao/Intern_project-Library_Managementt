@@ -2,6 +2,7 @@ package com.example.library_management.service.borrow;
 
 import com.example.library_management.dto.request.borrow.BorrowRequest;
 import com.example.library_management.dto.response.borrow.BorrowResponse;
+import com.example.library_management.exception.ApiException;
 import com.example.library_management.model.*;
 import com.example.library_management.repository.BookRepository;
 import com.example.library_management.repository.BorrowRepository;
@@ -15,6 +16,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.MessageSource;
 import org.springframework.context.event.EventListener;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -64,15 +66,15 @@ public class UpdateBorrowService {
 
     @Transactional
     public BorrowResponse returnBorrow(BorrowRequest request){
-        Borrow borrow = borrowRepository.findById(request.getId()).orElseThrow(()-> new RuntimeException(messageSource.getMessage("error.borrow.not.found", null, LocaleContextHolder.getLocale())));
-
-        borrow.setIsActive(request.getIsActive());
-        Book book = bookRepository.findByIdForUpdate(borrow.getBook().getId()).orElseThrow(() ->new RuntimeException(messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
+        Borrow borrow = borrowRepository.findById(request.getId()).orElseThrow(()-> new ApiException(HttpStatus.NOT_FOUND, "BORROW-NOT-FOUND", messageSource.getMessage("error.borrow.not.found", null, LocaleContextHolder.getLocale())));
+        if(borrow.getIsActive() == false){
+            throw new ApiException(HttpStatus.CONFLICT, "BORROW-NOT-ACTIVE", messageSource.getMessage("error.borrow.is.already.returned", null, LocaleContextHolder.getLocale()));
+        }
+        borrow.setIsActive(false);
+        Book book = bookRepository.findByIdForUpdate(borrow.getBook().getId()).orElseThrow(() ->new ApiException(HttpStatus.NOT_FOUND, "BOOK-NOT-FOUND", messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
         book.setCopies(book.getCopies() + 1);
         borrowRepository.save(borrow);
-        Book savedBook = bookRepository.save(book);
-        System.out.println("New copies value (Return): " + savedBook.getCopies());
-
+        bookRepository.save(book);
         logger.log("Returned borrow ID #{}", borrow.getId());
         borrowMailService.sendBorrowReturned(borrow);
         return new BorrowResponse(borrow);

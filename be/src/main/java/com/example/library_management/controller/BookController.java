@@ -9,6 +9,7 @@ import com.example.library_management.service.book.GetBookService;
 import com.example.library_management.service.book.UpdateBookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -46,7 +47,11 @@ public class BookController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -82,7 +87,11 @@ public class BookController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -113,7 +122,11 @@ public class BookController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -129,6 +142,26 @@ public class BookController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "Not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Book not found",
+                                            description = "Book can't be found by its ID",
+                                            value = """
+                                                    {"code": "BOOK-NOT-FOUND",
+                                                    "message": "Book not found",
+                                                    "data": null,
+                                                    "timestamp": "2026-08-19T10:00:00"}
+                                                    """
+                                    )
+                            }
                     )
             )
     })
@@ -146,7 +179,11 @@ public class BookController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -183,7 +220,11 @@ public class BookController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -218,7 +259,11 @@ public class BookController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -251,7 +296,11 @@ public class BookController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -280,11 +329,15 @@ public class BookController {
 
     @PreAuthorize("@securityService.hasAccess('CREATE_BOOK')")
     @PostMapping()
-    @Operation(summary = "Add book", description = "Add new book, require 'CREATE_BOOK' feature", security = @SecurityRequirement(name = "BearerAuth"))
+    @Operation(summary = "Add book", description = "Add new book, require 'CREATE_BOOK' feature, default users shall not be granted this feature", security = @SecurityRequirement(name = "BearerAuth"))
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -311,11 +364,15 @@ public class BookController {
 
     @PreAuthorize("@securityService.hasAccess('CREATE_BOOK')")
     @PostMapping("/upload-book-cover")
-    @Operation(summary = "Upload book cover", description = "Upload a book cover by book ID, require 'CREATE_BOOK' feature", security = @SecurityRequirement(name = "BearerAuth"))
+    @Operation(summary = "Upload book cover", description = "Upload a book cover by book ID, require 'CREATE_BOOK' feature, default users shall not be granted this feature", security = @SecurityRequirement(name = "BearerAuth"))
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -331,6 +388,46 @@ public class BookController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "Not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Book not found",
+                                            description = "Book can't be found by its ID",
+                                            value = """
+                                                    {"code": "BOOK-NOT-FOUND",
+                                                    "message": "Book not found",
+                                                    "data": null,
+                                                    "timestamp": "2026-08-19T10:00:00"}
+                                                    """
+                                    )
+                            }
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "500",
+                    description = "Server error",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Failed to upload book cover image",
+                                            description = "The server can't upload the image file",
+                                            value = """
+                                                    {"code": "BOOK-COVER-UPLOAD-FAILED",
+                                                    "message": "Failed to upload book cover",
+                                                    "data": null,
+                                                    "timestamp": "2026-08-19T10:00:00"}
+                                                    """
+                                    )
+                            }
                     )
             )
     })
@@ -343,11 +440,15 @@ public class BookController {
 
     @PreAuthorize("@securityService.hasAccess('UPDATE_BOOK')")
     @PatchMapping("")
-    @Operation(summary = "Update book", description = "Update a book by book ID, require 'UPDATE_BOOK' feature", security = @SecurityRequirement(name = "BearerAuth"))
+    @Operation(summary = "Update book", description = "Update a book by book ID, require 'UPDATE_BOOK' feature, default users shall not be granted this feature", security = @SecurityRequirement(name = "BearerAuth"))
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -363,6 +464,26 @@ public class BookController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "Not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Book not found",
+                                            description = "Book can't be found by its ID",
+                                            value = """
+                                                    {"code": "BOOK-NOT-FOUND',
+                                                    "message": "Book not found",
+                                                    "data": null,
+                                                    "timestamp": 2026-08-19T10:00:00"}
+                                                    """
+                                    )
+                            }
                     )
             )
     })
@@ -372,11 +493,15 @@ public class BookController {
 
     @PreAuthorize("@securityService.hasAccess('DELETE_BOOK')")
     @DeleteMapping("")
-    @Operation(summary = "Delete book", description = "Delete a book by book ID, require 'DELETE_BOOK' feature", security = @SecurityRequirement(name = "BearerAuth"))
+    @Operation(summary = "Delete book", description = "Delete a book by book ID, require 'DELETE_BOOK' feature, default users shall not be granted this feature", security = @SecurityRequirement(name = "BearerAuth"))
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -393,7 +518,47 @@ public class BookController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class)
                     )
-            )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "Not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Book not found",
+                                            description = "Book can't be found by its ID",
+                                            value = """
+                                                    {"code": "BOOK-NOT-FOUND',
+                                                    "message": "Book not found",
+                                                    "data": null,
+                                                    "timestamp": 2026-08-19T10:00:00"}
+                                                    """
+                                    )
+                            }
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "409",
+                    description = "Conflict",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Active borrow for this book",
+                                            description = "This book is still associated with active borrow(s)",
+                                            value = """
+                                                    {"code": "ACTIVE-BORROWS-EXIST',
+                                                    "message": "There are active borrow(s) for this book",
+                                                    "data": null,
+                                                    "timestamp": 2026-08-19T10:00:00"}
+                                                    """
+                                    )
+                            }
+                    )
+            ),
     })
     public ResponseEntity<ApiResponse<String>> deleteBook(@RequestParam Long id){
         return  ResponseEntity.ok(ApiResponse.success(deleteBookService.deleteBook(id)));

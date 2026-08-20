@@ -49,6 +49,36 @@ public class BorrowController {
                     )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "Not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Policy not found",
+                                            description = "Policy can't be found by its key",
+                                            value = """
+                                                    "code": "POLICY-NOT-FOUND",
+                                                    "message": "Policy not found",
+                                                    "data": null,
+                                                    "timestamp": "2026-08-19T10:00:00"
+                                                    """
+                                    ),
+                                    @ExampleObject(
+                                            name = "Book not found",
+                                            description = "Book can't be found by its ID",
+                                            value = """
+                                                    "code": "BOOK-NOT-FOUND",
+                                                    "message": "Book not found",
+                                                    "data": null,
+                                                    "timestamp": "2026-08-19T10:00:00"
+                                                    """
+                                    )
+                            }
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "403",
                     description = "Access denied",
                     content = @Content(
@@ -57,105 +87,32 @@ public class BorrowController {
                     )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
-                    responseCode = "400",
-                    description = "Invalid data provided",
+                    responseCode = "409",
+                    description = "Conflict",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
                             examples = {
                                     @ExampleObject(
-                                            name = "Book is not available",
-                                            summary = "Book's copies is 0",
+                                            name = "Borrow is already existed",
+                                            description = "A borrow with he same user ID and book ID is already existed",
                                             value = """
-                                                    {
-                                                        "code": "BOOk-NOT-AVAILABLE",
-                                                        "message": "Book is not available",
-                                                        "data": null,
-                                                        "timestamp": "2026-08-19T10:00:00"
-                                                    }
+                                                    "code": "BORROW-ALREADY-EXISTED",
+                                                    "message": "Borrow is already existed"
+                                                    "data": null,
+                                                    "timestamp" "2026-08-19T10:00:00"
                                                     """
                                     )
                             }
-                    )
-            ),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(
-                    responseCode = "500",
-                    description = "Server error",
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = RuntimeException.class)
                     )
             ),
     })
     public ResponseEntity<ApiResponse<BorrowResponse>> createBorrow(@RequestBody BorrowRequest request){
         return ResponseEntity.ok(ApiResponse.success(createBorrowService.createBorrow(request)));
     }
-//
-//    @PreAuthorize("@securityService.hasAccess('UPDATE_BORROW')")
-//    @PatchMapping("/{id}")
-//    @Operation(summary = "Add borrow", description = "Add new borrow, require 'CREATE_BORROW' feature", security = @SecurityRequirement(name = "BearerAuth"))
-//    @ApiResponses({
-//            @io.swagger.v3.oas.annotations.responses.ApiResponse(
-//                    responseCode = "200",
-//                    description = "Success"
-//            ),
-//            @io.swagger.v3.oas.annotations.responses.ApiResponse(
-//                    responseCode = "401",
-//                    description = "Unauthorized request",
-//                    content = @Content(
-//                            mediaType = "application/json",
-//                            schema = @Schema(implementation = ApiResponse.class)
-//                    )
-//            ),
-//            @io.swagger.v3.oas.annotations.responses.ApiResponse(
-//                    responseCode = "403",
-//                    description = "Access denied",
-//                    content = @Content(
-//                            mediaType = "application/json",
-//                            schema = @Schema(implementation = ApiResponse.class)
-//                    )
-//            ),
-//            @io.swagger.v3.oas.annotations.responses.ApiResponse(
-//                    responseCode = "400",
-//                    description = "Invalid data provided",
-//                    content = @Content(
-//                            mediaType = "application/json",
-//                            schema = @Schema(implementation = ApiResponse.class),
-//                            examples = {
-//                                    @ExampleObject(
-//                                            name = "Book is not available",
-//                                            summary = "Book's copies is 0",
-//                                            value = """
-//                                                    {
-//                                                        "code": "BOOk-NOT-AVAILABLE",
-//                                                        "message": "Book is not available",
-//                                                        "data": null,
-//                                                        "timestamp": "2026-08-19T10:00:00"
-//                                                    }
-//                                                    """
-//                                    )
-//                            }
-//                    )
-//            ),
-//            @io.swagger.v3.oas.annotations.responses.ApiResponse(
-//                    responseCode = "500",
-//                    description = "Server error",
-//                    content = @Content(
-//                            mediaType = "application/json",
-//                            schema = @Schema(implementation = RuntimeException.class)
-//                    )
-//            ),
-//    })
-//    public ResponseEntity<ApiResponse<BorrowResponse>> updateBorrow(
-//            @PathVariable Long id,
-//            @RequestBody BorrowRequest request
-//            ){
-//        request.setId(id);
-//        return ResponseEntity.ok(ApiResponse.success(updateBorrowService.updateBorrow(request)));
-//    }
 
     @PreAuthorize("@securityService.hasAccess('UPDATE_BORROW')")
-    @PatchMapping("/return/{id}")
+    @PatchMapping("/return")
     @Operation(summary = "Return borrow", description = "Change the borrow's status to 'Inactive', require 'UPDATE_BORROW' feature, default users shall not be granted this feature", security = @SecurityRequirement(name = "BearerAuth"))
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -171,6 +128,36 @@ public class BorrowController {
                     )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "Not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Borrow not found",
+                                            description = "Borrow can't be found by its ID",
+                                            value = """
+                                                    "code": "BORROW-NOT-FOUND",
+                                                    "message": "Borrow not found",
+                                                    "data": null,
+                                                    "timestamp": "2026-08-19T10:00:00"
+                                                    """
+                                    ),
+                                    @ExampleObject(
+                                            name = "Book not found",
+                                            description = "Book can't be found by its ID",
+                                            value = """
+                                                    "code": "BOOK-NOT-FOUND",
+                                                    "message": "Book not found",
+                                                    "data": null,
+                                                    "timestamp": "2026-08-19T10:00:00"
+                                                    """
+                                    )
+                            }
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "403",
                     description = "Access denied",
                     content = @Content(
@@ -179,19 +166,29 @@ public class BorrowController {
                     )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
-                    responseCode = "500",
-                    description = "Server error",
+                    responseCode = "409",
+                    description = "Conflict",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = RuntimeException.class)
+                            schema = @Schema(implementation = ApiResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Borrow is not active",
+                                            description = "Borrow is not active (already returned)",
+                                            value = """
+                                                    "code": "BORROW-IS-NOT-ACTIVE",
+                                                    "message": "Borrow is already returned"
+                                                    "data": null,
+                                                    "timestamp" "2026-08-19T10:00:00"
+                                                    """
+                                    )
+                            }
                     )
             ),
     })
     public ResponseEntity<ApiResponse<BorrowResponse>> returnBorrow(
-            @PathVariable Long id,
             @RequestBody BorrowRequest request
     ){
-        request.setId(id);
         return ResponseEntity.ok(ApiResponse.success(updateBorrowService.returnBorrow(request)));
     }
 

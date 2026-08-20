@@ -73,33 +73,22 @@ public class AuthService {
     @Autowired
     private TurnstileService turnstileService;
 
-    public Boolean resetPassword(UserRequest request){
-        try{
-            User user = userRepository.findByEmailAndIsDeletedFalse(request.getEmail()).orElseThrow(()->new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
-            user.setPassword(passwordEncoder.encode(request.getPassword()));
-            userRepository.save(user);
-            ResetPasswordCode resetCode = resetPasswordCodeRepository
-                    .findTopByUser_EmailOrderByCreatedAtDesc(request.getEmail())
-                    .orElseThrow();
-            resetCode.setReset(true);
-            resetPasswordCodeRepository.save(resetCode);
-            logger.log("SYSTEM", "Password reset for @{}", user.getUsername());
-            return true;
-        }
-        catch (Exception e){
-            log.error("Failed to reset password: {}", e.getMessage());
-            return false;
-        }
+    public boolean resetPassword(UserRequest request){
+        User user = userRepository.findByEmailAndIsDeletedFalse(request.getEmail()).orElseThrow(()->new ApiException(HttpStatus.NOT_FOUND, "USER-NOT-FOUND", messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        userRepository.save(user);
+        ResetPasswordCode resetCode = resetPasswordCodeRepository.findTopByUser_EmailOrderByCreatedAtDesc(request.getEmail()).orElseThrow();
+        resetCode.setReset(true);
+        resetPasswordCodeRepository.save(resetCode);
+        logger.log("SYSTEM", "Password reset for @{}", user.getUsername());
+        return true;
     }
 
-    public Boolean verifyPassword(LoginRequest request) {
+    public boolean verifyPassword(LoginRequest request) {
         try {
-            User user = userRepository.findByUsernameAndIsDeletedFalse(request.getUsername())
-                    .orElseThrow(() -> new RuntimeException(
-                            messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())
-                    ));
+            User user = userRepository.findByUsernameAndIsDeletedFalse(request.getUsername()).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "USER-NOT-FOUND",  messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
             if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-                String message = messageSource.getMessage("error.invalid.credential", null, LocaleContextHolder.getLocale());
+                String message = messageSource.getMessage("error.incorrect.credential", null, LocaleContextHolder.getLocale());
                 throw new AuthException(message);
             }
             return true;
@@ -116,12 +105,7 @@ public class AuthService {
         }
 
         try {
-            Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            request.getUsername(),
-                            request.getPassword()
-                    )
-            );
+            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
             String token = jwtUtil.generateToken(auth.getName());
             User user = userRepository.findByUsernameAndIsDeletedFalse(auth.getName()).orElseThrow();
             List<Feature> authorities = featureRepository.findByRoles_Id(user.getRole().getId());
@@ -129,48 +113,33 @@ public class AuthService {
             return new LoginResponse(user, token, authorities);
 
         } catch (org.springframework.security.authentication.BadCredentialsException e) {
-            String message = messageSource.getMessage("error.invalid.credential", null, LocaleContextHolder.getLocale());
+            String message = messageSource.getMessage("error.incorrect.credential", null, LocaleContextHolder.getLocale());
             throw new AuthException(message);
         }
     }
 
     public UserResponse updateAccount(UserRequest request){
-        try {
-            User user = userRepository.findByUsernameAndIsDeletedFalse(request.getUsername())
-                    .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
+        User user = userRepository.findByUsernameAndIsDeletedFalse(request.getUsername()).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "USER-NOT-FOUND", messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
 
-//            Role newRole = roleRepository.findByName(request.getRoleId())
-//                    .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
+        // update only the fields that should change
+        if (request.getPhoneNumber() != null) user.setPhoneNumber(request.getPhoneNumber());
+        if (request.getAddress() != null) user.setAddress(request.getAddress());
+        if (request.getEmail() != null) user.setEmail(request.getEmail());
+        if (request.getUsername() != null) user.setUsername(request.getUsername());
+        if (request.getFullName() != null) user.setFullName(request.getFullName());
+        if (request.getPassword() != null) user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-            // update only the fields that should change
-            if (request.getPhoneNumber() != null) user.setPhoneNumber(request.getPhoneNumber());
-            if (request.getAddress() != null) user.setAddress(request.getAddress());
-            if (request.getEmail() != null) user.setEmail(request.getEmail());
-            if (request.getUsername() != null) user.setUsername(request.getUsername());
-//            if (request.getRoleId() != null) user.setRole(newRole);
-            if (request.getFullName() != null) user.setFullName(request.getFullName());
-            if (request.getPassword() != null) user.setPassword(passwordEncoder.encode(request.getPassword()));
-
-            User savedUser = userRepository.save(user);
-            logger.log("Updated @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
-            return new UserResponse(savedUser);
-        }
-        catch (org.springframework.security.access.AccessDeniedException e) {
-            throw new RuntimeException(messageSource.getMessage("error.access.denied", null, LocaleContextHolder.getLocale()));
-        }
-        catch (jakarta.persistence.EntityNotFoundException e) {
-            throw new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale()));
-        }
-        catch (RuntimeException e) {
-            throw new RuntimeException(messageSource.getMessage("error.runtime", null, LocaleContextHolder.getLocale()) + e.getMessage());
-        }
+        User savedUser = userRepository.save(user);
+        logger.log("Updated @{}, ID #{}", savedUser.getUsername(), savedUser.getId());
+        return new UserResponse(savedUser);
     }
 
-    public void logout(String token){
+    public String logout(String token){
         tokenBlacklistService.blacklist(token);
         String username = jwtUtil.extractUsername(token);
         SecurityContextHolder.clearContext();
         logger.log("Logged out @{}", username);
+        return messageSource.getMessage("auth.logout.success", null, LocaleContextHolder.getLocale());
     }
 
     public UserResponse register(RegisterRequest request) {
@@ -180,12 +149,9 @@ public class AuthService {
             throw new AuthException(message);
         }
         if (userRepository.existsByUsernameAndIsDeletedFalse(request.getUsername())) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, "USERNAME-TAKEN",messageSource.getMessage("error.username.taken", null, LocaleContextHolder.getLocale()));
+            throw new ApiException(HttpStatus.CONFLICT, "USERNAME-TAKEN",messageSource.getMessage("error.username.taken", null, LocaleContextHolder.getLocale()));
         }
-
-        Role defaultRole = roleRepository.findByIsDefaultIsTrue()
-                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
-
+        Role defaultRole = roleRepository.findByIsDefaultIsTrue().orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "ROLE-NOT-FOUND", messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
         User user = new User();
         user.setUsername(request.getUsername());
         user.setFullName(request.getFullName());
@@ -206,7 +172,7 @@ public class AuthService {
 
         if (auth == null || !auth.isAuthenticated()
                 || auth instanceof AnonymousAuthenticationToken) {
-            throw new RuntimeException(messageSource.getMessage("error.user.not.authenticated", null, LocaleContextHolder.getLocale()));
+            throw new AuthException(messageSource.getMessage("error.user.not.authenticated", null, LocaleContextHolder.getLocale()));
         }
 
         String username = auth.getName();

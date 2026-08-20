@@ -9,6 +9,7 @@ import com.example.library_management.service.announcement.GetAnnouncementServic
 import com.example.library_management.service.announcement.UpdateAnnouncementService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,11 +39,15 @@ public class AnnouncementController {
 
     @PreAuthorize("@securityService.hasAccess('ANNOUNCEMENTS_MANAGEMENT')")
     @PostMapping()
-    @Operation(summary = "Create announcement", description = "Create a new announcement")
+    @Operation(summary = "Create announcement, require 'ANNOUNCEMENT_MANAGEMENT' feature, default users shall not be granted this feature", description = "Create a new announcement")
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -51,7 +56,15 @@ public class AnnouncementController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class)
                     )
-            )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "403",
+                    description = "Access denied",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
     })
     public ResponseEntity<ApiResponse<AnnouncementResponse>> createAnnouncement(
             @RequestBody AnnouncementRequest request
@@ -61,34 +74,15 @@ public class AnnouncementController {
 
     @PreAuthorize("@securityService.hasAccess('ANNOUNCEMENTS_MANAGEMENT')")
     @PatchMapping()
-    @Operation(summary = "Update announcement", description = "Update an announcement's status between 'Active' and 'Inactive'")
+    @Operation(summary = "Update announcement, require 'ANNOUNCEMENT_MANAGEMENT' feature, default users shall not be granted this feature", description = "Update an announcement's status between 'Active' and 'Inactive'")
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
-            ),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized request"
-            ),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(
-                    responseCode = "500",
-                    description = "Server error"
-            )
-    })
-    public ResponseEntity<ApiResponse<AnnouncementResponse>> updateAnnouncement(
-            @RequestBody AnnouncementRequest request
-    ){
-        return ResponseEntity.ok(ApiResponse.success(updateAnnouncementService.updateAnnouncement(request)));
-    }
-
-    @PreAuthorize("@securityService.hasAccess('ANNOUNCEMENTS_MANAGEMENT')")
-    @DeleteMapping()
-    @Operation(summary = "Delete announcement", description = "Delete an announcement")
-    @ApiResponses({
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(
-                    responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -99,11 +93,90 @@ public class AnnouncementController {
                     )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
-                    responseCode = "500",
-                    description = "Server error",
+                    responseCode = "403",
+                    description = "Access denied",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "Not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Announcement not found",
+                                            description = "Announcement can't be found by its ID",
+                                            value = """
+                                                    {
+                                                    "code": "ANNOUNCEMENT-NOT-FOUND",
+                                                    "message": "Announcement not found",
+                                                    "data": null,
+                                                    "timestamp": "2026-08-19T10:00:00"
+                                                    }
+                                                    """
+                                    )
+                            }
+                    )
+            ),
+    })
+    public ResponseEntity<ApiResponse<AnnouncementResponse>> updateAnnouncement(
+            @RequestBody AnnouncementRequest request
+    ){
+        return ResponseEntity.ok(ApiResponse.success(updateAnnouncementService.updateAnnouncement(request)));
+    }
+
+    @PreAuthorize("@securityService.hasAccess('ANNOUNCEMENTS_MANAGEMENT')")
+    @DeleteMapping()
+    @Operation(summary = "Delete announcement, require 'ANNOUNCEMENT_MANAGEMENT' feature, default users shall not be granted this feature", description = "Delete an announcement")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized request",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "403",
+                    description = "Access denied",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "Not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Announcement not found",
+                                            description = "Announcement can't be found by its ID",
+                                            value = """
+                                                    {
+                                                    "code": "ANNOUNCEMENT-NOT-FOUND",
+                                                    "message": "Announcement not found",
+                                                    "data": null,
+                                                    "timestamp": "2026-08-19T10:00:00"
+                                                    }
+                                                    """
+                                    )
+                            }
                     )
             ),
     })
@@ -118,7 +191,11 @@ public class AnnouncementController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -127,15 +204,7 @@ public class AnnouncementController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class)
                     )
-            ),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(
-                    responseCode = "500",
-                    description = "Announcement not found",
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = ApiResponse.class)
-                    )
-            ),
+            )
     })
     public ResponseEntity<ApiResponse<Page<AnnouncementResponse>>> getAnnouncements(
             @RequestParam(defaultValue = "0") int page,
