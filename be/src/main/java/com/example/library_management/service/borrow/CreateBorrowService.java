@@ -71,13 +71,8 @@ public class CreateBorrowService {
         newBorrow.setDueDate(LocalDateTime.now().plusDays(days));
 
         borrowRepository.save(newBorrow);
-        Book savedBook = bookRepository.save(book);
-        System.out.println("New copies value (Borrow): " + savedBook.getCopies());
-        try {
-            borrowMailService.sendBorrowCreatedEmail(newBorrow);
-        } catch (Exception e) {
-            logger.error("Failed to send borrow confirmation email for borrow ID #{}: {}", newBorrow.getId(), e.getMessage());
-        }
+        bookRepository.save(book);
+        borrowMailService.sendBorrowCreatedEmail(newBorrow);
         return new BorrowResponse(newBorrow);
     }
 }
