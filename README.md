@@ -16,6 +16,8 @@ role-based permission system and a trilingual interface.
 - **Role-based access control** — a permission ("feature") system where each
   role is granted a specific set of actions (create, read, update, delete,
   export, etc.) per resource.
+- **Security** — JWT-based authentication, BCrypt password hashing, and
+  Cloudflare Turnstile CAPTCHA protection on login and registration.
 - **Admin dashboard** — manage books, borrows, users, roles, and site-wide
   announcements from one place.
 - **Data export** — export users, books, borrows, or system logs to Excel,
@@ -32,7 +34,6 @@ role-based permission system and a trilingual interface.
 - Spring Security + JWT authentication
 - Spring Data JPA / Hibernate
 - MySQL 8
-- Redis
 - Apache POI (Excel export)
 - Logback (daily-rotating file logs)
 - JavaMailSender (SMTP email)
@@ -65,10 +66,17 @@ role-based permission system and a trilingual interface.
 ```
 
 ## Live demo
+> **Recommendation:** For the best experience, visit **[tylerdao.site](https://tylerdao.site)**
+> and sign up with your **real email address**. Email features (account
+> verification, password reset, and borrow reminders) will work out of the
+> box — no configuration needed. If you run the project locally with Docker
+> Compose, you will need to supply your own Gmail app password and SMTP
+> credentials in the `.env` file, and the pre-created demo accounts will not
+> receive emails since it is using a dummy email address.
 
 The project is deployed at **[tylerdao.site](https://tylerdao.site)**.
 
-A pre-created root account is available to explore the full feature set,
+A pre-created root account is available to explore the full feature set (except email notifications feature),
 including the admin dashboard and management tools:
 
 | | |
@@ -210,6 +218,15 @@ docker compose exec db mysql -u root -p
 # Check container status
 docker compose ps
 ```
+
+## Available documentation
+
+| Document | Location |
+|---|---|
+| README | This file |
+| API documentation | [tylerdao.site/api/swagger-ui/index.html](https://tylerdao.site/api/swagger-ui/index.html#/) |
+
+The API documentation is interactive — you can authorize with a JWT token using the **Authorize** button and test endpoints directly from the browser.
 
 ## License
 
