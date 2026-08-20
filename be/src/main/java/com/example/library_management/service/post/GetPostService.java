@@ -1,6 +1,7 @@
 package com.example.library_management.service.post;
 
 import com.example.library_management.dto.response.post.PostResponse;
+import com.example.library_management.exception.ApiException;
 import com.example.library_management.model.Post;
 import com.example.library_management.model.User;
 import com.example.library_management.repository.PostLikeRepository;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -91,9 +93,7 @@ public class GetPostService {
         String username = (auth != null && auth.isAuthenticated()) ? auth.getName() : null;
 
         Post post = postRepository.findById(postId)
-        .orElseThrow(() -> new RuntimeException(
-                messageSource.getMessage("error.post.not.found", null, LocaleContextHolder.getLocale())
-        ));
+        .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "POST-NOT-FOUND", messageSource.getMessage("error.post.not.found", null, LocaleContextHolder.getLocale())));
 
         boolean isLiked = username != null && postLikeRepository.findByPostIdAndUserUsername(postId, username).isPresent();
         boolean isOwner = Objects.equals(post.getCreatedBy(), username);

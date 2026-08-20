@@ -2,6 +2,7 @@ package com.example.library_management.service.user;
 
 import com.example.library_management.dto.request.user.UserRequest;
 import com.example.library_management.dto.response.user.UserResponse;
+import com.example.library_management.exception.ApiException;
 import com.example.library_management.model.Role;
 import com.example.library_management.model.User;
 import com.example.library_management.repository.RoleRepository;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,13 +44,13 @@ public class CreateUserService {
 
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
+        Role defaultRole = roleRepository.findByIsDefaultIsTrue().orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "ROLE-NOT-FOUND", messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
         if(request.getRole() != null){
-            Role role = roleRepository.findById(request.getRole()).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
+            Role role = roleRepository.findById(request.getRole()).orElse(defaultRole);
             user.setRole(role);
         }
         else {
-            Role role = roleRepository.findByIsDefaultIsTrue().orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
-            user.setRole(role);
+            user.setRole(defaultRole);
         }
 
         user = userRepository.save(user);

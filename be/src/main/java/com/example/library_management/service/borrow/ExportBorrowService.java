@@ -6,6 +6,8 @@ import com.example.library_management.repository.BorrowRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -22,6 +24,9 @@ import java.util.Locale;
 public class ExportBorrowService {
     @Autowired
     private BorrowRepository borrowRepository;
+
+    @Autowired
+    private MessageSource messageSource;
 
     private static final DateTimeFormatter DATE_FORMATTER =
             DateTimeFormatter.ofPattern("dd/MM/yyyy @ HH:mm:ss");
@@ -88,7 +93,8 @@ public class ExportBorrowService {
             workbook.write(out);
             return new ByteArrayInputStream(out.toByteArray());
         } catch (IOException e) {
-            throw new RuntimeException("Failed to export data to Excel: " + e.getMessage());
+            String message = messageSource.getMessage("error.export.failed", null, LocaleContextHolder.getLocale());
+            throw new RuntimeException(message + ": " + e.getMessage());
         }
     }
 

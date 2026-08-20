@@ -3,11 +3,18 @@ package com.example.library_management.controller;
 import com.example.library_management.dto.request.book.BookRequest;
 import com.example.library_management.dto.request.borrow.BorrowRequest;
 import com.example.library_management.dto.request.user.UserRequest;
+import com.example.library_management.dto.response.ApiResponse;
 import com.example.library_management.exception.ApiException;
 import com.example.library_management.service.borrow.ExportBorrowService;
 import com.example.library_management.service.log.ExportLogService;
 import com.example.library_management.service.user.ExportBookService;
 import com.example.library_management.service.user.ExportUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -40,6 +47,41 @@ public class ExportController {
 
     @PreAuthorize("@securityService.hasAccess('EXPORT_BORROW')")
     @PostMapping("/borrows")
+    @Operation(summary = "Export borrows", description = "Export all or selected borrows' information to Excel sheet, require 'EXPORT_BORROW' feature, default user shall not be granted this feature", security = @SecurityRequirement(name = "BearerAuth"))
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized request",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "403",
+                    description = "Access denied",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "500",
+                    description = "Server error",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+    })
     public ResponseEntity<InputStreamResource> exportBorrow(@RequestBody List<BorrowRequest> requests) {
         ByteArrayInputStream in = exportBorrowService.borrowsToExcel(requests);
         String filename = "borrows-export-" + LocalDate.now() + ".xlsx";
@@ -54,6 +96,41 @@ public class ExportController {
 
     @PreAuthorize("@securityService.hasAccess('EXPORT_USER')")
     @PostMapping("/users")
+    @Operation(summary = "Export users", description = "Export all or selected users' information to Excel sheet, require 'EXPORT_USER' feature, default user shall not be granted this feature", security = @SecurityRequirement(name = "BearerAuth"))
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized request",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "403",
+                    description = "Access denied",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "500",
+                    description = "Server error",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+    })
     public ResponseEntity<InputStreamResource> exportUser(@RequestBody List<UserRequest> requests) {
         ByteArrayInputStream in = exportUserService.usersToExcel(requests);
         String filename = "users-export-" + LocalDate.now() + ".xlsx";
@@ -68,6 +145,41 @@ public class ExportController {
 
     @PreAuthorize("@securityService.hasAccess('EXPORT_BOOK')")
     @PostMapping("/books")
+    @Operation(summary = "Export books", description = "Export all or selected books' information to Excel sheet, require 'EXPORT_BOOK' feature, default user shall not be granted this feature", security = @SecurityRequirement(name = "BearerAuth"))
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized request",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "403",
+                    description = "Access denied",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "500",
+                    description = "Server error",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+    })
     public ResponseEntity<InputStreamResource> exportBook(@RequestBody List<BookRequest> requests) {
         ByteArrayInputStream in = exportBookService.booksToExcel(requests);
         String filename = "books-export-" + LocalDate.now() + ".xlsx";
@@ -82,6 +194,41 @@ public class ExportController {
 
     @PreAuthorize("@securityService.hasAccess('EXPORT_LOG')")
     @PostMapping("/log")
+    @Operation(summary = "Export server log", description = "Export server log by date range to Excel sheet, require 'EXPORT_LOG' feature, default user shall not be granted this feature", security = @SecurityRequirement(name = "BearerAuth"))
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized request",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "403",
+                    description = "Access denied",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "500",
+                    description = "Server error",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+    })
     public ResponseEntity<InputStreamResource> exportLogs(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {

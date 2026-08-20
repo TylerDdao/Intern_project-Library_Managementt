@@ -1,5 +1,6 @@
 package com.example.library_management.service.genre;
 
+import com.example.library_management.exception.ApiException;
 import com.example.library_management.model.Book;
 import com.example.library_management.model.Genre;
 import com.example.library_management.repository.BookRepository;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +31,7 @@ public class DeleteGenreService {
     private MessageSource messageSource;
 
     public String deleteGenre(Long id){
-        Genre genre = genreRepository.findById(id).orElseThrow(()-> new RuntimeException(messageSource.getMessage("error.genre.not.found",null, LocaleContextHolder.getLocale())));
+        Genre genre = genreRepository.findById(id).orElseThrow(()-> new ApiException(HttpStatus.NOT_FOUND, "GENRE-NOT-FOUND", messageSource.getMessage("error.genre.not.found", null, LocaleContextHolder.getLocale())));
 
         List<Book> booksWithGenre = bookRepository.findByGenresContaining(genre);
         booksWithGenre.forEach(book -> book.getGenres().remove(genre));

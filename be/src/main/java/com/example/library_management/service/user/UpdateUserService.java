@@ -82,7 +82,7 @@ public class UpdateUserService {
     public UserResponse updateUserSelf(UserRequest request) throws MessagingException {
         String username = Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication()).getName();
         User user = userRepository.findByUsernameAndIsDeletedFalse(username)
-                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.username.not.found", null, LocaleContextHolder.getLocale())));
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "USER-NOT-FOUND", messageSource.getMessage("error.username.not.found", null, LocaleContextHolder.getLocale())));
 
         // update only the fields that should change
         if(request.getUsername() != null) user.setUsername(request.getUsername());
@@ -101,7 +101,8 @@ public class UpdateUserService {
                 userMailService.sendPasswordChangedEmail(savedUser);
             }
             catch (Exception e){
-                throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "EMAIL-ERROR", e.getMessage());
+                String message = messageSource.getMessage("error.email.send.failed", null, LocaleContextHolder.getLocale());
+                throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "EMAIL-ERROR", message + ": " + e.getMessage());
             }
         }
         logger.log("Updated @{}, ID #{}", savedUser.getUsername(),savedUser.getId());

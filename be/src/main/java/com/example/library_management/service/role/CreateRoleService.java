@@ -2,6 +2,8 @@ package com.example.library_management.service.role;
 
 import com.example.library_management.dto.request.role.RoleRequest;
 import com.example.library_management.dto.response.role.RoleResponse;
+import com.example.library_management.exception.ApiException;
+import com.example.library_management.exception.AuthException;
 import com.example.library_management.model.Role;
 import com.example.library_management.repository.RoleRepository;
 import com.example.library_management.util.AuditLogger;
@@ -10,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -27,13 +30,13 @@ public class CreateRoleService {
     @Transactional
     public RoleResponse createRole(RoleRequest request){
         if(roleRepository.existsByName(request.getName())){
-            throw new RuntimeException(messageSource.getMessage("error.role.existed", null, LocaleContextHolder.getLocale()));
+            throw new ApiException(HttpStatus.CONFLICT, "ROLE-ALREADY-EXISTED", messageSource.getMessage("error.role.already.existed", null, LocaleContextHolder.getLocale()));
         }
         else{
             Role role = new Role();
             role.setName(request.getName());
             if(role.getIsDefault()){
-                Role defaultRole = roleRepository.findByIsDefaultIsTrue().orElseThrow(()-> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
+                Role defaultRole = roleRepository.findByIsDefaultIsTrue().orElseThrow(()-> new ApiException(HttpStatus.NOT_FOUND, "ROLE-NOT-FOUND", messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
                 defaultRole.setIsDefault(false);
                 roleRepository.save(defaultRole);
                 role.setIsDefault(role.getIsDefault());

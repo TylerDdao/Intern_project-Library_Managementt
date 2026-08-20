@@ -35,20 +35,18 @@ public class DeleteRoleService {
     @Transactional
     public String deleteRole(Long id) {
         Role role = roleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "ROLE-NOT-FOUND", messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
         if (role.getName().equals("ROLE_ROOT")) {
-            throw new RuntimeException(messageSource.getMessage("error.cannot.delete.root.role", null, LocaleContextHolder.getLocale()));
+            throw new ApiException(HttpStatus.CONFLICT, "ROOT-ROLE-CONFLICT", messageSource.getMessage("error.cannot.delete.root.role", null, LocaleContextHolder.getLocale()));
         }
         if (role.getIsDefault()) {
             throw new ApiException(
-                    HttpStatus.BAD_REQUEST,
-                    "CANNOT-DELETE-DEFAULT-ROLE",
-                    messageSource.getMessage("error.cannot.delete.default.role", null, LocaleContextHolder.getLocale())
+                    HttpStatus.CONFLICT, "DEFAULT-ROLE-CONFLICT", messageSource.getMessage("error.cannot.delete.default.role", null, LocaleContextHolder.getLocale())
             );
         }
         List<User> users = userRepository.findByRole_NameAndIsDeletedFalse(role.getName());
         if (!users.isEmpty()){
-            Role defaultRole = roleRepository.findByIsDefaultIsTrue().orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
+            Role defaultRole = roleRepository.findByIsDefaultIsTrue().orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "ROLE-NOT-FOUND", messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
             users.forEach(user -> user.setRole(defaultRole));
             userRepository.saveAll(users);
             logger.log("Update all users with role {} to role {}", role.getName(), defaultRole.getName());

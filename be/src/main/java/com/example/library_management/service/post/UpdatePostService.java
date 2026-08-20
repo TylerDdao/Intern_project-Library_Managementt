@@ -2,6 +2,7 @@ package com.example.library_management.service.post;
 
 import com.example.library_management.dto.request.post.PostRequest;
 import com.example.library_management.dto.response.post.PostResponse;
+import com.example.library_management.exception.ApiException;
 import com.example.library_management.model.Post;
 import com.example.library_management.model.PostLike;
 import com.example.library_management.model.User;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -28,7 +30,7 @@ public class UpdatePostService {
     private final AuditLogger logger;
 
     public PostResponse updatePost(PostRequest request){
-        Post post = postRepository.findById(request.getId()).orElseThrow(()->new RuntimeException(messageSource.getMessage("error.post.not.found", null, LocaleContextHolder.getLocale())));
+        Post post = postRepository.findById(request.getId()).orElseThrow(()->new ApiException(HttpStatus.NOT_FOUND, "POST-NOT-FOUND", messageSource.getMessage("error.post.not.found", null, LocaleContextHolder.getLocale())));
         if(request.getSubject() != null) post.setSubject(request.getSubject());
         if(request.getContent() != null) post.setContent(request.getContent());
 

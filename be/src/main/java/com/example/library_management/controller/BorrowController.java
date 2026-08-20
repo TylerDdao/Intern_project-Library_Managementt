@@ -38,7 +38,11 @@ public class BorrowController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -59,20 +63,20 @@ public class BorrowController {
                                             name = "Policy not found",
                                             description = "Policy can't be found by its key",
                                             value = """
-                                                    "code": "POLICY-NOT-FOUND",
+                                                    {"code": "POLICY-NOT-FOUND",
                                                     "message": "Policy not found",
                                                     "data": null,
-                                                    "timestamp": "2026-08-19T10:00:00"
+                                                    "timestamp": "2026-08-19T10:00:00"}
                                                     """
                                     ),
                                     @ExampleObject(
                                             name = "Book not found",
                                             description = "Book can't be found by its ID",
                                             value = """
-                                                    "code": "BOOK-NOT-FOUND",
+                                                    {"code": "BOOK-NOT-FOUND",
                                                     "message": "Book not found",
                                                     "data": null,
-                                                    "timestamp": "2026-08-19T10:00:00"
+                                                    "timestamp": "2026-08-19T10:00:00"}
                                                     """
                                     )
                             }
@@ -97,10 +101,10 @@ public class BorrowController {
                                             name = "Borrow is already existed",
                                             description = "A borrow with he same user ID and book ID is already existed",
                                             value = """
-                                                    "code": "BORROW-ALREADY-EXISTED",
+                                                    {"code": "BORROW-ALREADY-EXISTED",
                                                     "message": "Borrow is already existed"
                                                     "data": null,
-                                                    "timestamp" "2026-08-19T10:00:00"
+                                                    "timestamp" "2026-08-19T10:00:00"}
                                                     """
                                     )
                             }
@@ -117,7 +121,11 @@ public class BorrowController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -138,20 +146,20 @@ public class BorrowController {
                                             name = "Borrow not found",
                                             description = "Borrow can't be found by its ID",
                                             value = """
-                                                    "code": "BORROW-NOT-FOUND",
+                                                    {"code": "BORROW-NOT-FOUND",
                                                     "message": "Borrow not found",
                                                     "data": null,
-                                                    "timestamp": "2026-08-19T10:00:00"
+                                                    "timestamp": "2026-08-19T10:00:00"}
                                                     """
                                     ),
                                     @ExampleObject(
                                             name = "Book not found",
                                             description = "Book can't be found by its ID",
                                             value = """
-                                                    "code": "BOOK-NOT-FOUND",
+                                                    {"code": "BOOK-NOT-FOUND",
                                                     "message": "Book not found",
                                                     "data": null,
-                                                    "timestamp": "2026-08-19T10:00:00"
+                                                    "timestamp": "2026-08-19T10:00:00"}
                                                     """
                                     )
                             }
@@ -176,10 +184,10 @@ public class BorrowController {
                                             name = "Borrow is not active",
                                             description = "Borrow is not active (already returned)",
                                             value = """
-                                                    "code": "BORROW-IS-NOT-ACTIVE",
+                                                    {"code": "BORROW-IS-NOT-ACTIVE",
                                                     "message": "Borrow is already returned"
                                                     "data": null,
-                                                    "timestamp" "2026-08-19T10:00:00"
+                                                    "timestamp" "2026-08-19T10:00:00"}
                                                     """
                                     )
                             }
@@ -194,11 +202,15 @@ public class BorrowController {
 
     @PreAuthorize("@securityService.hasAccess('GET_BORROW')")
     @GetMapping("/my-borrows")
-    @Operation(summary = "Get borrows", description = "Get borrows that are associate with username or can be filtered by book ID, require 'GET_BORROW' feature", security = @SecurityRequirement(name = "BearerAuth"))
+    @Operation(summary = "Get borrows of an user", description = "Get borrows that are associate with username and can be filtered by book ID, require 'GET_BORROW' feature", security = @SecurityRequirement(name = "BearerAuth"))
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -230,13 +242,68 @@ public class BorrowController {
         );
     }
 
+    @PreAuthorize("@securityService.hasAccess('GET_BORROW')")
     @GetMapping("/borrows-count/genre")
+    @Operation(summary = "Get borrow count by genre", description = "Get the number of borrow in each book genre, require 'GET_BORROW' feature", security = @SecurityRequirement(name = "BearerAuth"))
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized request",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "403",
+                    description = "Access denied",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+    })
     public ResponseEntity<ApiResponse<Map<String, Long>>> getBorrowsCountsByGenre() {
         return ResponseEntity.ok(ApiResponse.success(getBorrowService.getBorrowCountsByGenre()));
     }
 
     @PreAuthorize("@securityService.hasAccess('GET_BORROW_MULTI')")
     @GetMapping("/{status}")
+    @Operation(summary = "Get borrows by status of all user", description = "Administrator can get borrows in each status (On going, Late, Returned) of all users, require 'GET_BORROW_MULTI' feature, default user shall not be granted this feature", security = @SecurityRequirement(name = "BearerAuth"))
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized request",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "403",
+                    description = "Access denied",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+    })
     public ResponseEntity<ApiResponse<Page<BorrowResponse>>> getBorrowsByStatus(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,
@@ -251,6 +318,33 @@ public class BorrowController {
 
     @PreAuthorize("@securityService.hasAccess('GET_BORROW_MULTI')")
     @GetMapping()
+    @Operation(summary = "Get borrow of all user", description = "Administrator can see the borrow's information of all users, require 'GET_BORROW_MULTI' feature, default user shall not be granted this feature", security = @SecurityRequirement(name = "BearerAuth"))
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized request",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "403",
+                    description = "Access denied",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+    })
     public ResponseEntity<ApiResponse<Page<BorrowResponse>>> getBorrowsBySearchQuery(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit,

@@ -2,6 +2,7 @@ package com.example.library_management.service.role;
 
 import com.example.library_management.dto.request.role.AuthorityRequest;
 import com.example.library_management.dto.response.auth.AuthorityResponse;
+import com.example.library_management.exception.ApiException;
 import com.example.library_management.model.Feature;
 import com.example.library_management.model.Role;
 import com.example.library_management.repository.FeatureRepository;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,18 +35,11 @@ public class AuthorityService {
 
     public AuthorityResponse assignAuthority(AuthorityRequest request){
         Role role = roleRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "ROLE-NOT-FOUND", messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
 
         List<String> featureNames = request.getFeatures();
         List<Feature> features = new ArrayList<>();
-        featureNames.forEach(name->{
-            Feature feature = featureRepository.findByName(name).orElseGet(()->{
-                Feature newFeature = new Feature();
-                newFeature.setName(name);
-                return featureRepository.save(newFeature);
-            });
-            features.add(feature);
-        });
+        featureNames.forEach(name->{featureRepository.findByName(name).ifPresent(features::add);});
 
         features.forEach(feature -> {
             if(!role.getFeatures().contains(feature)){
@@ -52,7 +47,7 @@ public class AuthorityService {
             }
         });
         Role savedRole = roleRepository.save(role);
-        logger.log("Assigned {} -> {}", featureNames, savedRole.getName());
+        logger.log("Assigned {} to role {}", featureNames, savedRole.getName());
         return new AuthorityResponse(role.getName(), featureNames, "Assigned");
     }
 
@@ -62,18 +57,14 @@ public class AuthorityService {
 
         List<String> featureNames = request.getFeatures();
         List<Feature> features = new ArrayList<>();
-        featureNames.forEach(name ->
-                featureRepository.findByName(name).ifPresent(features::add)
-        );
+        featureNames.forEach(name -> featureRepository.findByName(name).ifPresent(features::add));
 
         role.getFeatures().removeAll(features);
 
-        List<String> featureNamesToLog = features.stream()
-                .map(Feature::getName)
-                .toList();
+        List<String> featureNamesToLog = features.stream().map(Feature::getName).toList();
 
         Role savedRole = roleRepository.save(role);
-        logger.log("Unassigned {} -> {}", featureNamesToLog, savedRole.getName());
+        logger.log("Unassigned {} from role {}", featureNamesToLog, savedRole.getName());
         return new AuthorityResponse(role.getName(), featureNames, "Unassigned");
     }
 }
