@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 interface Feature {
   callNumber: string;
@@ -18,7 +19,7 @@ interface Feature {
 export class LandingPage {
   // TODO: replace with your real repository URL
   readonly githubUrl = 'https://github.com/TylerDdao/TT_Viettel_Software-Library_Management.git';
-
+  readonly apiDocUrl = environment.apiUrl + "/swagger-ui/index.html#/"
   readonly features: Feature[] = [
     {
       callNumber: '020.285',

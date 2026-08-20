@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Map;
 
-@Tag(name = "Books", description = "Book management endpoints")
+@Tag(name = "Books", description = "Books management endpoints")
 @io.swagger.v3.oas.annotations.security.SecurityRequirement(name = "BearerAuth")
 @RestController
 @RequestMapping("/books")

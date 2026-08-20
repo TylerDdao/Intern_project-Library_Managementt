@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Announcements", description = "Announcement management endpoints")
+@Tag(name = "Announcements", description = "Announcements management endpoints")
 @io.swagger.v3.oas.annotations.security.SecurityRequirement(name = "BearerAuth")
 @RestController
 @RequestMapping("/announcements")

@@ -44,8 +44,8 @@ public class UpdateUserService {
     private UserMailService userMailService;
 
     public UserResponse updateUserRole(UserRequest request) {
-        Role defaultRole = roleRepository.findByIsDefaultIsTrue().orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
-        User user = userRepository.findById(request.getId()).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.id.not.found", null, LocaleContextHolder.getLocale())));
+        Role defaultRole = roleRepository.findByIsDefaultIsTrue().orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "ROLE-NOT-FOUND", messageSource.getMessage("error.role.not.found", null, LocaleContextHolder.getLocale())));
+        User user = userRepository.findById(request.getId()).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "USER-NOT-FOUND", messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
 
         Role newRole = request.getRole() != null ? roleRepository.findById(request.getRole()).orElse(defaultRole) : defaultRole;
 
@@ -54,15 +54,15 @@ public class UpdateUserService {
 
         boolean changingRole = user.getRole().getId() != newRole.getId();
 
-        if (changingRole && user.getUsername().equals(username) && isRoot) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, "ROOT-USER", messageSource.getMessage("error.cannot.delete.root.user", null, LocaleContextHolder.getLocale()));
-        }
+//        if (changingRole && user.getUsername().equals(username) && isRoot) {
+//            throw new ApiException(HttpStatus.CONFLICT, "ROOT-USER", messageSource.getMessage("error.cannot.delete.root.user", null, LocaleContextHolder.getLocale()));
+//        }
 
         if (changingRole && isRoot && !newRole.getName().equals("ROLE_ROOT")) {
             long rootCount = userRepository.countByRole_NameAndIsDeletedFalse("ROLE_ROOT");
 
             if (rootCount <= 1) {
-                throw new ApiException(HttpStatus.BAD_REQUEST, "ROOT-USER", messageSource.getMessage("error.cannot.remove.last.root.user", null, LocaleContextHolder.getLocale()));
+                throw new ApiException(HttpStatus.CONFLICT, "ROOT-USER", messageSource.getMessage("error.cannot.remove.last.root.user", null, LocaleContextHolder.getLocale()));
             }
 
             user.setRole(newRole);
@@ -81,9 +81,7 @@ public class UpdateUserService {
     @Transactional
     public UserResponse updateUserSelf(UserRequest request) throws MessagingException {
         String username = Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication()).getName();
-        User user = userRepository.findByUsernameAndIsDeletedFalse(username)
-                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "USER-NOT-FOUND", messageSource.getMessage("error.username.not.found", null, LocaleContextHolder.getLocale())));
-
+        User user = userRepository.findByUsernameAndIsDeletedFalse(username).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "USER-NOT-FOUND", messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
         // update only the fields that should change
         if(request.getUsername() != null) user.setUsername(request.getUsername());
         if (request.getPhoneNumber() != null) user.setPhoneNumber(request.getPhoneNumber());
@@ -111,8 +109,7 @@ public class UpdateUserService {
 
     @Transactional
     public UserResponse updateUser(UserRequest request) throws MessagingException {
-        User user = userRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.username.not.found", null, LocaleContextHolder.getLocale())));
+        User user = userRepository.findById(request.getId()).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "USER-NOT-FOUND", messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
 
         // update only the fields that should change
         if(request.getUsername() != null) user.setUsername(request.getUsername());

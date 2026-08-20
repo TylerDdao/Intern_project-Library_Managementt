@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -33,6 +34,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/export")
+@Tag(name = "Export", description = "Export management endpoints" )
 public class ExportController {
     @Autowired
     private ExportUserService exportUserService;

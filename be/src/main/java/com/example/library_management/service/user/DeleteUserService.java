@@ -64,21 +64,21 @@ public class DeleteUserService {
     @Transactional
     public String deleteUser(Long id){
         User user = userRepository.findByIdAndIsDeletedFalse(id)
-                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.username.not.found", null, LocaleContextHolder.getLocale())));
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "USER-NOT-FOUND", messageSource.getMessage("error.username.not.found", null, LocaleContextHolder.getLocale())));
         if(user.getRole().getName().equals("ROLE_ROOT")){
             String message = messageSource.getMessage("error.cannot.delete.root.user", null, LocaleContextHolder.getLocale());
-            throw new ApiException(HttpStatus.BAD_REQUEST, "ROOT-USER" ,message);
+            throw new ApiException(HttpStatus.CONFLICT, "ROOT-USER" ,message);
         }
 
         if (borrowRepository.existsByUser_IdAndIsActiveTrue(id)){
             String message = messageSource.getMessage("error.cannot.delete.user.with.on.going.borrows", null, LocaleContextHolder.getLocale());
-            throw new ApiException(HttpStatus.BAD_REQUEST, "USER-WITH-BORROWS" ,message);
+            throw new ApiException(HttpStatus.CONFLICT, "USER-WITH-BORROWS" ,message);
         }
 
-        if(user.getUsername().equals("root")){
-            String message = messageSource.getMessage("error.cannot.delete.root.user", null, LocaleContextHolder.getLocale());
-            throw new ApiException(HttpStatus.BAD_REQUEST, "ROOT-USER" ,message);
-        }
+//        if(user.getUsername().equals("root")){
+//            String message = messageSource.getMessage("error.cannot.delete.root.user", null, LocaleContextHolder.getLocale());
+//            throw new ApiException(HttpStatus.CONFLICT, "ROOT-USER" ,message);
+//        }
 
         user.setIsDeleted(true);
         userRepository.save(user);
