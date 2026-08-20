@@ -75,10 +75,10 @@ public class VerificationService {
             throw new AuthException(message);
         }
 
-        User user = userRepository.findByEmailAndIsDeletedFalse(email).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
+        User user = userRepository.findByEmailAndIsDeletedFalse(email).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "USER-NOT-FOUND", messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
 
         if (resetPasswordCodeRepository.existsByUser_EmailAndIsResetFalseAndExpiresAtAfter(email, LocalDateTime.now())) {
-            throw new ApiException(HttpStatus.BAD_REQUEST,"EMAIL-ALREADY-SENT", messageSource.getMessage("error.Code.is.already.sent", null, LocaleContextHolder.getLocale()));
+            throw new ApiException(HttpStatus.CONFLICT,"EMAIL-ALREADY-SENT", messageSource.getMessage("error.Code.is.already.sent", null, LocaleContextHolder.getLocale()));
         }
         String code;
         do {
@@ -100,10 +100,10 @@ public class VerificationService {
 
     public String sendVerificationEmail(UserRequest request){
         if (userRepository.existsByEmailAndIsDeletedFalse(request.getEmail())){
-            throw new ApiException(HttpStatus.BAD_REQUEST, "EMAIL-IS-USED", messageSource.getMessage("error.Email.has.been.used", null, LocaleContextHolder.getLocale()));
+            throw new ApiException(HttpStatus.CONFLICT, "EMAIL-IS-USED", messageSource.getMessage("error.Email.has.been.used", null, LocaleContextHolder.getLocale()));
         }
         if(verificationRepository.existsByEmailAndVerifiedFalseAndExpiresAtAfter(request.getEmail(), LocalDateTime.now())){
-            throw new ApiException(HttpStatus.BAD_REQUEST, "CODE-IS-SENT", messageSource.getMessage("error.Code.is.already.sent", null, LocaleContextHolder.getLocale()));
+            throw new ApiException(HttpStatus.CONFLICT, "CODE-IS-SENT", messageSource.getMessage("error.Code.is.already.sent", null, LocaleContextHolder.getLocale()));
         }
         String code;
         do {

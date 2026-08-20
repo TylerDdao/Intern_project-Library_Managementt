@@ -50,19 +50,19 @@ public class CreateBorrowService {
     public BorrowResponse createBorrow(BorrowRequest request){
         Optional<Borrow> existing = borrowRepository.findByUserIdAndBookIdAndIsActive(request.getUserId(), request.getBookId(), true);
         if (existing.isPresent()) {
-            throw new RuntimeException(messageSource.getMessage("error.borrow.already.existed",null, LocaleContextHolder.getLocale()));
+            throw new ApiException(HttpStatus.CONFLICT, "BORROW-EXISTED", messageSource.getMessage("error.borrow.already.existed",null, LocaleContextHolder.getLocale()));
         }
 
         Borrow newBorrow = new Borrow();
         User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.user.id.not.found", null, LocaleContextHolder.getLocale())));
         Book book = bookRepository.findByIdForUpdate(request.getBookId()).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.id.not.found", null, LocaleContextHolder.getLocale())));;
         if(book.getCopies() == 0){
-            throw new ApiException(HttpStatus.BAD_REQUEST, "BOOk-NOT-AVAILABLE", messageSource.getMessage("error.book.is.not.available", null, LocaleContextHolder.getLocale()));
+            throw new ApiException(HttpStatus.CONFLICT, "BOOk-NOT-AVAILABLE", messageSource.getMessage("error.book.is.not.available", null, LocaleContextHolder.getLocale()));
         }
 
         book.setCopies(book.getCopies() - 1);
 
-        Policy borrowDuration = policyRepository.findByKey("borrow_duration").orElseThrow(()->new RuntimeException(messageSource.getMessage("error.policy.not.found",null, LocaleContextHolder.getLocale())));
+        Policy borrowDuration = policyRepository.findByKey("borrow_duration").orElseThrow(()->new ApiException(HttpStatus.NOT_FOUND, "POLICY-NOT-FOUND", messageSource.getMessage("error.policy.not.found",null, LocaleContextHolder.getLocale())));
 
         newBorrow.setUser(user);
         newBorrow.setBook(book);

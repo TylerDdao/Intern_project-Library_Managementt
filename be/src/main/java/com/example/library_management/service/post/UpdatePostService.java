@@ -46,7 +46,7 @@ public class UpdatePostService {
                         messageSource.getMessage("post.post.id.not.found", null, LocaleContextHolder.getLocale())));
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException(
-                        messageSource.getMessage("user.user.id.not.found", null, LocaleContextHolder.getLocale())));
+                        messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
 
         Optional<PostLike> existing = postLikeRepository.findByPostAndUser(post, user);
 

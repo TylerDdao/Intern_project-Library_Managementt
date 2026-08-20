@@ -65,11 +65,10 @@ public class DeleteBookService {
 
     @Transactional
     public String deleteBook(Long id){
-        Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
+        Book book = bookRepository.findById(id).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "BOOK-NOT-FOUND", messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
 
         if (borrowRepository.existsByBook_IdAndIsActiveTrue(id)){
-            throw new ApiException(HttpStatus.BAD_REQUEST, "BORROWS-EXIST",messageSource.getMessage("error.there.are.borrows.of.this.book", null, LocaleContextHolder.getLocale()));
+            throw new ApiException(HttpStatus.CONFLICT, "ACTIVE-BORROWS-EXIST",messageSource.getMessage("error.there.are.borrows.of.this.book", null, LocaleContextHolder.getLocale()));
         }
 
         List<Post> posts = postRepository.findByBook_Id(id);

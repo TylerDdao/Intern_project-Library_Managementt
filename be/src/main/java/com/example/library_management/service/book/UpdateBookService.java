@@ -2,6 +2,7 @@ package com.example.library_management.service.book;
 
 import com.example.library_management.dto.request.book.BookRequest;
 import com.example.library_management.dto.response.book.BookResponse;
+import com.example.library_management.exception.ApiException;
 import com.example.library_management.model.Book;
 import com.example.library_management.model.Genre;
 import com.example.library_management.repository.BookRepository;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,8 +35,7 @@ public class UpdateBookService {
 
 //    @CacheEvict(value = "books", key = "#request.id")
     public BookResponse updateBook(BookRequest request){
-        Book book = bookRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
+        Book book = bookRepository.findById(request.getId()).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "BOOK-NOT-FOUND", messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
         if(request.getTitle() != null) book.setTitle(request.getTitle());
         if(request.getAuthor() != null) book.setAuthor(request.getAuthor());
         if(request.getGenres() != null){

@@ -1,6 +1,7 @@
 package com.example.library_management.service.book;
 
 import com.example.library_management.dto.response.book.BookResponse;
+import com.example.library_management.exception.ApiException;
 import com.example.library_management.model.Book;
 import com.example.library_management.model.Borrow;
 import com.example.library_management.repository.BookRepository;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -97,8 +99,7 @@ public class GetBookService {
 
     public BookResponse getBook(Long bookId, String title){
         if(bookId != null){
-//            Book book = self.getBookById(bookId);
-            Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
+            Book book = bookRepository.findById(bookId).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "BOOK-NOT-FOUND", messageSource.getMessage("error.book.not.found", null, LocaleContextHolder.getLocale())));
             BookResponse bookResponse = new BookResponse(book);
             Optional<Borrow> isBorrowed = borrowRepository.findByUserUsernameAndBookIdAndIsActive(SecurityContextHolder.getContext().getAuthentication().getName(), book.getId(), true);
             if(isBorrowed.isPresent()){

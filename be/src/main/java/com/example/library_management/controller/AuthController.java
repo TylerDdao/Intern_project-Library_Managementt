@@ -36,9 +36,6 @@ public class AuthController {
     private AuthService authService;
 
     @Autowired
-    private MessageSource messageSource;
-
-    @Autowired
     private VerificationService verificationService;
 
     @PatchMapping("/reset-password")
@@ -46,14 +43,42 @@ public class AuthController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
-            ),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(
-                    responseCode = "500",
-                    description = "Server error",
+                    description = "Success",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = ApiResponse.class)
+                            schema = @Schema(implementation = ApiResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Reset password success",
+                                            description = "User's password is reset",
+                                            value = """
+                                                    {"code": "200",
+                                                    "message": "Succes",
+                                                    "data": true,
+                                                    "timestamp": "2026-08-19T10:00:00"}
+                                                    """
+                                    )
+                            }
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "Not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "User not found",
+                                            description = "User can't be found by its ID",
+                                            value = """
+                                                    {"code": "USER-NOT-FOUND",
+                                                    "message": "User not found",
+                                                    "data": null,
+                                                    "timestamp": "2026-08-19T10:00:00"}
+                                                    """
+                                    )
+                            }
                     )
             ),
     })
@@ -68,7 +93,33 @@ public class AuthController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Verify reset password code success",
+                                            description = "Reset password code is verified",
+                                            value = """
+                                                    {"code": "200",
+                                                    "message": "Success",
+                                                    "data": true,
+                                                    "timestamp": '2026-08-19T10:00:00"}
+                                                    """
+                                    ),
+                                    @ExampleObject(
+                                            name = "Verify reset password code failed",
+                                            description = "Reset password code is not verified",
+                                            value = """
+                                                    {"code": "200",
+                                                    "message": "Success",
+                                                    "data": false,
+                                                    "timestamp": '2026-08-19T10:00:00"}
+                                                    """
+                                    )
+                            }
+                    )
             ),
     })
     public ResponseEntity<ApiResponse<Boolean>> verifyResetPasswordCode(
@@ -83,18 +134,30 @@ public class AuthController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
-                    responseCode = "400",
-                    description = "Invalid data provided",
+                    responseCode = "401",
+                    description = "Unauthorized request",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "Not found",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
                             examples = {
                                     @ExampleObject(
                                             name = "User not found",
-                                            summary = "User does not exist",
+                                            summary = "User can't be fund by its ID",
                                             value = """
                                                     {
                                                         "code": "USER-NOT-FOUND",
@@ -108,19 +171,19 @@ public class AuthController {
                     )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized request",
+                    responseCode = "409",
+                    description = "Conflict",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
                             examples = {
                                     @ExampleObject(
-                                            name = "Capcha failed",
-                                            summary = "Failed to verify capcha",
+                                            name = "Code has been sent sent",
+                                            summary = "Verification code has been already sent and has not been expired",
                                             value = """
                                                     {
-                                                        "code": "401",
-                                                        "message": "Failed to verify capcha",
+                                                        "code": "CODE-ALREADY-SENT",
+                                                        "message": "Code is already sent",
                                                         "data": null,
                                                         "timestamp": "2026-08-19T10:00:00"
                                                     }
@@ -143,11 +206,15 @@ public class AuthController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
-                    responseCode = "400",
-                    description = "Invalid data provided",
+                    responseCode = "409",
+                    description = "Conflict",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
@@ -159,6 +226,18 @@ public class AuthController {
                                                     {
                                                         "code": "EMAIL-IS-USED",
                                                         "message": "Email has been used",
+                                                        "data": null,
+                                                        "timestamp": "2026-08-19T10:00:00"
+                                                    }
+                                                    """
+                                    ),
+                                    @ExampleObject(
+                                            name = "Code has been sent",
+                                            summary = "Verification code has been already sent and has not been expired",
+                                            value = """
+                                                    {
+                                                        "code": "CODE-IS-SENT",
+                                                        "message": "Code is already sent",
                                                         "data": null,
                                                         "timestamp": "2026-08-19T10:00:00"
                                                     }
@@ -179,7 +258,39 @@ public class AuthController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Verify success",
+                                            description = "Email is verified",
+                                            value = """
+                                                    {"code": "200",
+                                                    "message": "Success",
+                                                    "data": {
+                                                        "email": "useremail@email.com",
+                                                        "verified": true
+                                                    },
+                                                    "timestamp": "2026-08-19T10:00:00"}
+                                                    """
+                                    ),
+                                    @ExampleObject(
+                                            name = "Verify failed",
+                                            description = "Email is not verified",
+                                            value = """
+                                                    {"code": "200",
+                                                    "message": "Success",
+                                                    "data": {
+                                                        "email": "useremail@email.com",
+                                                        "verified": false
+                                                    },
+                                                    "timestamp": "2026-08-19T10:00:00"}
+                                                    """
+                                    )
+                            }
+                    )
             ),
     })
     public ResponseEntity<ApiResponse<VerificationResponse>> verifyEmail(
@@ -194,11 +305,43 @@ public class AuthController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
-                    responseCode = "400",
-                    description = "Invalid data provided",
+                    responseCode = "401",
+                    description = "Unauthorized request",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "Not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = RuntimeException.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Role not found",
+                                            description = "Role can't be found be its ID",
+                                            value = """
+                                                    {"code": "ROLE-NOT-FOUND",
+                                                    "message": "Role not found",
+                                                    "data": null,
+                                                    "timestamp": "2026-08-19T10:00:00"}
+                                                    """
+                                    )
+                            }
+                    )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "409",
+                    description = "Conflict",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class),
@@ -218,14 +361,6 @@ public class AuthController {
                             }
                     )
             ),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(
-                    responseCode = "500",
-                    description = "Server error",
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = RuntimeException.class)
-                    )
-            ),
     })
     public ResponseEntity<ApiResponse<UserResponse>> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.status(201).body(ApiResponse.success(authService.register(request)));
@@ -236,7 +371,11 @@ public class AuthController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -251,7 +390,7 @@ public class AuthController {
                                             value = """
                                                     {
                                                         "code": "401",
-                                                        "message": "Invalid username or password",
+                                                        "message": "Incorrect username or password",
                                                         "data": null,
                                                         "timestamp": "2026-08-19T10:00:00"
                                                     }
@@ -259,7 +398,6 @@ public class AuthController {
                                     )
                             }
                     )
-
             )
     })
     public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody LoginRequest request) {
@@ -272,7 +410,11 @@ public class AuthController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -287,7 +429,7 @@ public class AuthController {
                                             value = """
                                                     {
                                                         "code": "401",
-                                                        "message": "Invalid username or password",
+                                                        "message": "Incorrect username or password",
                                                         "data": null,
                                                         "timestamp": "2026-08-19T10:00:00"
                                                     }
@@ -297,13 +439,27 @@ public class AuthController {
                     )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
-                    responseCode = "500",
-                    description = "Server error",
+                    responseCode = "404",
+                    description = "Not found",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = ApiResponse.class)
+                            schema = @Schema(implementation = ApiResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "User not found",
+                                            summary = "User can't be found by its ID",
+                                            value = """
+                                                    {
+                                                        "code": "USER-NOT-FOUND",
+                                                        "message": "User not found",
+                                                        "data": null,
+                                                        "timestamp": "2026-08-19T10:00:00"
+                                                    }
+                                                    """
+                                    )
+                            }
                     )
-            )
+            ),
     })
     public ResponseEntity<ApiResponse<Boolean>> verifyPassword(@RequestBody LoginRequest request){
         return ResponseEntity.ok((ApiResponse.success(authService.verifyPassword(request))));
@@ -314,7 +470,11 @@ public class AuthController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -327,8 +487,7 @@ public class AuthController {
     })
     public ResponseEntity<ApiResponse<String>> logout(@RequestHeader("Authorization") String authHeader) {
         String token = authHeader.substring(7);
-        authService.logout(token);
-        return ResponseEntity.ok(ApiResponse.success("Logged out successfully"));
+        return ResponseEntity.ok(ApiResponse.success(authService.logout(token)));
     }
 
     @PreAuthorize("@securityService.hasAccess('UPDATE_USER')")
@@ -337,7 +496,11 @@ public class AuthController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",
@@ -354,6 +517,26 @@ public class AuthController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiResponse.class)
                     )
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404",
+                    description = "Not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "User not found",
+                                            description = "User can't be found by its ID",
+                                            value = """
+                                                    {"code": "USER-NOT-FOUND",
+                                                    "message": "User not found",
+                                                    "data": null,
+                                                    "timestamp": "2026-08-19T10:00:00"}
+                                                    """
+                                    )
+                            }
+                    )
             )
     })
     public ResponseEntity<ApiResponse<UserResponse>> updateUser(@RequestBody UserRequest request) {
@@ -365,7 +548,11 @@ public class AuthController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "401",

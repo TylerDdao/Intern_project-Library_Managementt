@@ -8,6 +8,7 @@ import { Borrow } from '../../models/borrow';
 import { Book } from '../../models/book';
 import { User } from '../../models/user';
 import { getUser } from '../../util/session-storage';
+import { isActive } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -71,16 +72,12 @@ export class BorrowService {
     })
   }
 
-  updateBorrow(borrow: Borrow) {
-    return this.http.patch(`${this.baseUrl}/${borrow.id}`, 
-      { id: borrow.id, isActive: false, dueDate: borrow.dueDate },
-      { headers: getAuthHeaders(this.platformId) }
-    );
-  }
-
   returnBorrow(borrow: Borrow){
-    return this.http.patch(`${this.baseUrl}/return/${borrow.id}`, 
-      { id: borrow.id, isActive: false, dueDate: borrow.dueDate },
+    const body = {
+      id: borrow.id,
+    }
+    return this.http.patch(`${this.baseUrl}/return`, 
+      body,
       { headers: getAuthHeaders(this.platformId) }
     );
   }
