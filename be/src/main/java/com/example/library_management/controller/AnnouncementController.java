@@ -39,7 +39,7 @@ public class AnnouncementController {
 
     @PreAuthorize("@securityService.hasAccess('ANNOUNCEMENTS_MANAGEMENT')")
     @PostMapping()
-    @Operation(summary = "Create announcement, require 'ANNOUNCEMENT_MANAGEMENT' feature, default users shall not be granted this feature", description = "Create a new announcement")
+    @Operation(summary = "Create announcement", description = "Create a new announcement, require 'ANNOUNCEMENT_MANAGEMENT' feature, default users shall not be granted this feature")
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
@@ -74,7 +74,7 @@ public class AnnouncementController {
 
     @PreAuthorize("@securityService.hasAccess('ANNOUNCEMENTS_MANAGEMENT')")
     @PatchMapping()
-    @Operation(summary = "Update announcement, require 'ANNOUNCEMENT_MANAGEMENT' feature, default users shall not be granted this feature", description = "Update an announcement's status between 'Active' and 'Inactive'")
+    @Operation(summary = "Update announcement", description = "Update an announcement's status between 'Active' and 'Inactive', require 'ANNOUNCEMENT_MANAGEMENT' feature, default users shall not be granted this feature")
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
@@ -131,7 +131,7 @@ public class AnnouncementController {
 
     @PreAuthorize("@securityService.hasAccess('ANNOUNCEMENTS_MANAGEMENT')")
     @DeleteMapping()
-    @Operation(summary = "Delete announcement, require 'ANNOUNCEMENT_MANAGEMENT' feature, default users shall not be granted this feature", description = "Delete an announcement")
+    @Operation(summary = "Delete announcement", description = "Delete an announcement, require 'ANNOUNCEMENT_MANAGEMENT' feature, default users shall not be granted this feature")
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",
@@ -187,7 +187,7 @@ public class AnnouncementController {
     }
 
     @GetMapping()
-    @Operation(summary = "Get announcement", description = "Get announcements")
+    @Operation(summary = "Get announcements", description = "Get all announcements regardless of status")
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
                     responseCode = "200",

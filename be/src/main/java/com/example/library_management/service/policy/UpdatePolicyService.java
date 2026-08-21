@@ -5,6 +5,7 @@ import com.example.library_management.dto.response.policy.PolicyResponse;
 import com.example.library_management.model.Policy;
 import com.example.library_management.repository.PolicyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class UpdatePolicyService {
     @Autowired
     MessageSource messageSource;
 
+    @CacheEvict(value = "policies", key = "#request.key")
     public PolicyResponse updatePolicy(PolicyRequest request) {
         Policy policy = policyRepository.findByKey(request.getKey())
                 .orElseThrow(() -> new RuntimeException(messageSource.getMessage("error.policy.not.found", null, LocaleContextHolder.getLocale())));

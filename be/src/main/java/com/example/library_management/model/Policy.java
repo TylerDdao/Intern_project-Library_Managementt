@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Formula;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +16,11 @@ import java.util.List;
 @Table(name = "policies")
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Policy extends BaseEntity{
+
+public class Policy extends BaseEntity implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @Id
     @Column(name = "policy_key")
     private String key;
