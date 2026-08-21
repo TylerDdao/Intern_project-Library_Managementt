@@ -34,6 +34,7 @@ role-based permission system and a trilingual interface.
 - Spring Security + JWT authentication
 - Spring Data JPA / Hibernate
 - MySQL 8
+- Redis cache
 - Apache POI (Excel export)
 - Logback (daily-rotating file logs)
 - JavaMailSender (SMTP email)
