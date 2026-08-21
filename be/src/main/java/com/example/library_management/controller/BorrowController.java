@@ -187,9 +187,9 @@ public class BorrowController {
                                             description = "Borrow is not active (already returned)",
                                             value = """
                                                     {"code": "BORROW-IS-NOT-ACTIVE",
-                                                    "message": "Borrow is already returned"
+                                                    "message": "Borrow is already returned",
                                                     "data": null,
-                                                    "timestamp" "2026-08-19T10:00:00"}
+                                                    "timestamp": "2026-08-19T10:00:00"}
                                                     """
                                     )
                             }
