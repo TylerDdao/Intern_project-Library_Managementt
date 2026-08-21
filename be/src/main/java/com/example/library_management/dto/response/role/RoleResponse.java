@@ -4,13 +4,13 @@ import com.example.library_management.dto.response.feature.FeatureResponse;
 import com.example.library_management.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
+
 public class RoleResponse {
     private long id;
     private String name;

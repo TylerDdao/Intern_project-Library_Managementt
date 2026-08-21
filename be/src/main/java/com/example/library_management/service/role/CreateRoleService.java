@@ -3,13 +3,13 @@ package com.example.library_management.service.role;
 import com.example.library_management.dto.request.role.RoleRequest;
 import com.example.library_management.dto.response.role.RoleResponse;
 import com.example.library_management.exception.ApiException;
-import com.example.library_management.exception.AuthException;
 import com.example.library_management.model.Role;
 import com.example.library_management.repository.RoleRepository;
 import com.example.library_management.util.AuditLogger;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -28,6 +28,7 @@ public class CreateRoleService {
     private AuditLogger logger;
 
     @Transactional
+    @CacheEvict(value = "roles", allEntries = true)
     public RoleResponse createRole(RoleRequest request){
         if(roleRepository.existsByName(request.getName())){
             throw new ApiException(HttpStatus.CONFLICT, "ROLE-ALREADY-EXISTED", messageSource.getMessage("error.role.already.existed", null, LocaleContextHolder.getLocale()));

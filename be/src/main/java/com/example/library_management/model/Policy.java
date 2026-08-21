@@ -17,9 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 
-public class Policy extends BaseEntity implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
+public class Policy extends BaseEntity {
 
     @Id
     @Column(name = "policy_key")
