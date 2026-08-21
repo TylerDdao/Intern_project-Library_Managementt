@@ -258,7 +258,7 @@ public class PostController {
     })
     public ResponseEntity<ApiResponse<String>> toggleLike(@PathVariable Long postId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userRepository.findByUsernameAndIsDeletedFalse(username).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,"USER-NOT-FOUND", messageSource.getMessage("errro.user.not.found", null, LocaleContextHolder.getLocale())));
+        User user = userRepository.findByUsernameAndIsDeletedFalse(username).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,"USER-NOT-FOUND", messageSource.getMessage("error.user.not.found", null, LocaleContextHolder.getLocale())));
         String result = updatePostService.toggleLike(postId, user.getId());
         return ResponseEntity.ok(ApiResponse.success(result));
     }
